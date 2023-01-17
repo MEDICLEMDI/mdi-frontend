@@ -2,20 +2,39 @@ import * as React from 'react';
 import { View, Text, Pressable } from "react-native";
 
 import style from "./style";
+import GridList from "../GridList";
+import {useEffect} from "react";
 const CategoryTab = ({ tabs }) => {
     const [tabIndex, setTabIndex] = React.useState(0);
+    const [category, setCategory] = React.useState([]);
+
+    useEffect(() => {
+        initialize();
+    }, [tabs])
+
+    const initialize = () => {
+        if(tabs.length > 0) setCategory(tabs[0].data);
+    }
+
+    const tabChangeHandler = (tab: any, index: number) => {
+        setTabIndex(index);
+        setCategory(tab.data);
+    }
 
     const TabList = (
         tabs.map((tab, key) => (
-            <Pressable key={key} disabled={key === tabIndex} onPress={() => setTabIndex(key)}>
-                <Text style={[style.tabButton, key === tabIndex ? style.active : null]}>{tab}</Text>
+            <Pressable key={key} disabled={key === tabIndex} onPress={() => tabChangeHandler(tab, key)}>
+                <Text style={[style.tabButton, key === tabIndex ? style.active : null]}>{tab.name}</Text>
             </Pressable>
         )
     ));
 
     return (
-        <View style={style.tabButtonWrap}>
-            {TabList}
+        <View>
+            <View style={style.tabButtonWrap}>
+                {TabList}
+            </View>
+            <GridList data={category} />
         </View>
     )
 }
