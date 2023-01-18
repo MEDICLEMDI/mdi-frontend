@@ -50,4 +50,5 @@ export const dermatology = [
     {icon: category21, name: '귀'},
     {icon: category22, name: 'Y존'},
     {icon: category23, name: '기타'},
+    {icon: '', name: ''},
 ]

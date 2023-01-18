@@ -12,6 +12,7 @@ const CategoryTab = ({ tabs }) => {
         initialize();
     }, [tabs])
 
+    // Tab category data initialize
     const initialize = () => {
         if(tabs.length > 0) setCategory(tabs[0].data);
     }
@@ -24,7 +25,9 @@ const CategoryTab = ({ tabs }) => {
     const TabList = (
         tabs.map((tab, key) => (
             <Pressable key={key} disabled={key === tabIndex} onPress={() => tabChangeHandler(tab, key)}>
-                <Text style={[style.tabButton, key === tabIndex ? style.active : null]}>{tab.name}</Text>
+                <View style={key === tabIndex ? style.active : null}>
+                    <Text style={[style.tabButton, key === tabIndex ? style.active : null]}>{tab.name}</Text>
+                </View>
             </Pressable>
         )
     ));

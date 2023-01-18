@@ -2,9 +2,9 @@ import * as React from 'react';
 import {FlatList, FlatListProps, Image, Text, View} from "react-native";
 
 import style from './style';
-const Grid = ({item, width}) => (
-    <View style={[style.gridItem, { width: width, height: width }]}>
-        <Image style={style.gridItemIcon} source={item.icon} />
+const Grid = ({item, value}) => (
+    <View style={[item.name === '' ? style.gridItemEmpty : style.gridItem, { width: value, height: value }]}>
+        <Image style={style.gridItemIcon} source={item.name === '' ? 0 : item.icon} resizeMode='contain'/>
         <Text>{item.name}</Text>
     </View>
 )
@@ -17,19 +17,13 @@ const GridList = ({data}) => {
     const numColumns = 3;
 
     return (
-        <FlatList
-            style={style.gridWrap}
-            data={data}
-            onLayout={e => setContainerWidth(e.nativeEvent.layout.width)}
-            renderItem={({item}) => (<Grid item={item} width={(containerWidth - margins) / numColumns}/>)}
-            keyExtractor={(item, index) => index}
-            numColumns={3}
-            columnWrapperStyle={{
-                justifyContent: 'space-between',
-                marginBottom: 15,
-            }}
-            scrollEnabled={false}
-        />
+        <View style={style.gridWrap} onLayout={e => setContainerWidth(e.nativeEvent.layout.width)}>
+        {
+            data.map((item, key) => (
+                <Grid key={key} item={item} value={(containerWidth - margins) / numColumns}/>
+            ))
+        }
+        </View>
     )
 }
 

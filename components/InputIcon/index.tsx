@@ -17,7 +17,7 @@ const InputIcon = ({
 }) => {
     return (
         <View style={style.inputWrap}>
-            <TextInput placeholder={placeholder}/>
+            <TextInput placeholder={placeholder} autoFocus={false}/>
             <Pressable onPress={onPress}>
                 <Image source={icon} style={style.ic_search}/>
             </Pressable>

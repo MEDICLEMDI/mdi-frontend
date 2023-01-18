@@ -4,6 +4,7 @@ export default StyleSheet.create({
     tabButtonWrap: {
         height: 30,
         paddingHorizontal: 30,
+        marginVertical: 10,
         flexDirection: 'row',
         alignItems: 'flex-start',
     },
@@ -16,7 +17,8 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: '#000',
         paddingBottom: 10,
-        borderWidth: 1,
+        borderBottomWidth: 3,
+        borderBottomColor: '#97876D'
     }
 
 })
