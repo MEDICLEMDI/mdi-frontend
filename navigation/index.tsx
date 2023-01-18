@@ -7,8 +7,12 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import * as React from 'react'
 
-import Home from '../screens/Home'
 import Landing from "../screens/Landing";
+import Home from '../screens/Home'
+import Event from "../screens/Event";
+import Hospital from "../screens/Hospital";
+import Wallet from "../screens/Wallet";
+import Profile from "../screens/Profile";
 
 import {
   RootStackParamList,
@@ -46,7 +50,7 @@ const TabNavigator = () => {
             }/>
             <Tab.Screen
                 name="Hospital"
-                component={Home}
+                component={Hospital}
                 options={{
                     title: '병원',
                     tabBarLabelStyle: labelStyle,
@@ -55,7 +59,7 @@ const TabNavigator = () => {
             />
             <Tab.Screen
                 name="Event"
-                component={Home}
+                component={Event}
                 options={{
                     title: '이벤트',
                     tabBarLabelStyle: labelStyle,
@@ -64,7 +68,7 @@ const TabNavigator = () => {
             />
             <Tab.Screen
                 name="Wallet"
-                component={Home}
+                component={Wallet}
                 options={{
                     title: '지갑',
                     tabBarLabelStyle: labelStyle,
@@ -73,7 +77,7 @@ const TabNavigator = () => {
             />
             <Tab.Screen
                 name="Profile"
-                component={Home}
+                component={Profile}
                 options={{
                     title: '마이페이지',
                     tabBarLabelStyle: labelStyle,

@@ -2,7 +2,7 @@ const IS_LOCAL = !!__DEV__
 
 const BACKEND_CANISTER_ID = ''
 
-const IC_HOST = 'https://boundary.ic0.app/'
+const IC_HOST = ''
 
 export {
   IS_LOCAL,

@@ -15,9 +15,11 @@ import style from "./style";
 
 
 import { getBackendActor } from '../../lib/actor'
+import TestModal from "../../components/Modal";
 const Home = ({ navigation }) => {
     const isFocus = useIsFocused();
     const [tabs, setTabs] = React.useState([]);
+    const [active, setActive] = React.useState(false);
 
     React.useEffect(() => {
         initialize();
@@ -40,7 +42,7 @@ const Home = ({ navigation }) => {
 
                     <InputIcon onPress={() => console.log('Test')} placeholder="궁금한 시술, 병원 이름을 검색해주세요." icon={ic_search}/>
 
-                    <CategoryTab tabs={tabs}/>
+                    <CategoryTab tabs={tabs} onPress={() => setActive(true)}/>
 
                     <View style={style.eventWrap}></View>
                     <View style={style.listWrap}>
@@ -50,6 +52,7 @@ const Home = ({ navigation }) => {
 
                 </View>
             </ScrollView>
+            <TestModal active={active} closeHandler={() => setActive(false)} />
         </SafeAreaView>
     )
 }

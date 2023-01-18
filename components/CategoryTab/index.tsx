@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { View, Text, Pressable } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 import style from "./style";
 import GridList from "../GridList";
 import {useEffect} from "react";
-const CategoryTab = ({ tabs }) => {
+const CategoryTab = ({ tabs, onPress }) => {
     const [tabIndex, setTabIndex] = React.useState(0);
     const [category, setCategory] = React.useState([]);
 
@@ -24,11 +24,11 @@ const CategoryTab = ({ tabs }) => {
 
     const TabList = (
         tabs.map((tab, key) => (
-            <Pressable key={key} disabled={key === tabIndex} onPress={() => tabChangeHandler(tab, key)}>
+            <TouchableOpacity key={key} disabled={key === tabIndex} onPress={() => tabChangeHandler(tab, key)}>
                 <View style={key === tabIndex ? style.active : null}>
                     <Text style={[style.tabButton, key === tabIndex ? style.active : null]}>{tab.name}</Text>
                 </View>
-            </Pressable>
+            </TouchableOpacity>
         )
     ));
 
@@ -37,7 +37,7 @@ const CategoryTab = ({ tabs }) => {
             <View style={style.tabButtonWrap}>
                 {TabList}
             </View>
-            <GridList data={category} />
+            <GridList data={category} onPress={onPress}/>
         </View>
     )
 }
