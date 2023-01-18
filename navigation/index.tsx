@@ -16,6 +16,8 @@ import {
 import LinkingConfiguration from './LinkingConfiguration'
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
+import { HomeIcon, HospitalIcon, ProfileIcon, WalletIcon, GiftIcon } from "./icon";
+
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
@@ -25,13 +27,59 @@ const Tab = createBottomTabNavigator();
 
 
 const TabNavigator = () => {
+    const labelStyle = {
+        color: '#000',
+    }
+
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false }}>
-            <Tab.Screen name="Dashboard" component={Home} options={{ title: 'Home' }}/>
-            <Tab.Screen name="Hospital" component={Home} options={{ title: 'Hospital' }}/>
-            <Tab.Screen name="Event" component={Home} options={{ title: 'Event' }}/>
-            <Tab.Screen name="Wallet" component={Home} options={{ title: 'Wallet' }}/>
-            <Tab.Screen name="Profile" component={Home} options={{ title: 'Profile' }}/>
+        <Tab.Navigator
+            screenOptions={{ headerShown: false }}
+        >
+            <Tab.Screen
+                name="Dashboard"
+                component={Home}
+                options={{
+                    title: '홈',
+                    tabBarLabelStyle: labelStyle,
+                    tabBarIcon: ({size,focused,color}) => <HomeIcon isFocus={focused}/>,
+                }
+            }/>
+            <Tab.Screen
+                name="Hospital"
+                component={Home}
+                options={{
+                    title: '병원',
+                    tabBarLabelStyle: labelStyle,
+                    tabBarIcon: ({size,focused,color}) => <HospitalIcon isFocus={focused}/>,
+                }}
+            />
+            <Tab.Screen
+                name="Event"
+                component={Home}
+                options={{
+                    title: '이벤트',
+                    tabBarLabelStyle: labelStyle,
+                    tabBarIcon: ({size,focused,color}) => <GiftIcon isFocus={focused}/>,
+                }}
+            />
+            <Tab.Screen
+                name="Wallet"
+                component={Home}
+                options={{
+                    title: '지갑',
+                    tabBarLabelStyle: labelStyle,
+                    tabBarIcon: ({size,focused,color}) => <WalletIcon isFocus={focused}/>,
+                }}
+            />
+            <Tab.Screen
+                name="Profile"
+                component={Home}
+                options={{
+                    title: '마이페이지',
+                    tabBarLabelStyle: labelStyle,
+                    tabBarIcon: ({size,focused,color}) => <ProfileIcon isFocus={focused}/>,
+                }}
+            />
         </Tab.Navigator>
     )
 }
