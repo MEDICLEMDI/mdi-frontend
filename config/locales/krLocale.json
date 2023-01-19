@@ -1,0 +1,45 @@
+{
+  "translation": {
+    "navigation": {
+      "home": "홈",
+      "hospital": "병원",
+      "event": "이벤트",
+      "wallet": "지갑",
+      "profile": "마이페이지"
+    },
+    "category": {
+      "dental": "치과",
+      "cosmetic": "성형외과 • 피부과",
+      "implant": "임플란트",
+      "crown": "크라운 보철",
+      "cavity": "충치",
+      "scaling": "스케일링",
+      "denture": "틀니보철",
+      "tmj": "턱관절 치료",
+      "whitening": "치아미백",
+      "braces": "치아교정",
+      "laminate": "라미네이트",
+      "skin": "피부",
+      "face": "얼굴형",
+      "eyes": "눈",
+      "nose": "코",
+      "lip": "입술",
+      "forehead": "이마",
+      "chest": "가슴",
+      "bodyline": "바디라인",
+      "hair1": "털/제모/눈썹",
+      "hair2": "머리/헤어",
+      "teeth": "치아",
+      "ear": "귀",
+      "yzone": "Y존",
+      "etc": "기타"
+    },
+    "home": {
+      "inputPlaceholder": "궁금한 시술, 병원 이름을 검색해주세요."
+    },
+    "option": {
+      "changeLang": "언어 변경"
+    },
+    "comingSoon": "해당 서비스는 아직 준비중이에요."
+  }
+}

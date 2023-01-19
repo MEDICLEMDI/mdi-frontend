@@ -23,32 +23,39 @@ import category21 from "../../assets/images/ic_category21.png";
 import category22 from "../../assets/images/ic_category22.png";
 import category23 from "../../assets/images/ic_category23.png";
 
-export const dentist = [
-    {icon: category1, name: '임플란트'},
-    {icon: category2, name: '크라운 보철'},
-    {icon: category3, name: '충치'},
-    {icon: category4, name: '스케일링'},
-    {icon: category5, name: '틀니보철'},
-    {icon: category6, name: '턱관절 치료'},
-    {icon: category7, name: '치아미백'},
-    {icon: category8, name: '치아교정'},
-    {icon: category9, name: '라미네이트'},
-]
+const dentist = (t) => {
+    return [
+        {icon: category1, name: t('category.implant')},
+        {icon: category2, name: t('category.crown')},
+        {icon: category3, name: t('category.cavity')},
+        {icon: category4, name: t('category.scaling')},
+        {icon: category5, name: t('category.denture')},
+        {icon: category6, name: t('category.tmj')},
+        {icon: category7, name: t('category.whitening')},
+        {icon: category8, name: t('category.braces')},
+        {icon: category9, name: t('category.laminate')},
+    ]
+}
 
-export const dermatology = [
-    {icon: category10, name: '피부'},
-    {icon: category11, name: '얼굴형'},
-    {icon: category12, name: '눈'},
-    {icon: category13, name: '코'},
-    {icon: category14, name: '입술'},
-    {icon: category15, name: '이마'},
-    {icon: category16, name: '가슴'},
-    {icon: category17, name: '바디라인'},
-    {icon: category18, name: '털/제모/눈썹'},
-    {icon: category19, name: '머리/헤어'},
-    {icon: category20, name: '치아'},
-    {icon: category21, name: '귀'},
-    {icon: category22, name: 'Y존'},
-    {icon: category23, name: '기타'},
-    {icon: '', name: ''},
-]
+const dermatology = (t) => {
+    return [
+        {icon: category10, name: t('category.skin')},
+        {icon: category11, name: t('category.face')},
+        {icon: category12, name: t('category.eyes')},
+        {icon: category13, name: t('category.nose')},
+        {icon: category14, name: t('category.lip')},
+        {icon: category15, name: t('category.forehead')},
+        {icon: category16, name: t('category.chest')},
+        {icon: category17, name: t('category.bodyline')},
+        {icon: category18, name: t('category.hair1')},
+        {icon: category19, name: t('category.hair2')},
+        {icon: category20, name: t('category.teeth')},
+        {icon: category21, name: t('category.ear')},
+        {icon: category22, name: t('category.yzone')},
+        {icon: category23, name: t('category.etc')},
+        {icon: '', name: ''},
+    ]
+}
+
+export default { dentist, dermatology };
+

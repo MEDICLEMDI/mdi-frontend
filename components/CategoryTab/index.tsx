@@ -3,17 +3,18 @@ import { View, Text, TouchableOpacity } from "react-native";
 
 import style from "./style";
 import GridList from "../GridList";
-import {useEffect} from "react";
+
 const CategoryTab = ({ tabs, onPress }) => {
     const [tabIndex, setTabIndex] = React.useState(0);
     const [category, setCategory] = React.useState([]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         initialize();
     }, [tabs])
 
     // Tab category data initialize
     const initialize = () => {
+        setTabIndex(0);
         if(tabs.length > 0) setCategory(tabs[0].data);
     }
 

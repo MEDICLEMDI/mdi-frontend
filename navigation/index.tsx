@@ -21,6 +21,7 @@ import LinkingConfiguration from './LinkingConfiguration'
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
 import { HomeIcon, HospitalIcon, ProfileIcon, WalletIcon, GiftIcon } from "./icon";
+import {useTranslation} from "react-i18next";
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -31,6 +32,7 @@ const Tab = createBottomTabNavigator();
 
 
 const TabNavigator = () => {
+    const { t } = useTranslation();
     const labelStyle = {
         color: '#000',
     }
@@ -43,7 +45,7 @@ const TabNavigator = () => {
                 name="Dashboard"
                 component={Home}
                 options={{
-                    title: '홈',
+                    title: t('navigation.home'),
                     tabBarLabelStyle: labelStyle,
                     tabBarIcon: ({size,focused,color}) => <HomeIcon isFocus={focused}/>,
                 }
@@ -52,7 +54,7 @@ const TabNavigator = () => {
                 name="Hospital"
                 component={Hospital}
                 options={{
-                    title: '병원',
+                    title: t('navigation.hospital'),
                     tabBarLabelStyle: labelStyle,
                     tabBarIcon: ({size,focused,color}) => <HospitalIcon isFocus={focused}/>,
                 }}
@@ -61,7 +63,7 @@ const TabNavigator = () => {
                 name="Event"
                 component={Event}
                 options={{
-                    title: '이벤트',
+                    title: t('navigation.event'),
                     tabBarLabelStyle: labelStyle,
                     tabBarIcon: ({size,focused,color}) => <GiftIcon isFocus={focused}/>,
                 }}
@@ -70,7 +72,7 @@ const TabNavigator = () => {
                 name="Wallet"
                 component={Wallet}
                 options={{
-                    title: '지갑',
+                    title: t('navigation.wallet'),
                     tabBarLabelStyle: labelStyle,
                     tabBarIcon: ({size,focused,color}) => <WalletIcon isFocus={focused}/>,
                 }}
@@ -79,7 +81,7 @@ const TabNavigator = () => {
                 name="Profile"
                 component={Profile}
                 options={{
-                    title: '마이페이지',
+                    title: t('navigation.profile'),
                     tabBarLabelStyle: labelStyle,
                     tabBarIcon: ({size,focused,color}) => <ProfileIcon isFocus={focused}/>,
                 }}

@@ -1,0 +1,47 @@
+{
+    "translation": {
+        "navigation": {
+            "home": "Home",
+            "hospital": "Hospital",
+            "event": "Event",
+            "wallet": "Wallet",
+            "profile": "Profile"
+        },
+        "category": {
+            "dental": "Dental",
+            "cosmetic": "Cosmetic • Beauty",
+
+            "implant": "Implant",
+            "crown": "Crown setting",
+            "cavity": "Cavity",
+            "scaling": "Cleaning",
+            "denture": "Denture",
+            "tmj": "TMJ",
+            "whitening": "Whitening",
+            "braces": "Wearing braces",
+            "laminate": "Dental laminate",
+
+            "skin": "Skin",
+            "face": "Face",
+            "eyes": "Eyes",
+            "nose": "Nose",
+            "lip": "Lip",
+            "forehead": "ForeHead",
+            "chest": "Chest",
+            "bodyline": "Body Line",
+            "hair1": "Waxing",
+            "hair2": "Hair",
+            "teeth": "Teeth",
+            "ear": "Ear",
+            "yzone": "Y Zone",
+            "etc": "ETC"
+        },
+        "home": {
+          "inputPlaceholder": "Search for hospitals or treatments"
+        },
+        "option": {
+            "changeLang": "Change Language"
+        },
+        "comingSoon": "Coming Soon"
+    }
+}
