@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     tabButtonWrap: {
-        height: 30,
+        height: 35,
         paddingHorizontal: 30,
         marginVertical: 10,
         flexDirection: 'row',
@@ -16,9 +16,10 @@ export default StyleSheet.create({
     active: {
         fontWeight: 'bold',
         color: '#000',
-        paddingBottom: 10,
+        paddingBottom: 8,
+    },
+    activeBorder: {
         borderBottomWidth: 3,
         borderBottomColor: '#97876D'
     }
-
 })

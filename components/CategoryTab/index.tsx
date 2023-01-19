@@ -26,7 +26,7 @@ const CategoryTab = ({ tabs, onPress }) => {
     const TabList = (
         tabs.map((tab, key) => (
             <TouchableOpacity key={key} disabled={key === tabIndex} onPress={() => tabChangeHandler(tab, key)}>
-                <View style={key === tabIndex ? style.active : null}>
+                <View style={key === tabIndex ? style.activeBorder : null}>
                     <Text style={[style.tabButton, key === tabIndex ? style.active : null]}>{tab.name}</Text>
                 </View>
             </TouchableOpacity>
