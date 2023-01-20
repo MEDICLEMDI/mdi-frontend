@@ -15,7 +15,7 @@ const Hospital = ({ navigation }) => {
 
     return (
         <SafeAreaView style={style.container}>
-            <Header />
+            <Header goBack={false}/>
             <ScrollView horizontal={false}>
                 <View style={style.listWrap}>
                     <Image source={ic_refresh} style={{ width: 63, height: 63, marginTop: 100, marginBottom: 20 }}/>

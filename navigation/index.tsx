@@ -7,29 +7,25 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import * as React from 'react'
 
-import Landing from "../screens/Landing";
 import Home from '../screens/Home'
 import Event from "../screens/Event";
 import Hospital from "../screens/Hospital";
 import Wallet from "../screens/Wallet";
 import Profile from "../screens/Profile";
+import Setting from "../screens/Setting";
 
-import {
-  RootStackParamList,
-} from '../types'
 import LinkingConfiguration from './LinkingConfiguration'
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { HomeIcon, HospitalIcon, ProfileIcon, WalletIcon, GiftIcon } from "./icon";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
  */
-const Stack = createNativeStackNavigator<RootStackParamList>()
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
 
 const TabNavigator = () => {
     const { t } = useTranslation();
@@ -38,9 +34,7 @@ const TabNavigator = () => {
     }
 
     return (
-        <Tab.Navigator
-            screenOptions={{ headerShown: false }}
-        >
+        <Tab.Navigator screenOptions={{ headerShown: false }}>
             <Tab.Screen
                 name="Dashboard"
                 component={Home}
@@ -79,7 +73,7 @@ const TabNavigator = () => {
             />
             <Tab.Screen
                 name="Profile"
-                component={Profile}
+                component={SettingStack}
                 options={{
                     title: t('navigation.profile'),
                     tabBarLabelStyle: labelStyle,
@@ -90,11 +84,24 @@ const TabNavigator = () => {
     )
 }
 
-function RootNavigator(props) {
+const SettingStack = () => {
+    const { t } = useTranslation();
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }}/>
-            <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen
+                name='Home'
+                component={Profile}
+                options={{
+                    title: t('navigation.profile'),
+                }}
+            />
+            <Stack.Screen
+                name='Setting'
+                component={Setting}
+                options={{
+                    title: t('navigation.profile'),
+                }}
+            />
         </Stack.Navigator>
     )
 }
@@ -102,7 +109,7 @@ function RootNavigator(props) {
 export default function Navigation() {
   return (
     <NavigationContainer linking={LinkingConfiguration}>
-      <RootNavigator/>
+      <TabNavigator/>
     </NavigationContainer>
   )
 }

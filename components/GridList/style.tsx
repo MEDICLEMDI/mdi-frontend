@@ -8,19 +8,26 @@ export default StyleSheet.create({
         alignContent: 'flex-start',
         marginVertical: 10,
     },
-    gridItem: {
+    circleWrap: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F3F1EB',
-        borderRadius: 10,
-        margin: 20/2,
+        marginBottom: 25,
+    },
+    gridItemBox: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 10,
+    },
+    gridItemCircle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 25,
+        marginVertical: 10,
     },
     gridItemEmpty: {
-        margin: 20/2,
+        margin: 10,
     },
     gridItemIcon: {
-        width: 22,
-        height: 22,
         marginBottom: 20,
     }
 })

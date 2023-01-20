@@ -23,7 +23,18 @@ import category21 from "../../assets/images/ic_category21.png";
 import category22 from "../../assets/images/ic_category22.png";
 import category23 from "../../assets/images/ic_category23.png";
 
-const dentist = (t) => {
+import menus1 from "../../assets/images/ic_coin.png";
+import menus2 from "../../assets/images/ic_book.png";
+import menus3 from "../../assets/images/ic_heart.png";
+import menus4 from "../../assets/images/ic_note.png";
+import menus5 from "../../assets/images/ic_hospital_menu.png";
+import menus6 from "../../assets/images/ic_headphone.png";
+import menus7 from "../../assets/images/ic_card.png";
+import menus8 from "../../assets/images/ic_message.png";
+import menus9 from "../../assets/images/ic_setting.png";
+
+
+export const dentist = (t) => {
     return [
         {icon: category1, name: t('category.implant')},
         {icon: category2, name: t('category.crown')},
@@ -37,7 +48,7 @@ const dentist = (t) => {
     ]
 }
 
-const dermatology = (t) => {
+export const dermatology = (t) => {
     return [
         {icon: category10, name: t('category.skin')},
         {icon: category11, name: t('category.face')},
@@ -57,5 +68,16 @@ const dermatology = (t) => {
     ]
 }
 
-export default { dentist, dermatology };
-
+export const profileMenus = (t) => {
+    return [
+        {icon: menus1, name: t('menus.point'), route: 'Point'},
+        {icon: menus2, name: t('menus.receipt'), route: 'Receipt'},
+        {icon: menus3, name: t('menus.subscribe'), route: 'Subscribe'},
+        {icon: menus4, name: t('menus.chart'), route: 'Chart'},
+        {icon: menus5, name: t('menus.medicalState'), route: 'MedicalState'},
+        {icon: menus6, name: t('menus.faq'), route: 'FAQ'},
+        {icon: menus7, name: t('menus.exchange'), route: 'Exchange'},
+        {icon: menus8, name: t('menus.community'), route: 'Community'},
+        {icon: menus9, name: t('menus.settings'), route: 'Setting'},
+    ]
+}

@@ -5,13 +5,7 @@ import style from "./style";
 
 import logo from "../../assets/images/ic_logo.png"
 
-const Landing = ({navigation}: any) => {
-    useEffect(() => {
-        setTimeout(() => {
-            navigation.push('Home');
-        }, 1000)
-    }, []);
-
+const Landing = () => {
     return (
         <SafeAreaView style={style.container}>
             <View>

@@ -12,6 +12,7 @@ declare global {
 export type RootStackParamList = {
   Home: undefined
   Landing: undefined
+  Setting: undefined
 }
 
 

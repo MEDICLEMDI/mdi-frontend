@@ -36,8 +36,32 @@
             "yzone": "Y Zone",
             "etc": "ETC"
         },
+        "menus": {
+            "point": "Point",
+            "receipt": "Receipt",
+            "subscribe": "Subscribe",
+            "chart": "Chart",
+            "medicalState": "Medical State",
+            "faq": "FAQ",
+            "exchange": "Exchange",
+            "community": "Community",
+            "settings": "Settings"
+        },
         "home": {
           "inputPlaceholder": "Search for hospitals or treatments"
+        },
+        "profile": {
+            "myPoint": "My Point",
+            "editProfile": "Edit Profile"
+        },
+        "setting": {
+            "notice": "Notice",
+            "contact": "Contact",
+            "doc1": "Medicle Service Document",
+            "doc2": "Penal Document",
+            "marketing": "Marketing",
+            "signOut": "Sign Out",
+            "language": "Language Change"
         },
         "option": {
             "changeLang": "Change Language"

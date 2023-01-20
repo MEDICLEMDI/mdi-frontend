@@ -16,5 +16,9 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 50,
-    }
+    },
+    itemStyle: {
+        backgroundColor: '#F3F1EB',
+        borderRadius: 10,
+    },
 });

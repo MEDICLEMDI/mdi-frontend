@@ -9,7 +9,7 @@ import InputIcon from "../../components/InputIcon";
 import CategoryTab from "../../components/CategoryTab";
 import TestModal from "../../components/Modal";
 
-import Category from "../../components/Category";
+import { dentist, dermatology } from "../../components/Menus";
 
 import ic_search from "../../assets/images/ic_search.png";
 import ic_refresh from "../../assets/images/ic_refresh.png";
@@ -30,14 +30,14 @@ const Home = ({ navigation }) => {
 
     const initialize = () => {
         setTabs([
-            {name: t("category.dental"), data: Category.dentist(t)},
-            {name: t("category.cosmetic"), data: Category.dermatology(t)},
+            {name: t("category.dental"), data: dentist(t)},
+            {name: t("category.cosmetic"), data: dermatology(t)},
         ])
     }
 
     return (
         <SafeAreaView style={style.container}>
-            <Header />
+            <Header goBack={false}/>
             <ScrollView horizontal={false}>
                 <View>
 
@@ -45,7 +45,7 @@ const Home = ({ navigation }) => {
 
                     <InputIcon onPress={() => console.log('Test')} placeholder={t('home.inputPlaceholder')} icon={ic_search}/>
 
-                    <CategoryTab tabs={tabs} onPress={() => setActive(true)}/>
+                    <CategoryTab tabs={tabs} onPress={() => setActive(true)} itemStyle={style.itemStyle} type='box'/>
 
                     <View style={style.eventWrap}></View>
                     <View style={style.listWrap}>

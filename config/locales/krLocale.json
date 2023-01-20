@@ -34,8 +34,32 @@
       "yzone": "Y존",
       "etc": "기타"
     },
+    "menus": {
+      "point": "포인트",
+      "receipt": "결제목록",
+      "subscribe": "관심상품",
+      "chart": "진료내역",
+      "medicalState": "진료현황",
+      "faq": "고객센터",
+      "exchange": "거래소",
+      "community": "커뮤니티",
+      "settings": "환경설정"
+    },
     "home": {
       "inputPlaceholder": "궁금한 시술, 병원 이름을 검색해주세요."
+    },
+    "profile": {
+      "myPoint": "내 포인트",
+      "editProfile": "내 정보 수정하기"
+    },
+    "setting": {
+      "notice": "공지사항",
+      "contact": "제휴 문의",
+      "doc1": "메디클 서비스 이용약관",
+      "doc2": "개인정보 처리방침",
+      "marketing": "마케팅 정보 수신",
+      "signOut": "회원 탈퇴",
+      "language": "언어 설정"
     },
     "option": {
       "changeLang": "언어 변경"

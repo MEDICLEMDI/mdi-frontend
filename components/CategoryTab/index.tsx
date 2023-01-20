@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import style from "./style";
 import GridList from "../GridList";
 
-const CategoryTab = ({ tabs, onPress }) => {
+const CategoryTab = ({ tabs, onPress, itemStyle, type }) => {
     const [tabIndex, setTabIndex] = React.useState(0);
     const [category, setCategory] = React.useState([]);
 
@@ -38,7 +38,7 @@ const CategoryTab = ({ tabs, onPress }) => {
             <View style={style.tabButtonWrap}>
                 {TabList}
             </View>
-            <GridList data={category} onPress={onPress}/>
+            <GridList data={category} onPress={onPress} type={type} itemStyle={itemStyle}/>
         </View>
     )
 }
