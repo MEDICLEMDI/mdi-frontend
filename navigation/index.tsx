@@ -11,8 +11,19 @@ import Home from '../screens/Home'
 import Event from "../screens/Event";
 import Hospital from "../screens/Hospital";
 import Wallet from "../screens/Wallet";
+
+// Profile Menus
 import Profile from "../screens/Profile";
 import Setting from "../screens/Setting";
+import Point from "../screens/Point";
+import Receipt from "../screens/Receipt";
+import Subscribe from "../screens/Subscribe";
+import Chart from "../screens/Chart";
+import MedicalState from "../screens/MedicalState";
+import FAQ from "../screens/FAQ";
+import Exchange from "../screens/Exchange";
+import Community from "../screens/Community";
+
 
 import LinkingConfiguration from './LinkingConfiguration'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -91,16 +102,42 @@ const SettingStack = () => {
             <Stack.Screen
                 name='Home'
                 component={Profile}
-                options={{
-                    title: t('navigation.profile'),
-                }}
+            />
+            <Stack.Screen
+                name='Point'
+                component={Point}
+            />
+            <Stack.Screen
+                name='Receipt'
+                component={Receipt}
+            />
+            <Stack.Screen
+                name='Subscribe'
+                component={Subscribe}
+            />
+            <Stack.Screen
+                name='Chart'
+                component={Chart}
+            />
+            <Stack.Screen
+                name='MedicalState'
+                component={MedicalState}
+            />
+            <Stack.Screen
+                name='FAQ'
+                component={FAQ}
+            />
+            <Stack.Screen
+                name='Exchange'
+                component={Exchange}
+            />
+            <Stack.Screen
+                name='Community'
+                component={Community}
             />
             <Stack.Screen
                 name='Setting'
                 component={Setting}
-                options={{
-                    title: t('navigation.profile'),
-                }}
             />
         </Stack.Navigator>
     )
