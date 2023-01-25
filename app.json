@@ -1,9 +1,10 @@
 {
   "expo": {
-    "name": "medicle",
-    "version": "1.0.0",
+    "name": "MEDICLE",
+    "version": "1.0.1",
+    "sdkVersion": "31",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/mdi_logo_1024.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "updates": {
@@ -14,17 +15,18 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "medicle"
+      "bundleIdentifier": "com.medicle.alpha"
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/mdi_logo_1024.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.medicle.alpha"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/mdi_logo_1024.png"
     },
     "extra": {
       "eas": {

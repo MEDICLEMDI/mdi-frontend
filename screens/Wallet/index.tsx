@@ -8,6 +8,7 @@ import Header from "../../components/Header";
 import style from "./style";
 
 import ic_refresh from "../../assets/images/ic_refresh.png";
+import BoxDropShadow from "../../components/BoxDropShadow";
 
 const Wallet = ({ navigation }) => {
     const { t } = useTranslation();
@@ -17,9 +18,10 @@ const Wallet = ({ navigation }) => {
         <SafeAreaView style={style.container}>
             <Header goBack={false}/>
             <ScrollView horizontal={false}>
-                <View style={style.listWrap}>
-                    <Image source={ic_refresh} style={{ width: 63, height: 63, marginTop: 100, marginBottom: 20 }}/>
-                    <Text>{t('comingSoon')}</Text>
+                <View style={style.contentWrap}>
+                    <BoxDropShadow color={'#E8E8E8'} offset={[0, 7]} elevation={5} opacity={0.95} radius={20} viewStyle={style.profileWrap}>
+
+                    </BoxDropShadow>
                 </View>
             </ScrollView>
         </SafeAreaView>

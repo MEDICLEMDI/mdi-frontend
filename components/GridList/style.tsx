@@ -26,6 +26,7 @@ export default StyleSheet.create({
     },
     gridItemEmpty: {
         margin: 10,
+        backgroundColor: '#FFFFFF',
     },
     gridItemIcon: {
         marginBottom: 20,

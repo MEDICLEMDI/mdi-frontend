@@ -5,7 +5,7 @@ import style from './style';
 import {useNavigation} from "@react-navigation/native";
 const BoxGrid = ({item, size, onPress, itemStyle}) => (
     <TouchableOpacity onPress={onPress}>
-        <View style={[item.name === '' ? style.gridItemEmpty : style.gridItemBox, itemStyle, { width: size, height: size }]}>
+        <View style={[item.name === '' ? style.gridItemEmpty : itemStyle, style.gridItemBox, { width: size, height: size }]}>
             <Image style={[style.gridItemIcon, {width: 28, height: 28}]} source={item.name === '' ? 0 : item.icon} resizeMode='contain'/>
             <Text>{item.name}</Text>
         </View>
@@ -14,7 +14,7 @@ const BoxGrid = ({item, size, onPress, itemStyle}) => (
 
 const CircleGrid = ({item, size, onPress, itemStyle}) => (
     <TouchableOpacity onPress={onPress} style={style.circleWrap}>
-        <View style={[item.name === '' ? style.gridItemEmpty : style.gridItemCircle, itemStyle, { width: 65, height: 65 }]}>
+        <View style={[item.name === '' ? style.gridItemEmpty : itemStyle, style.gridItemCircle, { width: 65, height: 65 }]}>
             <Image style={[{width: 30, height: 30}]} source={item.name === '' ? 0 : item.icon} resizeMode='cover'/>
         </View>
         <Text>{item.name}</Text>

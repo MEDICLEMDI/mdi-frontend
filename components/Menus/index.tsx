@@ -70,14 +70,14 @@ export const dermatology = (t) => {
 
 export const profileMenus = (t) => {
     return [
-        {icon: menus1, name: t('menus.point'), route: 'Point'},
-        {icon: menus2, name: t('menus.receipt'), route: 'Receipt'},
-        {icon: menus3, name: t('menus.subscribe'), route: 'Subscribe'},
-        {icon: menus4, name: t('menus.chart'), route: 'Chart'},
-        {icon: menus5, name: t('menus.medicalState'), route: 'MedicalState'},
-        {icon: menus6, name: t('menus.faq'), route: 'FAQ'},
-        {icon: menus7, name: t('menus.exchange'), route: 'Exchange'},
-        {icon: menus8, name: t('menus.community'), route: 'Community'},
-        {icon: menus9, name: t('menus.settings'), route: 'Setting'},
+        {icon: menus1, name: t('menus.point'), route: 'Point', header: t('menus.header.point')},
+        {icon: menus2, name: t('menus.receipt'), route: 'Receipt', header: t('menus.header.receipt')},
+        {icon: menus3, name: t('menus.subscribe'), route: 'Subscribe', header: t('menus.header.subscribe')},
+        {icon: menus4, name: t('menus.chart'), route: 'Chart', header: t('menus.header.chart')},
+        {icon: menus5, name: t('menus.medicalState'), route: 'MedicalState', header: t('menus.header.medicalState')},
+        {icon: menus6, name: t('menus.faq'), route: 'FAQ', header: t('menus.header.faq')},
+        {icon: menus7, name: t('menus.exchange'), route: 'Exchange', header: t('menus.header.exchange')},
+        {icon: menus8, name: t('menus.community'), route: 'Community', header: t('menus.header.community')},
+        {icon: menus9, name: t('menus.settings'), route: 'Setting', header: t('menus.header.settings')},
     ]
 }

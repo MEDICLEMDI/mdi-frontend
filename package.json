@@ -1,6 +1,6 @@
 {
   "name": "dsocial",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -46,6 +46,7 @@
     "expo-sharing": "~11.0.1",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
+    "expo-updates": "~0.15.6",
     "expo-video-player": "^2.0.3",
     "expo-web-browser": "~12.0.0",
     "i18n-js": "^4.2.2",
