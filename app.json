@@ -2,7 +2,6 @@
   "expo": {
     "name": "MEDICLE",
     "version": "1.0.1",
-    "sdkVersion": "31",
     "orientation": "portrait",
     "icon": "./assets/images/mdi_logo_1024.png",
     "scheme": "myapp",
