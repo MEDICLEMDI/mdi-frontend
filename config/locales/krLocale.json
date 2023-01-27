@@ -7,6 +7,13 @@
       "wallet": "지갑",
       "profile": "마이페이지"
     },
+    "header": {
+      "hospital": "병원",
+      "event": "이벤트",
+      "wallet": "지갑",
+      "profile": "My 메디클",
+      "settings": "환경설정"
+    },
     "category": {
       "dental": "치과",
       "cosmetic": "성형외과 • 피부과",
@@ -47,6 +54,10 @@
     },
     "home": {
       "inputPlaceholder": "궁금한 시술, 병원 이름을 검색해주세요."
+    },
+    "wallet": {
+      "transactionHistory": "거래내역",
+      "pastYear": "최근 1년"
     },
     "profile": {
       "myPoint": "내 포인트",

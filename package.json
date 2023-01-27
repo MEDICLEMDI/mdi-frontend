@@ -74,6 +74,7 @@
     "react-native-web": "~0.18.7",
     "rn-placeholder": "^3.0.3",
     "text-encoding": "^0.7.0",
+    "use-count-up": "^3.0.1",
     "v8-android-jit-nointl": "^9.88.0",
     "web-streams-polyfill": "^3.1.0"
   },

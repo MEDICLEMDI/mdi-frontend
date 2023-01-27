@@ -20,7 +20,7 @@ export default StyleSheet.create({
         justifyContent: 'flex-end'
     },
     profileWrap: {
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         height: 75,
         backgroundColor: '#FFFFFF',
         borderRadius: 10,

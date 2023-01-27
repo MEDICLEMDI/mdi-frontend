@@ -8,7 +8,12 @@ import left_arrow from "../../assets/images/ic_arrow_left.png";
 import alarm from "../../assets/images/ic_alarm.png";
 import {useNavigation} from "@react-navigation/native";
 
-const Header = ({goBack}) => {
+interface IHeader {
+  goBack: boolean;
+  title: string | undefined;
+}
+
+const Header = ({goBack, title}: IHeader)  => {
     const navigation = useNavigation();
     return (
         <View style={[style.headerWrap, [Platform.OS === 'android' ? { paddingTop: 20 } : null]]}>
@@ -16,12 +21,18 @@ const Header = ({goBack}) => {
                 goBack
                 ?
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image source={left_arrow} style={style.ic_left_arrow}/>
+                  <Image source={left_arrow} style={style.ic_left_arrow}/>
                 </TouchableOpacity>
                 :
                 <View style={style.ic_left_arrow} />
             }
-            <Image source={logo} style={style.logo}/>
+            {
+              title === undefined
+              ?
+              <Image source={logo} style={style.logo}/>
+              :
+                <Text>{title}</Text>
+            }
             <Image source={alarm} style={style.ic_alarm}/>
         </View>
     );

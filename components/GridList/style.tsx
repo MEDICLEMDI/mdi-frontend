@@ -21,7 +21,7 @@ export default StyleSheet.create({
     gridItemCircle: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: 25,
+        marginHorizontal: 20,
         marginVertical: 10,
     },
     gridItemEmpty: {

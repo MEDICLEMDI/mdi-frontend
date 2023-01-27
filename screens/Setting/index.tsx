@@ -33,7 +33,7 @@ const Setting = () => {
 
     return (
         <SafeAreaView style={style.container}>
-            <Header goBack={true}/>
+            <Header goBack={true} title={t('header.settings')}/>
             <ScrollView horizontal={false} style={{flex: 1, width: '100%'}}>
                 <View style={{marginTop: 20}}>
                 {

@@ -7,6 +7,13 @@
             "wallet": "Wallet",
             "profile": "Profile"
         },
+        "header": {
+            "hospital": "Hospital",
+            "event": "Event",
+            "wallet": "Wallet",
+            "profile": "My Medicle",
+            "settings": "Settings"
+        },
         "category": {
             "dental": "Dental",
             "cosmetic": "Cosmetic • Beauty",
@@ -49,6 +56,10 @@
         },
         "home": {
           "inputPlaceholder": "Search for hospitals or treatments"
+        },
+        "wallet": {
+            "transactionHistory": "Transactions",
+            "pastYear": "Past 1 Year"
         },
         "profile": {
             "myPoint": "My Point",
