@@ -5,7 +5,7 @@ import { Modalize } from 'react-native-modalize';
 import Copy from '@/commonComponents/Copy';
 import Header from '@/commonComponents/Header';
 import Modal from '@/commonComponents/Modal';
-import PasswordInput from '@/commonComponents/PasswordInput';
+import PasswordInput from '@/components/common/PasswordInput';
 import SeedPhrase from '@/commonComponents/SeedPhrase';
 import Button from '@/components/buttons/Button';
 import Text from '@/components/common/Text';

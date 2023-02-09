@@ -8,9 +8,9 @@ import Header from '@/components/Header';
 import Icons from '@/icons';
 import KeyRing from '@/modules/keyring';
 
-import HomeWallet from './components/home';
-import WelcomeWallet from './components/welcome';
-import style from './style';
+import HomeWallet from './components/Home';
+import WelcomeWallet from './components/Welcome';
+import CommonStyle from './common_style';
 import Routes from '@/navigation/Routes';
 
 const MOCK_VALUE = 0;
@@ -31,11 +31,11 @@ const Wallet = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={style.container}>
-      <Header goBack={false} title={t('header.wallet')} />
-      <ScrollView horizontal={false} style={style.contentWrap}>
-      </ScrollView>
-    </SafeAreaView>
+    // <SafeAreaView style={style.container}>
+    //   <Header goBack={false} title={t('header.wallet')} />
+    //   <ScrollView horizontal={false} style={style.contentWrap}>
+    //   </ScrollView>
+    // </SafeAreaView>
   );
 };
 

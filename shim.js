@@ -1,25 +1,33 @@
-import { polyfill as polyfillEncoding } from 'react-native-polyfill-globals/src/encoding'
-import { polyfill as polyfillURL } from 'react-native-polyfill-globals/src/url'
-import { polyfill as polyfillCrypto } from 'react-native-polyfill-globals/src/crypto'
-import { polyfill as polyfillFetch } from 'react-native-polyfill-globals/src/fetch'
-import { polyfill as polyfillReadableStream } from 'react-native-polyfill-globals/src/readable-stream'
+if (typeof __dirname === 'undefined') {
+  global.__dirname = '/';
+}
+if (typeof __filename === 'undefined') {
+  global.__filename = '';
+}
+if (typeof process === 'undefined') {
+  global.process = require('process');
+} else {
+  const bProcess = require('process');
+  for (var p in bProcess) {
+    if (!(p in process)) {
+      process[p] = bProcess[p];
+    }
+  }
+}
 
-polyfillEncoding()
-polyfillReadableStream()
-polyfillURL()
-polyfillCrypto()
-polyfillFetch()
-
+process.browser = false;
 if (typeof Buffer === 'undefined') {
-  // eslint-disable-next-line global-require
-  global.Buffer = require('buffer/').Buffer
+  global.Buffer = require('buffer').Buffer;
 }
 
-// eslint-disable-next-line global-require
-if (typeof BigInt === 'undefined') global.BigInt = require('big-integer')
-
-if (!global.performance && global._chronoNow) {
-  global.performance = {
-    now: global._chronoNow,
-  };
+// global.location = global.location || { port: 80 }
+const isDev = typeof __DEV__ === 'boolean' && __DEV__;
+process.env.NODE_ENV = isDev ? 'development' : 'production';
+if (typeof localStorage !== 'undefined') {
+  // eslint-disable-next-line no-undef
+  localStorage.debug = isDev ? '*' : '';
 }
+
+// If using the crypto shim, uncomment the following line to ensure
+// crypto is loaded first, so it can populate global.crypto
+require('crypto');

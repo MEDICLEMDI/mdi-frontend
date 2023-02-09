@@ -184,3 +184,7 @@ export interface WalletConnectState {
 export interface AlertState {
   closeAllModals: boolean;
 }
+
+export interface TabDisplayState {
+  display: boolean;
+}

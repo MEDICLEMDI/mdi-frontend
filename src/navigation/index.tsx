@@ -1,15 +1,15 @@
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import React, { forwardRef, memo, useEffect, useRef } from 'react';
-import {AppState, Linking, SafeAreaView, StyleSheet} from 'react-native';
+import { AppState, Linking, SafeAreaView, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Host } from 'react-native-portalize';
 
 import { Colors } from '@/constants/theme';
 import KeyRing from '@/modules/keyring';
+import RootStackNavigator from '@/navigation/navigators/RootStackNavigator';
 import { useAppDispatch } from '@/redux/hooks';
 import { setPrelocked, setUnlocked } from '@/redux/slices/keyring';
 import { handleDeepLink } from '@/utils/deepLink';
-import RootStackNavigator from "@/navigation/navigators/RootStackNavigator";
 
 const Navigator = ({ routingInstrumentation }: any, navigationRef: any) => {
   const keyring = KeyRing.getInstance();
@@ -77,18 +77,18 @@ const Navigator = ({ routingInstrumentation }: any, navigationRef: any) => {
   } as Theme;
 
   return (
-      <NavigationContainer
-        ref={navigationRef}
-        theme={navTheme}
-        onReady={routingInstrumentation.registerNavigationContainer(
-          navigationRef
-        )}>
-        <GestureHandlerRootView style={styles.container}>
-          <Host>
-            <RootStackNavigator/>
-          </Host>
-        </GestureHandlerRootView>
-      </NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      theme={navTheme}
+      onReady={routingInstrumentation.registerNavigationContainer(
+        navigationRef
+      )}>
+      <GestureHandlerRootView style={styles.container}>
+        <Host>
+          <RootStackNavigator />
+        </Host>
+      </GestureHandlerRootView>
+    </NavigationContainer>
   );
 };
 

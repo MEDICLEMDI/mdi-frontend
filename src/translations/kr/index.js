@@ -480,7 +480,13 @@ const translations = {
   option: {
     changeLang: '언어 변경'
   },
-  comingSoon: '해당 서비스는 아직 준비중이에요.'
+  comingSoon: '해당 서비스는 아직 준비중이에요.',
+  errorMessage: {
+    unknownError: '*오류가 발생하였습니다, 나중에 다시 시도해주세요.',
+    nmemonicError: '*구문이 일치하지 않습니다. 다시 입력해주세요.',
+    passwordConfirmError: '*비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+    passwordValidError: '*영문/숫자/특수문자 혼합 8~20자로 입력해주세요.',
+  },
 };
 
 export default translations;

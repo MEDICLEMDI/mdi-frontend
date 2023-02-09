@@ -1,36 +1,4 @@
 {
-  "expo": {
-    "name": "MEDICLE",
-    "version": "1.0.1",
-    "orientation": "portrait",
-    "icon": "./assets/images/mdi_logo_1024.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.medicle.alpha"
-    },
-    "android": {
-      "versionCode": 2,
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/mdi_logo_1024.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.medicle.alpha"
-    },
-    "web": {
-      "favicon": "./assets/images/mdi_logo_1024.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "81e187ee-f92c-4176-8372-24ffaad35e09"
-      }
-    }
-  }
+  "name": "Plug",
+  "displayName": "MEDICLE Wallet"
 }

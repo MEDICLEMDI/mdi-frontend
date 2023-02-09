@@ -1,51 +1,54 @@
 import { StyleSheet } from 'react-native';
+import { color } from 'react-native-reanimated';
 
 export default StyleSheet.create({
-  imgContainer: {
+  cardContainer: {
+    marginTop: 17,
+  },
+  card: {
+    height: 150,
+    padding: 25,
+  },
+  cardTopLayer: {
+    borderWidth: 1,
+    borderColor: 'red',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  topLeftLayer: {
+    borderWidth: 1,
+    borderColor: 'green',
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  logo: {
-    width: 230,
-    marginTop: 190,
-  },
-  textContainer: {
-    alignItems: 'center',
-    marginTop: 70,
-  },
-  text: {
-    textAlign: 'center',
-    color: '#333333',
-    lineHeight: 25,
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  btnContainer: {
-    // backgroundColor: 'yellow',
-    marginTop: 30,
-  },
-  createBtn: {
-    backgroundColor: '#E7E1D5',
-    height: 50,
-    borderRadius: 10,
-    alignItems: 'center',
+  topRightLayer: {
+    // borderWidth: 1,
+    // borderColor: 'orange',
     justifyContent: 'center',
   },
-  createBtnText: {
-    color: '#000000',
-    fontSize: 16,
-    fontWeight: '500',
+  mdiLogo: {
+    width: 22,
+    height: 15,
   },
-  importBtn: {
-    marginTop: 12,
-    backgroundColor: '#5F5F5F',
-    height: 50,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+  mdiTitleText: {
+    fontSize: 15,
+    fontWeight: '400',
+    color: '#443927',
+    marginLeft: 7,
   },
-  importBtnText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '500',
+  settingIcon: {
+    width: 18,
+    height: 18,
   },
+  cardMiddleLayer: {
+    borderWidth: 1,
+    borderColor: 'black',
+    height: 48,
+    justifyContent: 'center'
+  },
+  mdiBalanceText: {
+    color: '#706148',
+    fontSize: 25,
+    fontWeight: '700',
+  }
 });
