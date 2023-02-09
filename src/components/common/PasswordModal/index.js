@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import Header from '@/commonComponents/Header';
 import Modal from '@/commonComponents/Modal';
-import PasswordInput from '@/commonComponents/PasswordInput';
+import PasswordInput from '@/components/common/PasswordInput';
 import RainbowButton from '@/components/buttons/RainbowButton';
 import { Column } from '@/layout';
 import { useAppDispatch } from '@/redux/hooks';

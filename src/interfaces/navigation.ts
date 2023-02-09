@@ -27,6 +27,7 @@ export type RootStackParamList = {
     password: string;
     shouldSaveBiometrics: boolean;
   };
+  [Routes.DASHBOARD]: undefined;
   [Routes.SERVICE]: undefined;
   [Routes.BACKUP_SEED_PHRASE]: { mnemonic: string };
   [Routes.CONNECTION_ERROR]: undefined;
@@ -47,11 +48,13 @@ export type RootStackParamList = {
   [Routes.COMMUNITY]: undefined;
   [Routes.SERVICE_SETTINGS]: undefined;
   [Routes.NOTICE]: undefined;
-  [Routes.NOTICE_DETAIL]: { title: string, content: string };
+  [Routes.NOTICE_DETAIL]: { title: string; content: string };
   [Routes.SERVICE_CONTACTS]: undefined;
   // about wallet screens
   [Routes.WALLET_WELCOME]: undefined;
   [Routes.WALLET_HOME]: undefined;
+  [Routes.WALLET_CREATE_PASSWORD]: { flow: 'create' | 'import' };
+  [Routes.WALLET_IMPORT]: { password: string };
 };
 
 export type ServiceTabParamList = {

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Image, Keyboard, View } from 'react-native';
 
 import Medicle from '@/assets/icons/il_medicle.png';
-import PasswordInput from '@/commonComponents/PasswordInput';
+import PasswordInput from '@/components/common/PasswordInput';
 import Button from '@/components/buttons/Button';
 import KeyboardScrollView from '@/components/common/KeyboardScrollView';
 import Text from '@/components/common/Text';
