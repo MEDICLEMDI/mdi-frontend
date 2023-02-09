@@ -3,6 +3,7 @@ import { TextStyle } from 'react-native';
 import { Inter, REGULAR, weights } from '@/constants/fonts';
 import { isAndroid } from '@/constants/platform';
 import { FontMakerOptions } from '@/interfaces/general';
+import { Colors } from "@/constants/theme";
 
 export const fontMaker = (options: FontMakerOptions): TextStyle => {
   const {
@@ -22,4 +23,17 @@ export const fontMaker = (options: FontMakerOptions): TextStyle => {
     font = { fontFamily: family, fontWeight };
   }
   return { ...font, color, fontSize: size, fontStyle: style };
+};
+
+export const fontStyleCreator = (options: {
+  color?: string | undefined;
+  size?: number | undefined;
+  weight?: 'bold' | 'normal' | undefined;
+}) => {
+  const { color, size, weight } = options;
+  return {
+    color: color === undefined ? Colors.Medicle.Black : color,
+    fontSize: size === undefined ? 14 : size,
+    fontWeight: weight === undefined ? 'normal' : weight,
+  };
 };

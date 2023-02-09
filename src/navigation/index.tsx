@@ -72,7 +72,7 @@ const Navigator = ({ routingInstrumentation }: any, navigationRef: any) => {
 
   const navTheme = {
     colors: {
-      background: Colors.Black.Primary,
+      background: Colors.White.Pure,
     },
   } as Theme;
 

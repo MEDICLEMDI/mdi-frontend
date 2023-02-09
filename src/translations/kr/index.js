@@ -401,7 +401,7 @@ const translations = {
     companyPlaceholder: '회사명을 입력해주세요.',
     phone: '연락처',
     phonePlaceholder: '010-1234-5678',
-    comment: '요청하상',
+    comment: '요청사항',
     commentPlaceholder: '업체에 요청하실 내용을 작성해주세요.',
     contact: '문의하기',
   },
@@ -410,14 +410,14 @@ const translations = {
     hospital: '병원',
     event: '이벤트',
     wallet: '지갑',
-    profile: '마이페이지'
+    profile: '마이페이지',
   },
   header: {
     hospital: '병원',
     event: '이벤트',
     wallet: '지갑',
     profile: 'My 메디클',
-    settings: '환경설정'
+    settings: '환경설정',
   },
   category: {
     dental: '치과',
@@ -444,7 +444,7 @@ const translations = {
     teeth: '치아',
     ear: '귀',
     yzone: 'Y존',
-    etc: '기타'
+    etc: '기타',
   },
   menus: {
     point: '포인트',
@@ -455,18 +455,18 @@ const translations = {
     faq: '고객센터',
     exchange: '거래소',
     community: '커뮤니티',
-    settings: '환경설정'
+    settings: '환경설정',
   },
   home: {
-    inputPlaceholder: '궁금한 시술, 병원 이름을 검색해주세요.'
+    inputPlaceholder: '궁금한 시술, 병원 이름을 검색해주세요.',
   },
   wallet: {
     transactionHistory: '거래내역',
-    pastYear: '최근 1년'
+    pastYear: '최근 1년',
   },
   profile: {
     myPoint: '내 포인트',
-    editProfile: '내 정보 수정하기'
+    editProfile: '내 정보 수정하기',
   },
   setting: {
     notice: '공지사항',
@@ -475,10 +475,17 @@ const translations = {
     doc2: '개인정보 처리방침',
     marketing: '마케팅 정보 수신',
     signOut: '회원 탈퇴',
-    language: '언어 설정'
+    language: '언어 설정',
   },
   option: {
-    changeLang: '언어 변경'
+    changeLang: '언어 변경',
+  },
+  serviceContact: {
+    agreementDescription: '회원 본인은 문의 및 확인에 동의합니다.',
+    doc1: '개인정보 수집 및 이용 동의',
+    doc2: '개인정보 제 3자 제공 동의',
+    detail: '자세히',
+    confirm: '문의하기',
   },
   comingSoon: '해당 서비스는 아직 준비중이에요.',
   errorMessage: {

@@ -7,27 +7,25 @@ import SelectedSquareCheckbox from '@/components/icons/svg/SelectedSquareCheckbo
 import SquareCheckbox from '@/components/icons/svg/SquareCheckbox.svg';
 import { COMMON_HITSLOP } from '@/constants/general';
 
-import Text, { TextProps } from '../Text';
+import { TextProps } from '../Text';
 import styles from './styles';
 
 interface Props {
   onPress?: () => void;
   selected: boolean;
-  label?: string;
+  children?: any;
   circle?: boolean;
   testID?: string;
-  labelProps?: TextProps;
   style?: StyleProp<ViewStyle>;
 }
 
 function CustomCheckbox({
   onPress,
   selected,
-  label,
   testID,
   circle,
-  labelProps,
   style,
+  children,
 }: Props) {
   const Checkbox = circle
     ? selected
@@ -45,7 +43,7 @@ function CustomCheckbox({
       style={[styles.container, style]}
       hitSlop={COMMON_HITSLOP}>
       <Checkbox width={24} height={24} />
-      {label && <Text {...labelProps}>{label}</Text>}
+      {children}
     </TouchableOpacity>
   );
 }

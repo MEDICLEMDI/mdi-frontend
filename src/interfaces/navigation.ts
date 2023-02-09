@@ -27,6 +27,7 @@ export type RootStackParamList = {
     password: string;
     shouldSaveBiometrics: boolean;
   };
+  [Routes.DASHBOARD]: undefined;
   [Routes.SERVICE]: undefined;
   [Routes.BACKUP_SEED_PHRASE]: { mnemonic: string };
   [Routes.CONNECTION_ERROR]: undefined;
