@@ -22,8 +22,6 @@ import {
   ServiceTabParamList,
 } from '@/interfaces/navigation';
 import KeyRing from '@/modules/keyring';
-import { useAppSelector } from '@/redux/hooks';
-import { setTabDisplay } from '@/redux/slices/tabDisplay';
 import Chart from '@/screens/service/Chart';
 import Community from '@/screens/service/Community';
 import Event from '@/screens/service/Event';
@@ -45,26 +43,58 @@ import Setting from '@/screens/service/Setting';
 import Subscribe from '@/screens/service/Subscribe';
 import WalletCreatePassword from '@/screens/service/Wallet/components/CreatePassword';
 import WalletHome from '@/screens/service/Wallet/components/Home';
+import WalletImport from '@/screens/service/Wallet/components/Import';
 // Wallet pages
 import WalletWelcome from '@/screens/service/Wallet/components/Welcome';
-import { navigate } from '@/utils/navigation';
 
 // Module packages
 import Routes from '../Routes';
-import { modalGroupOptions, rootStackOptions } from '../utils';
-import ModalStackNavigator from './ModalStackNavigator';
-import WalletImport from '@/screens/service/Wallet/components/Import';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
-const tabBarHideRoute: string[] = ['WalletCreatePassword'];
 
 const RootStackNavigator = () => {
-  const display = useAppSelector(state => state.tabDisplay.display);
+  return (
+    <Stack.Navigator
+      initialRouteName={Routes.DASHBOARD}
+      screenOptions={{
+        headerShown: false,
+      }}>
+      {/* 하단에 탭이 보이는 메뉴는 BottomTabNavigation에 적용되고 탭이 보이지 않는 메뉴는 Root의 Stack에 추가 */}
+      <Stack.Screen name={Routes.DASHBOARD} component={BottomTabNavigation} />
+      <Stack.Group>
+        <Stack.Screen
+          name={Routes.SERVICE_CONTACTS}
+          component={ServiceContacts}
+        />
+      </Stack.Group>
+
+      {/* Wallet Group */}
+      <Stack.Group>
+        <Stack.Screen
+          name={Routes.WALLET_CREATE_PASSWORD}
+          component={WalletCreatePassword}
+        />
+        <Stack.Screen name={Routes.WALLET_IMPORT} component={WalletImport} />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+};
+
+const BottomTabNavigation = () => {
   const { t } = useTranslation();
   const labelStyle = {
     color: '#000',
     marginTop: 5,
+  };
+  const tabActiveController = (active: boolean) => {
+    let color;
+    if (active) {
+      color = '#FFB61B';
+    } else {
+      color = '#101010';
+    }
+    return color;
   };
 
   return (
@@ -78,8 +108,8 @@ const RootStackNavigator = () => {
           paddingTop: 6,
           paddingBottom: Platform.OS === 'ios' ? 20 : 10,
           backgroundColor: '#FFF',
-          display: display ? 'flex' : 'none',
         },
+        tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: '#FFB61B',
         tabBarInactiveTintColor: '#101010',
       }}
@@ -90,9 +120,7 @@ const RootStackNavigator = () => {
         options={{
           title: t('navigation.home'),
           tabBarLabelStyle: labelStyle,
-          tabBarIcon: ({ size, focused, color }) => (
-            <Icon name="home" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <Icon name="home" color={color} />,
         }}
       />
       <Tab.Screen
@@ -101,10 +129,10 @@ const RootStackNavigator = () => {
         options={{
           title: t('navigation.hospital'),
           tabBarLabelStyle: labelStyle,
-          tabBarIcon: ({ size, focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
-              name="hospital_b"
-              style={{ stroke: focused ? '#FFB61B' : '#101010' }}
+              name="hospital"
+              style={{ stroke: tabActiveController(focused) }}
             />
           ),
         }}
@@ -115,10 +143,10 @@ const RootStackNavigator = () => {
         options={{
           title: t('navigation.event'),
           tabBarLabelStyle: labelStyle,
-          tabBarIcon: ({ size, focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="gift"
-              style={{ stroke: focused ? '#FFB61B' : '#101010' }}
+              style={{ stroke: tabActiveController(focused) }}
             />
           ),
         }}
@@ -129,10 +157,10 @@ const RootStackNavigator = () => {
         options={{
           title: t('navigation.wallet'),
           tabBarLabelStyle: labelStyle,
-          tabBarIcon: ({ size, focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="wallet"
-              style={{ stroke: focused ? '#FFB61B' : '#101010' }}
+              style={{ stroke: tabActiveController(focused) }}
             />
           ),
         }}
@@ -143,10 +171,10 @@ const RootStackNavigator = () => {
         options={{
           title: t('navigation.profile'),
           tabBarLabelStyle: labelStyle,
-          tabBarIcon: ({ size, focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="user"
-              style={{ stroke: focused ? '#FFB61B' : '#101010' }}
+              style={{ stroke: tabActiveController(focused) }}
             />
           ),
         }}
@@ -188,26 +216,12 @@ const ServiceSettings = () => {
       <Stack.Screen name={Routes.SERVICE_SETTINGS} component={Setting} />
       <Stack.Screen name={Routes.NOTICE} component={Notice} />
       <Stack.Screen name={Routes.NOTICE_DETAIL} component={NoticeDetail} />
-      <Stack.Screen
-        name={Routes.SERVICE_CONTACTS}
-        component={ServiceContacts}
-      />
     </Stack.Navigator>
   );
 };
 
-function WalletStack({ navigation, route }) {
+function WalletStack() {
   const keyring = KeyRing.getInstance();
-  const dispatch = useDispatch();
-
-  useLayoutEffect(() => {
-    if (tabBarHideRoute.includes(getFocusedRouteNameFromRoute(route))) {
-      dispatch(setTabDisplay(false));
-    } else {
-      dispatch(setTabDisplay(true));
-    }
-  }, [navigation, route]);
-
   // 최초 진입되는 라우팅 페이지 설정
   const initialRoute = keyring.isInitialized
     ? Routes.WALLET_HOME
@@ -220,11 +234,6 @@ function WalletStack({ navigation, route }) {
       <Stack.Group>
         <Stack.Screen name={Routes.WALLET_HOME} component={WalletHome} />
         <Stack.Screen name={Routes.WALLET_WELCOME} component={WalletWelcome} />
-        <Stack.Screen
-          name={Routes.WALLET_CREATE_PASSWORD}
-          component={WalletCreatePassword}
-        />
-        <Stack.Screen name={Routes.WALLET_IMPORT} component={WalletImport} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={modalGroupOptions}>
           <Stack.Screen
