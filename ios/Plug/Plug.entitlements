@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:plugwallet.ooo</string>
+		<string>applinks:medicle.io</string>
 	</array>
 </dict>
 </plist>

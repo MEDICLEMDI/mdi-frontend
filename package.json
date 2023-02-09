@@ -9,6 +9,7 @@
     "patch:ios": "sh copy-patches.sh ios && rm -rf node_modules && yarn install",
     "patch:android": "sh copy-patches.sh android && rm -rf node_modules && yarn install",
     "ios": "yarn run ic:build.ios && react-native run-ios --scheme plug-dev",
+    "arch": "arch -x86_64 yarn ios",
     "ios:stage": "yarn run ic:build.ios && react-native run-ios --scheme plug-stage --configuration Debug",
     "ios:prod": "yarn run ic:build.ios && react-native run-ios --scheme plug-prod --configuration Debug",
     "android": "yarn run ic:build.android && npx react-native run-android --variant=devDebug --appId co.medicle.mdi.dev ",
