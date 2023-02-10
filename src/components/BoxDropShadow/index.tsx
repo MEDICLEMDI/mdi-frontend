@@ -1,12 +1,26 @@
-import { View } from 'react-native';
-import style from './style';
+import { View, ViewProps } from 'react-native';
 
-const BoxDropShadow = ({ color, offset, opacity, radius, elevation, viewStyle, children }) => {
-    return (
-        <View style={[style(color, offset, opacity, radius, elevation).boxWrap, viewStyle]}>
-            {children}
-        </View>
-    )
+import BoxShadow from './style';
+
+interface BoxDropShadowProps extends ViewProps {
+  color: string;
+  offset: number[];
+  opacity: number;
+  radius: number;
+  elevation: number;
 }
 
-export default  BoxDropShadow;
+const BoxDropShadow = (props: BoxDropShadowProps) => {
+  const { color, offset, opacity, radius, elevation, children, style } = props;
+  return (
+    <View
+      style={[
+        BoxShadow(color, offset, opacity, radius, elevation).boxWrap,
+        style,
+      ]}>
+      {children}
+    </View>
+  );
+};
+
+export default BoxDropShadow;
