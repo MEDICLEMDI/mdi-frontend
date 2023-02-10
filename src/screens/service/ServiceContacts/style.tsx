@@ -5,7 +5,8 @@ import { Colors } from '@/constants/theme';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 30,
+    marginTop: 20,
+    marginBottom: Platform.OS == 'ios' ? 30 : 20,
     paddingHorizontal: 30,
     justifyContent: 'space-between',
   },

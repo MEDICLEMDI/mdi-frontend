@@ -1,20 +1,12 @@
 // React native packages
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// Hooks
-import {
-  getFocusedRouteNameFromRoute,
-  useNavigation,
-} from '@react-navigation/native';
 import {
   createStackNavigator,
   TransitionPresets,
 } from '@react-navigation/stack';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
-import { useDispatch } from 'react-redux';
-
-import Header from '@/components/Header';
 // Components
 import Icon from '@/icons';
 import {
@@ -22,6 +14,8 @@ import {
   ServiceTabParamList,
 } from '@/interfaces/navigation';
 import KeyRing from '@/modules/keyring';
+import PersonalDoc from '@/screens/Documents/personalDoc';
+import ServiceDoc from '@/screens/Documents/serviceDoc';
 import Chart from '@/screens/service/Chart';
 import Community from '@/screens/service/Community';
 import Event from '@/screens/service/Event';
@@ -216,6 +210,8 @@ const ServiceSettings = () => {
       <Stack.Screen name={Routes.SERVICE_SETTINGS} component={Setting} />
       <Stack.Screen name={Routes.NOTICE} component={Notice} />
       <Stack.Screen name={Routes.NOTICE_DETAIL} component={NoticeDetail} />
+      <Stack.Screen name={Routes.SERVICE_DOCUMENT} component={ServiceDoc} />
+      <Stack.Screen name={Routes.PERSONAL_DOCUMENT} component={PersonalDoc} />
     </Stack.Navigator>
   );
 };
