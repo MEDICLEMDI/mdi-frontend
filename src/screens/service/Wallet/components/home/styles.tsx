@@ -69,6 +69,7 @@ export default StyleSheet.create({
   historyContainer: {
     marginTop: 30,
     paddingHorizontal: 30,
+    flex: 1,
   },
   menuButton: {
     width: 24,
@@ -96,5 +97,17 @@ export default StyleSheet.create({
     // position: 'absolute',
     height: '10%',
   },
-  emptyHistory: {},
+  emptyHistory: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  homeContainer: {
+    flex: 1,
+  },
+  historyList: {
+    borderWidth: 1,
+    borderColor: 'orange',
+    flex: 1,
+  },
 });
