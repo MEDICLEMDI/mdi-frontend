@@ -1,29 +1,23 @@
 import { StyleSheet } from 'react-native';
-import { color } from 'react-native-reanimated';
 
 export default StyleSheet.create({
   cardContainer: {
     marginTop: 17,
+    paddingHorizontal: 30,
   },
   card: {
     height: 150,
     padding: 25,
   },
   cardTopLayer: {
-    borderWidth: 1,
-    borderColor: 'red',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   topLeftLayer: {
-    borderWidth: 1,
-    borderColor: 'green',
     flexDirection: 'row',
     alignItems: 'center',
   },
   topRightLayer: {
-    // borderWidth: 1,
-    // borderColor: 'orange',
     justifyContent: 'center',
   },
   mdiLogo: {
@@ -41,14 +35,79 @@ export default StyleSheet.create({
     height: 18,
   },
   cardMiddleLayer: {
-    borderWidth: 1,
-    borderColor: 'black',
     height: 48,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   mdiBalanceText: {
     color: '#706148',
     fontSize: 25,
     fontWeight: '700',
-  }
+  },
+  cardBottomLayer: {
+    marginTop: 10,
+    height: 23,
+    flexDirection: 'row',
+  },
+  krwBalanceLayer: {
+    backgroundColor: 'rgba(0,0,0, 0.3)',
+    height: 23,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
+    minWidth: 70,
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  krwBalance: {
+    color: '#FFFFFF',
+  },
+  refreshButton: {
+    height: 23,
+    width: 23,
+    marginLeft: 10,
+  },
+  historyContainer: {
+    marginTop: 30,
+    paddingHorizontal: 30,
+    flex: 1,
+  },
+  menuButton: {
+    width: 24,
+    height: 24,
+  },
+  historyTopLayer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  historyTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333333',
+  },
+  historySubText: {
+    fontSize: 11,
+    fontWeight: '400',
+    color: '#989898',
+  },
+  historyList: {
+    borderWidth: 1,
+    borderColor: 'red',
+    marginTop: 22,
+    // position: 'absolute',
+    height: '10%',
+  },
+  emptyHistory: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  homeContainer: {
+    flex: 1,
+  },
+  historyList: {
+    borderWidth: 1,
+    borderColor: 'orange',
+    flex: 1,
+  },
 });

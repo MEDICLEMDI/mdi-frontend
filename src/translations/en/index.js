@@ -464,11 +464,12 @@ const translations = {
   },
   wallet: {
     transactionHistory: 'Transactions',
-    pastYear: 'Past 1 Year'
+    pastYear: 'Past 1 Year',
+    createPassword: 'Password Setting',
   },
   profile: {
     myPoint: 'My Point',
-    editProfile: 'Edit Profile'
+    editProfile: 'Edit Profile',
   },
   setting: {
     notice: 'Notice',
@@ -482,7 +483,13 @@ const translations = {
   option: {
     changeLang: 'Change Language'
   },
-  comingSoon: 'Coming Soon'
+  comingSoon: 'Coming Soon',
+  errorMessage: {
+    unknownError: '*An error has occurred. Please try again.',
+    nmemonicError: '*Syntax mismatch. Please enter again.',
+    passwordConfirmError: '*Passwords do not match. Please enter again.',
+    passwordValidError: '*Please enter 8 to 20 characters with a mixture of English/number/special characters.',
+  },
 };
 
 export default translations;

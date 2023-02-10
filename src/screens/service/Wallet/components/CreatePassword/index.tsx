@@ -82,7 +82,7 @@ const WalletCreatePassword = ({
       <Header goBack={true} title={t('header.wallet')} />
       <View style={styles.mainContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>비밀번호 설정</Text>
+          <Text style={styles.titleText}>{t('wallet.createPassword')}</Text>
           <Text style={styles.subText}>지갑 비밀번호를 입력해주세요.</Text>
         </View>
         <View style={styles.inputContainer}>
