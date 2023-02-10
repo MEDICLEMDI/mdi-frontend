@@ -39,6 +39,15 @@ const WalletCreatePassword = ({
   const dispatch = useAppDispatch();
   const { icpPrice } = useAppSelector(state => state.icp);
   const flow = route.params?.flow;
+  const [buttonText, setButtonText] = useState('');
+
+  useEffect(() => {
+    if (flow) {
+      setButtonText(t('wallet.create.importButton'));
+    } else {
+      setButtonText(t('wallet.create.newCreateButton'));
+    }
+  }, []);
 
   // const [confirmPasswordVaild, setDisable] = useState(true);
 
@@ -79,16 +88,16 @@ const WalletCreatePassword = ({
 
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <Header goBack={true} title={t('header.wallet')} />
+      <Header goBack={true} title={t('wallet.create.header')} />
       <View style={styles.mainContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>비밀번호 설정</Text>
-          <Text style={styles.subText}>지갑 비밀번호를 입력해주세요.</Text>
+          <Text style={styles.titleText}>{t('wallet.create.title')}</Text>
+          <Text style={styles.subText}>{t('wallet.create.subTitle')}</Text>
         </View>
         <View style={styles.inputContainer}>
           <TextInput
             style={[styles.pwInput]}
-            placeholder="영문/숫자/특수문자 혼합 8~20자"
+            placeholder={t('wallet.create.passwordInput')}
             selectionColor={'#989898'}
             secureTextEntry={true}
             onChangeText={value => setPassword(value)}
@@ -99,7 +108,7 @@ const WalletCreatePassword = ({
           />
           <TextInput
             style={[styles.pwInput, { marginTop: 10 }]}
-            placeholder="비밀번호를 한번 더 입력해주세요."
+            placeholder={t('wallet.create.confirmPasswordInput')}
             selectionColor={'#989898'}
             secureTextEntry={true}
             maxLength={20}
@@ -132,7 +141,7 @@ const WalletCreatePassword = ({
                 styles.btnText,
                 { color: disable ? '#FFFFFF' : '#000000' },
               ]}>
-              다음
+              {buttonText}
             </Text>
           </TouchableOpacity>
         </View>

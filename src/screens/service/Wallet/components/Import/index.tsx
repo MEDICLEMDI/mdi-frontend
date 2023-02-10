@@ -66,19 +66,17 @@ const WalletImport = ({
 
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <Header goBack={true} title={t('header.wallet')} />
+      <Header goBack={true} title={t('wallet.import.header')} />
       <View style={styles.mainContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>지갑 불러오기</Text>
-          <Text style={styles.subText}>
-            12개의 비밀 복구 구문을 입력해주세요.
-          </Text>
+          <Text style={styles.titleText}>{t('wallet.import.title')}</Text>
+          <Text style={styles.subText}>{t('wallet.import.subTitle')}</Text>
         </View>
         <View style={styles.mnemonicContainer}>
           <TextInput
             style={styles.mnemonicInput}
             multiline
-            placeholder="비밀 복구 구문을 입력해주세요."
+            placeholder={t('wallet.import.mnemonicInput')}
             placeholderTextColor={'#989898'}
             selectionColor={'#989898'}
             numberOfLines={4}
@@ -102,7 +100,7 @@ const WalletImport = ({
                 styles.btnText,
                 { color: !isMnemonicValid ? '#FFFFFF' : '#000000' },
               ]}>
-              지갑 불러오기
+              {t('wallet.import.importButton')}
             </Text>
           </TouchableOpacity>
         </View>
