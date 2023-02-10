@@ -465,7 +465,20 @@ const translations = {
   wallet: {
     transactionHistory: 'Transactions',
     pastYear: 'Past 1 Year',
-    createPassword: 'Password Setting',
+    create: {
+      title: 'Password Setting',
+      subTitle: 'Please enter your wallet password.',
+      passwordInput: '8~20 letters/numbers/special characters',
+      confirmPasswordInput: 'Please enter your password once more.',
+      newCreateButton: 'Create',
+      importButton: 'Next',
+    },
+    import: {
+      title: 'Import wallet',
+      subTitle: 'Please enter 12 secret recovery phrases.',
+      mnemonicInput: 'Please enter your secret recovery phrase.',
+      importButton: 'Import',
+    },
   },
   profile: {
     myPoint: 'My Point',

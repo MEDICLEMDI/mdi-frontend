@@ -410,14 +410,14 @@ const translations = {
     hospital: '병원',
     event: '이벤트',
     wallet: '지갑',
-    profile: '마이페이지'
+    profile: '마이페이지',
   },
   header: {
     hospital: '병원',
     event: '이벤트',
     wallet: '지갑',
     profile: 'My 메디클',
-    settings: '환경설정'
+    settings: '환경설정',
   },
   category: {
     dental: '치과',
@@ -444,7 +444,7 @@ const translations = {
     teeth: '치아',
     ear: '귀',
     yzone: 'Y존',
-    etc: '기타'
+    etc: '기타',
   },
   menus: {
     point: '포인트',
@@ -455,18 +455,32 @@ const translations = {
     faq: '고객센터',
     exchange: '거래소',
     community: '커뮤니티',
-    settings: '환경설정'
+    settings: '환경설정',
   },
   home: {
-    inputPlaceholder: '궁금한 시술, 병원 이름을 검색해주세요.'
+    inputPlaceholder: '궁금한 시술, 병원 이름을 검색해주세요.',
   },
   wallet: {
     transactionHistory: '거래내역',
-    pastYear: '최근 1년'
+    pastYear: '최근 1년',
+    create: {
+      title: '비밀번호 설정',
+      subTitle: '지갑 비밀번호를 입력해주세요.',
+      passwordInput: '영문/숫자/특수문자 혼합 8~20자',
+      confirmPasswordInput: '비밀번호를 한번 더 입력해주세요.',
+      newCreateButton: '생성하기',
+      importButton: '다음',
+    },
+    import: {
+      title: '지갑 불러오기',
+      subTitle: '12개의 비밀 복구 구문을 입력해주세요.',
+      mnemonicInput: '비밀 복구 구문을 입력해주세요.',
+      importButton: '불러오기',
+    },
   },
   profile: {
     myPoint: '내 포인트',
-    editProfile: '내 정보 수정하기'
+    editProfile: '내 정보 수정하기',
   },
   setting: {
     notice: '공지사항',
@@ -475,10 +489,10 @@ const translations = {
     doc2: '개인정보 처리방침',
     marketing: '마케팅 정보 수신',
     signOut: '회원 탈퇴',
-    language: '언어 설정'
+    language: '언어 설정',
   },
   option: {
-    changeLang: '언어 변경'
+    changeLang: '언어 변경',
   },
   comingSoon: '해당 서비스는 아직 준비중이에요.',
   errorMessage: {
