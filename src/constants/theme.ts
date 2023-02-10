@@ -11,10 +11,17 @@ export const Colors = {
     White: '#FFFFFF',
     Black: '#15161C',
     Beige: '#E7E1D5',
+    Font: {
+      Grey: {
+        Light: '#B5B5B5',
+        Standard: '#989898',
+        Dark: '#666666',
+      },
+    },
     Grey: {
-      Light: '#B5B5B5',
+      Light: '#E8E8E8',
       Standard: '#989898',
-      Dark: '#666666',
+      Dark: '#454545',
     },
     Input: '#F2F2F2',
     InputText: '#989898',
