@@ -41,8 +41,8 @@ const WalletWelcome = ({
 
           <View style={styles.textContainer}>
             <Text style={styles.text}>
-              현재 연결 된 지갑이 없습니다. {'\n'}
-              지갑을 생성하거나 연결해주세요.
+              {t('wallet.welcome.textFirst')} {'\n'}
+              {t('wallet.welcome.textSecond')}
             </Text>
           </View>
 
@@ -50,12 +50,16 @@ const WalletWelcome = ({
             <TouchableOpacity
               style={styles.createBtn}
               onPress={onPress('create')}>
-              <Text style={styles.createBtnText}>지갑 생성하기</Text>
+              <Text style={styles.createBtnText}>
+                {t('wallet.welcome.createButton')}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.importBtn}
               onPress={onPress('import')}>
-              <Text style={styles.importBtnText}>지갑 불러오기</Text>
+              <Text style={styles.importBtnText}>
+                {t('wallet.welcome.importButton')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
