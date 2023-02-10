@@ -28,6 +28,7 @@ import Routes from '@/navigation/Routes';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import PeriodSettingModal from '@/components/PeriodSettingModal';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { t } = useTranslation();
@@ -204,6 +205,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
         </View>
         {/* </ScrollView> */}
       </View>
+      <PeriodSettingModal />
     </SafeAreaView>
   );
 };
