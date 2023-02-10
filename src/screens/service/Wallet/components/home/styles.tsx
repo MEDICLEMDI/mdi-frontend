@@ -90,13 +90,6 @@ export default StyleSheet.create({
     fontWeight: '400',
     color: '#989898',
   },
-  historyList: {
-    borderWidth: 1,
-    borderColor: 'red',
-    marginTop: 22,
-    // position: 'absolute',
-    height: '10%',
-  },
   emptyHistory: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -106,8 +99,27 @@ export default StyleSheet.create({
     flex: 1,
   },
   historyList: {
+    flex: 1,
+    marginTop: 22,
+  },
+  emptyText: {
+    color: '#333333',
+    fontWeight: '400',
+    fontSize: 14,
+  },
+  flatList: {
     borderWidth: 1,
     borderColor: 'orange',
-    flex: 1,
+  },
+  historyCard: {
+    height: 100,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#E8E8E8',
+    borderRadius: 10,
+    shadowColor: 'orange',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    elevation: 11,
   },
 });
