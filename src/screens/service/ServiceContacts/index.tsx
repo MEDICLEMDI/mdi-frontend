@@ -47,7 +47,7 @@ export default () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
 
-  const FONT_GRAY = fontStyleCreator({ color: Colors.Medicle.Grey.Standard });
+  const FONT_GRAY = fontStyleCreator({ color: Colors.Medicle.Font.Grey.Standard });
   const FONT_WHITE = fontStyleCreator({ color: Colors.Medicle.White });
 
   const [docAgree, setDocAgree] = React.useState({
@@ -131,7 +131,7 @@ export default () => {
       <TouchableOpacity
         style={style.confirmButton}
         onPress={() => console.log('Contact')}>
-        <Text style={[FONT_WHITE, ]}>{t('serviceContact.confirm')}</Text>
+        <Text style={[FONT_WHITE]}>{t('serviceContact.confirm')}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
