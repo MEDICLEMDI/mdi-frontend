@@ -66,7 +66,7 @@ const WalletImport = ({
 
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <Header goBack={true} title={t('header.wallet')} />
+      <Header goBack={true} title={t('wallet.import.header')} />
       <View style={styles.mainContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>{t('wallet.import.title')}</Text>

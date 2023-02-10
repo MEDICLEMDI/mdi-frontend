@@ -461,9 +461,15 @@ const translations = {
     inputPlaceholder: '궁금한 시술, 병원 이름을 검색해주세요.',
   },
   wallet: {
-    transactionHistory: '거래내역',
     pastYear: '최근 1년',
+    welcome: {
+      textFirst: '현재 연결 된 지갑이 없습니다.',
+      textSecond: '지갑을 생성하거나 연결해주세요.',
+      createButton: '지갑 생성하기',
+      importButton: '지갑 불러오기',
+    },
     create: {
+      header: '생성하기',
       title: '비밀번호 설정',
       subTitle: '지갑 비밀번호를 입력해주세요.',
       passwordInput: '영문/숫자/특수문자 혼합 8~20자',
@@ -472,10 +478,15 @@ const translations = {
       importButton: '다음',
     },
     import: {
+      header: '불러오기',
       title: '지갑 불러오기',
       subTitle: '12개의 비밀 복구 구문을 입력해주세요.',
       mnemonicInput: '비밀 복구 구문을 입력해주세요.',
       importButton: '불러오기',
+    },
+    home: {
+      transactionHistory: '거래내역',
+      emptyHistory: '거래 내역이 없습니다.',
     },
   },
   profile: {

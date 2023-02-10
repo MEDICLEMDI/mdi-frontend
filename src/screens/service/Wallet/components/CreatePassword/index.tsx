@@ -88,7 +88,7 @@ const WalletCreatePassword = ({
 
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <Header goBack={true} title={t('header.wallet')} />
+      <Header goBack={true} title={t('wallet.create.header')} />
       <View style={styles.mainContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>{t('wallet.create.title')}</Text>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   FlatList,
@@ -28,9 +28,13 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const [historyList, setHistoryList] = useState([]);
 
   // 나중에 히스토리 객체 타입지정 해놔야할듯
-  // const addData = () => {
-  //   setHistoryList([...historyList, { key: 'gdgd' }]);
-  // };
+  const addData = () => {
+    setHistoryList([...historyList, { key: 'gdgd' }]);
+  };
+
+  useEffect(() => {
+    addData();
+  }, []);
 
   function numberWithCommas(x) {
     let parts = x.toString().split('.');
@@ -94,7 +98,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
         <View style={styles.historyContainer}>
           <View style={styles.historyTopLayer}>
             <Text style={styles.historyTitle}>
-              {t('wallet.transactionHistory')}
+              {t('wallet.home.transactionHistory')}
               <Text style={styles.historySubText}>{' ' + period}</Text>
             </Text>
             {/* 히스토리 기간설정하기 */}
@@ -106,12 +110,19 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
           <View style={styles.historyList}>
             {historyList.length > 0 ? (
               <FlatList
+                style={styles.flatList}
                 data={historyList}
-                renderItem={({ item }) => <Text>{item.key}</Text>}
+                renderItem={({ item }) => (
+                  <View style={styles.historyCard}>
+                    <Text>{item.key}</Text>
+                  </View>
+                )}
               />
             ) : (
               <View style={styles.emptyHistory}>
-                <Text>Empty</Text>
+                <Text style={styles.emptyText}>
+                  {t('wallet.home.emptyHistory')}
+                </Text>
               </View>
             )}
           </View>
