@@ -2,19 +2,19 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Platform,
-  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
 import TestModal from '@/components/Modal';
+import { Colors } from '@/constants/theme';
 import Icons from '@/icons';
 import Routes from '@/navigation/Routes';
-import { Colors } from '@/constants/theme';
 
 import style from './style';
 
@@ -75,7 +75,9 @@ const Setting = ({ navigation }) => {
       <ScrollView horizontal={false} style={{ flex: 1, width: '100%' }}>
         <View style={{ marginTop: 20 }}>
           {data.map((item, key) => (
-            <Pressable key={key} onPress={item.onPress ? item.onPress : null}>
+            <TouchableOpacity
+              key={key}
+              onPress={item.onPress ? item.onPress : null}>
               <BoxDropShadow
                 color={
                   Platform.OS === 'ios'
@@ -86,11 +88,11 @@ const Setting = ({ navigation }) => {
                 elevation={10}
                 opacity={0.95}
                 radius={10}
-                style={style.profileWrap}>
+                style={[style.profileWrap, { opacity: 0.99 }]}>
                 <Text>{item.name}</Text>
                 <Icons name="arrowRight" />
               </BoxDropShadow>
-            </Pressable>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>

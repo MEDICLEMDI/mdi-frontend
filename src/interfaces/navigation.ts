@@ -55,6 +55,8 @@ export type RootStackParamList = {
   [Routes.WALLET_HOME]: undefined;
   [Routes.WALLET_CREATE_PASSWORD]: { flow: 'create' | 'import' };
   [Routes.WALLET_IMPORT]: { password: string };
+  [Routes.SERVICE_DOCUMENT]: undefined;
+  [Routes.PERSONAL_DOCUMENT]: undefined;
 };
 
 export type ServiceTabParamList = {

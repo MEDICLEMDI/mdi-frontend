@@ -1,31 +1,44 @@
-import {Modal, View, Text, TouchableOpacity, SafeAreaView} from "react-native";
-import * as React from "react";
-import style from "./style";
-import {useTranslation} from "react-i18next";
+import { Portal } from '@gorhom/portal';
+import * as React from 'react';
+import { Modal, ModalBaseProps, SafeAreaView } from 'react-native';
 
-const TestModal = ({ active, closeHandler }) => {
-    const { t } = useTranslation();
-
-    return (
-        <Modal
-            animationType="fade"
-            visible={active}
-            transparent={true}
-            onRequestClose={() => {
-                closeHandler()
-            }}
-        >
-            <View style={style.modalWrap}>
-                <View style={style.modalContent}>
-                    <Text style={style.modalTitle}>{t('comingSoon')}</Text>
-                    <TouchableOpacity style={style.closeBtn} onPress={() => closeHandler()}>
-                        <Text style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 14}}>Close</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </Modal>
-    )
-
+interface ModalProps extends ModalBaseProps {
+  name: string;
+  children?: React.ReactNode;
 }
 
-export default TestModal;
+const CustomModal = (props: ModalProps) => {
+  console.log(props);
+  const {
+    name,
+    animationType,
+    onRequestClose,
+    visible,
+    transparent,
+    onShow,
+    children,
+  } = props;
+  return (
+    <Portal name={name}>
+      <SafeAreaView>
+        <Modal
+          animationType={animationType}
+          visible={visible}
+          transparent={transparent}
+          onRequestClose={onRequestClose}
+          onShow={onShow}>
+          <SafeAreaView
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            {children}
+          </SafeAreaView>
+        </Modal>
+      </SafeAreaView>
+    </Portal>
+  );
+};
+
+export default CustomModal;
