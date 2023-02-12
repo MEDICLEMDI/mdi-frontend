@@ -12,14 +12,17 @@ export const Colors = {
     Black: '#15161C',
     Beige: '#E7E1D5',
     Font: {
-      Grey: {
+      Gray: {
         Light: '#B5B5B5',
         Standard: '#989898',
-        Dark: '#666666',
+        SemiDark: '#666666',
+        Dark: '#333333',
       },
+      Black: '#000000',
     },
-    Grey: {
-      Light: '#E8E8E8',
+    Gray: {
+      Light: '#F2F2F2',
+      SemiLight: '#E8E8E8',
       Standard: '#989898',
       Dark: '#454545',
     },

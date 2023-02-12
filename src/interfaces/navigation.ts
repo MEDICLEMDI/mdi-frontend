@@ -57,6 +57,7 @@ export type RootStackParamList = {
   [Routes.WALLET_IMPORT]: { password: string };
   [Routes.SERVICE_DOCUMENT]: undefined;
   [Routes.PERSONAL_DOCUMENT]: undefined;
+  [Routes.MARKETING]: undefined;
 };
 
 export type ServiceTabParamList = {

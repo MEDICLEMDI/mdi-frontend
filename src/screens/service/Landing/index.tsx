@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, Image } from "react-native";
+import { useEffect, useState } from 'react';
+import * as React from 'react';
+import { Image, SafeAreaView, Text, View } from 'react-native';
 
-import style from "./style";
-import * as React from "react";
-import Icons from "@/icons";
+import Icons from '@/icons';
+
+import style from './style';
 
 const Landing = () => {
-    return (
-        <SafeAreaView style={style.container}>
-            <View>
-              <Icons name='mdiLogo' />
-            </View>
-        </SafeAreaView>
-    )
-}
+  return (
+    <SafeAreaView style={style.container}>
+      <View>
+        <Icons name="mdiLogo" />
+      </View>
+    </SafeAreaView>
+  );
+};
 
 export default Landing;

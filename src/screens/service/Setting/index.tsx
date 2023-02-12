@@ -81,8 +81,8 @@ const Setting = ({ navigation }) => {
               <BoxDropShadow
                 color={
                   Platform.OS === 'ios'
-                    ? Colors.Medicle.Grey.Light
-                    : Colors.Medicle.Grey.Standard
+                    ? Colors.Medicle.Gray.SemiLight
+                    : Colors.Medicle.Gray.Standard
                 }
                 offset={[0, 7]}
                 elevation={10}

@@ -496,6 +496,7 @@ const translations = {
   setting: {
     notice: '공지사항',
     contact: '제휴 문의',
+    document: '이용약관',
     doc1: '메디클 서비스 이용약관',
     doc2: '개인정보 처리방침',
     marketing: '마케팅 정보 수신',
