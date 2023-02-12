@@ -7,6 +7,7 @@ import {
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
+
 // Components
 import Icon from '@/icons';
 import {
@@ -14,16 +15,17 @@ import {
   ServiceTabParamList,
 } from '@/interfaces/navigation';
 import KeyRing from '@/modules/keyring';
-import PersonalDoc from '@/screens/Documents/personalDoc';
-import ServiceDoc from '@/screens/Documents/serviceDoc';
 import Chart from '@/screens/service/Chart';
 import Community from '@/screens/service/Community';
+import PersonalDoc from '@/screens/service/Documents/personalDoc';
+import ServiceDoc from '@/screens/service/Documents/serviceDoc';
 import Event from '@/screens/service/Event';
 import Exchange from '@/screens/service/Exchange';
 import FAQ from '@/screens/service/FAQ';
 // Menus
 import DashBoard from '@/screens/service/Home';
 import Hospital from '@/screens/service/Hospital';
+import MarketingConfig from '@/screens/service/MarketingConfig';
 import MedicalState from '@/screens/service/MedicalState';
 // Setting pages
 import Notice from '@/screens/service/Notice';
@@ -212,6 +214,7 @@ const ServiceSettings = () => {
       <Stack.Screen name={Routes.NOTICE_DETAIL} component={NoticeDetail} />
       <Stack.Screen name={Routes.SERVICE_DOCUMENT} component={ServiceDoc} />
       <Stack.Screen name={Routes.PERSONAL_DOCUMENT} component={PersonalDoc} />
+      <Stack.Screen name={Routes.MARKETING} component={MarketingConfig} />
     </Stack.Navigator>
   );
 };

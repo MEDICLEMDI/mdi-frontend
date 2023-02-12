@@ -16,9 +16,9 @@ import {
 import { CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
 import { Colors } from '@/constants/theme';
+import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
-import { fontStyleCreator } from "@/utils/fonts";
 
 interface TopLabelInputProps extends TextInputProps {
   label: string;
@@ -47,7 +47,9 @@ export default () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
 
-  const FONT_GRAY = fontStyleCreator({ color: Colors.Medicle.Font.Grey.Standard });
+  const FONT_GRAY = fontStyleCreator({
+    color: Colors.Medicle.Font.Gray.Standard,
+  });
   const FONT_WHITE = fontStyleCreator({ color: Colors.Medicle.White });
 
   const [docAgree, setDocAgree] = React.useState({

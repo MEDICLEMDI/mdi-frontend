@@ -13,7 +13,6 @@ import Header from '@/components/Header';
 import ImageSlide from '@/components/ImageSlide';
 import InputIcon from '@/components/InputIcon';
 import { dentist, dermatology } from '@/components/Menus';
-import TestModal from '@/components/Modal';
 import Icon from '@/icons';
 
 import style from './style';
@@ -63,7 +62,6 @@ const Home = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
-      <TestModal active={active} closeHandler={() => setActive(false)} />
     </SafeAreaView>
   );
 };

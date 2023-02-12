@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -7,7 +7,6 @@ export default StyleSheet.create({
   },
   noticeList: {
     marginTop: 10,
-
   },
   noticeWrap: {
     flexDirection: 'row',
@@ -34,9 +33,9 @@ export default StyleSheet.create({
     marginTop: 40,
     paddingBottom: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#EDEDED'
+    borderBottomColor: '#EDEDED',
   },
   contentWrap: {
     padding: 30,
-  }
+  },
 });

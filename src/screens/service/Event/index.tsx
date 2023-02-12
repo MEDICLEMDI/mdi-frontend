@@ -1,13 +1,13 @@
+import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
-import {useIsFocused} from "@react-navigation/native";
-import {useTranslation} from "react-i18next";
-import {Image, SafeAreaView, ScrollView, Text, View} from "react-native";
+import { useTranslation } from 'react-i18next';
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 
-import Header from "@/components/Header";
-import BoxDropShadow from "@/components/BoxDropShadow";
+import BoxDropShadow from '@/components/BoxDropShadow';
+import Header from '@/components/Header';
+import Icons from '@/icons';
 
-import style from "./style";
-import Icons from "@/icons";
+import style from './style';
 
 const Event = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -15,10 +15,10 @@ const Event = ({ navigation }) => {
 
   return (
     <SafeAreaView style={style.container}>
-      <Header goBack={false} title={t('header.event')}/>
-      <ScrollView horizontal={false} style={{flex: 1, width: '100%'}}>
+      <Header goBack={false} title={t('header.event')} />
+      <ScrollView horizontal={false} style={{ flex: 1, width: '100%' }}>
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Icons name='refresh' />
+          <Icons name="refresh" />
           <Text>{t('comingSoon')}</Text>
         </View>
         {/*<View style={style.eventPanel}>*/}
@@ -30,7 +30,7 @@ const Event = ({ navigation }) => {
         {/*</View>*/}
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default Event;

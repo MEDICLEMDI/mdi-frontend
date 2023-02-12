@@ -44,6 +44,6 @@ export default StyleSheet.create({
     height: 55,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.Medicle.Grey.Standard,
+    backgroundColor: Colors.Medicle.Gray.Standard,
   },
 });
