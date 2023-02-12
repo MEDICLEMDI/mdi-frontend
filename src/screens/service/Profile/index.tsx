@@ -12,7 +12,7 @@ import BoxDropShadow from '@/components/BoxDropShadow';
 import GridList from '@/components/GridList';
 import Header from '@/components/Header';
 import { profileMenus } from '@/components/Menus';
-import TestModal from '@/components/Modal';
+import Modal from '@/components/Modal';
 import Icons from '@/icons';
 
 import style from './style';
@@ -21,7 +21,7 @@ const Profile = ({ navigation }) => {
   const { t, i18n } = useTranslation();
 
   const [menus, setMenus] = React.useState([]);
-  const [active, setActive] = React.useState(false);
+  const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
     initialize();
@@ -48,7 +48,7 @@ const Profile = ({ navigation }) => {
               <Text style={style.name}>Preview</Text>
             </View>
 
-            <TouchableOpacity onPress={() => setActive(true)}>
+            <TouchableOpacity onPress={() => setVisible(true)}>
               <View style={style.pointBtn}>
                 <Icons name="mdiIcon" />
                 <Text>{t('profile.myPoint')}</Text>
@@ -60,7 +60,7 @@ const Profile = ({ navigation }) => {
 
           <TouchableOpacity
             style={style.editProfileBtn}
-            onPress={() => setActive(true)}>
+            onPress={() => setVisible(true)}>
             <Text>{t('profile.editProfile')}</Text>
             <Icons name="arrowRight" />
           </TouchableOpacity>
@@ -73,7 +73,12 @@ const Profile = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-      <TestModal active={active} closeHandler={() => setActive(false)} />
+      <Modal name="soon" visible={visible} animationType="fade">
+        <Text>Test Modal</Text>
+        <TouchableOpacity onPress={() => setVisible(false)}>
+          <Text>Modal Close</Text>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 };

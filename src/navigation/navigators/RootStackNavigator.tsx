@@ -127,7 +127,7 @@ const BottomTabNavigation = () => {
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
             <Icon
-              name="hospital"
+              name="hospital_b"
               style={{ stroke: tabActiveController(focused) }}
             />
           ),

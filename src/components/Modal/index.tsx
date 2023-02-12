@@ -8,7 +8,6 @@ interface ModalProps extends ModalBaseProps {
 }
 
 const CustomModal = (props: ModalProps) => {
-  console.log(props);
   const {
     name,
     animationType,

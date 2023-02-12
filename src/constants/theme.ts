@@ -26,6 +26,12 @@ export const Colors = {
       Standard: '#989898',
       Dark: '#454545',
     },
+    Switch: {
+      TrackAble: '#FCF4E9',
+      TrackEnable: '#F2F2F2',
+      thumbAble: '#FFB61B',
+      thumbEnable: '#B8BAC1',
+    },
     Input: '#F2F2F2',
     InputText: '#989898',
     DisabledBtn: '#989898',
