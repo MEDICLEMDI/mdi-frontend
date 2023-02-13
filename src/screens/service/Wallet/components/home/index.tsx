@@ -1,13 +1,9 @@
-import { platform } from 'process';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Dimensions,
   FlatList,
   Image,
   ImageBackground,
-  Platform,
-  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
@@ -20,9 +16,7 @@ import Menu from '@/assets/images/ic_menu.png';
 import Refresh from '@/assets/images/refresh.png';
 import SettingIcon from '@/assets/images/setting_icon.png';
 import WalletCard from '@/assets/images/wallet_card.png';
-import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
-import { Colors } from '@/constants/theme';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 
@@ -31,30 +25,16 @@ import styles from './styles';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { t } = useTranslation();
-  const [moreData, setMoreData] = useState(false);
-
-  const data = [
-    { num: 1 },
-    { num: 2 },
-    { num: 3 },
-    { num: 4 },
-    { num: 5 },
-    { num: 6 },
-    { num: 7 },
-    { num: 8 },
-    { num: 9 },
-    { num: 10 },
-    { num: 11 },
-  ];
-  const [historyList, setHistoryList] = useState(data.slice(0, 4));
-  const [isMoreData, setIsMoreData] = useState(
-    data.length > historyList.length
-  );
+  const [historyList, setHistoryList] = useState([]);
 
   // 나중에 히스토리 객체 타입지정 해놔야할듯
-  const moreHandle = () => {
-    setHistoryList(data.slice(0, historyList.length + 4));
+  const addData = () => {
+    setHistoryList([...historyList, { key: 'gdgd' }]);
   };
+
+  useEffect(() => {
+    addData();
+  }, []);
 
   function numberWithCommas(x) {
     let parts = x.toString().split('.');
@@ -62,8 +42,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     return parts.join('.');
   }
 
-  const mockTrasactionBal = numberWithCommas(1200000);
-  const mockTxID = 'asdasfkneknqwkenkqwnekqwnekqnewkqnewkqne';
   const mockValue = '1000000.23233';
   const mockMDI = numberWithCommas(
     Math.floor(Number(mockValue) * 10000) / 10000
@@ -135,62 +113,9 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                 style={styles.flatList}
                 data={historyList}
                 renderItem={({ item }) => (
-                  <>
-                    <TouchableOpacity>
-                      <BoxDropShadow
-                        color={
-                          Platform.OS === 'ios'
-                            ? Colors.Medicle.Grey.Light
-                            : Colors.Medicle.Grey.Standard
-                        }
-                        offset={[0, 7]}
-                        elevation={10}
-                        opacity={0.95}
-                        radius={20}
-                        style={[
-                          styles.historyCard,
-                          {
-                            width: Dimensions.get('window').width - 60,
-                            opacity: 0.99,
-                          },
-                          item.num === historyList.length && {
-                            marginBottom: 20,
-                          },
-                          ,
-                        ]}>
-                        <View style={styles.historyCardTopLayer}>
-                          <Text style={styles.trasactionDate}>날짜</Text>
-                          <Text style={styles.trasactionType}>거래유형</Text>
-                        </View>
-                        <View style={styles.historyCardMiddleLayer}>
-                          <Text style={styles.trasactionTxID}>
-                            {mockTxID.substring(0, 10) + '...'}
-                          </Text>
-                        </View>
-                        <View style={styles.historyCardBottomLayer}>
-                          <Text style={styles.trasactionBal}>
-                            {mockTrasactionBal + ' MDI'}
-                          </Text>
-                        </View>
-                      </BoxDropShadow>
-                    </TouchableOpacity>
-                    {isMoreData && item.num === historyList.length ? (
-                      <View style={[styles.moreButtonLayer]}>
-                        <TouchableOpacity
-                          style={[
-                            styles.moreButton,
-                            historyList.length === data.length && {
-                              display: 'none',
-                            },
-                          ]}
-                          onPress={moreHandle}>
-                          <Text style={styles.moreButtonText}>
-                            거래내역 더보기
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    ) : null}
-                  </>
+                  <View style={styles.historyCard}>
+                    <Text>{item.key}</Text>
+                  </View>
                 )}
               />
             ) : (
