@@ -18,6 +18,10 @@ export const Colors = {
         SemiDark: '#666666',
         Dark: '#333333',
       },
+      Brown: {
+        Dark: '#443927',
+      },
+      White: '#FFFFFF',
       Black: '#000000',
     },
     Gray: {

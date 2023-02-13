@@ -11,7 +11,9 @@ export default StyleSheet.create({
   },
   eventPanel: {
     backgroundColor: '#FCF4E9',
+    paddingHorizontal: 30,
     height: 200,
+    justifyContent: 'center',
   },
   eventBox: {
     backgroundColor: '#FFFFFF',
