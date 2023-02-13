@@ -30,7 +30,6 @@ const CustomModal = (props: ModalProps) => {
             style={{
               flex: 1,
               justifyContent: 'center',
-              alignItems: 'center',
             }}>
             {children}
           </SafeAreaView>
