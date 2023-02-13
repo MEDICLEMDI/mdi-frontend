@@ -6,6 +6,7 @@ import { Platform, SafeAreaView, Text, View } from 'react-native';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
 import { Colors } from '@/constants/theme';
+import Icons from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -39,6 +40,7 @@ export default ({ navigation }) => {
             <Text style={[FONT_BLACK_B]}>{t('setting.doc2')}</Text>
             <Text style={[FONT_GRAY]}>[현행] 2022년 11월 15일 시행안</Text>
           </View>
+          <Icons name="arrowDown" />
         </BoxDropShadow>
       </View>
     </SafeAreaView>

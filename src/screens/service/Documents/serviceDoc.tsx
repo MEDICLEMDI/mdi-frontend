@@ -14,6 +14,7 @@ import { Colors } from '@/constants/theme';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
+import Icons from "@/icons";
 
 export default () => {
   const { t } = useTranslation();
@@ -86,6 +87,7 @@ export default () => {
             <Text style={[FONT_BLACK_B]}>{t('setting.doc1')}</Text>
             <Text style={[FONT_GRAY]}>[현행] 2022년 11월 15일 시행안</Text>
           </View>
+          <Icons name="arrowDown" />
         </BoxDropShadow>
       </View>
     </SafeAreaView>

@@ -58,6 +58,7 @@ export type RootStackParamList = {
   [Routes.SERVICE_DOCUMENT]: undefined;
   [Routes.PERSONAL_DOCUMENT]: undefined;
   [Routes.MARKETING]: undefined;
+  [Routes.SIGNOUT]: undefined;
 };
 
 export type ServiceTabParamList = {

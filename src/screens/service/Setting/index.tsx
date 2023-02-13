@@ -66,7 +66,7 @@ const Setting = ({ navigation }) => {
     {
       name: t('setting.signOut'),
       route: 'SignOut',
-      onPress: () => setVisible(true),
+      onPress: () => pageRoute(Routes.SIGNOUT),
     },
   ];
   return (
