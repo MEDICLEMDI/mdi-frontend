@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { Colors } from '@/constants/theme';
+import alert from '@/redux/slices/alert';
 
 export default StyleSheet.create({
   cardContainer: {
@@ -167,4 +168,79 @@ export default StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
   },
+
+  // about Modal
+
+  // mod
+  modalButtonLayer: {
+    flexDirection: 'row',
+    height: 52,
+  },
+  modalCalendarLayer: {
+    height: 199,
+    paddingHorizontal: 30,
+  },
+  resetButton: {
+    flex: 151,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#666666',
+    height: 52,
+  },
+  applyButton: {
+    flex: 209,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 52,
+    backgroundColor: '#E7E1D5',
+  },
+  calenderTopLayer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  calenderMiddleLayer: {
+    marginTop: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  calenderBottomLayer: { backgroundColor: 'green', marginTop: 29 },
+
+  borderForground: {
+    // position: 'ab'
+    borderTopStartRadius: 10,
+    borderTopEndRadius: 10,
+    backgroundColor: '#FFFFFF',
+  },
+  closeButton: {
+    width: 24,
+    height: 24,
+  },
+  periodDisabled: {
+    backgroundColor: '#F2F2F2',
+    width: 60,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  periodActive: {
+    backgroundColor: '#EDDFCC',
+    width: 60,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  periodDisabledText: {
+    fontWeight: '400',
+    fontSize: 13,
+    color: '#989898',
+  },
+  periodActiceText: {
+    fontWeight: '700',
+    fontSize: 13,
+    color: '#333333',
+  }
 });
