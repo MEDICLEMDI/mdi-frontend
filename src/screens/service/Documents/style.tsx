@@ -6,6 +6,9 @@ export default StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: Colors.Medicle.Gray.SemiLight,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   documentTabWrap: {
     flexDirection: 'row',

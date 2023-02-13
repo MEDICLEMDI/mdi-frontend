@@ -1,9 +1,15 @@
 import { Portal } from '@gorhom/portal';
 import * as React from 'react';
-import { Modal, ModalBaseProps, SafeAreaView } from 'react-native';
+import {
+  Modal,
+  ModalBaseProps,
+  SafeAreaView,
+  View,
+} from 'react-native';
 
 interface ModalProps extends ModalBaseProps {
   name: string;
+  modalDirection: 'flex-start' | 'center' | 'flex-end';
   children?: React.ReactNode;
 }
 
@@ -16,9 +22,25 @@ const CustomModal = (props: ModalProps) => {
     transparent,
     onShow,
     children,
+    modalDirection,
   } = props;
+
   return (
     <Portal name={name}>
+      {visible && (
+        <View
+          style={{
+            opacity: 0.5,
+            backgroundColor: '#000',
+            flex: 1,
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+          }}
+        />
+      )}
       <SafeAreaView>
         <Modal
           animationType={animationType}
@@ -29,8 +51,7 @@ const CustomModal = (props: ModalProps) => {
           <SafeAreaView
             style={{
               flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: modalDirection,
             }}>
             {children}
           </SafeAreaView>

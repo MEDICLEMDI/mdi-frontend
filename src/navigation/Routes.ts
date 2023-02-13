@@ -27,6 +27,7 @@ enum Routes {
   SERVICE_DOCUMENT = 'ServiceDoc',
   PERSONAL_DOCUMENT = 'PersonalDoc',
   MARKETING = 'Marketing',
+  SIGNOUT = 'SignOut',
   // Auth Screens:
   LOGIN = 'Login',
   WELCOME = 'Welcome',
@@ -40,7 +41,7 @@ enum Routes {
   WALLET_CONNECT_FLOWS = 'WCFlows',
   WALLET_CONNECT_ERROR = 'WCError',
 
-  //Modal Stack:
+  // Modal Stack:
   MODAL_STACK = 'ModalStack',
   SETTINGS = 'Settings',
   CONTACTS = 'Contacts',
@@ -49,7 +50,7 @@ enum Routes {
   NFT_LIST = 'NFTList',
   NFT_DETAIL = 'NFTDetail',
 
-  // Wallet screns
+  // Wallet Screen
   WALLET_WELCOME = 'WalletWelcome',
   WALLET_HOME = 'WalletHome',
   WALLET_CREATE_PASSWORD = 'WalletCreatePassword',

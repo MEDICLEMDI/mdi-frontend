@@ -34,6 +34,7 @@ import XTCIcon from './svg/XTC.svg';
 
 import MdiLogoIcon from './svg/MdiLogoHorizontal.svg';
 import ArrowLeftIcon from './svg/ArrowLeft.svg';
+import ArrowDownIcon from './svg/ArrowDown.svg';
 import AlarmIcon from './svg/Alarm.svg';
 import SearchIcon from './svg/Search.svg';
 import RefreshIcon from './svg/Refresh.svg';
@@ -98,7 +99,7 @@ export const IconTypes = (type: string) =>
     transactionError: TransactionError,
     faceIdIcon: FaceIdIcon,
     arrowRight: ArrowRightIcon,
-    arrowDown: ArrowDownRoundedIcon,
+    // arrowDown: ArrowDownRoundedIcon,
     threeDots: ThreeDotsIcon,
     swapArrows: SwapArrowsIcon,
     activitySend: ActivitySendIcon,
@@ -115,6 +116,7 @@ export const IconTypes = (type: string) =>
 
     mdiHorizontal: MdiLogoIcon,
     arrowLeft: ArrowLeftIcon,
+    arrowDown: ArrowDownIcon,
     alarm: AlarmIcon,
     search: SearchIcon,
     refresh: RefreshIcon,

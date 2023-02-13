@@ -10,7 +10,7 @@ export const Colors = {
   Medicle: {
     White: '#FFFFFF',
     Black: '#15161C',
-    Beige: '#E7E1D5',
+    Primary: '#E7E1D5',
     Font: {
       Gray: {
         Light: '#B5B5B5',

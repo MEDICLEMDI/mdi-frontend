@@ -30,6 +30,7 @@ import MedicalState from '@/screens/service/MedicalState';
 // Setting pages
 import Notice from '@/screens/service/Notice';
 import NoticeDetail from '@/screens/service/Notice/detail';
+import SignOut from '@/screens/SignOut';
 // Profile pages
 import Point from '@/screens/service/Point';
 import Profile from '@/screens/service/Profile';
@@ -59,10 +60,8 @@ const RootStackNavigator = () => {
       {/* 하단에 탭이 보이는 메뉴는 BottomTabNavigation에 적용되고 탭이 보이지 않는 메뉴는 Root의 Stack에 추가 */}
       <Stack.Screen name={Routes.DASHBOARD} component={BottomTabNavigation} />
       <Stack.Group>
-        <Stack.Screen
-          name={Routes.SERVICE_CONTACTS}
-          component={ServiceContacts}
-        />
+        <Stack.Screen name={Routes.SERVICE_CONTACTS} component={ServiceContacts} />
+        <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
       </Stack.Group>
 
       {/* Wallet Group */}
