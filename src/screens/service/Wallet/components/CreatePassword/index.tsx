@@ -14,6 +14,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { PasswordInput } from '@/components/common';
 // import MedicleLogo from '@/assets/icons/wallet_logo.png';
 import Header from '@/components/Header';
+import LoadingModal from '@/components/LoadingModal';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -21,7 +22,6 @@ import { createWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import LoadingModal from '@/components/LoadingModal';
 
 const WalletCreatePassword = ({
   route,
@@ -36,6 +36,7 @@ const WalletCreatePassword = ({
   const [showPasswordError, setShowPasswordError] = useState(false);
   const [showConfirmPasswordError, setShowConfirmPasswordError] =
     useState(false);
+  const [showCreateError, setShowCreateError] = useState(false);
   const [disable, setDisable] = useState(true);
   const dispatch = useAppDispatch();
   const { icpPrice } = useAppSelector(state => state.icp);
@@ -67,9 +68,10 @@ const WalletCreatePassword = ({
       setShowConfirmPasswordError(!(password === confirmPassword));
     }
     setDisable(!(password === confirmPassword && passwordValid));
-  }, [password, confirmPassword]);
+  }, [password, confirmPassword, loading]);
 
   const handleCreateWallet = async () => {
+    setLoading(true);
     if (flow === 'import') {
       navigation.navigate(Routes.WALLET_IMPORT, {
         password,
@@ -78,13 +80,13 @@ const WalletCreatePassword = ({
       try {
         dispatch(createWallet({ password, icpPrice }))
           .unwrap()
-          .then(async result => {
-            console.log(result);
+          .then(async => {
             navigation.navigate(Routes.WALLET_HOME);
+            setLoading(false);
           });
       } catch (e) {
-        console.log('Error:', e);
-        Alert.alert('오류가 발생하였습니다, 나중에 다시 시도해주세요.');
+        setShowCreateError(true);
+        setLoading(false);
       }
     }
   };
@@ -131,6 +133,13 @@ const WalletCreatePassword = ({
                 {t('errorMessage.passwordConfirmError')}
               </Text>
             ) : null}
+
+            {showCreateError ? (
+              <Text style={[styles.errMsg, { marginTop: 5 }]}>
+                {/* {t('errorMessage.passwordConfirmError')} */}
+                *지갑생성 중 오류가 발생하였습니다. 다시 시도해주세요.
+              </Text>
+            ) : null}
           </View>
           <View style={styles.btnContainer}>
             <TouchableOpacity
@@ -151,6 +160,7 @@ const WalletCreatePassword = ({
           </View>
         </View>
       </SafeAreaView>
+      <LoadingModal name="loading" visible={loading} />
     </>
   );
 };
