@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { Colors } from '@/constants/theme';
+
 export default StyleSheet.create({
   cardContainer: {
     marginTop: 17,
@@ -55,8 +57,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 50,
     minWidth: 70,
-    borderWidth: 1,
-    borderColor: 'black',
   },
   krwBalance: {
     color: '#FFFFFF',
@@ -68,7 +68,6 @@ export default StyleSheet.create({
   },
   historyContainer: {
     marginTop: 30,
-    paddingHorizontal: 30,
     flex: 1,
   },
   menuButton: {
@@ -79,6 +78,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingHorizontal: 30,
   },
   historyTitle: {
     fontSize: 16,
@@ -88,7 +88,7 @@ export default StyleSheet.create({
   historySubText: {
     fontSize: 11,
     fontWeight: '400',
-    color: '#989898',
+    color: Colors.Medicle.Gray.Standard,
   },
   emptyHistory: {
     alignItems: 'center',
@@ -100,7 +100,7 @@ export default StyleSheet.create({
   },
   historyList: {
     flex: 1,
-    marginTop: 22,
+    marginTop: 10,
   },
   emptyText: {
     color: '#333333',
@@ -108,18 +108,63 @@ export default StyleSheet.create({
     fontSize: 14,
   },
   flatList: {
-    borderWidth: 1,
-    borderColor: 'orange',
+    // paddingTop: 10,
+    // borderWidth: 1,
+    // borderColor: 'red',
+    width: '100%',
   },
   historyCard: {
-    height: 100,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#E8E8E8',
+    marginTop: 10,
+    height: 120,
     borderRadius: 10,
-    shadowColor: 'orange',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 1,
-    elevation: 11,
+    marginLeft: 30,
+  },
+  historyCardTopLayer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  trasactionDate: {
+    color: Colors.Medicle.Gray.Standard,
+    fontSize: 12,
+    fontWeight: '400',
+  },
+  trasactionType: {
+    color: Colors.Medicle.Gray.Standard,
+    fontSize: 12,
+    fontWeight: '400',
+  },
+  historyCardMiddleLayer: {
+    marginTop: 8,
+    fontSize: 12,
+    fontWeight: '400',
+  },
+  trasactionTxID: {
+    color: '#443927',
+  },
+  historyCardBottomLayer: {
+    justifyContent: 'flex-end',
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  trasactionBal: {
+    color: '#443927',
+    fontWeight: '700',
+    fontSize: 20,
+  },
+  moreButtonLayer: {
+    paddingHorizontal: 30,
+  },
+  moreButton: {
+    backgroundColor: '#E7E1D5',
+    height: 40,
+    marginBottom: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+  },
+  moreButtonText: {
+    color: '#333333',
+    fontWeight: '500',
+    fontSize: 14,
   },
 });
