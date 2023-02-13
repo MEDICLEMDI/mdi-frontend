@@ -88,7 +88,7 @@ export const importWallet = createAsyncThunk(
     { dispatch, rejectWithValue }
   ) => {
     const { icpPrice, password, mnemonic, onError, onSuccess } = params;
-    let unlocked = false;
+    // let unlocked = false;
     // Reset previous state:
     resetStores(dispatch);
     try {
@@ -99,13 +99,13 @@ export const importWallet = createAsyncThunk(
         mnemonic,
       });
       const wallet = response?.wallet;
-      unlocked = await instance?.unlock(params.password);
+      // unlocked = await instance?.unlock(params.password);
 
       // Get new data:
       await instance?.getICNSData({});
       getNewAccountData(dispatch, icpPrice);
       onSuccess?.();
-      return { wallet, unlocked };
+      return { wallet };
     } catch (e: any) {
       console.log('Import Wallet Error:', e.message);
       onError?.();

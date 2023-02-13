@@ -76,11 +76,13 @@ const WalletCreatePassword = ({
       navigation.navigate(Routes.WALLET_IMPORT, {
         password,
       });
+      setLoading(false);
     } else {
       try {
         dispatch(createWallet({ password, icpPrice }))
           .unwrap()
-          .then(async => {
+          .then(async result => {
+            console.log(result);
             navigation.navigate(Routes.WALLET_HOME);
             setLoading(false);
           });
@@ -159,8 +161,8 @@ const WalletCreatePassword = ({
             </TouchableOpacity>
           </View>
         </View>
+        {loading && <LoadingModal name="loading" visible={loading} />}
       </SafeAreaView>
-      <LoadingModal name="loading" visible={loading} />
     </>
   );
 };

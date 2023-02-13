@@ -13,10 +13,11 @@ import Header from '@/components/Header';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { importWallet } from '@/redux/slices/keyring';
+import { clear, importWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import LoadingModal from '@/components/LoadingModal';
 
 const WalletImport = ({
   route,
@@ -31,6 +32,7 @@ const WalletImport = ({
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const password = route?.params.password;
+  const [loading, setLoading] = useState(false);
 
   const onChangeText = (text: string) => {
     setSeedPhrase(text);
@@ -43,25 +45,38 @@ const WalletImport = ({
 
   const importWalletFromSeedPhrase = async () => {
     // Alert.alert(password);
-    dispatch(
-      importWallet({
-        icpPrice,
-        mnemonic: seedPhrase!,
-        password,
-        onError: () => {},
-        onSuccess: async () => {},
-      })
-    ).then(res => {
-      console.log(res);
-      if (res.error) {
-        if (res.payload === 'The provided mnemonic is invalid') {
-          setErrorMsg(t('errorMessage.nmemonicError'));
-        } else {
-          setErrorMsg(t('errorMessage.unknownError'));
+    setLoading(true);
+    setTimeout(() => {
+      dispatch(
+        importWallet({
+          icpPrice,
+          mnemonic: seedPhrase!,
+          password,
+          onError: () => {
+            setLoading(false);
+          },
+          onSuccess: async () => {
+            // navigation.reset({
+            //   index: 1,
+            //   routes: [{ name: Routes.WALLET_HOME }],
+            // });
+            setLoading(false);
+          },
+        })
+      ).then(res => {
+        setLoading(false);
+
+        console.log(res);
+        if (res.error) {
+          if (res.payload === 'The provided mnemonic is invalid') {
+            setErrorMsg(t('errorMessage.nmemonicError'));
+          } else {
+            setErrorMsg(t('errorMessage.unknownError'));
+          }
+          setError(true);
         }
-        setError(true);
-      }
-    });
+      });
+    }, 500);
   };
 
   return (
@@ -105,6 +120,7 @@ const WalletImport = ({
           </TouchableOpacity>
         </View>
       </View>
+      {loading && <LoadingModal name="loading" visible={loading} />}
     </SafeAreaView>
   );
 };
