@@ -21,6 +21,7 @@ import { createWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import LoadingModal from '@/components/LoadingModal';
 
 const WalletCreatePassword = ({
   route,
@@ -40,6 +41,7 @@ const WalletCreatePassword = ({
   const { icpPrice } = useAppSelector(state => state.icp);
   const flow = route.params?.flow;
   const [buttonText, setButtonText] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (flow) {
@@ -78,6 +80,7 @@ const WalletCreatePassword = ({
           .unwrap()
           .then(async result => {
             console.log(result);
+            navigation.navigate(Routes.WALLET_HOME);
           });
       } catch (e) {
         console.log('Error:', e);
@@ -87,66 +90,68 @@ const WalletCreatePassword = ({
   };
 
   return (
-    <SafeAreaView style={CommonStyle.container}>
-      <Header goBack={true} title={t('wallet.create.header')} />
-      <View style={styles.mainContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>{t('wallet.create.title')}</Text>
-          <Text style={styles.subText}>{t('wallet.create.subTitle')}</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={[styles.pwInput]}
-            placeholder={t('wallet.create.passwordInput')}
-            selectionColor={'#989898'}
-            secureTextEntry={true}
-            onChangeText={value => setPassword(value)}
-            maxLength={20}
-            onSubmitEditing={() => {
-              confirmPasswordInputRef.current.focus();
-            }}
-          />
-          <TextInput
-            style={[styles.pwInput, { marginTop: 10 }]}
-            placeholder={t('wallet.create.confirmPasswordInput')}
-            selectionColor={'#989898'}
-            secureTextEntry={true}
-            maxLength={20}
-            onChangeText={word => setConfirmPassword(word)}
-            ref={confirmPasswordInputRef}
-            onSubmitEditing={handleCreateWallet}
-          />
-          {showPasswordError ? (
-            <Text style={styles.errMsg}>
-              {t('errorMessage.passwordValidError')}
-            </Text>
-          ) : null}
+    <>
+      <SafeAreaView style={CommonStyle.container}>
+        <Header goBack={true} title={t('wallet.create.header')} />
+        <View style={styles.mainContainer}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>{t('wallet.create.title')}</Text>
+            <Text style={styles.subText}>{t('wallet.create.subTitle')}</Text>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={[styles.pwInput]}
+              placeholder={t('wallet.create.passwordInput')}
+              selectionColor={'#989898'}
+              secureTextEntry={true}
+              onChangeText={value => setPassword(value)}
+              maxLength={20}
+              onSubmitEditing={() => {
+                confirmPasswordInputRef.current.focus();
+              }}
+            />
+            <TextInput
+              style={[styles.pwInput, { marginTop: 10 }]}
+              placeholder={t('wallet.create.confirmPasswordInput')}
+              selectionColor={'#989898'}
+              secureTextEntry={true}
+              maxLength={20}
+              onChangeText={word => setConfirmPassword(word)}
+              ref={confirmPasswordInputRef}
+              onSubmitEditing={handleCreateWallet}
+            />
+            {showPasswordError ? (
+              <Text style={styles.errMsg}>
+                {t('errorMessage.passwordValidError')}
+              </Text>
+            ) : null}
 
-          {showConfirmPasswordError ? (
-            <Text style={[styles.errMsg, { marginTop: 5 }]}>
-              {t('errorMessage.passwordConfirmError')}
-            </Text>
-          ) : null}
-        </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-            style={[
-              styles.btn,
-              { backgroundColor: disable ? '#989898' : '#E7E1D5' },
-            ]}
-            disabled={disable}
-            onPress={handleCreateWallet}>
-            <Text
+            {showConfirmPasswordError ? (
+              <Text style={[styles.errMsg, { marginTop: 5 }]}>
+                {t('errorMessage.passwordConfirmError')}
+              </Text>
+            ) : null}
+          </View>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
               style={[
-                styles.btnText,
-                { color: disable ? '#FFFFFF' : '#000000' },
-              ]}>
-              {buttonText}
-            </Text>
-          </TouchableOpacity>
+                styles.btn,
+                { backgroundColor: disable ? '#989898' : '#E7E1D5' },
+              ]}
+              disabled={disable}
+              onPress={handleCreateWallet}>
+              <Text
+                style={[
+                  styles.btnText,
+                  { color: disable ? '#FFFFFF' : '#000000' },
+                ]}>
+                {buttonText}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </>
   );
 };
 
