@@ -86,6 +86,7 @@ import InstagramIcon from './svg/Instagram.svg';
 import GithubIcon from './svg/Github.svg';
 import TwitterIcon from './svg/Twitter.svg';
 import TelegramIcon from './svg/Telegram.svg';
+import MenuIcon from './svg/Menu.svg';
 
 export const IconTypes = (type: string) =>
   ({
@@ -94,6 +95,7 @@ export const IconTypes = (type: string) =>
     github: GithubIcon,
     twitter: TwitterIcon,
     telegram: TelegramIcon,
+    menu: MenuIcon,
     mdi: MDIIcon,
     xtc: XTCIcon,
     wicp: WICPIcon,

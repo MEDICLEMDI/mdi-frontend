@@ -59,7 +59,7 @@ export default () => {
             <Text>최근 1년</Text>
           </View>
           <TouchableOpacity>
-            <Icons name="arrowDown" />
+            <Icons name="menu" />
           </TouchableOpacity>
         </View>
         {/*<FlatList data={} renderItem={}>*/}

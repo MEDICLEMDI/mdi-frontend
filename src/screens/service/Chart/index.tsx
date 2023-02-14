@@ -22,7 +22,7 @@ export default () => {
             <Text>최근 1년</Text>
           </View>
           <TouchableOpacity>
-            <Icons name="arrowDown" />
+            <Icons name="menu" />
           </TouchableOpacity>
         </View>
         <View style={style.noData}>
