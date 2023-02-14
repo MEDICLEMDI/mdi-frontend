@@ -81,8 +81,19 @@ import GiftIcon from './svg/Gift.svg';
 import UserIcon from './svg/User.svg';
 import Hospital_BIcon from './svg/Hospita_B.svg';
 
+import FacebookIcon from './svg/Facebook.svg';
+import InstagramIcon from './svg/Instagram.svg';
+import GithubIcon from './svg/Github.svg';
+import TwitterIcon from './svg/Twitter.svg';
+import TelegramIcon from './svg/Telegram.svg';
+
 export const IconTypes = (type: string) =>
   ({
+    facebook: FacebookIcon,
+    instagram: InstagramIcon,
+    github: GithubIcon,
+    twitter: TwitterIcon,
+    telegram: TelegramIcon,
     mdi: MDIIcon,
     xtc: XTCIcon,
     wicp: WICPIcon,

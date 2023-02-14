@@ -1,7 +1,7 @@
 import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import Header from '@/components/Header';
 import Icons from '@/icons';
@@ -14,13 +14,13 @@ export default () => {
 
   return (
     <SafeAreaView style={style.container}>
-      <Header goBack={true} />
-      <ScrollView horizontal={false}>
-        <View style={style.listWrap}>
-          <Icons name="refresh" />
-          <Text>{t('comingSoon')}</Text>
+      <Header goBack={true} title={t('menus.medicalState')}/>
+      <View style={style.content}>
+        <Text>진료 현황 내역</Text>
+        <View style={style.noData}>
+          <Text>진료내역이 없습니다.</Text>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

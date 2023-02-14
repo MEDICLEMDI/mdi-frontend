@@ -14,13 +14,12 @@ export default () => {
 
   return (
     <SafeAreaView style={style.container}>
-      <Header goBack={true} />
-      <ScrollView horizontal={false}>
-        <View style={style.listWrap}>
-          <Icons name="refresh" />
-          <Text>{t('comingSoon')}</Text>
+      <Header goBack={true} title={t('menus.faq')} />
+      <View style={style.content}>
+        <View style={style.noData}>
+          <Text>등록된 FAQ가 없습니다.</Text>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

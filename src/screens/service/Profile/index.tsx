@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 import BoxDropShadow from '@/components/BoxDropShadow';
 import GridList from '@/components/GridList';
@@ -54,9 +49,7 @@ const Profile = ({ navigation }) => {
           </TouchableOpacity>
         </BoxDropShadow>
 
-        <TouchableOpacity
-          style={style.editProfileBtn}
-          onPress={() => null}>
+        <TouchableOpacity style={style.editProfileBtn} onPress={() => null}>
           <Text>{t('profile.editProfile')}</Text>
           <Icons name="arrowRight" />
         </TouchableOpacity>

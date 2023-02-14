@@ -1,5 +1,6 @@
 // React native packages
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 import {
   createStackNavigator,
   TransitionPresets,
@@ -30,7 +31,6 @@ import MedicalState from '@/screens/service/MedicalState';
 // Setting pages
 import Notice from '@/screens/service/Notice';
 import NoticeDetail from '@/screens/service/Notice/detail';
-import SignOut from '@/screens/SignOut';
 // Profile pages
 import Point from '@/screens/service/Point';
 import Profile from '@/screens/service/Profile';
@@ -43,6 +43,7 @@ import WalletHome from '@/screens/service/Wallet/components/Home';
 import WalletImport from '@/screens/service/Wallet/components/Import';
 // Wallet pages
 import WalletWelcome from '@/screens/service/Wallet/components/Welcome';
+import SignOut from '@/screens/SignOut';
 
 // Module packages
 import Routes from '../Routes';
@@ -60,7 +61,10 @@ const RootStackNavigator = () => {
       {/* 하단에 탭이 보이는 메뉴는 BottomTabNavigation에 적용되고 탭이 보이지 않는 메뉴는 Root의 Stack에 추가 */}
       <Stack.Screen name={Routes.DASHBOARD} component={BottomTabNavigation} />
       <Stack.Group>
-        <Stack.Screen name={Routes.SERVICE_CONTACTS} component={ServiceContacts} />
+        <Stack.Screen
+          name={Routes.SERVICE_CONTACTS}
+          component={ServiceContacts}
+        />
         <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
       </Stack.Group>
 
@@ -78,6 +82,8 @@ const RootStackNavigator = () => {
 
 const BottomTabNavigation = () => {
   const { t } = useTranslation();
+  const navigation = useNavigation();
+
   const labelStyle = {
     color: '#000',
     marginTop: 5,
@@ -206,8 +212,8 @@ const ServiceSettings = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={Routes.SERVICE_SETTINGS}>
-      <Stack.Screen name={Routes.SERVICE_SETTINGS} component={Setting} />
+      initialRouteName="Home">
+      <Stack.Screen name='Home' component={Setting} />
       <Stack.Screen name={Routes.NOTICE} component={Notice} />
       <Stack.Screen name={Routes.NOTICE_DETAIL} component={NoticeDetail} />
       <Stack.Screen name={Routes.SERVICE_DOCUMENT} component={ServiceDoc} />

@@ -23,6 +23,18 @@ const Home = ({ navigation }) => {
     initialize();
   }, [isFocus]);
 
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', e => {
+      // Prevent default behavior
+      // e.preventDefault();
+
+      // Do something manually
+      // ...
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   const initialize = () => {
     setTabs([
       { name: t('category.dental'), data: dentist(t) },
@@ -43,11 +55,7 @@ const Home = ({ navigation }) => {
             icon="search"
           />
 
-          <CategoryTab
-            tabs={tabs}
-            itemStyle={style.itemStyle}
-            type="box"
-          />
+          <CategoryTab tabs={tabs} itemStyle={style.itemStyle} type="box" />
 
           <View style={style.reviewWrap}>
             <Image
