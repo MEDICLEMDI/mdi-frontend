@@ -11,7 +11,6 @@ import {
 
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
-import Modal from '@/components/Modal';
 import { Colors } from '@/constants/theme';
 import Icons from '@/icons';
 import Routes from '@/navigation/Routes';
@@ -20,7 +19,6 @@ import style from './style';
 
 const Setting = ({ navigation }) => {
   const { t, i18n } = useTranslation();
-  const [visible, setVisible] = React.useState(false);
 
   const languageChangeHandler = () => {
     if (i18n.language === 'kr') {
@@ -96,12 +94,6 @@ const Setting = ({ navigation }) => {
           ))}
         </View>
       </ScrollView>
-      <Modal name="soon" visible={visible} animationType="fade">
-        <Text>Test Modal</Text>
-        <TouchableOpacity onPress={() => setVisible(false)}>
-          <Text>Modal Close</Text>
-        </TouchableOpacity>
-      </Modal>
     </SafeAreaView>
   );
 };

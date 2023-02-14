@@ -5,7 +5,12 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF',
   },
-  listWrap: {
+  content: {
+    flex: 1,
+    padding: 30,
+  },
+  noData: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

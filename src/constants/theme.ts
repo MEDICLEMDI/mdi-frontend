@@ -18,6 +18,10 @@ export const Colors = {
         SemiDark: '#666666',
         Dark: '#333333',
       },
+      Brown: {
+        Dark: '#443927',
+      },
+      White: '#FFFFFF',
       Black: '#000000',
     },
     Gray: {
@@ -25,6 +29,10 @@ export const Colors = {
       SemiLight: '#E8E8E8',
       Standard: '#989898',
       Dark: '#454545',
+    },
+    Brown: {
+      Light: '#FCF4E9',
+      SemiLight: '#EDDFCC',
     },
     Switch: {
       TrackAble: '#FCF4E9',

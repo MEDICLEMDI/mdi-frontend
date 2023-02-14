@@ -14,13 +14,12 @@ export default () => {
 
   return (
     <SafeAreaView style={style.container}>
-      <Header goBack={true} />
-      <ScrollView horizontal={false}>
-        <View style={style.listWrap}>
-          <Icons name="refresh" />
-          <Text>{t('comingSoon')}</Text>
+      <Header goBack={true} title={t('menus.exchange')} />
+      <View style={style.content}>
+        <View style={style.noData}>
+          <Text>등록된 거래소 정보가 없습니다.</Text>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
