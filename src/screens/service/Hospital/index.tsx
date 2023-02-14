@@ -22,14 +22,16 @@ const Hospital = ({ navigation }) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={dentist(t)}
-          renderItem={({item}) => (<Text style={{paddingHorizontal: 12, paddingVertical: 4}}>{item.name}</Text>)} />
+          renderItem={({item}) => (
+            <Text style={{paddingHorizontal: 12, paddingVertical: 4}}>
+              {item.name}
+            </Text>
+          )}
+        />
       </View>
-      <ScrollView horizontal={false}>
-        <View style={style.listWrap}>
-          <Icons name='refresh' />
-          <Text>{t('comingSoon')}</Text>
-        </View>
-      </ScrollView>
+      <View style={style.noData}>
+        <Text>등록된 병원이 없습니다.</Text>
+      </View>
     </SafeAreaView>
   )
 }

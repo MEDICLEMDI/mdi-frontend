@@ -3,10 +3,16 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
   },
-  listWrap: {
+  content: {
+    padding: 30,
+  },
+  summary: {
+    marginBottom: 20,
+  },
+  noData: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
+  }
 });
