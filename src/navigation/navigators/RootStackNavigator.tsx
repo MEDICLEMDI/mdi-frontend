@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
 
 // Components
-import Icon from '@/icons';
+import Icons from '@/icons';
 import {
   RootStackParamList,
   ServiceTabParamList,
@@ -115,7 +115,7 @@ const BottomTabNavigation = () => {
         options={{
           title: t('navigation.home'),
           tabBarLabelStyle: labelStyle,
-          tabBarIcon: ({ color }) => <Icon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <Icons name="home" color={color} />,
         }}
       />
       <Tab.Screen
@@ -125,7 +125,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.hospital'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icon
+            <Icons
               name="hospital_b"
               style={{ stroke: tabActiveController(focused) }}
             />
@@ -139,7 +139,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.event'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icon
+            <Icons
               name="gift"
               style={{ stroke: tabActiveController(focused) }}
             />
@@ -153,7 +153,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.wallet'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icon
+            <Icons
               name="wallet"
               style={{ stroke: tabActiveController(focused) }}
             />
@@ -167,7 +167,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.profile'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icon
+            <Icons
               name="user"
               style={{ stroke: tabActiveController(focused) }}
             />
@@ -182,8 +182,8 @@ const SettingStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={Routes.MYPAGE}>
-      <Stack.Screen name={Routes.MYPAGE} component={Profile} />
+      initialRouteName="Home">
+      <Stack.Screen name="Home" component={Profile} />
       <Stack.Screen name={Routes.POINT} component={Point} />
       <Stack.Screen name={Routes.RECEIPT} component={Receipt} />
       <Stack.Screen name={Routes.SUBSCRIBE} component={Subscribe} />
@@ -205,7 +205,6 @@ const ServiceSettings = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        ...TransitionPresets.SlideFromRightIOS,
       }}
       initialRouteName={Routes.SERVICE_SETTINGS}>
       <Stack.Screen name={Routes.SERVICE_SETTINGS} component={Setting} />

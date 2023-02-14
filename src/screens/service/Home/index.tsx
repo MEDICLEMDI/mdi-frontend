@@ -1,13 +1,9 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 
+import ReviewImage from '@/assets/images/Review.png';
 import CategoryTab from '@/components/CategoryTab';
 import Header from '@/components/Header';
 import ImageSlide from '@/components/ImageSlide';
@@ -22,7 +18,6 @@ const Home = ({ navigation }) => {
 
   const isFocus = useIsFocused();
   const [tabs, setTabs] = useState<any[]>([]);
-  const [active, setActive] = useState(false);
 
   useEffect(() => {
     initialize();
@@ -50,16 +45,21 @@ const Home = ({ navigation }) => {
 
           <CategoryTab
             tabs={tabs}
-            onPress={() => setActive(true)}
             itemStyle={style.itemStyle}
             type="box"
           />
 
-          <View style={style.eventWrap} />
-          <View style={style.listWrap}>
-            <Icon name="refresh" />
-            <Text>{t('comingSoon')}</Text>
+          <View style={style.reviewWrap}>
+            <Image
+              source={ReviewImage}
+              resizeMode="contain"
+              style={style.reviewImage}
+            />
           </View>
+          {/*<View style={style.listWrap}>*/}
+          {/*  <Icon name="refresh" />*/}
+          {/*  <Text>{t('comingSoon')}</Text>*/}
+          {/*</View>*/}
         </View>
       </ScrollView>
     </SafeAreaView>

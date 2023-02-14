@@ -1,3 +1,5 @@
+import Routes from '@/navigation/Routes';
+
 export const dentist = t => {
   return [
     { icon: 'implant', name: t('category.implant') },
@@ -32,60 +34,60 @@ export const dermatology = t => {
   ];
 };
 
-export const profileMenus = t => {
+export const profileMenus = (t): any => {
   return [
     {
       icon: 'coin',
       name: t('menus.point'),
-      route: 'Point',
+      route: Routes.POINT,
       header: t('menus.header.point'),
     },
     {
       icon: 'book',
       name: t('menus.receipt'),
-      route: 'Receipt',
+      route: Routes.RECEIPT,
       header: t('menus.header.receipt'),
     },
     {
       icon: 'heart',
       name: t('menus.subscribe'),
-      route: 'Subscribe',
+      route: Routes.SUBSCRIBE,
       header: t('menus.header.subscribe'),
     },
     {
       icon: 'notePlus',
       name: t('menus.chart'),
-      route: 'Chart',
+      route: Routes.CHART,
       header: t('menus.header.chart'),
     },
     {
       icon: 'hospital',
       name: t('menus.medicalState'),
-      route: 'MedicalState',
+      route: Routes.MEDICAL_STATE,
       header: t('menuss.header.medicalState'),
     },
     {
       icon: 'faq',
       name: t('menus.faq'),
-      route: 'FAQ',
+      route: Routes.FAQ,
       header: t('menus.header.faq'),
     },
     {
       icon: 'exchange',
       name: t('menus.exchange'),
-      route: 'Exchange',
+      route: Routes.EXCHANGE,
       header: t('menus.header.exchange'),
     },
     {
       icon: 'community',
       name: t('menus.community'),
-      route: 'Community',
+      route: Routes.COMMUNITY,
       header: t('menus.header.community'),
     },
     {
       icon: 'settings',
       name: t('menus.settings'),
-      route: 'serviceSettings',
+      route: Routes.SERVICE_SETTINGS,
       header: t('menus.header.settings'),
     },
   ];
