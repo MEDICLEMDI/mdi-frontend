@@ -1,17 +1,15 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Alert,
-  Image,
+  NativeModules,
   SafeAreaView,
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
-import { PasswordInput } from '@/components/common';
 // import MedicleLogo from '@/assets/icons/wallet_logo.png';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
@@ -22,6 +20,7 @@ import { createWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import Config from 'react-native-config';
 
 const WalletCreatePassword = ({
   route,
@@ -71,26 +70,33 @@ const WalletCreatePassword = ({
   }, [password, confirmPassword, loading]);
 
   const handleCreateWallet = async () => {
-    setLoading(true);
-    if (flow === 'import') {
-      navigation.navigate(Routes.WALLET_IMPORT, {
-        password,
-      });
-      setLoading(false);
-    } else {
-      try {
-        dispatch(createWallet({ password, icpPrice }))
-          .unwrap()
-          .then(async result => {
-            console.log(result);
-            navigation.navigate(Routes.WALLET_HOME);
-            setLoading(false);
-          });
-      } catch (e) {
-        setShowCreateError(true);
-        setLoading(false);
-      }
-    }
+    const Aes = NativeModules.Aes;
+    const AES_KEY = Config.AES_KEY;
+    Aes.encrypt(AES_KEY, password)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+    // setLoading(true);
+    // if (flow === 'import') {
+    //   navigation.navigate(Routes.WALLET_IMPORT, {
+    //     password,
+    //   });
+    //   setLoading(false);
+    // } else {
+    //   try {
+    //     dispatch(createWallet({ password, icpPrice }))
+    //       .unwrap()
+    //       .then(async result => {
+    //         if (result.wallet) {
+
+    //         }
+    //         navigation.navigate(Routes.WALLET_HOME);
+    //         setLoading(false);
+    //       });
+    //   } catch (e) {
+    //     setShowCreateError(true);
+    //     setLoading(false);
+    //   }
+    // }
   };
 
   return (

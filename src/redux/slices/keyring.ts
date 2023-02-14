@@ -63,11 +63,11 @@ export const createWallet = createAsyncThunk(
       const mnemonic = await generateMnemonic();
       const response = await instance?.importMnemonic({ password, mnemonic });
       const { wallet } = response || {};
-      // const unlocked = await instance?.unlock(password);
+      const unlocked = await instance?.unlock(password);
 
       // Get new data:
       getNewAccountData(dispatch, icpPrice);
-      return { wallet, mnemonic };
+      return { wallet, mnemonic, unlocked };
     } catch (e: any) {
       console.log('Error at createWallet: ', e);
       return rejectWithValue(e.message);

@@ -45,12 +45,11 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const [icp, setIcp] = useState<Asset | null>();
   const [mdi, setMdi] = useState<Asset | null>();
 
+  // console.log(assets);
   useEffect(() => {
     assets.map(token => {
       token.name === 'MDI' ? setMdi(token) : setIcp(token);
     });
-    console.log(mdi);
-    console.log(mdi);
   }, []);
 
   const handleRefresh = () => {
