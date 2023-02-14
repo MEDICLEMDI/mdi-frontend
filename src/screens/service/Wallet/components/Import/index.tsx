@@ -10,14 +10,14 @@ import {
 import { TextInput } from 'react-native-gesture-handler';
 
 import Header from '@/components/Header';
+import LoadingModal from '@/components/LoadingModal';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { clear, importWallet } from '@/redux/slices/keyring';
+import { importWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import LoadingModal from '@/components/LoadingModal';
 
 const WalletImport = ({
   route,

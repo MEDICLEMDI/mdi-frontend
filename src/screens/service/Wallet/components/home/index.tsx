@@ -1,4 +1,3 @@
-import { platform } from 'process';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -7,9 +6,7 @@ import {
   Image,
   ImageBackground,
   Platform,
-  Pressable,
   SafeAreaView,
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -28,32 +25,50 @@ import CustomModal from '@/components/Modal';
 import { Colors } from '@/constants/theme';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { reset as resetICPStore } from '@/redux/slices/icp';
-import { lock, reset as resetKeyringStore } from '@/redux/slices/keyring';
-import { reset as resetUserStore } from '@/redux/slices/user';
+import { reset as resetKeyringStore } from '@/redux/slices/keyring';
+import { getBalance, reset as resetUserStore } from '@/redux/slices/user';
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
 import { clearStorage } from '@/utils/localStorage';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import { Asset } from '@/interfaces/redux';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { t } = useTranslation();
   const deleteWalletRef = useRef<Modalize>(null);
+  const { assets, assetsLoading, assetsError } = useAppSelector(
+    state => state.user
+  );
+  const [icp, setIcp] = useState<Asset | null>();
+  const [mdi, setMdi] = useState<Asset | null>();
+
+  useEffect(() => {
+    assets.map(token => {
+      token.name === 'MDI' ? setMdi(token) : setIcp(token);
+    });
+    console.log(mdi);
+    console.log(mdi);
+  }, []);
+
+  const handleRefresh = () => {
+    dispatch(getBalance());
+  };
 
   const data = [
-    { num: 1 },
-    { num: 2 },
-    { num: 3 },
-    { num: 4 },
-    { num: 5 },
-    { num: 6 },
-    { num: 7 },
-    { num: 8 },
-    { num: 9 },
-    { num: 10 },
-    { num: 11 },
+    // { num: 1 },
+    // { num: 2 },
+    // { num: 3 },
+    // { num: 4 },
+    // { num: 5 },
+    // { num: 6 },
+    // { num: 7 },
+    // { num: 8 },
+    // { num: 9 },
+    // { num: 10 },
+    // { num: 11 },
   ];
   const [modalActive, setModalActive] = useState(false);
   const [historyList, setHistoryList] = useState(data.slice(0, 4));
@@ -74,12 +89,11 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
   const mockTrasactionBal = numberWithCommas(1200000);
   const mockTxID = 'asdasfkneknqwkenkqwnekqwnekqnewkqnewkqne';
-  const mockValue = '1000000.23233';
-  const mockMDI = numberWithCommas(
-    Math.floor(Number(mockValue) * 10000) / 10000
+  const mdiValue = numberWithCommas(
+    Math.floor(Number(mdi?.amount) * 10000) / 10000
   );
-  const mockKRW = numberWithCommas(Math.floor(Number(mockValue) * 10));
-  const lengthKRW = (mockKRW.length + 4) * 9.5;
+  const mdiKrwValue = numberWithCommas(Math.floor(Number(mdi?.value) * 10));
+  const lengthKRW = (mdiKrwValue.length + 4) * 9.5;
 
   const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
   const [period, setPeriod] = useState('1년');
@@ -129,16 +143,15 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             <View style={styles.cardMiddleLayer}>
               {/* 누르면 다른화면 표현 */}
               <TouchableOpacity>
-                <Text style={styles.mdiBalanceText}>{mockMDI + ' MDI'}</Text>
+                <Text style={styles.mdiBalanceText}>{mdiValue + ' MDI'}</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.cardBottomLayer}>
-              <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
-                <Text style={styles.krwBalance}>{mockKRW + ' KRW'}</Text>
-              </View>
-              {/* 잔액새로고침 이벤트 */}
-              <TouchableOpacity>
+              {/* <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
+                <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
+              </View> */}
+              <TouchableOpacity onPress={handleRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
               </TouchableOpacity>
             </View>
@@ -152,12 +165,12 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               <Text style={styles.historySubText}>{' 최근 ' + period}</Text>
             </Text>
             {/* 히스토리 기간설정하기 */}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 setModalActive(true);
               }}>
               <Image source={Menu} style={styles.menuButton} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View style={styles.historyList}>
