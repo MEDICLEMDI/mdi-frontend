@@ -37,7 +37,7 @@ const WalletCreatePassword = ({
   const [showConfirmPasswordError, setShowConfirmPasswordError] =
     useState(false);
   const [showCreateError, setShowCreateError] = useState(false);
-  const [disable, setDisable] = useState(true);
+  const [disable, setDisable] = useState(false);
   const dispatch = useAppDispatch();
   const { icpPrice } = useAppSelector(state => state.icp);
   const flow = route.params?.flow;
@@ -88,7 +88,7 @@ const WalletCreatePassword = ({
                 Config.AES_KEY
               ).toString();
               AsyncStorage.setItem('password', encryptKey);
-              navigation.navigate(Routes.WALLET_HOME);
+              // navigation.navigate(Routes.WALLET_HOME);
             }
           });
       } catch (e) {
