@@ -1,6 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import CryptoJS from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import CryptoJS from 'crypto-js';
 import {
   Dimensions,
   FlatList,
@@ -12,7 +13,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 import { Modalize } from 'react-native-modalize';
+import { shallowEqual } from 'react-redux';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
 import CloseButton from '@/assets/images/ic_close.png';
@@ -25,31 +28,41 @@ import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
 import CustomModal from '@/components/Modal';
 import { Colors } from '@/constants/theme';
+import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
 import { Asset } from '@/interfaces/redux';
+import KeyRing from '@/modules/keyring';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { reset as resetICPStore } from '@/redux/slices/icp';
 import { login, reset as resetKeyringStore } from '@/redux/slices/keyring';
-import { getBalance, reset as resetUserStore } from '@/redux/slices/user';
+import {
+  addCustomToken,
+  getBalance,
+  getTokenInfo,
+  getTransactions,
+  reset as resetUserStore,
+} from '@/redux/slices/user';
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
 import { clearStorage } from '@/utils/localStorage';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import KeyRing from '@/modules/keyring';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Config from 'react-native-config';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { icpPrice } = useAppSelector(state => state.icp);
-  const keyring = KeyRing.getInstance();
-  const dispatch = useAppDispatch();
-
-  const { t } = useTranslation();
-  const deleteWalletRef = useRef<Modalize>(null);
   const { assets, assetsLoading } = useAppSelector(state => state.user);
   const [mdi, setMdi] = useState<Asset | null>(null);
+  const deleteWalletRef = useRef<Modalize>(null);
+  const keyring = KeyRing.getInstance();
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
+  const standard: FungibleStandard = 'DIP20';
+  const [lock, setLock] = useState<boolean>(keyring.isUnlocked);
+  const { transactions, transactionsLoading, transactionsError } =
+    useAppSelector(state => state.user, shallowEqual);
+
   const data = [];
   const [modalActive, setModalActive] = useState(false);
   const [historyList, setHistoryList] = useState(data.slice(0, 4));
@@ -67,11 +80,28 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
   const [period, setPeriod] = useState('1년');
 
+  // unlock
   useEffect(() => {
     if (keyring.isInitialized && !keyring.isUnlocked) {
       unlock();
     }
   });
+
+  const transactionRefresh = () => {
+    dispatch(getTransactions({ icpPrice }));
+  };
+
+  // set mdi
+  useEffect(() => {
+    if (lock) {
+      assets.map(token => {
+        token.name === 'MDI' ? setMdi(token) : null;
+      });
+      if (mdi === null) {
+        addMdiToken();
+      }
+    }
+  }, [assets]);
 
   const unlock = async () => {
     const encryptKey = await AsyncStorage.getItem('password');
@@ -86,14 +116,33 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
       })
     )
       .unwrap()
-      .then(unlocked => {});
+      .then(unlocked => {
+        setLock(unlocked);
+      });
   };
 
-  useEffect(() => {
-    assets.map(token => {
-      token.name === 'MDI' ? setMdi(token) : null;
-    });
-  }, [assets]);
+  const addMdiToken = async () => {
+    dispatch(
+      getTokenInfo({
+        token: { canisterId, standard },
+        onSuccess: res => {
+          const token = res.token;
+          dispatch(
+            addCustomToken({
+              token,
+              onSuccess() {},
+              onError(e) {
+                console.log(e);
+              },
+            })
+          );
+        },
+        onError: err => {
+          console.log(err);
+        },
+      })
+    );
+  };
 
   const handleRefresh = () => {
     dispatch(getBalance());
@@ -122,6 +171,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
       routes: [{ name: Routes.WALLET_WELCOME }],
     });
   };
+
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Header goBack={false} title={t('header.wallet')} />
@@ -165,6 +215,9 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                 <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
               </View> */}
               <TouchableOpacity onPress={handleRefresh}>
+                <Image source={Refresh} style={styles.refreshButton} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={transactionRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
               </TouchableOpacity>
             </View>
