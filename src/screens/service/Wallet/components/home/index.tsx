@@ -87,9 +87,9 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     }
   });
 
-  const transactionRefresh = () => {
-    dispatch(getTransactions({ icpPrice }));
-  };
+  // const transactionRefresh = () => {
+  //   dispatch(getTransactions({ icpPrice }));
+  // };
 
   // set mdi
   useEffect(() => {
@@ -105,6 +105,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
   const unlock = async () => {
     const encryptKey = await AsyncStorage.getItem('password');
+    console.log(encryptKey);
     const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
       CryptoJS.enc.Utf8
     );
@@ -193,12 +194,12 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
               <View style={styles.topRightLayer}>
                 {/* 셋팅버튼은 누르면 셋팅라우트로 이동 */}
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => {
                     handleDeleteWallet();
                   }}>
                   <Image source={SettingIcon} style={styles.settingIcon} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
             <View style={styles.cardMiddleLayer}>
@@ -217,26 +218,26 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               <TouchableOpacity onPress={handleRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={transactionRefresh}>
+              {/* <TouchableOpacity onPress={transactionRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </ImageBackground>
         </View>
 
-        <View style={styles.historyContainer}>
+        {/* <View style={styles.historyContainer}>
           <View style={styles.historyTopLayer}>
             <Text style={styles.historyTitle}>
               {t('wallet.home.transactionHistory')}
               <Text style={styles.historySubText}>{' 최근 ' + period}</Text>
-            </Text>
+            </Text> */}
             {/* 히스토리 기간설정하기 */}
             {/* <TouchableOpacity
               onPress={() => {
                 setModalActive(true);
               }}>
               <Image source={Menu} style={styles.menuButton} />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
 
           <View style={styles.historyList}>
@@ -311,7 +312,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
             )}
           </View>
-        </View>
+        </View> */}
 
         {/* </ScrollView> */}
       </View>
