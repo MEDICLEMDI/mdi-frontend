@@ -59,8 +59,7 @@ const WalletImport = ({
             setLoading(false);
           },
           onSuccess: async () => {
-            const AES_KEY = Config.AES_KEY;
-            const encryptKey = AES.encrypt(AES_KEY, password).toString();
+            const encryptKey = AES.encrypt(password, Config.AES_KEY).toString();
             await AsyncStorage.setItem('password', encryptKey);
           },
         })

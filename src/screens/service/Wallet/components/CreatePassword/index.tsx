@@ -83,8 +83,10 @@ const WalletCreatePassword = ({
           .unwrap()
           .then(async result => {
             if (result.wallet) {
-              const AES_KEY = Config.AES_KEY;
-              const encryptKey = AES.encrypt(AES_KEY, password).toString();
+              const encryptKey = AES.encrypt(
+                password,
+                Config.AES_KEY
+              ).toString();
               AsyncStorage.setItem('password', encryptKey);
               navigation.navigate(Routes.WALLET_HOME);
             }

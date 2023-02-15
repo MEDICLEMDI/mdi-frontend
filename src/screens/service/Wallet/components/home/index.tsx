@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import CryptoJS from 'crypto-js';
 import {
   Dimensions,
   FlatList,
@@ -29,20 +30,64 @@ import { Asset } from '@/interfaces/redux';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { reset as resetICPStore } from '@/redux/slices/icp';
-import { reset as resetKeyringStore } from '@/redux/slices/keyring';
+import { login, reset as resetKeyringStore } from '@/redux/slices/keyring';
 import { getBalance, reset as resetUserStore } from '@/redux/slices/user';
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
 import { clearStorage } from '@/utils/localStorage';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import KeyRing from '@/modules/keyring';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Config from 'react-native-config';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { icpPrice } = useAppSelector(state => state.icp);
+  const keyring = KeyRing.getInstance();
+  const dispatch = useAppDispatch();
+
   const { t } = useTranslation();
   const deleteWalletRef = useRef<Modalize>(null);
   const { assets, assetsLoading } = useAppSelector(state => state.user);
   const [mdi, setMdi] = useState<Asset | null>(null);
+  const data = [];
+  const [modalActive, setModalActive] = useState(false);
+  const [historyList, setHistoryList] = useState(data.slice(0, 4));
+  const [isMoreData, setIsMoreData] = useState(
+    data.length > historyList.length
+  );
+  const mockTrasactionBal = numberWithCommas(1200000);
+  const mockTxID = 'asdasfkneknqwkenkqwnekqwnekqnewkqnewkqne';
+  const mdiValue = numberWithCommas(
+    Math.floor(Number(mdi?.amount) * 10000) / 10000
+  );
+  const mdiKrwValue = numberWithCommas(Math.floor(Number(mdi?.value) * 10));
+  const lengthKRW = (mdiKrwValue.length + 4) * 9.5;
+
+  const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
+  const [period, setPeriod] = useState('1년');
+
+  useEffect(() => {
+    if (keyring.isInitialized && !keyring.isUnlocked) {
+      unlock();
+    }
+  });
+
+  const unlock = async () => {
+    const encryptKey = await AsyncStorage.getItem('password');
+    const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
+      CryptoJS.enc.Utf8
+    );
+
+    dispatch(
+      login({
+        password: password,
+        icpPrice,
+      })
+    )
+      .unwrap()
+      .then(unlocked => {});
+  };
 
   useEffect(() => {
     assets.map(token => {
@@ -53,13 +98,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const handleRefresh = () => {
     dispatch(getBalance());
   };
-
-  const data = [];
-  const [modalActive, setModalActive] = useState(false);
-  const [historyList, setHistoryList] = useState(data.slice(0, 4));
-  const [isMoreData, setIsMoreData] = useState(
-    data.length > historyList.length
-  );
 
   // 나중에 히스토리 객체 타입지정 해놔야할듯
   const moreHandle = () => {
@@ -72,18 +110,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     return parts.join('.');
   }
 
-  const mockTrasactionBal = numberWithCommas(1200000);
-  const mockTxID = 'asdasfkneknqwkenkqwnekqwnekqnewkqnewkqne';
-  const mdiValue = numberWithCommas(
-    Math.floor(Number(mdi?.amount) * 10000) / 10000
-  );
-  const mdiKrwValue = numberWithCommas(Math.floor(Number(mdi?.value) * 10));
-  const lengthKRW = (mdiKrwValue.length + 4) * 9.5;
-
-  const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
-  const [period, setPeriod] = useState('1년');
-
-  const dispatch = useAppDispatch();
   const handleDeleteWallet = () => {
     clearStorage();
     dispatch(resetUserStore());
