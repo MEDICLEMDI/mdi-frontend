@@ -21,9 +21,11 @@ import SettingIcon from '@/assets/images/setting_icon.png';
 import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
+import LoadingModal from '@/components/LoadingModal';
 import CustomModal from '@/components/Modal';
 import { Colors } from '@/constants/theme';
 import { RootScreenProps } from '@/interfaces/navigation';
+import { Asset } from '@/interfaces/redux';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { reset as resetICPStore } from '@/redux/slices/icp';
@@ -34,41 +36,25 @@ import { clearStorage } from '@/utils/localStorage';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import { Asset } from '@/interfaces/redux';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
+  const { icpPrice } = useAppSelector(state => state.icp);
   const { t } = useTranslation();
   const deleteWalletRef = useRef<Modalize>(null);
-  const { assets, assetsLoading, assetsError } = useAppSelector(
-    state => state.user
-  );
-  const [icp, setIcp] = useState<Asset | null>();
-  const [mdi, setMdi] = useState<Asset | null>();
+  const { assets, assetsLoading } = useAppSelector(state => state.user);
+  const [mdi, setMdi] = useState<Asset | null>(null);
 
-  // console.log(assets);
   useEffect(() => {
     assets.map(token => {
-      token.name === 'MDI' ? setMdi(token) : setIcp(token);
+      token.name === 'MDI' ? setMdi(token) : null;
     });
-  }, []);
+  }, [assets]);
 
   const handleRefresh = () => {
     dispatch(getBalance());
   };
 
-  const data = [
-    // { num: 1 },
-    // { num: 2 },
-    // { num: 3 },
-    // { num: 4 },
-    // { num: 5 },
-    // { num: 6 },
-    // { num: 7 },
-    // { num: 8 },
-    // { num: 9 },
-    // { num: 10 },
-    // { num: 11 },
-  ];
+  const data = [];
   const [modalActive, setModalActive] = useState(false);
   const [historyList, setHistoryList] = useState(data.slice(0, 4));
   const [isMoreData, setIsMoreData] = useState(
@@ -141,9 +127,11 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             </View>
             <View style={styles.cardMiddleLayer}>
               {/* 누르면 다른화면 표현 */}
-              <TouchableOpacity>
-                <Text style={styles.mdiBalanceText}>{mdiValue + ' MDI'}</Text>
-              </TouchableOpacity>
+              {mdi && (
+                <TouchableOpacity>
+                  <Text style={styles.mdiBalanceText}>{mdiValue + ' MDI'}</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             <View style={styles.cardBottomLayer}>
@@ -306,6 +294,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
           </View>
         </CustomModal>
       )}
+      {assetsLoading && <LoadingModal name="loading" visible={assetsLoading} />}
     </SafeAreaView>
   );
 };

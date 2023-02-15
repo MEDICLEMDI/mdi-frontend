@@ -18,6 +18,9 @@ import { importWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import Config from 'react-native-config';
+import { AES } from 'crypto-js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WalletImport = ({
   route,
@@ -56,17 +59,14 @@ const WalletImport = ({
             setLoading(false);
           },
           onSuccess: async () => {
-            // navigation.reset({
-            //   index: 1,
-            //   routes: [{ name: Routes.WALLET_HOME }],
-            // });
-            setLoading(false);
+            const AES_KEY = Config.AES_KEY;
+            const encryptKey = AES.encrypt(AES_KEY, password).toString();
+            await AsyncStorage.setItem('password', encryptKey);
           },
         })
       ).then(res => {
         setLoading(false);
 
-        console.log(res);
         if (res.error) {
           if (res.payload === 'The provided mnemonic is invalid') {
             setErrorMsg(t('errorMessage.nmemonicError'));

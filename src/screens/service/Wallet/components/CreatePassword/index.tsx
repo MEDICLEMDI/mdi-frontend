@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AES } from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -8,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 import { TextInput } from 'react-native-gesture-handler';
 
 // import MedicleLogo from '@/assets/icons/wallet_logo.png';
@@ -20,7 +22,6 @@ import { createWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import Config from 'react-native-config';
 
 const WalletCreatePassword = ({
   route,
@@ -70,33 +71,30 @@ const WalletCreatePassword = ({
   }, [password, confirmPassword, loading]);
 
   const handleCreateWallet = async () => {
-    const Aes = NativeModules.Aes;
-    const AES_KEY = Config.AES_KEY;
-    Aes.encrypt(AES_KEY, password)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-    // setLoading(true);
-    // if (flow === 'import') {
-    //   navigation.navigate(Routes.WALLET_IMPORT, {
-    //     password,
-    //   });
-    //   setLoading(false);
-    // } else {
-    //   try {
-    //     dispatch(createWallet({ password, icpPrice }))
-    //       .unwrap()
-    //       .then(async result => {
-    //         if (result.wallet) {
-
-    //         }
-    //         navigation.navigate(Routes.WALLET_HOME);
-    //         setLoading(false);
-    //       });
-    //   } catch (e) {
-    //     setShowCreateError(true);
-    //     setLoading(false);
-    //   }
-    // }
+    setLoading(true);
+    if (flow === 'import') {
+      navigation.navigate(Routes.WALLET_IMPORT, {
+        password,
+      });
+      setLoading(false);
+    } else {
+      try {
+        dispatch(createWallet({ password, icpPrice }))
+          .unwrap()
+          .then(async result => {
+            if (result.wallet) {
+              const AES_KEY = Config.AES_KEY;
+              const encryptKey = AES.encrypt(AES_KEY, password).toString();
+              AsyncStorage.setItem('password', encryptKey);
+              navigation.navigate(Routes.WALLET_HOME);
+            }
+          });
+      } catch (e) {
+        console.log('실패');
+        setShowCreateError(true);
+        setLoading(false);
+      }
+    }
   };
 
   return (
