@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import CryptoJS from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -11,7 +13,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 import { Modalize } from 'react-native-modalize';
+import { shallowEqual } from 'react-redux';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
 import CloseButton from '@/assets/images/ic_close.png';
@@ -21,60 +25,128 @@ import SettingIcon from '@/assets/images/setting_icon.png';
 import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
+import LoadingModal from '@/components/LoadingModal';
 import CustomModal from '@/components/Modal';
 import { Colors } from '@/constants/theme';
+import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
+import { Asset } from '@/interfaces/redux';
+import KeyRing from '@/modules/keyring';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { reset as resetICPStore } from '@/redux/slices/icp';
-import { reset as resetKeyringStore } from '@/redux/slices/keyring';
-import { getBalance, reset as resetUserStore } from '@/redux/slices/user';
+import { login, reset as resetKeyringStore } from '@/redux/slices/keyring';
+import {
+  addCustomToken,
+  getBalance,
+  getTokenInfo,
+  getTransactions,
+  reset as resetUserStore,
+} from '@/redux/slices/user';
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
 import { clearStorage } from '@/utils/localStorage';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import { Asset } from '@/interfaces/redux';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
-  const { t } = useTranslation();
+  const { icpPrice } = useAppSelector(state => state.icp);
+  const { assets, assetsLoading } = useAppSelector(state => state.user);
+  const [mdi, setMdi] = useState<Asset | null>(null);
   const deleteWalletRef = useRef<Modalize>(null);
-  const { assets, assetsLoading, assetsError } = useAppSelector(
-    state => state.user
-  );
-  const [icp, setIcp] = useState<Asset | null>();
-  const [mdi, setMdi] = useState<Asset | null>();
+  const keyring = KeyRing.getInstance();
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
+  const standard: FungibleStandard = 'DIP20';
+  const [lock, setLock] = useState<boolean>(keyring.isUnlocked);
+  const { transactions, transactionsLoading, transactionsError } =
+    useAppSelector(state => state.user, shallowEqual);
 
-  useEffect(() => {
-    assets.map(token => {
-      token.name === 'MDI' ? setMdi(token) : setIcp(token);
-    });
-    console.log(mdi);
-    console.log(mdi);
-  }, []);
-
-  const handleRefresh = () => {
-    dispatch(getBalance());
-  };
-
-  const data = [
-    // { num: 1 },
-    // { num: 2 },
-    // { num: 3 },
-    // { num: 4 },
-    // { num: 5 },
-    // { num: 6 },
-    // { num: 7 },
-    // { num: 8 },
-    // { num: 9 },
-    // { num: 10 },
-    // { num: 11 },
-  ];
+  const data = [];
   const [modalActive, setModalActive] = useState(false);
   const [historyList, setHistoryList] = useState(data.slice(0, 4));
   const [isMoreData, setIsMoreData] = useState(
     data.length > historyList.length
   );
+  const mockTrasactionBal = numberWithCommas(1200000);
+  const mockTxID = 'asdasfkneknqwkenkqwnekqwnekqnewkqnewkqne';
+  const mdiValue = numberWithCommas(
+    Math.floor(Number(mdi?.amount) * 10000) / 10000
+  );
+  const mdiKrwValue = numberWithCommas(Math.floor(Number(mdi?.value) * 10));
+  const lengthKRW = (mdiKrwValue.length + 4) * 9.5;
+
+  const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
+  const [period, setPeriod] = useState('1년');
+
+  // unlock
+  useEffect(() => {
+    if (keyring.isInitialized && !keyring.isUnlocked) {
+      unlock();
+    }
+  });
+
+  const transactionRefresh = () => {
+    dispatch(getTransactions({ icpPrice }));
+  };
+
+  // set mdi
+  useEffect(() => {
+    if (lock) {
+      assets.map(token => {
+        token.name === 'MDI' ? setMdi(token) : null;
+      });
+      if (mdi === null) {
+        addMdiToken();
+      }
+    }
+  }, [assets]);
+
+  const unlock = async () => {
+    const encryptKey = await AsyncStorage.getItem('password');
+    const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
+      CryptoJS.enc.Utf8
+    );
+
+    dispatch(
+      login({
+        password: password,
+        icpPrice,
+      })
+    )
+      .unwrap()
+      .then(unlocked => {
+        setLock(unlocked);
+      });
+  };
+
+  const addMdiToken = async () => {
+    dispatch(
+      getTokenInfo({
+        token: { canisterId, standard },
+        onSuccess: res => {
+          const token = res.token;
+          dispatch(
+            addCustomToken({
+              token,
+              onSuccess() {},
+              onError(e) {
+                console.log(e);
+              },
+            })
+          );
+        },
+        onError: err => {
+          console.log(err);
+        },
+      })
+    );
+  };
+
+  const handleRefresh = () => {
+    dispatch(getBalance());
+  };
 
   // 나중에 히스토리 객체 타입지정 해놔야할듯
   const moreHandle = () => {
@@ -87,18 +159,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     return parts.join('.');
   }
 
-  const mockTrasactionBal = numberWithCommas(1200000);
-  const mockTxID = 'asdasfkneknqwkenkqwnekqwnekqnewkqnewkqne';
-  const mdiValue = numberWithCommas(
-    Math.floor(Number(mdi?.amount) * 10000) / 10000
-  );
-  const mdiKrwValue = numberWithCommas(Math.floor(Number(mdi?.value) * 10));
-  const lengthKRW = (mdiKrwValue.length + 4) * 9.5;
-
-  const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
-  const [period, setPeriod] = useState('1년');
-
-  const dispatch = useAppDispatch();
   const handleDeleteWallet = () => {
     clearStorage();
     dispatch(resetUserStore());
@@ -111,6 +171,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
       routes: [{ name: Routes.WALLET_WELCOME }],
     });
   };
+
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Header goBack={false} title={t('header.wallet')} />
@@ -142,9 +203,11 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             </View>
             <View style={styles.cardMiddleLayer}>
               {/* 누르면 다른화면 표현 */}
-              <TouchableOpacity>
-                <Text style={styles.mdiBalanceText}>{mdiValue + ' MDI'}</Text>
-              </TouchableOpacity>
+              {mdi && (
+                <TouchableOpacity>
+                  <Text style={styles.mdiBalanceText}>{mdiValue + ' MDI'}</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             <View style={styles.cardBottomLayer}>
@@ -152,6 +215,9 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                 <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
               </View> */}
               <TouchableOpacity onPress={handleRefresh}>
+                <Image source={Refresh} style={styles.refreshButton} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={transactionRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
               </TouchableOpacity>
             </View>
@@ -307,6 +373,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
           </View>
         </CustomModal>
       )}
+      {assetsLoading && <LoadingModal name="loading" visible={assetsLoading} />}
     </SafeAreaView>
   );
 };

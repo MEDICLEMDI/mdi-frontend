@@ -1,17 +1,17 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AES } from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Alert,
-  Image,
+  NativeModules,
   SafeAreaView,
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 import { TextInput } from 'react-native-gesture-handler';
 
-import { PasswordInput } from '@/components/common';
 // import MedicleLogo from '@/assets/icons/wallet_logo.png';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
@@ -82,11 +82,17 @@ const WalletCreatePassword = ({
         dispatch(createWallet({ password, icpPrice }))
           .unwrap()
           .then(async result => {
-            console.log(result);
-            navigation.navigate(Routes.WALLET_HOME);
-            setLoading(false);
+            if (result.wallet) {
+              const encryptKey = AES.encrypt(
+                password,
+                Config.AES_KEY
+              ).toString();
+              AsyncStorage.setItem('password', encryptKey);
+              navigation.navigate(Routes.WALLET_HOME);
+            }
           });
       } catch (e) {
+        console.log('실패');
         setShowCreateError(true);
         setLoading(false);
       }
