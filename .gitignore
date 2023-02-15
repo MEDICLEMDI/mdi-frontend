@@ -83,3 +83,5 @@ ios/envfile
 
 # Visual Studio Code
 /.vscode
+upload_certificate.pem
+private_key.pepk
