@@ -12,12 +12,16 @@ import { dentist, dermatology } from '@/components/Menus';
 import Icon from '@/icons';
 
 import style from './style';
+import Config from "react-native-config";
 
 const Home = ({ navigation }) => {
   const { t } = useTranslation();
 
   const isFocus = useIsFocused();
   const [tabs, setTabs] = useState<any[]>([]);
+
+  const HOME = Config.HOME;
+  console.log(HOME);
 
   useEffect(() => {
     initialize();
