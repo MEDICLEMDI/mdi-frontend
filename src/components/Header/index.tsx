@@ -27,7 +27,8 @@ const Header = ({ goBack, title }: IHeader) => {
       ) : (
         <Text>{title}</Text>
       )}
-      <Icon name="alarm" />
+      {/*<Icon name="alarm" />*/}
+      <View style={style.ic_left_arrow} />
     </View>
   );
 };
