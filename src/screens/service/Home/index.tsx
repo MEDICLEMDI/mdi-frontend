@@ -20,9 +20,6 @@ const Home = ({ navigation }) => {
   const isFocus = useIsFocused();
   const [tabs, setTabs] = useState<any[]>([]);
 
-  const HOME = Config.HOME;
-  console.log(HOME);
-
   useEffect(() => {
     initialize();
   }, [isFocus]);
