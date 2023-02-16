@@ -22,7 +22,7 @@ import Reactotron from '../config/reactotron';
 import AlertReducer from './slices/alert';
 import IcpReducer from './slices/icp';
 import KeyringReducer from './slices/keyring';
-import TabDisplayReducer from './slices/tabDisplay';
+import TabDisplayReducer from './slices/transaction';
 import UserReducer from './slices/user';
 import WalletConnectReducer from './slices/walletconnect';
 import { migrateData } from './utils';

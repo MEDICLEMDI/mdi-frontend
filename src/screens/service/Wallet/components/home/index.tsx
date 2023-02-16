@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 import Config from 'react-native-config';
 import { Modalize } from 'react-native-modalize';
-import { shallowEqual } from 'react-redux';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
 import CloseButton from '@/assets/images/ic_close.png';
@@ -40,7 +39,6 @@ import {
   addCustomToken,
   getBalance,
   getTokenInfo,
-  getTransactions,
   reset as resetUserStore,
 } from '@/redux/slices/user';
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
@@ -60,9 +58,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
   const standard: FungibleStandard = 'DIP20';
   const [lock, setLock] = useState<boolean>(keyring.isUnlocked);
-  const { transactions, transactionsLoading, transactionsError } =
-    useAppSelector(state => state.user, shallowEqual);
-
   const data = [];
   const [modalActive, setModalActive] = useState(false);
   const [historyList, setHistoryList] = useState(data.slice(0, 4));
@@ -79,7 +74,10 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
   const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
   const [period, setPeriod] = useState('1년');
+  const { currentWallet } = useAppSelector(state => state.keyring);
+  const { principal } = currentWallet || {};
 
+  console.log(principal);
   // unlock
   useEffect(() => {
     if (keyring.isInitialized && !keyring.isUnlocked) {
@@ -106,9 +104,10 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const unlock = async () => {
     const encryptKey = await AsyncStorage.getItem('password');
     console.log(encryptKey);
-    const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
-      CryptoJS.enc.Utf8
-    );
+    const password = CryptoJS.AES.decrypt(
+      encryptKey!,
+      Config.AES_KEY!
+    ).toString(CryptoJS.enc.Utf8);
 
     dispatch(
       login({
