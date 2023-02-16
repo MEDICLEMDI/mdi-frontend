@@ -194,12 +194,12 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
               <View style={styles.topRightLayer}>
                 {/* 셋팅버튼은 누르면 셋팅라우트로 이동 */}
-                {/* <TouchableOpacity
+                <TouchableOpacity
                   onPress={() => {
                     handleDeleteWallet();
                   }}>
                   <Image source={SettingIcon} style={styles.settingIcon} />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
               </View>
             </View>
             <View style={styles.cardMiddleLayer}>
@@ -212,27 +212,27 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             </View>
 
             <View style={styles.cardBottomLayer}>
-              {/* <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
+              <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
                 <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
-              </View> */}
+              </View>
               <TouchableOpacity onPress={handleRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
               </TouchableOpacity>
-              {/* <TouchableOpacity onPress={transactionRefresh}>
+              <TouchableOpacity>
                 <Image source={Refresh} style={styles.refreshButton} />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
           </ImageBackground>
         </View>
 
-        {/* <View style={styles.historyContainer}>
+        <View style={styles.historyContainer}>
           <View style={styles.historyTopLayer}>
             <Text style={styles.historyTitle}>
               {t('wallet.home.transactionHistory')}
               <Text style={styles.historySubText}>{' 최근 ' + period}</Text>
-            </Text> */}
+            </Text>
             {/* 히스토리 기간설정하기 */}
-            {/* <TouchableOpacity
+            <TouchableOpacity
               onPress={() => {
                 setModalActive(true);
               }}>
@@ -312,7 +312,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
             )}
           </View>
-        </View> */}
+        </View>
 
         {/* </ScrollView> */}
       </View>
