@@ -404,6 +404,12 @@ const translations = {
     comment: '요청하상',
     commentPlaceholder: '업체에 요청하실 내용을 작성해주세요.',
     contact: '문의하기',
+    all: '전체',
+    pastYear: '1년',
+    past6month: '6개월',
+    past3month: '3개월',
+    pastMonth: '1개월',
+    pastWeek: '1주일',
   },
   navigation: {
     home: '홈',

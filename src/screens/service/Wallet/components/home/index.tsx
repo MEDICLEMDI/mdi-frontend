@@ -24,7 +24,7 @@ import SettingIcon from '@/assets/images/setting_icon.png';
 import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
-import CustomModal from '@/components/Modal';
+import CustomModal from '@/components/modals/Modal';
 import { Colors } from '@/constants/theme';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
