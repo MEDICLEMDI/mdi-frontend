@@ -10,13 +10,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import CalendarPicker from 'react-native-calendar-picker';
 
 import BoxDropShadow from '@/components/BoxDropShadow';
 import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
 import { DatePicker } from '@/components/modals';
-import CustomModal from '@/components/modals/Modal';
 import { Colors } from '@/constants/theme';
 import Icons from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
@@ -72,6 +70,14 @@ export default () => {
       </BoxDropShadow>
       <View style={style.historyWrap}>
         <SearchBar onPress={() => setVisible(true)} />
+        <DatePicker
+          name="dataPicker"
+          modalDirection="flex-end"
+          visible={visible}
+          onRequestClose={() => setVisible(false)}
+          animationType="slide"
+          dateResponse={setDate}
+        />
         {/*<FlatList data={} renderItem={}>*/}
 
         {/*</FlatList>*/}
@@ -79,14 +85,6 @@ export default () => {
           <Text>사용 포인트 내역이 없습니다.</Text>
         </View>
       </View>
-      <DatePicker
-        name="dataPicker"
-        modalDirection="flex-end"
-        visible={visible}
-        onRequestClose={() => setVisible(false)}
-        animationType="slide"
-        dateResponse={setDate}
-      />
     </SafeAreaView>
   );
 };
