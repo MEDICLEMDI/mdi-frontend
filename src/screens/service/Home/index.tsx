@@ -2,17 +2,16 @@ import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import Config from 'react-native-config';
 
 import ReviewImage from '@/assets/images/Review.png';
 import CategoryTab from '@/components/CategoryTab';
 import Header from '@/components/Header';
 import ImageSlide from '@/components/ImageSlide';
-import InputIcon from '@/components/InputIcon';
+import InputIcon from '@/components/inputs/InputIcon';
 import { dentist, dermatology } from '@/components/Menus';
-import Icon from '@/icons';
 
 import style from './style';
-import Config from "react-native-config";
 
 const Home = ({ navigation }) => {
   const { t } = useTranslation();
@@ -31,7 +30,6 @@ const Home = ({ navigation }) => {
     const unsubscribe = navigation.addListener('tabPress', e => {
       // Prevent default behavior
       // e.preventDefault();
-
       // Do something manually
       // ...
     });

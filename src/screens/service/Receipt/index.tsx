@@ -9,6 +9,7 @@ import Icons from '@/icons';
 import style from './style';
 import { fontStyleCreator } from "@/utils/fonts";
 import { Colors } from "@/constants/theme";
+import SearchBar from "@/components/forms/SearchHeader";
 
 export default () => {
   const { t } = useTranslation();
@@ -24,15 +25,7 @@ export default () => {
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.receipt')} />
       <View style={style.contentWrap}>
-        <View style={[style.searchBar]}>
-          <View style={style.flexRow}>
-            <Text>거래내역</Text>
-            <Text>최근 1년</Text>
-          </View>
-          <TouchableOpacity>
-            <Icons name="menu" />
-          </TouchableOpacity>
-        </View>
+        <SearchBar onPress={() => console.log('test')} />
 
         {/* 받아온 데이터를 이용하여 map으로 재구성해야함 */}
         <View style={style.summaryWrap}>

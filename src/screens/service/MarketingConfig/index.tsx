@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { SafeAreaView, Text, View } from 'react-native';
 
 import Header from '@/components/Header';
-import MedicleSwitch from '@/components/MedicleSwitch';
+import MedicleSwitch from '@/components/buttons/MedicleSwitch';
 import { Colors } from '@/constants/theme';
 import { fontStyleCreator } from '@/utils/fonts';
 

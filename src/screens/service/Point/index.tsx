@@ -1,19 +1,37 @@
 import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import CalendarPicker from 'react-native-calendar-picker';
 
 import BoxDropShadow from '@/components/BoxDropShadow';
+import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
+import { DatePicker } from '@/components/modals';
+import CustomModal from '@/components/modals/Modal';
 import { Colors } from '@/constants/theme';
 import Icons from '@/icons';
+import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
-import { fontStyleCreator } from "@/utils/fonts";
 
 export default () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
+  const [visible, setVisible] = React.useState(false);
+  const [date, setDate] = React.useState();
+
+  React.useEffect(() => {
+    console.log(date);
+  }, [date]);
 
   const FONT_BASIC_BLACK = fontStyleCreator({
     color: Colors.Medicle.Font.Gray.Dark,
@@ -53,15 +71,7 @@ export default () => {
         </View>
       </BoxDropShadow>
       <View style={style.historyWrap}>
-        <View style={[style.searchBar]}>
-          <View style={style.flexRow}>
-            <Text>거래내역</Text>
-            <Text>최근 1년</Text>
-          </View>
-          <TouchableOpacity>
-            <Icons name="menu" />
-          </TouchableOpacity>
-        </View>
+        <SearchBar onPress={() => setVisible(true)} />
         {/*<FlatList data={} renderItem={}>*/}
 
         {/*</FlatList>*/}
@@ -69,6 +79,14 @@ export default () => {
           <Text>사용 포인트 내역이 없습니다.</Text>
         </View>
       </View>
+      <DatePicker
+        name="dataPicker"
+        modalDirection="flex-end"
+        visible={visible}
+        onRequestClose={() => setVisible(false)}
+        animationType="slide"
+        dateResponse={setDate}
+      />
     </SafeAreaView>
   );
 };
