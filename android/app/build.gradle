@@ -154,8 +154,8 @@ android {
         applicationId "co.medicle.mdi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 32
-        versionName "0.4.4"
+        versionCode 33
+        versionName "0.0.2"
         resValue "string", "build_config_package", "co.medicle.mdi"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         if (isNewArchitectureEnabled()) {
