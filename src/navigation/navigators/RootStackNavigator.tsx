@@ -101,6 +101,7 @@ const BottomTabNavigation = () => {
   return (
     <Tab.Navigator
       screenOptions={{
+        unmountOnBlur: true,
         headerShown: false,
         tabBarStyle: {
           height: Platform.OS === 'ios' ? 70 : 60,

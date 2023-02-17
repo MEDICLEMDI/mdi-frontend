@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Image,
@@ -13,20 +13,43 @@ import MedicleLogo from '@/assets/icons/wallet_logo.png';
 import Header from '@/components/Header';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
+import { useAppSelector } from '@/redux/hooks';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import KeyRing from '@/modules/keyring';
+import { useNavigation } from '@react-navigation/native';
 
 const WalletWelcome = ({
   navigation,
 }: RootScreenProps<Routes.WALLET_WELCOME>) => {
   const { t } = useTranslation();
+  const { isInitialized } = useAppSelector(state => state.keyring);
+
+  const keyring = KeyRing.getInstance();
 
   const onPress = (flow: 'create' | 'import') => () =>
     navigation.navigate(Routes.WALLET_CREATE_PASSWORD, {
       flow,
     });
-  return (
+
+  const goHome = () => {
+    navigation.reset({
+      index: 1,
+      routes: [{ name: Routes.WALLET_HOME }],
+    });
+  };
+
+  useEffect(() => {
+    if (isInitialized) {
+      goHome();
+    }
+  }, [isInitialized]);
+
+  if (keyring.isInitialized) {
+    navigation.navigate(Routes.WALLET_HOME);
+  }
+  return isInitialized ? null : (
     <SafeAreaView style={CommonStyle.container}>
       <Header goBack={false} title={t('header.wallet')} />
       <ScrollView horizontal={false} style={CommonStyle.contentWrap}>

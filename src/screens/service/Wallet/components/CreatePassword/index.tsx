@@ -1,19 +1,20 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AES } from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Alert,
-  Image,
+  NativeModules,
   SafeAreaView,
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 import { TextInput } from 'react-native-gesture-handler';
 
-import { PasswordInput } from '@/components/common';
 // import MedicleLogo from '@/assets/icons/wallet_logo.png';
 import Header from '@/components/Header';
+import LoadingModal from '@/components/LoadingModal';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -35,11 +36,13 @@ const WalletCreatePassword = ({
   const [showPasswordError, setShowPasswordError] = useState(false);
   const [showConfirmPasswordError, setShowConfirmPasswordError] =
     useState(false);
-  const [disable, setDisable] = useState(true);
+  const [showCreateError, setShowCreateError] = useState(false);
+  const [disable, setDisable] = useState(false);
   const dispatch = useAppDispatch();
   const { icpPrice } = useAppSelector(state => state.icp);
   const flow = route.params?.flow;
   const [buttonText, setButtonText] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (flow) {
@@ -65,88 +68,108 @@ const WalletCreatePassword = ({
       setShowConfirmPasswordError(!(password === confirmPassword));
     }
     setDisable(!(password === confirmPassword && passwordValid));
-  }, [password, confirmPassword]);
+  }, [password, confirmPassword, loading]);
 
   const handleCreateWallet = async () => {
+    setLoading(true);
     if (flow === 'import') {
       navigation.navigate(Routes.WALLET_IMPORT, {
         password,
       });
+      setLoading(false);
     } else {
       try {
         dispatch(createWallet({ password, icpPrice }))
           .unwrap()
           .then(async result => {
-            console.log(result);
+            if (result.wallet) {
+              const encryptKey = AES.encrypt(
+                password,
+                Config.AES_KEY
+              ).toString();
+              AsyncStorage.setItem('password', encryptKey);
+              // navigation.navigate(Routes.WALLET_HOME);
+            }
           });
       } catch (e) {
-        console.log('Error:', e);
-        Alert.alert('오류가 발생하였습니다, 나중에 다시 시도해주세요.');
+        console.log('실패');
+        setShowCreateError(true);
+        setLoading(false);
       }
     }
   };
 
   return (
-    <SafeAreaView style={CommonStyle.container}>
-      <Header goBack={true} title={t('wallet.create.header')} />
-      <View style={styles.mainContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>{t('wallet.create.title')}</Text>
-          <Text style={styles.subText}>{t('wallet.create.subTitle')}</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={[styles.pwInput]}
-            placeholder={t('wallet.create.passwordInput')}
-            selectionColor={'#989898'}
-            secureTextEntry={true}
-            onChangeText={value => setPassword(value)}
-            maxLength={20}
-            onSubmitEditing={() => {
-              confirmPasswordInputRef.current.focus();
-            }}
-          />
-          <TextInput
-            style={[styles.pwInput, { marginTop: 10 }]}
-            placeholder={t('wallet.create.confirmPasswordInput')}
-            selectionColor={'#989898'}
-            secureTextEntry={true}
-            maxLength={20}
-            onChangeText={word => setConfirmPassword(word)}
-            ref={confirmPasswordInputRef}
-            onSubmitEditing={handleCreateWallet}
-          />
-          {showPasswordError ? (
-            <Text style={styles.errMsg}>
-              {t('errorMessage.passwordValidError')}
-            </Text>
-          ) : null}
+    <>
+      <SafeAreaView style={CommonStyle.container}>
+        <Header goBack={true} title={t('wallet.create.header')} />
+        <View style={styles.mainContainer}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>{t('wallet.create.title')}</Text>
+            <Text style={styles.subText}>{t('wallet.create.subTitle')}</Text>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={[styles.pwInput]}
+              placeholder={t('wallet.create.passwordInput')}
+              selectionColor={'#989898'}
+              secureTextEntry={true}
+              onChangeText={value => setPassword(value)}
+              maxLength={20}
+              onSubmitEditing={() => {
+                confirmPasswordInputRef.current.focus();
+              }}
+            />
+            <TextInput
+              style={[styles.pwInput, { marginTop: 10 }]}
+              placeholder={t('wallet.create.confirmPasswordInput')}
+              selectionColor={'#989898'}
+              secureTextEntry={true}
+              maxLength={20}
+              onChangeText={word => setConfirmPassword(word)}
+              ref={confirmPasswordInputRef}
+              onSubmitEditing={handleCreateWallet}
+            />
+            {showPasswordError ? (
+              <Text style={styles.errMsg}>
+                {t('errorMessage.passwordValidError')}
+              </Text>
+            ) : null}
 
-          {showConfirmPasswordError ? (
-            <Text style={[styles.errMsg, { marginTop: 5 }]}>
-              {t('errorMessage.passwordConfirmError')}
-            </Text>
-          ) : null}
-        </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-            style={[
-              styles.btn,
-              { backgroundColor: disable ? '#989898' : '#E7E1D5' },
-            ]}
-            disabled={disable}
-            onPress={handleCreateWallet}>
-            <Text
+            {showConfirmPasswordError ? (
+              <Text style={[styles.errMsg, { marginTop: 5 }]}>
+                {t('errorMessage.passwordConfirmError')}
+              </Text>
+            ) : null}
+
+            {showCreateError ? (
+              <Text style={[styles.errMsg, { marginTop: 5 }]}>
+                {/* {t('errorMessage.passwordConfirmError')} */}
+                *지갑생성 중 오류가 발생하였습니다. 다시 시도해주세요.
+              </Text>
+            ) : null}
+          </View>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
               style={[
-                styles.btnText,
-                { color: disable ? '#FFFFFF' : '#000000' },
-              ]}>
-              {buttonText}
-            </Text>
-          </TouchableOpacity>
+                styles.btn,
+                { backgroundColor: disable ? '#989898' : '#E7E1D5' },
+              ]}
+              disabled={disable}
+              onPress={handleCreateWallet}>
+              <Text
+                style={[
+                  styles.btnText,
+                  { color: disable ? '#FFFFFF' : '#000000' },
+                ]}>
+                {buttonText}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+        {loading && <LoadingModal name="loading" visible={loading} />}
+      </SafeAreaView>
+    </>
   );
 };
 
