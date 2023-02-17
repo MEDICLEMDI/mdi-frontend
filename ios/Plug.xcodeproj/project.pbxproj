@@ -70,7 +70,7 @@
 		1F25339C284E554700B76386 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Plug/BootSplash.storyboard; sourceTree = "<group>"; };
 		1F982B2D2853DA6B006294A0 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Plug/AppDelegate.mm; sourceTree = "<group>"; };
 		1FF442DA28999BC30086AFD3 /* Plug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Plug.entitlements; path = Plug/Plug.entitlements; sourceTree = "<group>"; };
-		306382E9136C44B693B8217E /* SplashScreen.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SplashScreen.storyboard; path = Plug/SplashScreen.storyboard; sourceTree = "<group>"; };
+		306382E9136C44B693B8217E /* SplashScreen.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SplashScreen.storyboard; path = Plug/SplashScreen.storyboard; sourceTree = "<group>"; };
 		33E5DE36FA63D06ED1690823 /* Pods-Plug-PlugTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plug-PlugTests.release.xcconfig"; path = "Target Support Files/Pods-Plug-PlugTests/Pods-Plug-PlugTests.release.xcconfig"; sourceTree = "<group>"; };
 		36B634A50B344B3A90EA60B9 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "Plug/noop-file.swift"; sourceTree = "<group>"; };
 		3809386EBD20482F923CAB29 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -561,7 +561,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = PD9HGZ4YAV;
+				DEVELOPMENT_TEAM = 7MXM63QGKX;
 				INFOPLIST_FILE = PlugTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -636,7 +636,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DZVNACPGLK;
+				DEVELOPMENT_TEAM = 7MXM63QGKX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"DEBUG=1",
