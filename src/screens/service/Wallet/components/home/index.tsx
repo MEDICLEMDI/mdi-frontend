@@ -89,7 +89,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   //   dispatch(getTransactions({ icpPrice }));
   // };
 
-  // set mdi
+  // set alpha
   useEffect(() => {
     if (lock) {
       assets.map(token => {

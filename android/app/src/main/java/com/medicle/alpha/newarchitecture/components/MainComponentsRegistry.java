@@ -1,4 +1,4 @@
-package co.medicle.mdi.newarchitecture.components;
+package com.medicle.alpha.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

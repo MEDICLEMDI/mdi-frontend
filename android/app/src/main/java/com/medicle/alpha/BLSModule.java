@@ -1,4 +1,4 @@
-package co.medicle.mdi;
+package com.medicle.alpha;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;

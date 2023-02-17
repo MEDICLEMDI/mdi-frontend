@@ -1,4 +1,4 @@
-package co.medicle.mdi;
+package com.medicle.alpha;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

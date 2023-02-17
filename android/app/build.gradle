@@ -151,12 +151,12 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "co.medicle.mdi"
+        applicationId "com.medicle.alpha"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 33
         versionName "0.0.2"
-        resValue "string", "build_config_package", "co.medicle.mdi"
+        resValue "string", "build_config_package", "com.medicle.alpha"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.

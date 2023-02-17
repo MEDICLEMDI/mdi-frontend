@@ -10,7 +10,7 @@
 # Add any project specific keep options here:
 
 # react-native-config
--keep class co.medicle.mdi.BuildConfig { *; }
+-keep class com.medicle.alpha.BuildConfig { *; }
 
 ## react-native-reanimated
 -keep class com.swmansion.reanimated.** { *; }
