@@ -10,6 +10,7 @@ import {
 import { TextInput } from 'react-native-gesture-handler';
 
 import Header from '@/components/Header';
+import LoadingModal from '@/components/LoadingModal';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -17,6 +18,9 @@ import { importWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import Config from 'react-native-config';
+import { AES } from 'crypto-js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WalletImport = ({
   route,
@@ -31,6 +35,7 @@ const WalletImport = ({
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const password = route?.params.password;
+  const [loading, setLoading] = useState(false);
 
   const onChangeText = (text: string) => {
     setSeedPhrase(text);
@@ -43,25 +48,34 @@ const WalletImport = ({
 
   const importWalletFromSeedPhrase = async () => {
     // Alert.alert(password);
-    dispatch(
-      importWallet({
-        icpPrice,
-        mnemonic: seedPhrase!,
-        password,
-        onError: () => {},
-        onSuccess: async () => {},
-      })
-    ).then(res => {
-      console.log(res);
-      if (res.error) {
-        if (res.payload === 'The provided mnemonic is invalid') {
-          setErrorMsg(t('errorMessage.nmemonicError'));
-        } else {
-          setErrorMsg(t('errorMessage.unknownError'));
+    setLoading(true);
+    setTimeout(() => {
+      dispatch(
+        importWallet({
+          icpPrice,
+          mnemonic: seedPhrase!,
+          password,
+          onError: () => {
+            setLoading(false);
+          },
+          onSuccess: async () => {
+            const encryptKey = AES.encrypt(password, Config.AES_KEY).toString();
+            await AsyncStorage.setItem('password', encryptKey);
+          },
+        })
+      ).then(res => {
+        setLoading(false);
+
+        if (res.error) {
+          if (res.payload === 'The provided mnemonic is invalid') {
+            setErrorMsg(t('errorMessage.nmemonicError'));
+          } else {
+            setErrorMsg(t('errorMessage.unknownError'));
+          }
+          setError(true);
         }
-        setError(true);
-      }
-    });
+      });
+    }, 500);
   };
 
   return (
@@ -105,6 +119,7 @@ const WalletImport = ({
           </TouchableOpacity>
         </View>
       </View>
+      {loading && <LoadingModal name="loading" visible={loading} />}
     </SafeAreaView>
   );
 };

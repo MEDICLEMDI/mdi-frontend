@@ -6,7 +6,7 @@ export const USD_PER_TC = 1.42656;
 
 export const getTokenPrices = (symbol: string, icpPrice: number) => {
   switch (symbol) {
-    case TOKENS.XTC.symbol:
+    // case TOKENS.XTC.symbol:
     // case 'WTC':
     //   return USD_PER_TC;
     case TOKENS.ICP.symbol:
@@ -20,14 +20,14 @@ export const getTokenPrices = (symbol: string, icpPrice: number) => {
 
 export const TOKEN_IMAGES = {
   MDI: 'mdi',
-  XTC: 'xtc',
+  // XTC: 'xtc',
   ICP: 'dfinity',
   // WICP: 'wicp',
 };
 
 export const DEFAULT_ASSETS = [
   ICP_CANISTER_ID,
-  XTC_CANISTER_ID,
+  // XTC_CANISTER_ID,
   MDI_CANISTER_ID,
   // WICP_CANISTER_ID,
 ];
@@ -53,16 +53,16 @@ export const TOKENS = {
     icon: TOKEN_IMAGES.ICP,
     standard: 'ROSETTA',
   },
-  XTC: {
-    symbol: 'XTC',
-    canisterId: XTC_CANISTER_ID,
-    name: 'Cycles',
-    decimals: 12,
-    amount: 0,
-    value: 0,
-    icon: TOKEN_IMAGES.XTC,
-    standard: 'DIP20',
-  },
+  // XTC: {
+  //   symbol: 'XTC',
+  //   canisterId: XTC_CANISTER_ID,
+  //   name: 'Cycles',
+  //   decimals: 12,
+  //   amount: 0,
+  //   value: 0,
+  //   icon: TOKEN_IMAGES.XTC,
+  //   standard: 'DIP20',
+  // },
   // WICP: {
   //   symbol: 'WICP',
   //   canisterId: WICP_CANISTER_ID,
