@@ -25,7 +25,7 @@ import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
-import CustomModal from '@/components/Modal';
+import { CustomModal } from "@/components/modals/index";
 import { Colors } from '@/constants/theme';
 import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
