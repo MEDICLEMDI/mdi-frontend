@@ -47,6 +47,7 @@ import SignOut from '@/screens/SignOut';
 
 // Module packages
 import Routes from '../Routes';
+import EditProfile from "@/screens/service/Profile/edit";
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
@@ -190,6 +191,7 @@ const SettingStack = () => {
       screenOptions={{ headerShown: false }}
       initialRouteName="Home">
       <Stack.Screen name="Home" component={Profile} />
+      <Stack.Screen name={Routes.EDIT_PROFILE} component={EditProfile}/>
       <Stack.Screen name={Routes.POINT} component={Point} />
       <Stack.Screen name={Routes.RECEIPT} component={Receipt} />
       <Stack.Screen name={Routes.SUBSCRIBE} component={Subscribe} />

@@ -2,47 +2,16 @@ import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TextInput,
-  TextInputProps,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 import { CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
+import TopLabelInput from '@/components/inputs/MedicleInput';
 import { Colors } from '@/constants/theme';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
 
-interface TopLabelInputProps extends TextInputProps {
-  label: string;
-}
-
-const TopLabelInput = (props: TopLabelInputProps) => {
-  return (
-    <View style={style.inputWrap}>
-      <Text>{props.label}</Text>
-      <TextInput
-        placeholder={props.placeholder}
-        editable={props.editable}
-        multiline={props.multiline}
-        numberOfLines={props.numberOfLines}
-        style={[props.style, style.inputStyle]}
-        // ios settings
-        clearButtonMode="always"
-        enablesReturnKeyAutomatically={true}
-        // android settings
-        disableFullscreenUI={true}
-      />
-    </View>
-  );
-};
 export default () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();

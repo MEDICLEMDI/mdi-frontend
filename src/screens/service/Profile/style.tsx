@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from "react-native";
+import { Colors } from "@/constants/theme";
 
 export default StyleSheet.create({
   container: {
@@ -50,7 +51,28 @@ export default StyleSheet.create({
     borderRadius: 50,
   },
   name: {
+    marginLeft: 10,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  // Edit page
+  profileHeader: {
+    borderBottomWidth: 10,
+    borderColor: Colors.Medicle.Gray.SemiLight,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingBottom: 30,
+    marginBottom: 30,
+  },
+  inputGroup: {
+    marginBottom: 30,
+  },
+  inputButton: {
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    alignSelf: 'flex-end',
+    marginTop: 10,
   },
 });

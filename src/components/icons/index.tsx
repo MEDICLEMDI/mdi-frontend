@@ -14,9 +14,12 @@ import ArrowRightIcon from './svg/ArrowRight.svg';
 import BackIcon from './svg/Back.svg';
 import BookIcon from './svg/Book.svg';
 import BracesIcon from './svg/Braces.svg';
+import CalendarIcon from './svg/Calendar.svg';
 import CavityIcon from './svg/Cavity.svg';
 import ChestIcon from './svg/Chest.svg';
 import ChevronIcon from './svg/Chevron.svg';
+import ClockIcon from './svg/Clock.svg';
+import CloseIcon from './svg/Close.svg';
 import CoinIcon from './svg/Coin.svg';
 import CommunityIcon from './svg/Community.svg';
 import ConnectDefaultIcon from './svg/ConnectDefault.svg';
@@ -76,15 +79,13 @@ import TransactionError from './svg/TransactionError.svg';
 import TransactionSuccess from './svg/TransactionSuccess.svg';
 import TwitterIcon from './svg/Twitter.svg';
 import UserIcon from './svg/User.svg';
+import UserCircleIcon from './svg/UserCircle.svg';
 import WalletIcon from './svg/Wallet.svg';
 import WaxingIcon from './svg/Waxing.svg';
 import WhiteningIcon from './svg/Whitening.svg';
 import WICPIcon from './svg/WICP.svg';
 import XTCIcon from './svg/XTC.svg';
 import YZoneIcon from './svg/YZone.svg';
-import CalendarIcon from './svg/Calendar.svg';
-import ClockIcon from './svg/Clock.svg';
-import CloseIcon from './svg/Close.svg';
 
 export const IconTypes = (type: string) =>
   ({
@@ -136,6 +137,7 @@ export const IconTypes = (type: string) =>
     refresh: RefreshIcon,
     refresh_s: RefreshSmallIcon,
     mdiIcon: MdiLogoSmallIcon,
+    userCircle: UserCircleIcon,
 
     implant: ImplantIcon,
     crown: CrownIcon,

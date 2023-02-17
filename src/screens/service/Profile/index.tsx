@@ -1,12 +1,20 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import BoxDropShadow from '@/components/BoxDropShadow';
 import GridList from '@/components/GridList';
 import Header from '@/components/Header';
 import { profileMenus } from '@/components/Menus';
+import { Colors } from '@/constants/theme';
 import Icons from '@/icons';
+import Routes from '@/navigation/Routes';
 
 import style from './style';
 
@@ -28,14 +36,18 @@ const Profile = ({ navigation }) => {
       <Header goBack={false} title={t('header.profile')} />
       <View style={style.contentWrap}>
         <BoxDropShadow
-          color={'#E8E8E8'}
+          color={
+            Platform.OS === 'ios'
+              ? Colors.Medicle.Gray.SemiLight
+              : Colors.Medicle.Gray.Standard
+          }
           offset={[0, 7]}
-          elevation={5}
+          elevation={10}
           opacity={0.95}
-          radius={20}
+          radius={10}
           style={style.profileWrap}>
           <View style={style.profileNameWrap}>
-            <Icons name="user" />
+            <Icons name="userCircle" />
             <Text style={style.name}>Preview</Text>
           </View>
 
@@ -49,7 +61,9 @@ const Profile = ({ navigation }) => {
           </TouchableOpacity>
         </BoxDropShadow>
 
-        <TouchableOpacity style={style.editProfileBtn} onPress={() => null}>
+        <TouchableOpacity
+          style={style.editProfileBtn}
+          onPress={() => navigation.navigate(Routes.EDIT_PROFILE)}>
           <Text>{t('profile.editProfile')}</Text>
           <Icons name="arrowRight" />
         </TouchableOpacity>

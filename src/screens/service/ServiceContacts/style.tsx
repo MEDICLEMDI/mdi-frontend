@@ -10,17 +10,6 @@ export default StyleSheet.create({
     paddingHorizontal: 30,
     justifyContent: 'space-between',
   },
-  inputWrap: {
-    marginBottom: 20,
-  },
-  inputStyle: {
-    marginTop: 10,
-    paddingVertical: Platform.OS == 'ios' ? 10 : 5,
-    paddingLeft: 15,
-
-    backgroundColor: '#F2F2F2',
-    borderRadius: 15,
-  },
   agreeComment: {
     paddingBottom: 15,
     borderBottomWidth: 1,
