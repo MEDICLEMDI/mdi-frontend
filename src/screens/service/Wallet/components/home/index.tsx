@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import Config from 'react-native-config';
 import { Modalize } from 'react-native-modalize';
+import { shallowEqual } from 'react-redux';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
 import CloseButton from '@/assets/images/ic_close.png';
@@ -25,7 +26,7 @@ import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
-import { CustomModal } from "@/components/modals/index";
+import { CustomModal } from '@/components/modals/Modal';
 import { Colors } from '@/constants/theme';
 import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
@@ -39,6 +40,7 @@ import {
   addCustomToken,
   getBalance,
   getTokenInfo,
+  // getTransactions,
   reset as resetUserStore,
 } from '@/redux/slices/user';
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
@@ -58,6 +60,9 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
   const standard: FungibleStandard = 'DIP20';
   const [lock, setLock] = useState<boolean>(keyring.isUnlocked);
+  // const { transactions, transactionsLoading, transactionsError } =
+  //   useAppSelector(state => state.user, shallowEqual);
+
   const data = [];
   const [modalActive, setModalActive] = useState(false);
   const [historyList, setHistoryList] = useState(data.slice(0, 4));
@@ -74,10 +79,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
   const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
   const [period, setPeriod] = useState('1년');
-  const { currentWallet } = useAppSelector(state => state.keyring);
-  const { principal } = currentWallet || {};
 
-  console.log(principal);
   // unlock
   useEffect(() => {
     if (keyring.isInitialized && !keyring.isUnlocked) {
@@ -89,7 +91,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   //   dispatch(getTransactions({ icpPrice }));
   // };
 
-  // set alpha
+  // set mdi
   useEffect(() => {
     if (lock) {
       assets.map(token => {
@@ -104,10 +106,9 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const unlock = async () => {
     const encryptKey = await AsyncStorage.getItem('password');
     console.log(encryptKey);
-    const password = CryptoJS.AES.decrypt(
-      encryptKey!,
-      Config.AES_KEY!
-    ).toString(CryptoJS.enc.Utf8);
+    const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
+      CryptoJS.enc.Utf8
+    );
 
     dispatch(
       login({
@@ -193,12 +194,12 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
               <View style={styles.topRightLayer}>
                 {/* 셋팅버튼은 누르면 셋팅라우트로 이동 */}
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => {
                     handleDeleteWallet();
                   }}>
                   <Image source={SettingIcon} style={styles.settingIcon} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
             <View style={styles.cardMiddleLayer}>
@@ -211,27 +212,27 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             </View>
 
             <View style={styles.cardBottomLayer}>
-              <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
+              {/* <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
                 <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
-              </View>
+              </View> */}
               <TouchableOpacity onPress={handleRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              {/* <TouchableOpacity onPress={transactionRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </ImageBackground>
         </View>
 
-        <View style={styles.historyContainer}>
+        {/* <View style={styles.historyContainer}>
           <View style={styles.historyTopLayer}>
             <Text style={styles.historyTitle}>
               {t('wallet.home.transactionHistory')}
               <Text style={styles.historySubText}>{' 최근 ' + period}</Text>
-            </Text>
+            </Text> */}
             {/* 히스토리 기간설정하기 */}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 setModalActive(true);
               }}>
@@ -311,7 +312,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
             )}
           </View>
-        </View>
+        </View> */}
 
         {/* </ScrollView> */}
       </View>

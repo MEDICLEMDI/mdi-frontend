@@ -185,6 +185,8 @@ export interface AlertState {
   closeAllModals: boolean;
 }
 
-export interface TabDisplayState {
-  display: boolean;
+export interface TransactionsState {
+  transactions: [];
+  loading: boolean;
+  error?: string;
 }

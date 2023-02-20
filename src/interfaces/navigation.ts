@@ -19,6 +19,7 @@ export type RootStackParamList = {
   [Routes.NFTS]: undefined;
   [Routes.TOKENS]: undefined;
   [Routes.PROFILE]: undefined;
+  [Routes.EDIT_PROFILE]: undefined;
   [Routes.SWIPE_LAYOUT]: undefined;
   [Routes.LOGIN]: { manualLock: boolean };
   [Routes.WELCOME]: undefined;

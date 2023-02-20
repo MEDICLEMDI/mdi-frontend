@@ -1302,7 +1302,7 @@ pub mod android {
     use super::{ios_verify, IOSVerify};
 
     #[no_mangle]
-    pub unsafe extern "C" fn Java_co_medicle_mdi_BLSModule_verifyJson(
+    pub unsafe extern "C" fn Java_com_medicle_alpha_BLSModule_verifyJson(
         env: JNIEnv,
         _: JClass,
         s: JString,

@@ -13,7 +13,7 @@ import { KEYRING_STORAGE_KEY } from '@/constants/keyring';
 import { WALLETCONNECT_STORAGE_KEY } from '@/constants/walletconnect';
 import {
   IcpState,
-  TabDisplayState,
+  TransactionsState,
   UserState,
   WalletConnectState,
 } from '@/interfaces/redux';
@@ -22,7 +22,7 @@ import Reactotron from '../config/reactotron';
 import AlertReducer from './slices/alert';
 import IcpReducer from './slices/icp';
 import KeyringReducer from './slices/keyring';
-import TabDisplayReducer from './slices/transaction';
+import transactionReducer from './slices/transaction';
 import UserReducer from './slices/user';
 import WalletConnectReducer from './slices/walletconnect';
 import { migrateData } from './utils';
@@ -66,7 +66,7 @@ const rootReducer = combineReducers({
   user: persistReducer<UserState, AnyAction>(userPersistConfig, UserReducer),
   walletconnect: WalletConnectReducer as Reducer<WalletConnectState, AnyAction>,
   alert: AlertReducer,
-  tabDisplay: TabDisplayReducer as Reducer<TabDisplayState, AnyAction>,
+  transaction: transactionReducer as Reducer<TransactionsState, AnyAction>,
 });
 
 export const store = configureStore({

@@ -3,6 +3,7 @@ enum Routes {
   NFTS = 'NFTs',
   TOKENS = 'Tokens',
   PROFILE = 'Profile',
+  EDIT_PROFILE = 'EditProfile',
   SWIPE_LAYOUT = 'SwipeLayout',
   // Service Page
   SERVICE = 'Service',
@@ -20,7 +21,7 @@ enum Routes {
   FAQ = 'FAQ',
   EXCHANGE = 'Exchange',
   COMMUNITY = 'Community',
-  SERVICE_SETTINGS = 'serviceSettings',
+  SERVICE_SETTINGS = 'ServiceSettings',
   NOTICE = 'Notice',
   NOTICE_DETAIL = 'NoticeDetail',
   SERVICE_CONTACTS = 'ServiceContacts',

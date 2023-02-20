@@ -13,8 +13,6 @@ project.ext.envConfigFiles = [
     "": ".dev.env",
 ]
 
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
-
 apply from: project(":react-native-config").projectDir.getPath() + "/dotenv.gradle"
 
 /**
@@ -154,7 +152,7 @@ android {
         applicationId "com.medicle.alpha"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 33
+        versionCode 34
         versionName "0.0.2"
         resValue "string", "build_config_package", "com.medicle.alpha"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
@@ -307,7 +305,7 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     //react-native-bootsplash
-    // implementation "androidx.core:core-splashscreen:1.0.0"
+    implementation "androidx.core:core-splashscreen:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

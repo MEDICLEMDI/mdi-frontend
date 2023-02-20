@@ -93,7 +93,6 @@ const PersistedApp = () => {
 
   return (
     <PersistGate loading={null} persistor={persistor}>
-
       <ErrorBoundary>
         <SafeAreaProvider>
           <ToastProvider {...toastProviderProps}>
@@ -116,11 +115,12 @@ const App = () => (
     <PersistedApp />
   </Provider>
 );
-// const AppWithSentry = Sentry.wrap(__DEV__ ? Reactotron.overlay(App) : App);
+
+const AppWithSentry = Sentry.wrap(__DEV__ ? Reactotron.overlay(App) : App);
 
 export default codePush({
   checkfrecuency: codePush.CheckFrequency.MANUAL,
   deploymentKey: isIos
     ? Config.CODE_PUSH_IOS_DEPLOY_KEY
     : Config.CODE_PUSH_ANDROID_DEPLOY_KEY,
-})(Reactotron.overlay(App));
+})(App);

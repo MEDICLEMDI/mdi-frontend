@@ -10,9 +10,8 @@
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
-      android:debuggable="false"
-      android:icon="@drawable/src_assets_icons_il_medicle_mdpi"
-      android:roundIcon="@drawable/src_assets_icons_il_medicle_mdpi"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/BootTheme">
       <activity
