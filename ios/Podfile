@@ -6,10 +6,10 @@ install! 'cocoapods', :deterministic_uuids => false
 
 target 'Plug' do
   config = use_native_modules!
-  
+
   # Flags change depending on the env values.
   flags = get_default_flags()
-  
+
   pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '7.25.1'
 
   use_react_native!(
@@ -46,4 +46,4 @@ target 'Plug' do
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
-end 
+end
