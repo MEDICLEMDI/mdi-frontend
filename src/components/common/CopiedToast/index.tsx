@@ -55,7 +55,7 @@ function CopiedToast({
     <Animated.View
       style={[styles.animationContainer, customStyle, { opacity: fadeAnim }]}>
       <View style={[styles.pointer, customPointerStyle]} />
-      <Text style={[FontStyles.Small, styles.text]}>{t('common.copied')}</Text>
+      <Text style={[FontStyles.Small, styles.text]}>복사완료</Text>
     </Animated.View>
   ) : null;
 }

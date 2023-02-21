@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Clipboard from '@react-native-clipboard/clipboard';
+// import Clipboard from '@react-native-clipboard/clipboard';
 import CryptoJS from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,14 +20,17 @@ import { Modalize } from 'react-native-modalize';
 import { shallowEqual } from 'react-redux';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
+import Copy from '@/assets/images/copy.png';
 import CloseButton from '@/assets/images/ic_close.png';
 import Menu from '@/assets/images/ic_menu.png';
 import Refresh from '@/assets/images/refresh.png';
 import SettingIcon from '@/assets/images/setting_icon.png';
 import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
+import { CopiedToast } from '@/components/common';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
+import { CustomModal } from '@/components/Modals';
 import { Colors } from '@/constants/theme';
 import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
@@ -45,7 +50,6 @@ import {
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
 import { clearStorage } from '@/utils/localStorage';
 
-import CustomModal from '../../../../../components/modals/Modal';
 import CommonStyle from '../../common_style';
 import styles from './styles';
 
@@ -66,6 +70,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const [isMoreData, setIsMoreData] = useState(
     data.length > historyList.length
   );
+  const [visibility, setVisibility] = useState(false);
   const mockTrasactionBal = numberWithCommas(1200000);
   const mockTxID = 'asdasfkneknqwkenkqwnekqwnekqnewkqnewkqne';
   const mdiValue = numberWithCommas(
@@ -89,6 +94,10 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   // const transactionRefresh = () => {
   //   dispatch(getTransactions({ icpPrice }));
   // };
+
+  const copyToClipboard = async () => {
+    Clipboard.setString(principal!);
+  };
 
   // set mdi
   useEffect(() => {
@@ -215,12 +224,38 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               {/* <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
                 <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
               </View> */}
-              <TouchableOpacity onPress={handleRefresh}>
+              {/* <TouchableOpacity onPress={handleRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               {/* <TouchableOpacity onPress={transactionRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
               </TouchableOpacity> */}
+              {principal && (
+                <>
+                  <Text style={styles.walletAddress}>
+                    {principal?.slice(0, 35) + '....'}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={async () => {
+                      Clipboard.setString(principal!);
+                      setVisibility(true);
+                    }}>
+                    <Image
+                      style={styles.copyImage}
+                      source={Copy}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+            <View style={{ alignItems: 'center' }}>
+              <CopiedToast
+                visibility={visibility}
+                setVisibility={setVisibility}
+                customStyle={styles.toastStyle}
+                customPointerStyle={styles.toastPointerStyle}
+              />
             </View>
           </ImageBackground>
         </View>
