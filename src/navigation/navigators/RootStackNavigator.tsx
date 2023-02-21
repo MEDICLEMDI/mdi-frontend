@@ -123,7 +123,12 @@ const BottomTabNavigation = () => {
         options={{
           title: t('navigation.home'),
           tabBarLabelStyle: labelStyle,
-          tabBarIcon: ({ focused }) => <Icons name="home" style={{ fill: tabActiveController(focused) }} />,
+          tabBarIcon: ({ focused }) => (
+            <Icons
+              name="home"
+              style={{ fill: tabActiveController(focused) }}
+            />
+          ),
         }}
       />
       <Tab.Screen
@@ -190,8 +195,8 @@ const SettingStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Home">
-      <Stack.Screen name="Home" component={Profile} />
+      initialRouteName={Routes.MYPAGE}>
+      <Stack.Screen name={Routes.MYPAGE} component={Profile} />
       <Stack.Screen name={Routes.EDIT_PROFILE} component={EditProfile}/>
       <Stack.Screen name={Routes.POINT} component={Point} />
       <Stack.Screen name={Routes.RECEIPT} component={Receipt} />
@@ -215,8 +220,8 @@ const ServiceSettings = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Home">
-      <Stack.Screen name='Home' component={Setting} />
+      initialRouteName={Routes.SERVICE_SETTINGS}>
+      <Stack.Screen name={Routes.SERVICE_SETTINGS} component={Setting} />
       <Stack.Screen name={Routes.NOTICE} component={Notice} />
       <Stack.Screen name={Routes.NOTICE_DETAIL} component={NoticeDetail} />
       <Stack.Screen name={Routes.SERVICE_DOCUMENT} component={ServiceDoc} />

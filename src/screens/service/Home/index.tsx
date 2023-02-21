@@ -1,5 +1,5 @@
 import { useIsFocused } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import Config from 'react-native-config';
@@ -17,22 +17,7 @@ const Home = ({ navigation }) => {
   const { t } = useTranslation();
 
   const isFocus = useIsFocused();
-  const [tabs, setTabs] = useState<any[]>([]);
-
-  useEffect(() => {
-    initialize();
-  }, [isFocus]);
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', e => {
-      // Prevent default behavior
-      // e.preventDefault();
-      // Do something manually
-      // ...
-    });
-
-    return unsubscribe;
-  }, [navigation]);
+  const [tabs, setTabs] = React.useState<any[]>([]);
 
   const initialize = () => {
     setTabs([
@@ -40,6 +25,8 @@ const Home = ({ navigation }) => {
       { name: t('category.cosmetic'), data: dermatology(t) },
     ]);
   };
+
+  React.useMemo(() => initialize(), [isFocus])
 
   return (
     <SafeAreaView style={style.container}>

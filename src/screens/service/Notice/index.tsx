@@ -18,38 +18,32 @@ export default ({ navigation }) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
 
-  const data = [
-    { title: 'Test Notice 1', content: 'This is test notice.' },
-    { title: 'Test Notice 2', content: 'This is test notice.' },
-    { title: 'Test Notice 3', content: 'This is test notice.' },
-    { title: 'Test Notice 4', content: 'This is test notice.' },
-    { title: 'Test Notice 5', content: 'This is test notice.' },
-    { title: 'Test Notice 6', content: 'This is test notice.' },
-    { title: 'Test Notice 7', content: 'This is test notice.' },
-  ];
+  const [notices, setNotices] = React.useState<{title: string, content: string}[]>();
 
-  const pageRoute = (route: string, data: any) => {
-    navigation.navigate(route, data);
-  };
+  const initialize = () => {
 
-  const NoticeBox = (item: any) => {
-    return (
-      <TouchableOpacity
-        style={style.noticeWrap}
-        onPress={() => pageRoute(Routes.NOTICE_DETAIL, item)}>
-        <Text>{item.title}</Text>
-        <Icons name="arrowRight" />
-      </TouchableOpacity>
-    );
-  };
+    const data = [
+      { title: 'Test Notice', content: 'This is test notice.' },
+    ];
+    setNotices(data);
+  }
+
+  React.useMemo(() => initialize(), [isFocus]);
 
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('setting.notice')} />
       <FlatList
-        data={data}
-        renderItem={({ item }) => NoticeBox(item)}
         style={style.noticeList}
+        data={notices}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={style.noticeWrap}
+            onPress={() => navigation.navigate(Routes.NOTICE_DETAIL, item)}>
+            <Text>{item.title}</Text>
+            <Icons name="arrowRight" />
+          </TouchableOpacity>
+        )}
       />
     </SafeAreaView>
   );
