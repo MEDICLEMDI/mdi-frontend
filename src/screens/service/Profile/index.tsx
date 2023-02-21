@@ -51,7 +51,7 @@ const Profile = ({ navigation }) => {
             <Text style={style.name}>Preview</Text>
           </View>
 
-          <TouchableOpacity onPress={() => null}>
+          <TouchableOpacity onPress={() => null} style={{ marginBottom: 20 }}>
             <View style={style.pointBtn}>
               <Icons name="mdiIcon" />
               <Text>{t('profile.myPoint')}</Text>
@@ -61,12 +61,12 @@ const Profile = ({ navigation }) => {
           </TouchableOpacity>
         </BoxDropShadow>
 
-        <TouchableOpacity
-          style={style.editProfileBtn}
-          onPress={() => navigation.navigate(Routes.EDIT_PROFILE)}>
-          <Text>{t('profile.editProfile')}</Text>
-          <Icons name="arrowRight" />
-        </TouchableOpacity>
+        {/*<TouchableOpacity*/}
+        {/*  style={style.editProfileBtn}*/}
+        {/*  onPress={() => navigation.navigate(Routes.EDIT_PROFILE)}>*/}
+        {/*  <Text>{t('profile.editProfile')}</Text>*/}
+        {/*  <Icons name="arrowRight" />*/}
+        {/*</TouchableOpacity>*/}
 
         <GridList
           data={menus}

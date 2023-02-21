@@ -86,3 +86,4 @@ ios/envfile
 
 # Custom Patches
 patches/@dfinity+agent+0.9.3.patch
+key
