@@ -83,5 +83,6 @@ ios/envfile
 
 # Visual Studio Code
 /.vscode
-upload_certificate.pem
-private_key.pepk
+
+# Custom Patches
+patches/@dfinity+agent+0.9.3.patch

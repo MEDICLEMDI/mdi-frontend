@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MEDICLE</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">@string/CODE_PUSH_ANDROID_DEPLOY_KEY</string>
+</resources>
