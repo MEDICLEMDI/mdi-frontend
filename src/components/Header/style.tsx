@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   logo: {
@@ -18,6 +18,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 30,
-    height: 60,
+    paddingVertical: Platform.OS === 'ios' ? 0 : 20,
+    paddingBottom: 20,
   },
 });
