@@ -6,7 +6,7 @@ import defaultStyle from './style';
 interface TopLabelInputProps extends TextInputProps {
   readonly direction?: 'row' | 'column' | undefined;
   label?: string | undefined;
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
 }
 
 const MedicleInput = ({

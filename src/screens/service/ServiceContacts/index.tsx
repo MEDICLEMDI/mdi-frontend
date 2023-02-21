@@ -50,20 +50,23 @@ export default () => {
         <View>
           <TopLabelInput
             label={t('input.name')}
+            style={[style.input]}
             placeholder={t('input.namePlaceholder')}
           />
           <TopLabelInput
             label={t('input.company')}
+            style={[style.input]}
             placeholder={t('input.companyPlaceholder')}
           />
           <TopLabelInput
             label={t('input.phone')}
+            style={[style.input]}
             placeholder={t('input.phonePlaceholder')}
           />
           <TopLabelInput
             label={t('input.comment')}
             placeholder={t('input.commentPlaceholder')}
-            style={{ minHeight: 80, paddingTop: 15, textAlignVertical: 'top' }}
+            style={[style.textArea, style.input]}
             editable={true}
             multiline={true}
             numberOfLines={4}
@@ -74,27 +77,27 @@ export default () => {
         <View>
           <View style={style.agreeComment}>
             <Text style={[FONT_GRAY]}>
-              {t('serviceContact.agreementDescription')}
+              {t('input.agreementDescription')}
             </Text>
           </View>
           <CustomCheckbox
             selected={docAgree.doc1}
             onPress={() => checkboxListener('doc1')}>
             <Text style={[style.checkBoxLabel, FONT_GRAY]}>
-              {t('serviceContact.doc1')}
+              {t('input.doc1')}
             </Text>
             <Text style={[style.detail, FONT_GRAY]}>
-              {t('serviceContact.detail')}
+              {t('input.detail')}
             </Text>
           </CustomCheckbox>
           <CustomCheckbox
             selected={docAgree.doc2}
             onPress={() => checkboxListener('doc2')}>
             <Text style={[style.checkBoxLabel, FONT_GRAY]}>
-              {t('serviceContact.doc2')}
+              {t('input.doc2')}
             </Text>
             <Text style={[style.detail, FONT_GRAY]}>
-              {t('serviceContact.detail')}
+              {t('input.detail')}
             </Text>
           </CustomCheckbox>
         </View>
@@ -102,7 +105,7 @@ export default () => {
       <TouchableOpacity
         style={style.confirmButton}
         onPress={() => console.log('Contact')}>
-        <Text style={[FONT_WHITE]}>{t('serviceContact.confirm')}</Text>
+        <Text style={[FONT_WHITE]}>{t('input.confirm')}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
