@@ -12,7 +12,7 @@
     "arch": "arch -x86_64 yarn ios",
     "ios:stage": "yarn run ic:build.ios && react-native run-ios --scheme plug-stage --configuration Debug",
     "ios:prod": "yarn run ic:build.ios && react-native run-ios --scheme plug-prod --configuration Debug",
-    "android": "yarn run ic:build.android && npx react-native run-android --variant=devDebug --appId co.medicle.mdi.dev ",
+    "android": "yarn run ic:build.android && npx react-native run-android --variant=devDebug --appId com.medicle.alpha.dev ",
     "android:stage": "yarn run ic:build.android && react-native run-android --variant=stageDebug ",
     "android:prod": "yarn run ic:build.android && react-native run-android --variant=productionDebug ",
     "android:build.dev": "yarn run ic:build.android && yarn run patch:android && cd android && ./gradlew clean && ./gradlew assembleDevRelease",
