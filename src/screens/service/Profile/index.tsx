@@ -45,7 +45,7 @@ const Profile = ({ navigation }) => {
           elevation={10}
           opacity={0.95}
           radius={10}
-          style={[style.profileWrap, { marginBottom: 20 }]}>
+          style={style.profileWrap}>
           <View style={style.profileNameWrap}>
             <Icons name="userCircle" />
             <Text style={style.name}>Preview</Text>
@@ -61,12 +61,12 @@ const Profile = ({ navigation }) => {
           </TouchableOpacity>
         </BoxDropShadow>
 
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={style.editProfileBtn}
           onPress={() => navigation.navigate(Routes.EDIT_PROFILE)}>
           <Text>{t('profile.editProfile')}</Text>
           <Icons name="arrowRight" />
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
         <GridList
           data={menus}
