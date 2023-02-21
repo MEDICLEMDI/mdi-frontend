@@ -1,0 +1,429 @@
+2023-02-21 07:24:29 +0000  Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x2a3a85f90; archive(resolved)="<IDEArchive: 0x60009fc8c240>", distributionTask(resolved)="2", distributionDestination(resolved)="2", distributionMethod(resolved)="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team(resolved)="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	Chain (16, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0x2a3a85f90; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionProcessingPipelineContext: 0x2b7a0e110; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a1789860; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a3e260f0; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a3e22f70; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a3b82980; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a1789660; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a1789460; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a1788eb0; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2b7a0df10; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a3b7d900; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a3b7c510; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a1789260; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600010aa6640; teamID='7MXM63QGKX', teamName='MEDICLE Co., Ltd.', teamType='Company', username='uhas2003@naver.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2a1788cb0; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="(null)">
+	<IDEDistributionContext: 0x2a3ada640; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x60000d4ec790>", team="(null)">
+	<IDEDistributionContext: 0x2b7a0d670; archive = "<IDEArchive: 0x60009fc8c240>", distributionMethod="(null)", team="(null)">
+</IDEDistributionProcessingPipelineContext: 0x2a3a85f90>
+2023-02-21 07:24:29 +0000  Processing step: IDEDistributionCreateDestRootStep
+2023-02-21 07:24:29 +0000  Processing step: IDEDistributionCopyItemStep
+2023-02-21 07:24:29 +0000  Running /usr/bin/ditto '-V' '/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app'
+2023-02-21 07:24:29 +0000  >>> Copying /Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app 
+2023-02-21 07:24:29 +0000  copying file ./_CodeSignature/CodeResources ... 
+2023-02-21 07:24:29 +0000  13678 bytes for ./_CodeSignature/CodeResources
+2023-02-21 07:24:29 +0000  copying file ./Fontisto.ttf ... 
+2023-02-21 07:24:29 +0000  313528 bytes for ./Fontisto.ttf
+2023-02-21 07:24:29 +0000  copying file ./Octicons.ttf ... 
+2023-02-21 07:24:29 +0000  49404 bytes for ./Octicons.ttf
+2023-02-21 07:24:29 +0000  copying file ./Inter-Medium.ttf ... 
+2023-02-21 07:24:29 +0000  314712 bytes for ./Inter-Medium.ttf
+2023-02-21 07:24:29 +0000  copying file ./Feather.ttf ... 
+2023-02-21 07:24:29 +0000  56228 bytes for ./Feather.ttf
+2023-02-21 07:24:29 +0000  copying file ./Entypo.ttf ... 
+2023-02-21 07:24:29 +0000  66200 bytes for ./Entypo.ttf
+2023-02-21 07:24:29 +0000  copying file ./FontAwesome5_Brands.ttf ... 
+2023-02-21 07:24:29 +0000  134040 bytes for ./FontAwesome5_Brands.ttf
+2023-02-21 07:24:29 +0000  copying file ./MaterialCommunityIcons.ttf ... 
+2023-02-21 07:24:29 +0000  1147844 bytes for ./MaterialCommunityIcons.ttf
+2023-02-21 07:24:29 +0000  copying file ./AppIcon60x60@2x.png ... 
+2023-02-21 07:24:29 +0000  9337 bytes for ./AppIcon60x60@2x.png
+2023-02-21 07:24:29 +0000  copying file ./AntDesign.ttf ... 
+2023-02-21 07:24:29 +0000  70344 bytes for ./AntDesign.ttf
+2023-02-21 07:24:29 +0000  copying file ./Foundation.ttf ... 
+2023-02-21 07:24:29 +0000  56976 bytes for ./Foundation.ttf
+2023-02-21 07:24:29 +0000  copying file ./Ionicons.ttf ... 
+2023-02-21 07:24:29 +0000  247192 bytes for ./Ionicons.ttf
+2023-02-21 07:24:29 +0000  copying file ./FontAwesome5_Solid.ttf ... 
+2023-02-21 07:24:29 +0000  202744 bytes for ./FontAwesome5_Solid.ttf
+2023-02-21 07:24:29 +0000  copying file ./FontAwesome5_Regular.ttf ... 
+2023-02-21 07:24:29 +0000  33736 bytes for ./FontAwesome5_Regular.ttf
+2023-02-21 07:24:29 +0000  copying file ./AccessibilityResources.bundle/en.lproj/Localizable.strings ... 
+2023-02-21 07:24:29 +0000  518 bytes for ./AccessibilityResources.bundle/en.lproj/Localizable.strings
+2023-02-21 07:24:29 +0000  copying file ./AccessibilityResources.bundle/Info.plist ... 
+2023-02-21 07:24:29 +0000  791 bytes for ./AccessibilityResources.bundle/Info.plist
+2023-02-21 07:24:29 +0000  copying file ./Inter-Regular.ttf ... 
+2023-02-21 07:24:29 +0000  309828 bytes for ./Inter-Regular.ttf
+2023-02-21 07:24:29 +0000  copying file ./FontAwesome.ttf ... 
+2023-02-21 07:24:29 +0000  165548 bytes for ./FontAwesome.ttf
+2023-02-21 07:24:29 +0000  copying file ./Zocial.ttf ... 
+2023-02-21 07:24:29 +0000  25788 bytes for ./Zocial.ttf
+2023-02-21 07:24:29 +0000  copying file ./Assets.car ... 
+2023-02-21 07:24:29 +0000  799359 bytes for ./Assets.car
+2023-02-21 07:24:29 +0000  copying file ./EvilIcons.ttf ... 
+2023-02-21 07:24:29 +0000  13456 bytes for ./EvilIcons.ttf
+2023-02-21 07:24:29 +0000  copying file ./AppIcon76x76@2x~ipad.png ... 
+2023-02-21 07:24:29 +0000  13685 bytes for ./AppIcon76x76@2x~ipad.png
+2023-02-21 07:24:29 +0000  copying file ./main.jsbundle ... 
+2023-02-21 07:24:29 +0000  7970392 bytes for ./main.jsbundle
+2023-02-21 07:24:29 +0000  copying file ./BootSplash.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib ... 
+2029 bytes for ./BootSplash.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib
+copying file ./BootSplash.storyboardc/UIViewController-01J-lp-oVM.nib ... 
+896 bytes for ./BootSplash.storyboardc/UIViewController-01J-lp-oVM.nib
+copying file ./BootSplash.storyboardc/Info.plist ... 
+258 bytes for ./BootSplash.storyboardc/Info.plist
+2023-02-21 07:24:29 +0000  copying file ./Frameworks/hermes.framework/_CodeSignature/CodeResources ... 
+2023-02-21 07:24:29 +0000  1798 bytes for ./Frameworks/hermes.framework/_CodeSignature/CodeResources
+2023-02-21 07:24:29 +0000  copying file ./Frameworks/hermes.framework/hermes ... 
+2023-02-21 07:24:29 +0000  487597872 bytes for ./Frameworks/hermes.framework/hermes
+copying file ./Frameworks/hermes.framework/Info.plist ... 
+2023-02-21 07:24:29 +0000  815 bytes for ./Frameworks/hermes.framework/Info.plist
+copying file ./SimpleLineIcons.ttf ... 
+54056 bytes for ./SimpleLineIcons.ttf
+copying file ./embedded.mobileprovision ... 
+20666 bytes for ./embedded.mobileprovision
+copying file ./assets/node_modules/@react-navigation/elements/src/assets/back-icon@3x.png ... 
+761 bytes for ./assets/node_modules/@react-navigation/elements/src/assets/back-icon@3x.png
+copying file ./assets/node_modules/@react-navigation/elements/src/assets/back-icon@2x.png ... 
+405 bytes for ./assets/node_modules/@react-navigation/elements/src/assets/back-icon@2x.png
+copying file ./assets/node_modules/@react-navigation/elements/src/assets/back-icon.png ... 
+2023-02-21 07:24:29 +0000  290 bytes for ./assets/node_modules/@react-navigation/elements/src/assets/back-icon.png
+copying file ./assets/node_modules/@react-navigation/elements/src/assets/back-icon-mask.png ... 
+2023-02-21 07:24:29 +0000  913 bytes for ./assets/node_modules/@react-navigation/elements/src/assets/back-icon-mask.png
+2023-02-21 07:24:29 +0000  copying file ./assets/src/assets/template_image.jpg ... 
+2023-02-21 07:24:29 +0000  86495 bytes for ./assets/src/assets/template_image.jpg
+2023-02-21 07:24:29 +0000  copying file ./assets/src/assets/images/ImageSlide_1.png ... 
+2023-02-21 07:24:29 +0000  68743 bytes for ./assets/src/assets/images/ImageSlide_1.png
+copying file ./assets/src/assets/images/Review.png ... 
+2023-02-21 07:24:29 +0000  46989 bytes for ./assets/src/assets/images/Review.png
+copying file ./assets/src/assets/images/wallet_card.png ... 
+2023-02-21 07:24:29 +0000  313996 bytes for ./assets/src/assets/images/wallet_card.png
+copying file ./assets/src/assets/images/copy.png ... 
+2023-02-21 07:24:29 +0000  1411 bytes for ./assets/src/assets/images/copy.png
+2023-02-21 07:24:29 +0000  copying file ./assets/src/assets/icons/il_medicle@2x.png ... 
+2023-02-21 07:24:29 +0000  12117 bytes for ./assets/src/assets/icons/il_medicle@2x.png
+copying file ./assets/src/assets/icons/wallet_logo.png ... 
+2023-02-21 07:24:29 +0000  28591 bytes for ./assets/src/assets/icons/wallet_logo.png
+copying file ./assets/src/assets/icons/il_medicle@3x.png ... 
+2023-02-21 07:24:29 +0000  23009 bytes for ./assets/src/assets/icons/il_medicle@3x.png
+copying file ./assets/src/assets/icons/key.png ... 
+2023-02-21 07:24:29 +0000  725 bytes for ./assets/src/assets/icons/key.png
+copying file ./assets/src/assets/icons/il_medicle.png ... 
+2023-02-21 07:24:29 +0000  4258 bytes for ./assets/src/assets/icons/il_medicle.png
+copying file ./assets/src/assets/icons/medicle-logo-full.png ... 
+2023-02-21 07:24:29 +0000  5845 bytes for ./assets/src/assets/icons/medicle-logo-full.png
+2023-02-21 07:24:29 +0000  copying file ./Plug ... 
+2023-02-21 07:24:29 +0000  7219840 bytes for ./Plug
+copying file ./Info.plist ... 
+2023-02-21 07:24:29 +0000  /usr/bin/ditto exited with 0
+2023-02-21 07:24:29 +0000  1706 bytes for ./Info.plist
+copying file ./Inter-SemiBold.ttf ... 
+315756 bytes for ./Inter-SemiBold.ttf
+copying file ./PkgInfo ... 
+8 bytes for ./PkgInfo
+copying file ./MaterialIcons.ttf ... 
+230384 bytes for ./MaterialIcons.ttf
+2023-02-21 07:24:29 +0000  Processing step: IDEDistributionEmbedProfileStep
+2023-02-21 07:24:29 +0000  Skipping profile for item: <IDEDistributionItem: 0x60009fcc80c0; bundleID='dev.hermesengine.iphoneos', path='<DVTFilePath:0x600033ed6b50:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60003b5de940; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000a1a9760; name='Apple Development: sehoon park (NDSP2Q23T3)', hash='F53153EA6DC2174CD5F3406FA041B8B181157908', serialNumber='7156BE5AB26E78AD4974843BD66BBC0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-16 01:59:49 +0000''>', entitlements='(null)', teamID='7MXM63QGKX', identifier='dev.hermesengine.iphoneos', executablePath='<DVTFilePath:0x60009fc8c180:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework/hermes'>', hardenedRuntime='0'>'>
+2023-02-21 07:24:30 +0000  Processing step: IDEDistributionInfoPlistStep
+2023-02-21 07:24:30 +0000  Processing step: IDEDistributionItemRemovalStep
+2023-02-21 07:24:30 +0000  Processing step: IDEDistributionAppThinningPlistStep
+2023-02-21 07:24:30 +0000  Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2023-02-21 07:24:30 +0000  Processing step: IDEDistributionCompileBitcodeStep
+2023-02-21 07:24:30 +0000  Skipping step: IDEDistributionCompileBitcodeStep because it said so
+2023-02-21 07:24:30 +0000  Processing step: IDEDistributionCodeSlimmingStep
+2023-02-21 07:24:30 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks/hermes.framework/hermes' '-r' '-keep_cs' '-o' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks/hermes.framework/hermes'
+2023-02-21 07:24:30 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip exited with 0
+2023-02-21 07:24:30 +0000  Processing step: IDEDistributionCopyBCSymbolMapsStep
+2023-02-21 07:24:30 +0000  Processing step: IDEDistributionSymbolsStep
+2023-02-21 07:24:30 +0000  Processing symbols for hermes.framework
+2023-02-21 07:24:30 +0000  Running /usr/bin/rsync '-8aPhhE' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks/hermes.framework' '--link-dest' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0'
+2023-02-21 07:24:30 +0000  building file list ... 
+2023-02-21 07:24:30 +0000   0 files...
+2023-02-21 07:24:30 +0000  5 files to consider
+2023-02-21 07:24:30 +0000  hermes.framework/
+2023-02-21 07:24:30 +0000  hermes.framework/_CodeSignature/
+rsync: link "/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/hermes.framework/_CodeSignature/CodeResources" => /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks/hermes.framework/_CodeSignature/CodeResources failed: Operation not permitted (1)
+2023-02-21 07:24:30 +0000  hermes.framework/_CodeSignature/CodeResources
+2023-02-21 07:24:30 +0000  
+2023-02-21 07:24:30 +0000  sent 219 bytes  received 38 bytes  514.00 bytes/sec
+total size is 6.56M  speedup is 26761.07
+2023-02-21 07:24:30 +0000  /usr/bin/rsync exited with 0
+2023-02-21 07:24:30 +0000  Running /usr/bin/rsync '-8aPhhE' '/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/dSYMs/' '--link-dest' '/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/dSYMs/' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0'
+2023-02-21 07:24:30 +0000  building file list ... 
+2023-02-21 07:24:30 +0000   0 files...
+2023-02-21 07:24:30 +0000  7 files to consider
+2023-02-21 07:24:30 +0000  ./
+2023-02-21 07:24:30 +0000  Plug.app.dSYM/
+Plug.app.dSYM/Contents/
+Plug.app.dSYM/Contents/Resources/
+Plug.app.dSYM/Contents/Resources/DWARF/
+2023-02-21 07:24:30 +0000  
+2023-02-21 07:24:30 +0000  sent 234 bytes  received 50 bytes  568.00 bytes/sec
+total size is 57.88M  speedup is 213700.76
+2023-02-21 07:24:30 +0000  /usr/bin/rsync exited with 0
+2023-02-21 07:24:30 +0000  Writing /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Symbols/982A4FEA-A17A-39BC-8A39-65B6ADD8E871.symbols
+2023-02-21 07:24:30 +0000  Processing symbols for Plug.app
+2023-02-21 07:24:30 +0000  Running /usr/bin/rsync '-8aPhhE' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app' '--link-dest' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0'
+2023-02-21 07:24:30 +0000  building file list ... 
+2023-02-21 07:24:30 +0000   0 files...
+2023-02-21 07:24:30 +0000  69 files to consider
+2023-02-21 07:24:30 +0000  Plug.app/
+2023-02-21 07:24:30 +0000  Plug.app/AccessibilityResources.bundle/
+Plug.app/AccessibilityResources.bundle/en.lproj/
+Plug.app/BootSplash.storyboardc/
+Plug.app/Frameworks/
+Plug.app/Frameworks/hermes.framework/
+Plug.app/Frameworks/hermes.framework/_CodeSignature/
+Plug.app/_CodeSignature/
+Plug.app/assets/
+Plug.app/assets/node_modules/
+Plug.app/assets/node_modules/@react-navigation/
+Plug.app/assets/node_modules/@react-navigation/elements/
+Plug.app/assets/node_modules/@react-navigation/elements/src/
+Plug.app/assets/node_modules/@react-navigation/elements/src/assets/
+2023-02-21 07:24:30 +0000  Plug.app/assets/src/
+Plug.app/assets/src/assets/
+Plug.app/assets/src/assets/icons/
+Plug.app/assets/src/assets/images/
+2023-02-21 07:24:30 +0000  
+2023-02-21 07:24:30 +0000  sent 1.95K bytes  received 128 bytes  4.16K bytes/sec
+total size is 26.06M  speedup is 12836.45
+2023-02-21 07:24:30 +0000  /usr/bin/rsync exited with 0
+2023-02-21 07:24:30 +0000  Running /usr/bin/rsync '-8aPhhE' '/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/dSYMs/' '--link-dest' '/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/dSYMs/' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0'
+2023-02-21 07:24:30 +0000  building file list ... 
+2023-02-21 07:24:30 +0000   0 files...
+2023-02-21 07:24:30 +0000  7 files to consider
+2023-02-21 07:24:30 +0000  ./
+2023-02-21 07:24:30 +0000  Plug.app.dSYM/
+Plug.app.dSYM/Contents/
+Plug.app.dSYM/Contents/Resources/
+Plug.app.dSYM/Contents/Resources/DWARF/
+2023-02-21 07:24:30 +0000  
+2023-02-21 07:24:30 +0000  sent 246 bytes  received 62 bytes  616.00 bytes/sec
+total size is 57.88M  speedup is 197048.76
+2023-02-21 07:24:30 +0000  /usr/bin/rsync exited with 0
+2023-02-21 07:24:31 +0000  Writing /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Symbols/71367DD1-1F8A-392C-8373-AC7A17C590D5.symbols
+2023-02-21 07:24:31 +0000  Processing step: IDEDistributionCopyAppleProvidedContentStep
+2023-02-21 07:24:31 +0000  Processing step: IDEDistributionAppThinningStep
+2023-02-21 07:24:31 +0000  Skipping step: IDEDistributionAppThinningStep because it said so
+2023-02-21 07:24:31 +0000  Processing step: IDEDistributionArchThinningStep
+2023-02-21 07:24:31 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks/hermes.framework/hermes' '-verify_arch' 'arm64e'
+2023-02-21 07:24:31 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2023-02-21 07:24:31 +0000  Skipping architecture thinning for item "hermes" because arch "arm64e" wasn't found
+2023-02-21 07:24:31 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Plug' '-verify_arch' 'arm64e'
+2023-02-21 07:24:31 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2023-02-21 07:24:31 +0000  Skipping architecture thinning for item "Plug" because arch "arm64e" wasn't found
+2023-02-21 07:24:31 +0000  Processing step: IDEDistributionODRStep
+2023-02-21 07:24:31 +0000  Processing step: IDEDistributionStripXattrsStep
+2023-02-21 07:24:31 +0000  Skipping stripping extended attributes of item: <IDEDistributionItem: 0x60009fcc80c0; bundleID='dev.hermesengine.iphoneos', path='<DVTFilePath:0x600033ed6b50:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60003b5de940; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000a11c0b0; name='Apple Development: sehoon park (NDSP2Q23T3)', hash='F53153EA6DC2174CD5F3406FA041B8B181157908', serialNumber='7156BE5AB26E78AD4974843BD66BBC0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-16 01:59:49 +0000''>', entitlements='(null)', teamID='7MXM63QGKX', identifier='dev.hermesengine.iphoneos', executablePath='<DVTFilePath:0x60009fc8c180:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework/hermes'>', hardenedRuntime='0'>'>
+2023-02-21 07:24:31 +0000  Running /usr/bin/xattr '-crs' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app'
+2023-02-21 07:24:31 +0000  /usr/bin/xattr exited with 0
+2023-02-21 07:24:31 +0000  Processing step: IDEDistributionCodesignStep
+2023-02-21 07:24:31 +0000  Entitlements for <IDEDistributionItem: 0x60009fcc80c0; bundleID='dev.hermesengine.iphoneos', path='<DVTFilePath:0x600033ed6b50:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60003b5de940; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000a11c0b0; name='Apple Development: sehoon park (NDSP2Q23T3)', hash='F53153EA6DC2174CD5F3406FA041B8B181157908', serialNumber='7156BE5AB26E78AD4974843BD66BBC0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-16 01:59:49 +0000''>', entitlements='(null)', teamID='7MXM63QGKX', identifier='dev.hermesengine.iphoneos', executablePath='<DVTFilePath:0x60009fc8c180:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework/hermes'>', hardenedRuntime='0'>'>: {
+}
+2023-02-21 07:24:31 +0000  Entitlements for <IDEDistributionItem: 0x60009fcc80c0; bundleID='dev.hermesengine.iphoneos', path='<DVTFilePath:0x600033ed6b50:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60003b5de940; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000a11c2c0; name='Apple Development: sehoon park (NDSP2Q23T3)', hash='F53153EA6DC2174CD5F3406FA041B8B181157908', serialNumber='7156BE5AB26E78AD4974843BD66BBC0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-16 01:59:49 +0000''>', entitlements='(null)', teamID='7MXM63QGKX', identifier='dev.hermesengine.iphoneos', executablePath='<DVTFilePath:0x60009fc8c180:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework/hermes'>', hardenedRuntime='0'>'> are: {
+}
+2023-02-21 07:24:31 +0000  Writing entitlements for <IDEDistributionItem: 0x60009fcc80c0; bundleID='dev.hermesengine.iphoneos', path='<DVTFilePath:0x600033ed6b50:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60003b5de940; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000a11c420; name='Apple Development: sehoon park (NDSP2Q23T3)', hash='F53153EA6DC2174CD5F3406FA041B8B181157908', serialNumber='7156BE5AB26E78AD4974843BD66BBC0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-16 01:59:49 +0000''>', entitlements='(null)', teamID='7MXM63QGKX', identifier='dev.hermesengine.iphoneos', executablePath='<DVTFilePath:0x60009fc8c180:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Frameworks/hermes.framework/hermes'>', hardenedRuntime='0'>'> to: /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/entitlements~~~oXzt3l
+2023-02-21 07:24:31 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' 'B62DDC7E2B6Dcom.medicle.alpha57B50B809B2' '--entitlements' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/entitlements~~~oXzt3l' '--generate-entitlement-der' '--preserve-metadata=identifier,flags,runtime' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks/hermes.framework'
+2023-02-21 07:24:31 +0000  /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks/hermes.framework: replacing existing signature
+2023-02-21 07:24:31 +0000  /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks/hermes.framework: signed bundle with Mach-O thin (arm64) [dev.hermesengine.iphoneos]
+2023-02-21 07:24:31 +0000  /usr/bin/codesign exited with 0
+2023-02-21 07:24:31 +0000  Entitlements forcom.medicle.alphaItem: 0x60009fcc9800; bundleID='com.alpha.medicle', path='<DVTFilePath:0x600033e309a0:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60003b5de990; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000a13c160; name='Apple Development: sehoon park (NDSP2Q23T3)', hash='F53153EA6DC2174CD5F3406FA041B8B181157908', serialNumber='7156BE5AB26E78AD4974843BD66BBC0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-16 01:59:49 +0000''>', entitlements='{
+    "application-identifier" = "7MXM63QGKX.com.alpha.medicle";
+    "com.apple.developer.associated-domains" =     (
+        "applinks:plugwallet.ooo"com.medicle.alpha
+    );com.medicle.alpha
+    "com.apple.developer.team-identifier" = 7MXM63QGKX;
+    "get-task-allow" = 1;
+}', teamID='7MXM63QGKX', identifier='com.alpha.medicle', executablePath='<DVTFilePath:0x60009fc40000:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Plug'>', hardenedRuntime='0'>'>: {
+    "application-identifier" = "7MXM63QGKX.com.alpha.medicle";
+    "beta-reports-active" = 1;
+    "com.apple.developer.associated-domains" =     (
+        "applinks:plugwallet.ooo"
+    );com.medicle.alpha
+    "com.apple.developer.team-identifier" = 7MXM63QGKX;
+    "get-task-allow" = 0;
+}
+2023-02-21 07:24:31 +0000  Entitlements forcom.medicle.alphaItem: 0x60009fcc9800; bundleID='com.alpha.medicle', path='<DVTFilePath:0x600033e309a0:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60003b5de990; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000a11c210; name='Apple Development: sehoon park (NDSP2Q23T3)', hash='F53153EA6DC2174CD5F3406FA041B8B181157908', serialNumber='7156BE5AB26E78AD4974843BD66BBC0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-16 01:59:49 +0000''>', entitlements='{
+    "application-identifier" = "7MXM63QGKX.com.alpha.medicle";
+    "com.apple.developer.associated-domains" =     (
+        "applinks:plugwallet.ooo"com.medicle.alpha
+    );com.medicle.alpha
+    "com.apple.developer.team-identifier" = 7MXM63QGKX;
+    "get-task-allow" = 1;
+}', teamID='7MXM63QGKX', identifier='com.alpha.medicle', executablePath='<DVTFilePath:0x60009fc40000:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Plug'>', hardenedRuntime='0'>'> are: {
+    "application-identifier" = "7MXM63QGKX.com.alpha.medicle";
+    "beta-reports-active" = 1;
+    "com.apple.developer.associated-domains" =     (
+        "applinks:plugwallet.ooo"
+    );com.medicle.alpha
+    "com.apple.developer.team-identifier" = 7MXM63QGKX;
+    "get-task-allow" = 0;
+}
+2023-02-21 07:24:31 +0000  Writing entitlemcom.medicle.alphaributionItem: 0x60009fcc9800; bundleID='com.alpha.medicle', path='<DVTFilePath:0x600033e309a0:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60003b5de990; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000a11c420; name='Apple Development: sehoon park (NDSP2Q23T3)', hash='F53153EA6DC2174CD5F3406FA041B8B181157908', serialNumber='7156BE5AB26E78AD4974843BD66BBC0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-16 01:59:49 +0000''>', entitlements='{
+    "application-identifier" = "7MXM63QGKX.com.alpha.medicle";
+    "com.apple.developer.associated-domains" =     (
+        "applinks:plugwallet.ooo"com.medicle.alpha
+    );
+    "com.apple.developer.team-identifier" = 7MXM63QGKX;
+    "get-task-allow" = 1;com.medicle.alpha
+}', teamID='7MXM63QGKX', identifier='com.alpha.medicle', executablePath='<DVTFilePath:0x60009fc40000:'/Users/nialabs/Library/Developer/Xcode/Archives/2023-02-21/Plug 2023-02-21 4.23 PM.xcarchive/Products/Applications/Plug.app/Plug'>', hardenedRuntime='0'>'> to: /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/entitlements~~~gzb3R0
+2023-02-21 07:24:31 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' 'B62DDC7E2B6D44075195665D1729E57B50B809B2' '--entitlements' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/entitlements~~~gzb3R0' '--generate-entitlement-der' '--preserve-metadata=identifier,flags,runtime' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app'
+2023-02-21 07:24:31 +0000  /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app: replacing existing signature
+2023-02-21 07:24:31 +0000  /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app: signed app bundle with Mach-O thin (arm64) [com.alpha.medicle]
+2023-02-21 07:24:31 +0000  /usr/bin/codesign exited with 0
+2023-02-21 07:24:31 +0000  Processing step: IDEDistributionZipODRItemStep
+2023-02-21 07:24:31 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2023-02-21 07:24:31 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2023-02-21 07:24:31 +0000  Processing step: IDEDistributionCreateIPAStep
+2023-02-21 07:24:31 +0000  Running /usr/bin/rsync '-8aPhhE' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Symbols' '--link-dest' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root'
+2023-02-21 07:24:31 +0000  building file list ... 
+2023-02-21 07:24:31 +0000   0 files...
+2023-02-21 07:24:31 +0000  3 files to consider
+2023-02-21 07:24:31 +0000  Symbols/
+2023-02-21 07:24:31 +0000  
+2023-02-21 07:24:31 +0000  sent 204 bytes  received 26 bytes  460.00 bytes/sec
+total size is 18.83M  speedup is 85853.50
+2023-02-21 07:24:31 +0000  /usr/bin/rsync exited with 0
+2023-02-21 07:24:31 +0000  Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root' '/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Packages/Plug.ipa'
+2023-02-21 07:24:31 +0000  >>> Copying /var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root 
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/_CodeSignature/CodeResources ... 
+2023-02-21 07:24:31 +0000  13678 bytes for ./Payload/Plug.app/_CodeSignature/CodeResources
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Fontisto.ttf ... 
+2023-02-21 07:24:31 +0000  313528 bytes for ./Payload/Plug.app/Fontisto.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Octicons.ttf ... 
+2023-02-21 07:24:31 +0000  49404 bytes for ./Payload/Plug.app/Octicons.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Inter-Medium.ttf ... 
+2023-02-21 07:24:31 +0000  314712 bytes for ./Payload/Plug.app/Inter-Medium.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Feather.ttf ... 
+2023-02-21 07:24:31 +0000  56228 bytes for ./Payload/Plug.app/Feather.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Entypo.ttf ... 
+2023-02-21 07:24:31 +0000  66200 bytes for ./Payload/Plug.app/Entypo.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/FontAwesome5_Brands.ttf ... 
+2023-02-21 07:24:31 +0000  134040 bytes for ./Payload/Plug.app/FontAwesome5_Brands.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/MaterialCommunityIcons.ttf ... 
+2023-02-21 07:24:31 +0000  1147844 bytes for ./Payload/Plug.app/MaterialCommunityIcons.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/AppIcon60x60@2x.png ... 
+2023-02-21 07:24:31 +0000  9337 bytes for ./Payload/Plug.app/AppIcon60x60@2x.png
+copying file ./Payload/Plug.app/AntDesign.ttf ... 
+2023-02-21 07:24:31 +0000  70344 bytes for ./Payload/Plug.app/AntDesign.ttf
+copying file ./Payload/Plug.app/Foundation.ttf ... 
+2023-02-21 07:24:31 +0000  56976 bytes for ./Payload/Plug.app/Foundation.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Ionicons.ttf ... 
+2023-02-21 07:24:31 +0000  247192 bytes for ./Payload/Plug.app/Ionicons.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/FontAwesome5_Solid.ttf ... 
+2023-02-21 07:24:31 +0000  202744 bytes for ./Payload/Plug.app/FontAwesome5_Solid.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/FontAwesome5_Regular.ttf ... 
+2023-02-21 07:24:31 +0000  33736 bytes for ./Payload/Plug.app/FontAwesome5_Regular.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/AccessibilityResources.bundle/en.lproj/Localizable.strings ... 
+2023-02-21 07:24:31 +0000  518 bytes for ./Payload/Plug.app/AccessibilityResources.bundle/en.lproj/Localizable.strings
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/AccessibilityResources.bundle/Info.plist ... 
+2023-02-21 07:24:31 +0000  791 bytes for ./Payload/Plug.app/AccessibilityResources.bundle/Info.plist
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Inter-Regular.ttf ... 
+2023-02-21 07:24:31 +0000  309828 bytes for ./Payload/Plug.app/Inter-Regular.ttf
+copying file ./Payload/Plug.app/FontAwesome.ttf ... 
+2023-02-21 07:24:31 +0000  165548 bytes for ./Payload/Plug.app/FontAwesome.ttf
+copying file ./Payload/Plug.app/Zocial.ttf ... 
+2023-02-21 07:24:31 +0000  25788 bytes for ./Payload/Plug.app/Zocial.ttf
+copying file ./Payload/Plug.app/Assets.car ... 
+2023-02-21 07:24:31 +0000  799359 bytes for ./Payload/Plug.app/Assets.car
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/EvilIcons.ttf ... 
+2023-02-21 07:24:31 +0000  13456 bytes for ./Payload/Plug.app/EvilIcons.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/AppIcon76x76@2x~ipad.png ... 
+2023-02-21 07:24:31 +0000  13685 bytes for ./Payload/Plug.app/AppIcon76x76@2x~ipad.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/main.jsbundle ... 
+2023-02-21 07:24:31 +0000  7970392 bytes for ./Payload/Plug.app/main.jsbundle
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/BootSplash.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib ... 
+2029 bytes for ./Payload/Plug.app/BootSplash.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/BootSplash.storyboardc/UIViewController-01J-lp-oVM.nib ... 
+2023-02-21 07:24:31 +0000  896 bytes for ./Payload/Plug.app/BootSplash.storyboardc/UIViewController-01J-lp-oVM.nib
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/BootSplash.storyboardc/Info.plist ... 
+258 bytes for ./Payload/Plug.app/BootSplash.storyboardc/Info.plist
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Frameworks/hermes.framework/_CodeSignature/CodeResources ... 
+2023-02-21 07:24:31 +0000  1798 bytes for ./Payload/Plug.app/Frameworks/hermes.framework/_CodeSignature/CodeResources
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Frameworks/hermes.framework/hermes ... 
+2023-02-21 07:24:31 +0000  3119552 bytes for ./Payload/Plug.app/Frameworks/hermes.framework/hermes
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Frameworks/hermes.framework/Info.plist ... 
+870 bytes for ./Payload/Plug.app/Frameworks/hermes.framework/Info.plist
+copying file ./Payload/Plug.app/SimpleLineIcons.ttf ... 
+2023-02-21 07:24:31 +0000  54056 bytes for ./Payload/Plug.app/SimpleLineIcons.ttf
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/embedded.mobileprovision ... 
+2023-02-21 07:24:31 +0000  16363 bytes for ./Payload/Plug.app/embedded.mobileprovision
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/node_modules/@react-navigation/elements/src/assets/back-icon@3x.png ... 
+2023-02-21 07:24:31 +0000  761 bytes for ./Payload/Plug.app/assets/node_modules/@react-navigation/elements/src/assets/back-icon@3x.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/node_modules/@react-navigation/elements/src/assets/back-icon@2x.png ... 
+405 bytes for ./Payload/Plug.app/assets/node_modules/@react-navigation/elements/src/assets/back-icon@2x.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/node_modules/@react-navigation/elements/src/assets/back-icon.png ... 
+290 bytes for ./Payload/Plug.app/assets/node_modules/@react-navigation/elements/src/assets/back-icon.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/node_modules/@react-navigation/elements/src/assets/back-icon-mask.png ... 
+2023-02-21 07:24:31 +0000  913 bytes for ./Payload/Plug.app/assets/node_modules/@react-navigation/elements/src/assets/back-icon-mask.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/src/assets/template_image.jpg ... 
+2023-02-21 07:24:31 +0000  86495 bytes for ./Payload/Plug.app/assets/src/assets/template_image.jpg
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/src/assets/images/ImageSlide_1.png ... 
+2023-02-21 07:24:31 +0000  68743 bytes for ./Payload/Plug.app/assets/src/assets/images/ImageSlide_1.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/src/assets/images/Review.png ... 
+2023-02-21 07:24:31 +0000  46989 bytes for ./Payload/Plug.app/assets/src/assets/images/Review.png
+copying file ./Payload/Plug.app/assets/src/assets/images/wallet_card.png ... 
+2023-02-21 07:24:31 +0000  313996 bytes for ./Payload/Plug.app/assets/src/assets/images/wallet_card.png
+copying file ./Payload/Plug.app/assets/src/assets/images/copy.png ... 
+2023-02-21 07:24:31 +0000  1411 bytes for ./Payload/Plug.app/assets/src/assets/images/copy.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/src/assets/icons/il_medicle@2x.png ... 
+2023-02-21 07:24:31 +0000  12117 bytes for ./Payload/Plug.app/assets/src/assets/icons/il_medicle@2x.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/src/assets/icons/wallet_logo.png ... 
+2023-02-21 07:24:31 +0000  28591 bytes for ./Payload/Plug.app/assets/src/assets/icons/wallet_logo.png
+copying file ./Payload/Plug.app/assets/src/assets/icons/il_medicle@3x.png ... 
+2023-02-21 07:24:31 +0000  23009 bytes for ./Payload/Plug.app/assets/src/assets/icons/il_medicle@3x.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/src/assets/icons/key.png ... 
+2023-02-21 07:24:31 +0000  725 bytes for ./Payload/Plug.app/assets/src/assets/icons/key.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/src/assets/icons/il_medicle.png ... 
+2023-02-21 07:24:31 +0000  4258 bytes for ./Payload/Plug.app/assets/src/assets/icons/il_medicle.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/assets/src/assets/icons/medicle-logo-full.png ... 
+2023-02-21 07:24:31 +0000  5845 bytes for ./Payload/Plug.app/assets/src/assets/icons/medicle-logo-full.png
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Plug ... 
+2023-02-21 07:24:31 +0000  7219904 bytes for ./Payload/Plug.app/Plug
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Info.plist ... 
+1737 bytes for ./Payload/Plug.app/Info.plist
+2023-02-21 07:24:31 +0000  copying file ./Payload/Plug.app/Inter-SemiBold.ttf ... 
+2023-02-21 07:24:32 +0000  315756 bytes for ./Payload/Plug.app/Inter-SemiBold.ttf
+copying file ./Payload/Plug.app/PkgInfo ... 
+2023-02-21 07:24:32 +0000  8 bytes for ./Payload/Plug.app/PkgInfo
+copying file ./Payload/Plug.app/MaterialIcons.ttf ... 
+2023-02-21 07:24:32 +0000  230384 bytes for ./Payload/Plug.app/MaterialIcons.ttf
+2023-02-21 07:24:32 +0000  copying file ./Symbols/982A4FEA-A17A-39BC-8A39-65B6ADD8E871.symbols ... 
+2023-02-21 07:24:32 +0000  270996 bytes for ./Symbols/982A4FEA-A17A-39BC-8A39-65B6ADD8E871.symbols
+2023-02-21 07:24:32 +0000  copying file ./Symbols/71367DD1-1F8A-392C-8373-AC7A17C590D5.symbols ... 
+2023-02-21 07:24:32 +0000  19475308 bytes for ./Symbols/71367DD1-1F8A-392C-8373-AC7A17C590D5.symbols
+2023-02-21 07:24:32 +0000  /usr/bin/ditto exited with 0
+2023-02-21 07:24:32 +0000  Processing step: IDEDistributionAppStoreInformationStep
+2023-02-21 07:24:32 +0000  Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2023-02-21 07:24:32 +0000  Processing step: IDEDistributionGenerateProcessedDistributionItems
+2023-02-21 07:24:32 +0000  IDEDistributionItem init <DVTFilePath:0x600037ee6060:'/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app/Frameworks/hermes.framework'>
+2023-02-21 07:24:32 +0000  IDEDistributionItem init <DVTFilePath:0x600037ee75d0:'/var/folders/rl/hx41kx1s165fw7qx_25ljnp80000gn/T/XcodeDistPipeline.~~~QtWhM0/Root/Payload/Plug.app'>
+2023-02-21 07:24:32 +0000  Processing step: IDEDistributionCreateManifestStep
+2023-02-21 07:24:32 +0000  Skipping step: IDEDistributionCreateManifestStep because it said so
