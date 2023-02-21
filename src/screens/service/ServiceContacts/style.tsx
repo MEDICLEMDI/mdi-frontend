@@ -10,6 +10,14 @@ export default StyleSheet.create({
     paddingHorizontal: 30,
     justifyContent: 'space-between',
   },
+  textArea: {
+    minHeight: 80,
+    paddingTop: 15,
+    textAlignVertical: 'top'
+  },
+  input: {
+    marginBottom: 20,
+  },
   agreeComment: {
     paddingBottom: 15,
     borderBottomWidth: 1,

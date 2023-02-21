@@ -1,19 +1,22 @@
 import { StyleSheet } from 'react-native';
+import {Colors} from "@/constants/theme";
 
 export default StyleSheet.create({
   container: {
     flex: 1,
   },
+  settingWrap: {
+    paddingVertical: 30,
+  },
   profileWrap: {
     paddingHorizontal: 30,
-    marginVertical: 8,
+    marginVertical: 4,
     marginHorizontal: 30,
 
-    height: 75,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.Medicle.White,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E8E8E8',
+    borderColor: Colors.Medicle.Gray.SemiLight,
 
     flexDirection: 'row',
     justifyContent: 'space-between',

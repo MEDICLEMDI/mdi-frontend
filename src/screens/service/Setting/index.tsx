@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  FlatList,
   Platform,
   SafeAreaView,
   ScrollView,
@@ -70,30 +71,30 @@ const Setting = ({ navigation }) => {
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('header.settings')} />
-      <ScrollView horizontal={false} style={{ flex: 1, width: '100%' }}>
-        <View style={{ marginTop: 20 }}>
-          {data.map((item, key) => (
-            <TouchableOpacity
-              key={key}
-              onPress={item.onPress ? item.onPress : null}>
-              <BoxDropShadow
-                color={
-                  Platform.OS === 'ios'
-                    ? Colors.Medicle.Gray.SemiLight
-                    : Colors.Medicle.Gray.Standard
-                }
-                offset={[0, 7]}
-                elevation={10}
-                opacity={0.95}
-                radius={10}
-                style={[style.profileWrap, { opacity: 0.99 }]}>
-                <Text>{item.name}</Text>
-                <Icons name="arrowRight" />
-              </BoxDropShadow>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+        <FlatList
+            style={style.settingWrap}
+            data={data}
+            renderItem={({item}) => (
+              <TouchableOpacity onPress={item.onPress ? item.onPress : null} >
+                <BoxDropShadow
+                    color={
+                      Platform.OS === 'ios'
+                          ? Colors.Medicle.Gray.SemiLight
+                          : Colors.Medicle.Gray.Dark
+                    }
+                    offset={[0, 7]}
+                    elevation={10}
+                    opacity={0.95}
+                    radius={10}
+                    style={[style.profileWrap, { opacity: 0.99 }]}>
+                  <Text>{item.name}</Text>
+                  <Icons name="arrowRight" />
+                </BoxDropShadow>
+              </TouchableOpacity>
+            )}
+            ListFooterComponent={() => <View style={{ marginTop: 20 }} />}
+        />
+
     </SafeAreaView>
   );
 };
