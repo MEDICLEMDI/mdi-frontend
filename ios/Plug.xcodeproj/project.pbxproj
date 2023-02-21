@@ -21,7 +21,6 @@
 		56A497EFEE344CDFB2865F73 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4ABFD47BAF2E44B9AE285C85 /* Inter-Regular.ttf */; };
 		A1C3D441ED1064791A2B7D4D /* libPods-Plug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE8378D6CEF5F723EC96CF5A /* libPods-Plug.a */; };
 		E00C5047015A63A63D32E91C /* libPods-Plug-PlugTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FADF2B18F6FD670780D27D82 /* libPods-Plug-PlugTests.a */; };
-		EB532FE2E03440628ADCE8CC /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B634A50B344B3A90EA60B9 /* noop-file.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,22 +45,6 @@
 		0AEEB14227C918E9005F12AA /* RCTSigningBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTSigningBridge.h; sourceTree = "<group>"; };
 		0AEEB14527C920A0005F12AA /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		0AEEB14B27C92BF3005F12AA /* ic_agent_lib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = ic_agent_lib.a; path = ../rust/.cargo/mobile_app/target/universal/release/ic_agent_lib.a; sourceTree = "<group>"; };
-		0FCCB92729810A4100CCC18F /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Entypo.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		0FCCB92829810A4100CCC18F /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		0FCCB92929810A4100CCC18F /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		0FCCB92A29810A4100CCC18F /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		0FCCB92B29810A4100CCC18F /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		0FCCB92C29810A4100CCC18F /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		0FCCB92D29810A4100CCC18F /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		0FCCB92E29810A4100CCC18F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SimpleLineIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		0FCCB92F29810A4100CCC18F /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Fontisto.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		0FCCB93029810A4100CCC18F /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		0FCCB93129810A4100CCC18F /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		0FCCB93229810A4100CCC18F /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		0FCCB93329810A4100CCC18F /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		0FCCB93429810A4100CCC18F /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AntDesign.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
-		0FCCB93529810A4100CCC18F /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		0FCCB93629810A4100CCC18F /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zocial.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Plug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Plug/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Plug/Images.xcassets; sourceTree = "<group>"; };
@@ -70,9 +53,7 @@
 		1F25339C284E554700B76386 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Plug/BootSplash.storyboard; sourceTree = "<group>"; };
 		1F982B2D2853DA6B006294A0 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Plug/AppDelegate.mm; sourceTree = "<group>"; };
 		1FF442DA28999BC30086AFD3 /* Plug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Plug.entitlements; path = Plug/Plug.entitlements; sourceTree = "<group>"; };
-		306382E9136C44B693B8217E /* SplashScreen.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SplashScreen.storyboard; path = Plug/SplashScreen.storyboard; sourceTree = "<group>"; };
 		33E5DE36FA63D06ED1690823 /* Pods-Plug-PlugTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plug-PlugTests.release.xcconfig"; path = "Target Support Files/Pods-Plug-PlugTests/Pods-Plug-PlugTests.release.xcconfig"; sourceTree = "<group>"; };
-		36B634A50B344B3A90EA60B9 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "Plug/noop-file.swift"; sourceTree = "<group>"; };
 		3809386EBD20482F923CAB29 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		4ABFD47BAF2E44B9AE285C85 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		9479768527D7D70800272BB1 /* react-native-config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "react-native-config.xcconfig"; sourceTree = "<group>"; };
@@ -123,29 +104,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		0FCCB926298109E600CCC18F /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				0FCCB93429810A4100CCC18F /* AntDesign.ttf */,
-				0FCCB92729810A4100CCC18F /* Entypo.ttf */,
-				0FCCB92929810A4100CCC18F /* EvilIcons.ttf */,
-				0FCCB93129810A4100CCC18F /* Feather.ttf */,
-				0FCCB92D29810A4100CCC18F /* FontAwesome.ttf */,
-				0FCCB93329810A4100CCC18F /* FontAwesome5_Brands.ttf */,
-				0FCCB92829810A4100CCC18F /* FontAwesome5_Regular.ttf */,
-				0FCCB93529810A4100CCC18F /* FontAwesome5_Solid.ttf */,
-				0FCCB92F29810A4100CCC18F /* Fontisto.ttf */,
-				0FCCB92B29810A4100CCC18F /* Foundation.ttf */,
-				0FCCB93029810A4100CCC18F /* Ionicons.ttf */,
-				0FCCB92A29810A4100CCC18F /* MaterialCommunityIcons.ttf */,
-				0FCCB93229810A4100CCC18F /* MaterialIcons.ttf */,
-				0FCCB92C29810A4100CCC18F /* Octicons.ttf */,
-				0FCCB92E29810A4100CCC18F /* SimpleLineIcons.ttf */,
-				0FCCB93629810A4100CCC18F /* Zocial.ttf */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		1001C41F0FEA4B21A6F1CC16 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,8 +128,6 @@
 				0AEEB14027C918D3005F12AA /* RCTSigningBridge.m */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				36B634A50B344B3A90EA60B9 /* noop-file.swift */,
-				306382E9136C44B693B8217E /* SplashScreen.storyboard */,
 			);
 			name = Plug;
 			sourceTree = "<group>";
@@ -208,7 +164,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				0FCCB926298109E600CCC18F /* Fonts */,
 				9479768527D7D70800272BB1 /* react-native-config.xcconfig */,
 				03F752A4273ACE6F006DB889 /* BridgingFile.swift */,
 				13B07FAE1A68108700A75B9A /* Plug */,
@@ -505,7 +460,6 @@
 				0AEEB14127C918D3005F12AA /* RCTSigningBridge.m in Sources */,
 				1F982B2E2853DA6B006294A0 /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				EB532FE2E03440628ADCE8CC /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,7 +480,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = PD9HGZ4YAV;
+				DEVELOPMENT_TEAM = 7MXM63QGKX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -549,8 +503,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Plug.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Plug";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Plug.app/Plug";
 			};
 			name = Debug;
 		};
@@ -580,8 +533,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Plug.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Plug";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Plug.app/Plug";
 			};
 			name = Release;
 		};
@@ -595,10 +547,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DZVNACPGLK;
+				DEVELOPMENT_TEAM = 7MXM63QGKX;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Plug/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MEDICLE;
+				INFOPLIST_KEY_CFBundleDisplayName = Medicle;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -615,13 +567,12 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.medicle.alpha;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alpha.medicle;
 				PRODUCT_NAME = Plug;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -643,7 +594,7 @@
 					"COCOAPODS=1",
 				);
 				INFOPLIST_FILE = Plug/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MEDICLE;
+				INFOPLIST_KEY_CFBundleDisplayName = Medicle;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -660,12 +611,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.medicle.alpha;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alpha.medicle;
 				PRODUCT_NAME = Plug;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Plug-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -705,7 +655,7 @@
 				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -721,12 +671,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = MEDICLE;
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "";
-				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSPrincipalClass = "";
-				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
@@ -781,7 +725,7 @@
 				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -790,12 +734,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = MEDICLE;
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "";
-				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSPrincipalClass = "";
-				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,

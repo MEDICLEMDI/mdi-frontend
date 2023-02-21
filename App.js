@@ -123,4 +123,4 @@ export default codePush({
   deploymentKey: isIos
     ? Config.CODE_PUSH_IOS_DEPLOY_KEY
     : Config.CODE_PUSH_ANDROID_DEPLOY_KEY,
-})(App);
+})(AppWithSentry);

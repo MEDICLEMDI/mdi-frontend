@@ -22,6 +22,7 @@ import com.facebook.react.uimanager.ViewManagerRegistry;
 import com.medicle.alpha.BuildConfig;
 import com.medicle.alpha.newarchitecture.components.MainComponentsRegistry;
 import com.medicle.alpha.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+
 import java.util.ArrayList;
 import java.util.List;
 

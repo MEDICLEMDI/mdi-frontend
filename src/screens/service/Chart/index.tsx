@@ -5,7 +5,7 @@ import { SafeAreaView, Text, View } from 'react-native';
 
 import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
-import { DatePicker } from '@/components/modals';
+import { DatePicker } from '@/components/Modals';
 
 import style from './style';
 

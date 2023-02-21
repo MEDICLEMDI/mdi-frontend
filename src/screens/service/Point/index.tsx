@@ -14,7 +14,7 @@ import {
 import BoxDropShadow from '@/components/BoxDropShadow';
 import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
-import { DatePicker } from '@/components/modals';
+import { DatePicker } from '@/components/Modals';
 import { Colors } from '@/constants/theme';
 import Icons from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';

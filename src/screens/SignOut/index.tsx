@@ -14,7 +14,7 @@ import {
 import BoxDropShadow from '@/components/BoxDropShadow';
 import { CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
-import CustomModal from '@/components/modals/Modal';
+import CustomModal from '@/components/Modals/Modal';
 import { Colors } from '@/constants/theme';
 import Icons from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';

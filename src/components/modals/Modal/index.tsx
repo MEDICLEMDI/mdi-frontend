@@ -1,6 +1,6 @@
 import { Portal } from '@gorhom/portal';
 import * as React from 'react';
-import { Modal, ModalBaseProps, View } from 'react-native';
+import { Modal, ModalBaseProps, SafeAreaView, View } from 'react-native';
 
 interface ModalProps extends ModalBaseProps {
   name: string;

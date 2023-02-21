@@ -34,7 +34,6 @@ import NoticeDetail from '@/screens/service/Notice/detail';
 // Profile pages
 import Point from '@/screens/service/Point';
 import Profile from '@/screens/service/Profile';
-import EditProfile from '@/screens/service/Profile/edit';
 import Receipt from '@/screens/service/Receipt';
 import ServiceContacts from '@/screens/service/ServiceContacts';
 import Setting from '@/screens/service/Setting';
@@ -48,6 +47,7 @@ import SignOut from '@/screens/SignOut';
 
 // Module packages
 import Routes from '../Routes';
+import EditProfile from "@/screens/service/Profile/edit";
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
@@ -123,9 +123,7 @@ const BottomTabNavigation = () => {
         options={{
           title: t('navigation.home'),
           tabBarLabelStyle: labelStyle,
-          tabBarIcon: ({ focused }) => (
-            <Icons name="home" style={{ fill: tabActiveController(focused) }} />
-          ),
+          tabBarIcon: ({ focused }) => <Icons name="home" style={{ fill: tabActiveController(focused) }} />,
         }}
       />
       <Tab.Screen
@@ -194,7 +192,7 @@ const SettingStack = () => {
       screenOptions={{ headerShown: false }}
       initialRouteName="Home">
       <Stack.Screen name="Home" component={Profile} />
-      <Stack.Screen name={Routes.EDIT_PROFILE} component={EditProfile} />
+      <Stack.Screen name={Routes.EDIT_PROFILE} component={EditProfile}/>
       <Stack.Screen name={Routes.POINT} component={Point} />
       <Stack.Screen name={Routes.RECEIPT} component={Receipt} />
       <Stack.Screen name={Routes.SUBSCRIBE} component={Subscribe} />
@@ -218,7 +216,7 @@ const ServiceSettings = () => {
         headerShown: false,
       }}
       initialRouteName="Home">
-      <Stack.Screen name="Home" component={Setting} />
+      <Stack.Screen name='Home' component={Setting} />
       <Stack.Screen name={Routes.NOTICE} component={Notice} />
       <Stack.Screen name={Routes.NOTICE_DETAIL} component={NoticeDetail} />
       <Stack.Screen name={Routes.SERVICE_DOCUMENT} component={ServiceDoc} />

@@ -242,12 +242,10 @@ android {
             keyPassword 'android'
         }
         release {
-            if (project.hasProperty('PLUG_PROD_STORE_FILE')) {
-                storeFile file(PLUG_PROD_STORE_FILE)
-                storePassword PLUG_PROD_STORE_PASSWORD
-                keyAlias PLUG_PROD_KEY_ALIAS
-                keyPassword PLUG_PROD_KEY_PASSWORD
-            }
+                storeFile file(project.ext.env.get("MEDICLE_PROD_STORE_FILE"))
+                storePassword project.ext.env.get("MEDICLE_PROD_STORE_PASSWORD")
+                keyAlias project.ext.env.get("MEDICLE_PROD_KEY_ALIAS")
+                keyPassword project.ext.env.get("MEDICLE_PROD_KEY_PASSWORD")
         }
     }
     buildTypes {
