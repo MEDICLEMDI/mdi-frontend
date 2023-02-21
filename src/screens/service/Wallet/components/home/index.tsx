@@ -26,7 +26,6 @@ import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
-import { CustomModal } from '@/components/Modals';
 import { Colors } from '@/constants/theme';
 import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
@@ -46,6 +45,7 @@ import {
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
 import { clearStorage } from '@/utils/localStorage';
 
+import CustomModal from '../../../../../components/modals/Modal';
 import CommonStyle from '../../common_style';
 import styles from './styles';
 
