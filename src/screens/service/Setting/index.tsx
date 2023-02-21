@@ -31,41 +31,41 @@ const Setting = ({ navigation }) => {
     navigation.navigate(route);
   };
   const data = [
-    {
-      name: t('setting.notice'),
-      route: 'Notice',
-      onPress: () => pageRoute(Routes.NOTICE),
-    },
-    {
-      name: t('setting.contact'),
-      route: 'Contact',
-      onPress: () => pageRoute(Routes.SERVICE_CONTACTS),
-    },
-    {
-      name: t('setting.doc1'),
-      route: 'Doc1',
-      onPress: () => pageRoute(Routes.SERVICE_DOCUMENT),
-    },
-    {
-      name: t('setting.doc2'),
-      route: 'Doc2',
-      onPress: () => pageRoute(Routes.PERSONAL_DOCUMENT),
-    },
-    {
-      name: t('setting.marketing'),
-      route: 'Marketing',
-      onPress: () => pageRoute(Routes.MARKETING),
-    },
+    // {
+    //   name: t('setting.notice'),
+    //   route: 'Notice',
+    //   onPress: () => pageRoute(Routes.NOTICE),
+    // },
+    // {
+    //   name: t('setting.contact'),
+    //   route: 'Contact',
+    //   onPress: () => pageRoute(Routes.SERVICE_CONTACTS),
+    // },
+    // {
+    //   name: t('setting.doc1'),
+    //   route: 'Doc1',
+    //   onPress: () => pageRoute(Routes.SERVICE_DOCUMENT),
+    // },
+    // {
+    //   name: t('setting.doc2'),
+    //   route: 'Doc2',
+    //   onPress: () => pageRoute(Routes.PERSONAL_DOCUMENT),
+    // },
+    // {
+    //   name: t('setting.marketing'),
+    //   route: 'Marketing',
+    //   onPress: () => pageRoute(Routes.MARKETING),
+    // },
     {
       name: t('setting.language'),
       route: 'Language',
       onPress: languageChangeHandler,
     },
-    {
-      name: t('setting.signOut'),
-      route: 'SignOut',
-      onPress: () => pageRoute(Routes.SIGNOUT),
-    },
+    // {
+    //   name: t('setting.signOut'),
+    //   route: 'SignOut',
+    //   onPress: () => pageRoute(Routes.SIGNOUT),
+    // },
   ];
   return (
     <SafeAreaView style={style.container}>
