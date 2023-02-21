@@ -50,6 +50,7 @@ export default StyleSheet.create({
     marginTop: 10,
     height: 23,
     flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   krwBalanceLayer: {
     backgroundColor: 'rgba(0,0,0, 0.3)',
@@ -242,5 +243,21 @@ export default StyleSheet.create({
     fontWeight: '700',
     fontSize: 13,
     color: '#333333',
-  }
+  },
+  walletAddress: {
+    fontWeight: '400',
+    color: '#706148',
+    fontSize: 13,
+  },
+  copyImage: {
+    width: 18,
+    height: 18,
+    marginLeft: 'auto',
+  },
+  toastStyle: {
+    // top: 25,
+    // left: 100,
+  },
+  toastPointerStyle: {
+  },
 });

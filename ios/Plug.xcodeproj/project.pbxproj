@@ -551,6 +551,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Plug/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Medicle;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -561,7 +562,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/rust/.cargo/mobile_app/target/universal/release",
 				);
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 0.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -595,6 +596,7 @@
 				);
 				INFOPLIST_FILE = Plug/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Medicle;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -605,7 +607,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/rust/.cargo/mobile_app/target/universal/release",
 				);
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 0.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
