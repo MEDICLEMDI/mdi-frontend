@@ -235,8 +235,12 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
 
               <View style={styles.cardBottomLayer}>
-                <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
-                  <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
+                <View style={mdi && [styles.krwBalanceLayer, { width: lengthKRW }]}>
+                  {mdi && (
+                    <Text style={styles.krwBalance}>
+                      {mdiKrwValue + ' KRW'}
+                    </Text>
+                  )}
                 </View>
                 <TouchableOpacity onPress={handleRefresh}>
                   <Image source={Refresh} style={styles.refreshButton} />
