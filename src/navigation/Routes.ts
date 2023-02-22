@@ -14,6 +14,7 @@ enum Routes {
   MYPAGE = 'MyPage',
   MYPAGE_SETTINGS = 'MyPageSettings',
   POINT = 'Point',
+  POINT_CHARGE = 'PointCharge',
   RECEIPT = 'Receipt',
   SUBSCRIBE = 'Subscribe',
   CHART = 'Chart',

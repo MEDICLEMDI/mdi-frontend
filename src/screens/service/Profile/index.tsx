@@ -51,11 +51,11 @@ const Profile = ({ navigation }) => {
             <Text style={style.name}>Preview</Text>
           </View>
 
-          <TouchableOpacity onPress={() => null}>
+          <TouchableOpacity onPress={() => navigation.navigate(Routes.POINT_CHARGE)}>
             <View style={style.pointBtn}>
               <Icons name="mdiIcon" />
-              <Text>{t('profile.myPoint')}</Text>
-              <Text style={{ marginLeft: 10, marginRight: 5 }}>0 P</Text>
+              <Text style={{ marginHorizontal: 10 }}>{t('profile.myPoint')}</Text>
+              <Text>0 P</Text>
               <Icons name="arrowRight" />
             </View>
           </TouchableOpacity>

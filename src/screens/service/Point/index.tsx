@@ -20,8 +20,9 @@ import Icons from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
+import Routes from "@/navigation/Routes";
 
-export default () => {
+export default ({ navigation }) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [visible, setVisible] = React.useState(false);
@@ -63,7 +64,7 @@ export default () => {
         <Text style={style.pointText}>적립 예정 포인트</Text>
         <View style={[style.flexRow, { justifyContent: 'space-between' }]}>
           <Text>{0}원</Text>
-          <TouchableOpacity style={style.chargeButton}>
+          <TouchableOpacity style={style.chargeButton} onPress={() => navigation.navigate(Routes.POINT_CHARGE)}>
             <Text style={FONT_BASIC_BLACK}>충전하기</Text>
           </TouchableOpacity>
         </View>
