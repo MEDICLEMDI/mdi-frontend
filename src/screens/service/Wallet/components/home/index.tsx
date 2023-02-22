@@ -95,10 +95,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   //   dispatch(getTransactions({ icpPrice }));
   // };
 
-  const copyToClipboard = async () => {
-    Clipboard.setString(principal!);
-  };
-
+ 
   // set mdi
   useEffect(() => {
     if (lock) {
@@ -201,14 +198,13 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                 <Text style={styles.mdiTitleText}>MDI</Text>
               </View>
               <View style={styles.topRightLayer}>
-                {/* <Text>{principal}</Text> */}
                 {/* 셋팅버튼은 누르면 셋팅라우트로 이동 */}
-                {/* <TouchableOpacity
+                <TouchableOpacity
                   onPress={() => {
                     handleDeleteWallet();
                   }}>
                   <Image source={SettingIcon} style={styles.settingIcon} />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
               </View>
             </View>
             <View style={styles.cardMiddleLayer}>
@@ -221,16 +217,13 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             </View>
 
             <View style={styles.cardBottomLayer}>
-              {/* <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
+              <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
                 <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
-              </View> */}
-              {/* <TouchableOpacity onPress={handleRefresh}>
+              </View>
+              <TouchableOpacity onPress={handleRefresh}>
                 <Image source={Refresh} style={styles.refreshButton} />
-              </TouchableOpacity> */}
-              {/* <TouchableOpacity onPress={transactionRefresh}>
-                <Image source={Refresh} style={styles.refreshButton} />
-              </TouchableOpacity> */}
-              {principal && (
+              </TouchableOpacity>
+              {/* {principal && (
                 <>
                   <Text style={styles.walletAddress}>
                     {principal?.slice(0, 35) + '....'}
@@ -247,7 +240,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                     />
                   </TouchableOpacity>
                 </>
-              )}
+              )} */}
             </View>
             <View style={{ alignItems: 'center' }}>
               <CopiedToast
@@ -260,14 +253,14 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
           </ImageBackground>
         </View>
 
-        {/* <View style={styles.historyContainer}>
+        <View style={styles.historyContainer}>
           <View style={styles.historyTopLayer}>
             <Text style={styles.historyTitle}>
               {t('wallet.home.transactionHistory')}
               <Text style={styles.historySubText}>{' 최근 ' + period}</Text>
-            </Text> */}
+            </Text>
         {/* 히스토리 기간설정하기 */}
-        {/* <TouchableOpacity
+        <TouchableOpacity
               onPress={() => {
                 setModalActive(true);
               }}>
@@ -347,11 +340,9 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
             )}
           </View>
-        </View> */}
-
-        {/* </ScrollView> */}
+        </View>
       </View>
-      {/* {modalActive && (
+      {modalActive && (
         <CustomModal
           name="test"
           visible={modalActive}
@@ -408,7 +399,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             </View>
           </View>
         </CustomModal>
-      )} */}
+      )}
       {assetsLoading && <LoadingModal name="loading" visible={assetsLoading} />}
     </SafeAreaView>
   );
