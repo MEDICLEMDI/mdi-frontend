@@ -11,4 +11,9 @@ export default StyleSheet.create({
     backgroundColor: Colors.Medicle.Gray.Light,
     borderRadius: 10,
   },
+  textArea: {
+    minHeight: 80,
+    paddingTop: 15,
+    textAlignVertical: 'top'
+  },
 });

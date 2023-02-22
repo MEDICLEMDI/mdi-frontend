@@ -26,7 +26,7 @@ const MedicleInput = ({
   };
 
   return (
-    <View style={flexDirection}>
+    <View style={[flexDirection, style]}>
       {label && <Text>{label}</Text>}
       <TextInput
         placeholder={placeholder}
@@ -35,7 +35,7 @@ const MedicleInput = ({
         numberOfLines={numberOfLines}
         onChange={onChange}
         onPressIn={onPressIn}
-        style={[style, defaultStyle.inputStyle]}
+        style={[defaultStyle.inputStyle, multiline ? defaultStyle.textArea : null ]}
         // ios settings
         clearButtonMode="always"
         enablesReturnKeyAutomatically={true}
