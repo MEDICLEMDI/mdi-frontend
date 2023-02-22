@@ -57,4 +57,18 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  // Charge Page
+  borderBottom: {
+    borderBottomWidth: 10,
+    borderBottomColor: Colors.Medicle.Gray.Light,
+  },
+  chargeWrap: {
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+  },
+  balanceWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
 });

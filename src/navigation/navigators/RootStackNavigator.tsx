@@ -8,8 +8,6 @@ import {
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
-
-// Components
 import Icons from '@/icons';
 import {
   RootStackParamList,
@@ -23,15 +21,12 @@ import ServiceDoc from '@/screens/service/Documents/serviceDoc';
 import Event from '@/screens/service/Event';
 import Exchange from '@/screens/service/Exchange';
 import FAQ from '@/screens/service/FAQ';
-// Menus
 import DashBoard from '@/screens/service/Home';
 import Hospital from '@/screens/service/Hospital';
 import MarketingConfig from '@/screens/service/MarketingConfig';
 import MedicalState from '@/screens/service/MedicalState';
-// Setting pages
 import Notice from '@/screens/service/Notice';
 import NoticeDetail from '@/screens/service/Notice/detail';
-// Profile pages
 import Point from '@/screens/service/Point';
 import Profile from '@/screens/service/Profile';
 import Receipt from '@/screens/service/Receipt';
@@ -41,11 +36,9 @@ import Subscribe from '@/screens/service/Subscribe';
 import WalletCreatePassword from '@/screens/service/Wallet/components/CreatePassword';
 import WalletHome from '@/screens/service/Wallet/components/Home';
 import WalletImport from '@/screens/service/Wallet/components/Import';
-// Wallet pages
 import WalletWelcome from '@/screens/service/Wallet/components/Welcome';
 import SignOut from '@/screens/SignOut';
-
-// Module packages
+import PointCharge from '@/screens/service/Point/charge';
 import Routes from '../Routes';
 import EditProfile from "@/screens/service/Profile/edit";
 
@@ -76,6 +69,7 @@ const RootStackNavigator = () => {
           component={WalletCreatePassword}
         />
         <Stack.Screen name={Routes.WALLET_IMPORT} component={WalletImport} />
+        <Stack.Screen name={Routes.POINT_CHARGE} component={PointCharge} />
       </Stack.Group>
     </Stack.Navigator>
   );

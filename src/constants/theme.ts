@@ -11,6 +11,7 @@ export const Colors = {
     White: '#FFFFFF',
     Black: '#15161C',
     Primary: '#E7E1D5',
+    Orange: '#FFB61B',
     Font: {
       Gray: {
         Light: '#B5B5B5',
