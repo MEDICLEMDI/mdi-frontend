@@ -6,7 +6,7 @@ import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 import { CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
-import TopLabelInput from '@/components/inputs/MedicleInput';
+import MedicleInput from '@/components/inputs/MedicleInput';
 import { Colors } from '@/constants/theme';
 import { fontStyleCreator } from '@/utils/fonts';
 
@@ -46,27 +46,27 @@ export default () => {
     <SafeAreaView style={{ flex: 1 }}>
       <Header goBack={true} title={t('setting.contact')} />
       <View style={style.container}>
-        {/* Input Wrap */}
         <View>
-          <TopLabelInput
+          {/* Input Wrap */}
+          <MedicleInput
             label={t('input.name')}
             style={[style.input]}
             placeholder={t('input.namePlaceholder')}
           />
-          <TopLabelInput
+          <MedicleInput
             label={t('input.company')}
             style={[style.input]}
             placeholder={t('input.companyPlaceholder')}
           />
-          <TopLabelInput
+          <MedicleInput
             label={t('input.phone')}
             style={[style.input]}
             placeholder={t('input.phonePlaceholder')}
           />
-          <TopLabelInput
+          <MedicleInput
             label={t('input.comment')}
             placeholder={t('input.commentPlaceholder')}
-            style={[style.textArea, style.input]}
+            style={[style.input]}
             editable={true}
             multiline={true}
             numberOfLines={4}
