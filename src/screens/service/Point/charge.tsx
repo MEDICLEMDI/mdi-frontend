@@ -2,7 +2,8 @@ import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Platform,
+  FlatList,
+  Platform, Pressable,
   SafeAreaView,
   ScrollView,
   Text,
@@ -18,16 +19,36 @@ import { fontStyleCreator } from '@/utils/fonts';
 import style from './style';
 import MedicleButton from "@/buttons/MedicleButton";
 import {MedicleInput} from "@/components/inputs";
+import RadioInput from "@/components/RadioInput";
+import {useEffect} from "react";
 
 export default () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
-  const [visible, setVisible] = React.useState(false);
+  const [radioIndex, setRadioIndex] = React.useState(0);
 
   const FONT_BASIC_BLACK = fontStyleCreator({
     color: Colors.Medicle.Font.Gray.Dark,
     size: 10,
   });
+
+  useEffect(() => {
+    console.log(radioIndex)
+  }, [radioIndex])
+
+  const radioData = [
+    {label: 'MDI 결제'},
+    {label: '일반 결제'},
+  ]
+
+  const paymentType = [
+    {label: '신용카드'},
+    {label: '가상계좌'},
+    {label: '계좌이체(에스크로)'},
+    {label: '휴대폰 결제'},
+    {label: '토스'},
+    {label: '카카오페이'},
+  ]
 
   return (
     <SafeAreaView style={style.container}>
@@ -49,8 +70,20 @@ export default () => {
       </View>
       <View style={[style.borderBottom, style.chargeWrap]}>
         <Text>결제 정보</Text>
-        <Text>MDI 결제</Text>
-        <Text>일반 결제</Text>
+        <RadioInput data={radioData} response={setRadioIndex}/>
+        {
+          radioIndex === 1 && (
+            <View>
+              <FlatList
+                data={paymentType}
+                renderItem={({item}) => (
+                  <MedicleButton key={item.key} onPress={() => null} text={item.label} buttonStyle={{ flex: 1, }} />
+                )}
+                numColumns={2}
+              />
+            </View>
+          )
+        }
       </View>
       <View style={[style.borderBottom, style.chargeWrap]}>
         <Text>환불 방법</Text>
