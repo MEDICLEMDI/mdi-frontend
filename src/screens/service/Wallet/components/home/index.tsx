@@ -64,7 +64,18 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
   const standard: FungibleStandard = 'DIP20';
   const [lock, setLock] = useState<boolean>(keyring.isUnlocked);
-  const data = [];
+  const data = [
+    { num: 1 },
+    { num: 2 },
+    { num: 3 },
+    { num: 4 },
+    { num: 5 },
+    { num: 6 },
+    { num: 7 },
+    { num: 8 },
+    { num: 9 },
+    { num: 10 },
+  ];
   const [modalActive, setModalActive] = useState(false);
   const [historyList, setHistoryList] = useState(data.slice(0, 4));
   const [isMoreData, setIsMoreData] = useState(
@@ -95,7 +106,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   //   dispatch(getTransactions({ icpPrice }));
   // };
 
- 
   // set mdi
   useEffect(() => {
     if (lock) {
@@ -188,42 +198,50 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             source={WalletCard}
             resizeMode="contain"
             style={styles.card}>
-            <View style={styles.cardTopLayer}>
-              <View style={styles.topLeftLayer}>
-                <Image
-                  source={MedicleLogo}
-                  resizeMode="contain"
-                  style={styles.mdiLogo}
-                />
-                <Text style={styles.mdiTitleText}>MDI</Text>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                paddingHorizontal: 25,
+              }}>
+              <View style={styles.cardTopLayer}>
+                <View style={styles.topLeftLayer}>
+                  <Image
+                    source={MedicleLogo}
+                    resizeMode="contain"
+                    style={styles.mdiLogo}
+                  />
+                  <Text style={styles.mdiTitleText}>MDI</Text>
+                </View>
+                <View style={styles.topRightLayer}>
+                  {/* 셋팅버튼은 누르면 셋팅라우트로 이동 */}
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleDeleteWallet();
+                    }}>
+                    <Image source={SettingIcon} style={styles.settingIcon} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.topRightLayer}>
-                {/* 셋팅버튼은 누르면 셋팅라우트로 이동 */}
-                <TouchableOpacity
-                  onPress={() => {
-                    handleDeleteWallet();
-                  }}>
-                  <Image source={SettingIcon} style={styles.settingIcon} />
-                </TouchableOpacity>
+              <View style={styles.cardMiddleLayer}>
+                {/* 누르면 다른화면 표현 */}
+                {mdi && (
+                  <TouchableOpacity>
+                    <Text style={styles.mdiBalanceText}>
+                      {mdiValue + ' MDI'}
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
-            </View>
-            <View style={styles.cardMiddleLayer}>
-              {/* 누르면 다른화면 표현 */}
-              {mdi && (
-                <TouchableOpacity>
-                  <Text style={styles.mdiBalanceText}>{mdiValue + ' MDI'}</Text>
-                </TouchableOpacity>
-              )}
-            </View>
 
-            <View style={styles.cardBottomLayer}>
-              <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
-                <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
-              </View>
-              <TouchableOpacity onPress={handleRefresh}>
-                <Image source={Refresh} style={styles.refreshButton} />
-              </TouchableOpacity>
-              {/* {principal && (
+              <View style={styles.cardBottomLayer}>
+                <View style={[styles.krwBalanceLayer, { width: lengthKRW }]}>
+                  <Text style={styles.krwBalance}>{mdiKrwValue + ' KRW'}</Text>
+                </View>
+                <TouchableOpacity onPress={handleRefresh}>
+                  <Image source={Refresh} style={styles.refreshButton} />
+                </TouchableOpacity>
+                {/* {principal && (
                 <>
                   <Text style={styles.walletAddress}>
                     {principal?.slice(0, 35) + '....'}
@@ -241,14 +259,15 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                   </TouchableOpacity>
                 </>
               )} */}
-            </View>
-            <View style={{ alignItems: 'center' }}>
-              <CopiedToast
-                visibility={visibility}
-                setVisibility={setVisibility}
-                customStyle={styles.toastStyle}
-                customPointerStyle={styles.toastPointerStyle}
-              />
+              </View>
+              <View style={{ alignItems: 'center' }}>
+                <CopiedToast
+                  visibility={visibility}
+                  setVisibility={setVisibility}
+                  customStyle={styles.toastStyle}
+                  customPointerStyle={styles.toastPointerStyle}
+                />
+              </View>
             </View>
           </ImageBackground>
         </View>
@@ -259,8 +278,8 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               {t('wallet.home.transactionHistory')}
               <Text style={styles.historySubText}>{' 최근 ' + period}</Text>
             </Text>
-        {/* 히스토리 기간설정하기 */}
-        <TouchableOpacity
+            {/* 히스토리 기간설정하기 */}
+            <TouchableOpacity
               onPress={() => {
                 setModalActive(true);
               }}>
@@ -290,6 +309,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                           styles.historyCard,
                           {
                             width: Dimensions.get('window').width - 60,
+                            maxWidth: 420,
                             opacity: 0.99,
                           },
                           item.num === historyList.length && {

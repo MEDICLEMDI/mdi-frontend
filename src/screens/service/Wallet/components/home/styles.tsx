@@ -5,12 +5,14 @@ import alert from '@/redux/slices/alert';
 
 export default StyleSheet.create({
   cardContainer: {
-    marginTop: 17,
+    // marginTop: 17,
     paddingHorizontal: 30,
+    // backgroundColor: 'red',
+    flex: 1,
   },
   card: {
-    height: 150,
-    padding: 25,
+    flex: 1,
+    justifyContent: 'center',
   },
   cardTopLayer: {
     flexDirection: 'row',
@@ -70,7 +72,7 @@ export default StyleSheet.create({
   },
   historyContainer: {
     marginTop: 30,
-    flex: 1,
+    flex: 2,
   },
   menuButton: {
     width: 24,
