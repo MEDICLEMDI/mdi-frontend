@@ -46,6 +46,8 @@ const WalletWelcome = ({
     }
   }, [isInitialized]);
 
+
+
   if (keyring.isInitialized) {
     navigation.navigate(Routes.WALLET_HOME);
   }

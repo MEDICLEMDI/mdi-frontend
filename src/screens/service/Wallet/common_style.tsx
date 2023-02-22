@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
   },
   contentWrap: {
     paddingHorizontal: 30,
+    height: '100%',
   },
   balanceWrap: {
     alignItems: 'flex-start',

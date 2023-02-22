@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   imgContainer: {
@@ -6,7 +6,7 @@ export default StyleSheet.create({
   },
   logo: {
     width: 230,
-    marginTop: 190,
+    marginTop: Dimensions.get('window').height >= 700 ? 190 : 100,
   },
   textContainer: {
     alignItems: 'center',

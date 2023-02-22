@@ -1,7 +1,7 @@
 import { PortalProvider } from '@gorhom/portal';
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import React, { forwardRef, memo, useEffect, useRef } from 'react';
-import { AppState, Linking, StyleSheet } from 'react-native';
+import { AppState, Dimensions, Linking, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Host } from 'react-native-portalize';
 
@@ -78,20 +78,36 @@ const Navigator = ({ routingInstrumentation }: any, navigationRef: any) => {
   } as Theme;
 
   return (
-    <PortalProvider>
-      <NavigationContainer
-        ref={navigationRef}
-        theme={navTheme}
-        onReady={routingInstrumentation.registerNavigationContainer(
-          navigationRef
-        )}>
-        <GestureHandlerRootView style={styles.container}>
-          <Host>
-            <RootStackNavigator />
-          </Host>
-        </GestureHandlerRootView>
-      </NavigationContainer>
-    </PortalProvider>
+    <View
+      style={{
+        backgroundColor: '#000',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <View
+        style={{
+          flex: 1,
+          maxHeight: 1067,
+          maxWidth: 480,
+          width: Dimensions.get('window').width,
+        }}>
+        <PortalProvider>
+          <NavigationContainer
+            ref={navigationRef}
+            theme={navTheme}
+            onReady={routingInstrumentation.registerNavigationContainer(
+              navigationRef
+            )}>
+            <GestureHandlerRootView style={styles.container}>
+              <Host>
+                <RootStackNavigator />
+              </Host>
+            </GestureHandlerRootView>
+          </NavigationContainer>
+        </PortalProvider>
+      </View>
+    </View>
   );
 };
 
