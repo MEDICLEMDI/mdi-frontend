@@ -23,7 +23,7 @@ import BoxDropShadow from '@/components/BoxDropShadow';
 import { CopiedToast } from '@/components/common';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
-import { CustomModal } from '@/components/Modals';
+import { CustomModal, DatePicker } from '@/components/Modals';
 import { Colors } from '@/constants/theme';
 import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
@@ -34,6 +34,7 @@ import { addCustomToken, getBalance, getTokenInfo } from '@/redux/slices/user';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import SearchBar from '@/components/forms/SearchHeader';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { assets, assetsLoading } = useAppSelector(state => state.user);
@@ -219,6 +220,15 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
           </ImageBackground>
         </View>
 
+        {/* <SearchBar onPress={() => setVisible(true)} />
+        <DatePicker
+          name="dataPicker"
+          modalDirection="flex-end"
+          visible={true}
+          // onRequestClose={() => setVisible(false)}
+          animationType="slide"
+          dateResponse={console.log}
+        /> */}
         <View style={styles.historyContainer}>
           <View style={styles.historyTopLayer}>
             <Text style={styles.historyTitle}>

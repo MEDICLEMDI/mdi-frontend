@@ -81,4 +81,5 @@ export default StyleSheet.create({
     color: '#333333',
     fontWeight: '400',
   },
+  
 });

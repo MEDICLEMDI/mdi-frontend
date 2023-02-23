@@ -192,7 +192,11 @@ const WalletSetting = ({
                     </Text>
                   </View>
                   <View style={styles.animatedContents}>
-                    <TouchableOpacity style={styles.nmemonicButton}>
+                    <TouchableOpacity
+                      style={styles.nmemonicButton}
+                      onPress={() => {
+                        navigation.navigate(Routes.WALLET_MNEMONIC);
+                      }}>
                       <Text style={styles.nmemonicButtonText}>
                         비밀 복구 구문 공개
                       </Text>

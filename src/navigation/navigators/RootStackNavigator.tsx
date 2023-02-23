@@ -42,6 +42,7 @@ import PointCharge from '@/screens/service/Point/charge';
 import Routes from '../Routes';
 import EditProfile from "@/screens/service/Profile/edit";
 import WalletSetting from '@/screens/service/Wallet/components/Setting';
+import WalletNmemonic from '@/screens/service/Wallet/components/Nmemonic';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
@@ -70,6 +71,7 @@ const RootStackNavigator = () => {
           component={WalletCreatePassword}
         />
         <Stack.Screen name={Routes.WALLET_IMPORT} component={WalletImport} />
+        <Stack.Screen name={Routes.WALLET_MNEMONIC} component={WalletNmemonic} />
         <Stack.Screen name={Routes.POINT_CHARGE} component={PointCharge} />
       </Stack.Group>
     </Stack.Navigator>

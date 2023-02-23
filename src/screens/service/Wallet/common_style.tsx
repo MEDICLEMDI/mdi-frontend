@@ -7,6 +7,8 @@ export default StyleSheet.create({
   contentWrap: {
     paddingHorizontal: 30,
     height: '100%',
+    flex: 1,
+    // backgroundColor: 'red',
   },
   balanceWrap: {
     alignItems: 'flex-start',
