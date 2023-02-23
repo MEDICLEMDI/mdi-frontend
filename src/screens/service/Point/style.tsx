@@ -66,9 +66,12 @@ export default StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 20,
   },
+  sectionHeader: {
+    marginBottom: 20,
+  },
   balanceWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  }
+  },
 });

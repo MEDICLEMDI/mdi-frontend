@@ -1,7 +1,8 @@
-import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import {
+  Dimensions,
   FlatList,
   Platform, Pressable,
   SafeAreaView,
@@ -12,15 +13,31 @@ import {
 } from 'react-native';
 
 import Header from '@/components/Header';
-import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import MedicleButton from "@/buttons/MedicleButton";
+import RadioInput from "@/components/RadioInput";
+import GridLayout, {deviceWidthCalculator} from "@/components/GridLayout";
 import { fontStyleCreator } from '@/utils/fonts';
+import { MedicleInput } from "@/components/inputs";
+import { payType, payCondition } from "@/constants/payType";
 
 import style from './style';
-import MedicleButton from "@/buttons/MedicleButton";
-import {MedicleInput} from "@/components/inputs";
-import RadioInput from "@/components/RadioInput";
-import {useEffect} from "react";
+import { Colors } from '@/constants/theme';
+
+const PayConditionItems = ({item, numColumns}: any) => {
+  const gap = 10;
+  return (
+    <MedicleButton
+      onPress={() => null}
+      text={item.label}
+      buttonStyle={{
+        paddingVertical: 8,
+        borderRadius: 5,
+        flex: 1,
+        maxWidth: deviceWidthCalculator({padding: 60, gap: gap, numColumns: numColumns}),
+        marginVertical: gap / 2
+      }}/>
+  )
+}
 
 export default () => {
   const { t } = useTranslation();
@@ -29,32 +46,20 @@ export default () => {
 
   const FONT_BASIC_BLACK = fontStyleCreator({
     color: Colors.Medicle.Font.Gray.Dark,
-    size: 10,
+    size: 14,
+    weight: 'bold',
   });
+  const numColumns = 2;
 
-  useEffect(() => {
-    console.log(radioIndex)
+  React.useEffect(() => {
+    // console.log(radioIndex)
   }, [radioIndex])
-
-  const radioData = [
-    {label: 'MDI 결제'},
-    {label: '일반 결제'},
-  ]
-
-  const paymentType = [
-    {label: '신용카드'},
-    {label: '가상계좌'},
-    {label: '계좌이체(에스크로)'},
-    {label: '휴대폰 결제'},
-    {label: '토스'},
-    {label: '카카오페이'},
-  ]
 
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.point')} />
       <View style={[style.borderBottom, style.chargeWrap]}>
-        <Text>메디클 포인트 충전</Text>
+        <Text style={[FONT_BASIC_BLACK, style.sectionHeader]}>메디클 포인트 충전</Text>
         <View style={[style.balanceWrapper]}>
           <Text>보유 MDI</Text>
           <Text>0.00 MDI</Text>
@@ -69,28 +74,26 @@ export default () => {
         </View>
       </View>
       <View style={[style.borderBottom, style.chargeWrap]}>
-        <Text>결제 정보</Text>
-        <RadioInput data={radioData} response={setRadioIndex}/>
+        <Text style={[FONT_BASIC_BLACK, style.sectionHeader]}>결제 정보</Text>
+        <RadioInput data={payType} response={setRadioIndex}/>
         {
           radioIndex === 1 && (
-            <View>
-              <FlatList
-                data={paymentType}
-                renderItem={({item}) => (
-                  <MedicleButton key={item.key} onPress={() => null} text={item.label} buttonStyle={{ flex: 1, }} />
-                )}
-                numColumns={2}
-              />
-            </View>
+            <GridLayout
+              numColumns={numColumns}
+              data={payCondition}
+              renderItem={({item}) => (
+                <PayConditionItems item={item} numColumns={numColumns}/>
+              )}
+            />
           )
         }
       </View>
       <View style={[style.borderBottom, style.chargeWrap]}>
-        <Text>환불 방법</Text>
+        <Text style={[FONT_BASIC_BLACK, style.sectionHeader]}>환불 방법</Text>
         <Text>상품 예약시 약관</Text>
       </View>
       <View style={[style.chargeWrap]}>
-        <Text>최종 결제금액</Text>
+        <Text style={[FONT_BASIC_BLACK, style.sectionHeader]}>최종 결제금액</Text>
         <View style={[style.balanceWrapper]}>
           <Text>상품 금액</Text>
           <Text>0원</Text>

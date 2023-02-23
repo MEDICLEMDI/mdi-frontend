@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 
 import style from "./style";
 
-import {dentist} from "@/components/Menus";
+import {dentist} from "@/constants/category";
 import Icons from "@/icons";
 
 const Hospital = ({ navigation }) => {
@@ -21,7 +21,7 @@ const Hospital = ({ navigation }) => {
         <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          data={dentist(t)}
+          data={dentist()}
           renderItem={({item}) => (
             <Text style={{paddingHorizontal: 12, paddingVertical: 4}}>
               {item.name}

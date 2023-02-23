@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 import Icons from '@/icons';
 
 import style from './style';
-import { dentist } from "@/components/Menus";
+import { dentist } from "@/constants/category";
 
 export default () => {
   const { t } = useTranslation();
@@ -24,7 +24,7 @@ export default () => {
           <FlatList
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            data={dentist(t)}
+            data={dentist()}
             renderItem={({item}) => (<Text style={{paddingHorizontal: 12, paddingVertical: 4}}>{item.name}</Text>)} />
         </View>
         <View style={style.noData}>
