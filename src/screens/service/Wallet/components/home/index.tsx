@@ -1,7 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Clipboard from '@react-native-clipboard/clipboard';
-// import Clipboard from '@react-native-clipboard/clipboard';
-import CryptoJS from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -15,12 +11,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Config from 'react-native-config';
 import { Modalize } from 'react-native-modalize';
-import { shallowEqual } from 'react-redux';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
-import Copy from '@/assets/images/copy.png';
 import CloseButton from '@/assets/images/ic_close.png';
 import Menu from '@/assets/images/ic_menu.png';
 import Refresh from '@/assets/images/refresh.png';
@@ -35,16 +28,14 @@ import { Colors } from '@/constants/theme';
 import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
 import { Asset } from '@/interfaces/redux';
-import KeyRing from '@/modules/keyring';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { reset as resetICPStore } from '@/redux/slices/icp';
-import { login, reset as resetKeyringStore } from '@/redux/slices/keyring';
+import { reset as resetKeyringStore } from '@/redux/slices/keyring';
 import {
   addCustomToken,
   getBalance,
   getTokenInfo,
-  getTransactions,
   reset as resetUserStore,
 } from '@/redux/slices/user';
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
@@ -54,16 +45,13 @@ import CommonStyle from '../../common_style';
 import styles from './styles';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
-  const { icpPrice } = useAppSelector(state => state.icp);
   const { assets, assetsLoading } = useAppSelector(state => state.user);
   const [mdi, setMdi] = useState<Asset | null>(null);
   const deleteWalletRef = useRef<Modalize>(null);
-  const keyring = KeyRing.getInstance();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
   const standard: FungibleStandard = 'DIP20';
-  const [lock, setLock] = useState<boolean>(keyring.isUnlocked);
   const data = [
     { num: 1 },
     { num: 2 },
@@ -92,50 +80,16 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
   const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
   const [period, setPeriod] = useState('1년');
-  const { currentWallet } = useAppSelector(state => state.keyring);
-  const { principal } = currentWallet || {};
-
-  // unlock
-  useEffect(() => {
-    if (keyring.isInitialized && !keyring.isUnlocked) {
-      unlock();
-    }
-  });
-
-  // const transactionRefresh = () => {
-  //   dispatch(getTransactions({ icpPrice }));
-  // };
 
   // set mdi
   useEffect(() => {
-    if (lock) {
-      assets.map(token => {
-        token.name === 'MDI' ? setMdi(token) : null;
-      });
-      if (mdi === null) {
-        addMdiToken();
-      }
+    assets.map(token => {
+      token.name === 'MDI' ? setMdi(token) : null;
+    });
+    if (mdi === null) {
+      addMdiToken();
     }
   }, [assets]);
-
-  const unlock = async () => {
-    const encryptKey = await AsyncStorage.getItem('password');
-    console.log(encryptKey);
-    const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
-      CryptoJS.enc.Utf8
-    );
-
-    dispatch(
-      login({
-        password: password,
-        icpPrice,
-      })
-    )
-      .unwrap()
-      .then(unlocked => {
-        setLock(unlocked);
-      });
-  };
 
   const addMdiToken = async () => {
     dispatch(
@@ -169,7 +123,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     setHistoryList(data.slice(0, historyList.length + 4));
   };
 
-  function numberWithCommas(x) {
+  function numberWithCommas(x: any) {
     let parts = x.toString().split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return parts.join('.');
@@ -235,7 +189,8 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
 
               <View style={styles.cardBottomLayer}>
-                <View style={mdi && [styles.krwBalanceLayer, { width: lengthKRW }]}>
+                <View
+                  style={mdi && [styles.krwBalanceLayer, { width: lengthKRW }]}>
                   {mdi && (
                     <Text style={styles.krwBalance}>
                       {mdiKrwValue + ' KRW'}

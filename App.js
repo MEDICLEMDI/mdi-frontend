@@ -3,7 +3,9 @@ import '@/config/i18n';
 import '@/config/reactotron';
 import '@/config/extensions';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Sentry from '@sentry/react-native';
+import CryptoJS from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { AppState, Platform, StatusBar } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
@@ -23,15 +25,17 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ErrorBoundary } from '@/components/common';
 import { toastProviderProps } from '@/components/common/Toast';
 import { isIos } from '@/constants/platform';
+import KeyRing from '@/modules/keyring';
 import Routes from '@/navigation';
-import { useAppDispatch } from '@/redux/hooks';
-import { initKeyring } from '@/redux/slices/keyring';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { initKeyring, login } from '@/redux/slices/keyring';
 import { persistor, store } from '@/redux/store';
 import { navigationRef } from '@/utils/navigation';
 
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
 const baseDist = getBuildNumber();
 const baseRelease = `${getBundleId()}@${getVersion()}:${Platform.OS}`;
+const keyring = KeyRing.getInstance();
 
 Sentry.init({
   dsn: Config.SENTRY_DSN,
@@ -53,6 +57,7 @@ const PersistedApp = () => {
   const appState = useRef(AppState.currentState);
   const [showRoutes, setShowRoutes] = useState(false);
   const dispatch = useAppDispatch();
+  const { icpPrice } = useAppSelector(state => state.icp);
 
   useEffect(() => {
     const event = AppState.addEventListener('change', handleAppStateChange);
@@ -80,10 +85,27 @@ const PersistedApp = () => {
     }
   };
 
+  const unlock = async () => {
+    const encryptKey = await AsyncStorage.getItem('password');
+    const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
+      CryptoJS.enc.Utf8
+    );
+
+    dispatch(
+      login({
+        password: password,
+        icpPrice,
+      })
+    );
+  };
+
   useEffect(() => {
     dispatch(
       initKeyring({
         callback: () => {
+          if (keyring.isInitialized && !keyring.isUnlocked) {
+            unlock();
+          }
           RNBootSplash.hide({ fade: true });
           setShowRoutes(true);
         },
