@@ -88,7 +88,6 @@ const WalletCreatePassword = ({
                 Config.AES_KEY
               ).toString();
               AsyncStorage.setItem('password', encryptKey);
-              // navigation.navigate(Routes.WALLET_HOME);
             }
           });
       } catch (e) {
