@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Dimensions,
@@ -11,7 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Modalize } from 'react-native-modalize';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
 import CloseButton from '@/assets/images/ic_close.png';
@@ -30,16 +30,7 @@ import { RootScreenProps } from '@/interfaces/navigation';
 import { Asset } from '@/interfaces/redux';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { reset as resetICPStore } from '@/redux/slices/icp';
-import { reset as resetKeyringStore } from '@/redux/slices/keyring';
-import {
-  addCustomToken,
-  getBalance,
-  getTokenInfo,
-  reset as resetUserStore,
-} from '@/redux/slices/user';
-import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
-import { clearStorage } from '@/utils/localStorage';
+import { addCustomToken, getBalance, getTokenInfo } from '@/redux/slices/user';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
@@ -47,7 +38,6 @@ import styles from './styles';
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { assets, assetsLoading } = useAppSelector(state => state.user);
   const [mdi, setMdi] = useState<Asset | null>(null);
-  const deleteWalletRef = useRef<Modalize>(null);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
@@ -84,12 +74,19 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   // set mdi
   useEffect(() => {
     assets.map(token => {
-      token.name === 'MDI' ? setMdi(token) : null;
+      if (token.name === 'MDI') {
+        setMdi(token);
+        saveMdiAmount();
+      }
     });
     if (mdi === null) {
       addMdiToken();
     }
   }, [assets]);
+
+  const saveMdiAmount = async () => {
+    await AsyncStorage.setItem('MDI_AMOUNT', mdi!.amount.toString());
+  };
 
   const addMdiToken = async () => {
     dispatch(
@@ -128,19 +125,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return parts.join('.');
   }
-
-  const handleDeleteWallet = () => {
-    clearStorage();
-    dispatch(resetUserStore());
-    dispatch(resetICPStore());
-    dispatch(resetWalletConnectStore());
-    dispatch(resetKeyringStore());
-    deleteWalletRef.current?.close();
-    navigation.reset({
-      index: 0,
-      routes: [{ name: Routes.WALLET_WELCOME }],
-    });
-  };
 
   return (
     <SafeAreaView style={CommonStyle.container}>

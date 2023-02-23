@@ -17,16 +17,14 @@ import Routes from '@/navigation/Routes';
 import CommonStyle from '../../common_style';
 import styles from './styles';
 
-const WalletHome = ({
-  navigation,
-}: RootScreenProps<Routes.WALLET_HOME>) => {
+const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { t } = useTranslation();
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Header goBack={false} title={t('header.wallet')} />
       <ScrollView horizontal={false} style={CommonStyle.contentWrap}>
-        <View>
-          
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>타이틀</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

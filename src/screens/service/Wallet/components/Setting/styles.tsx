@@ -67,6 +67,7 @@ export default StyleSheet.create({
   nmemonicButtonText: {
     fontSize: 12,
     fontWeight: '500',
+    color: '#333333',
   },
   walletDeleteButton: {
     height: 57,
@@ -74,5 +75,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#E7E1D5',
     borderRadius: 10,
+  },
+  animatedContentsText: {
+    fontSize: 14,
+    color: '#333333',
+    fontWeight: '400',
   },
 });

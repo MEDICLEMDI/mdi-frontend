@@ -1,51 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  imgContainer: {
-    alignItems: 'center',
+  titleContainer: {
+    marginTop: 20,
+    height: 27,
   },
-  logo: {
-    width: 230,
-    marginTop: 190,
-  },
-  textContainer: {
-    alignItems: 'center',
-    marginTop: 70,
-  },
-  text: {
-    textAlign: 'center',
+  titleText: {
+    fontSize: 20,
+    fontWeight: '700',
     color: '#333333',
-    lineHeight: 25,
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  btnContainer: {
-    // backgroundColor: 'yellow',
-    marginTop: 30,
-  },
-  createBtn: {
-    backgroundColor: '#E7E1D5',
-    height: 50,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  createBtnText: {
-    color: '#000000',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  importBtn: {
-    marginTop: 12,
-    backgroundColor: '#5F5F5F',
-    height: 50,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  importBtnText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '500',
   },
 });

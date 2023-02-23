@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Animated,
@@ -17,6 +18,12 @@ import Header from '@/components/Header';
 import { Colors } from '@/constants/theme';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { reset as resetICPStore } from '@/redux/slices/icp';
+import { reset as resetKeyringStore } from '@/redux/slices/keyring';
+import { reset as resetUserStore } from '@/redux/slices/user';
+import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
+import { clearStorage } from '@/utils/localStorage';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
@@ -32,6 +39,34 @@ const WalletSetting = ({
   const walletInfoOpacity = useRef(new Animated.Value(0)).current;
   const SecurityInfoHeight = useRef(new Animated.Value(0)).current;
   const SecurityInfoOpacity = useRef(new Animated.Value(0)).current;
+  const [mdiAmount, setMdiAmount] = useState(0);
+  const dispatch = useAppDispatch();
+  const deleteWalletRef = useRef<Modalize>(null);
+  const principal = useAppSelector(
+    state => state.keyring?.currentWallet?.principal
+  );
+
+  useEffect(() => {
+    getMdiAmount();
+  }, [mdiAmount]);
+
+  const getMdiAmount = async () => {
+    const amount = await AsyncStorage.getItem('MDI_AMOUNT');
+    setMdiAmount(Number(amount));
+  };
+
+  const handleDeleteWallet = () => {
+    clearStorage();
+    dispatch(resetUserStore());
+    dispatch(resetICPStore());
+    dispatch(resetWalletConnectStore());
+    dispatch(resetKeyringStore());
+    deleteWalletRef.current?.close();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: Routes.WALLET_WELCOME }],
+    });
+  };
 
   const toggleExpanded = (
     height: Animated.Value,
@@ -106,12 +141,14 @@ const WalletSetting = ({
                     { height: walletInfoHeight, opacity: walletInfoOpacity },
                   ]}>
                   <View style={styles.animatedContents}>
-                    <Text>보유 MDI</Text>
-                    <Text>잔액</Text>
+                    <Text style={styles.animatedContentsText}>보유 MDI</Text>
+                    <Text style={styles.animatedContentsText}>{mdiAmount}</Text>
                   </View>
                   <View style={styles.animatedContents}>
-                    <Text>지갑주소</Text>
-                    <Text>주소</Text>
+                    <Text style={styles.animatedContentsText}>지갑주소</Text>
+                    <Text style={styles.animatedContentsText}>
+                      {principal?.slice(0, 8) + '...'}
+                    </Text>
                   </View>
                 </Animated.View>
               </View>
@@ -150,7 +187,9 @@ const WalletSetting = ({
                     },
                   ]}>
                   <View style={styles.animatedContents}>
-                    <Text>비밀 복구 구문 공개</Text>
+                    <Text style={styles.animatedContentsText}>
+                      비밀 복구 구문 공개
+                    </Text>
                   </View>
                   <View style={styles.animatedContents}>
                     <TouchableOpacity style={styles.nmemonicButton}>
@@ -163,7 +202,10 @@ const WalletSetting = ({
               </View>
             </BoxDropShadow>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                handleDeleteWallet();
+              }}>
               <BoxDropShadow
                 color={
                   Platform.OS === 'ios'
