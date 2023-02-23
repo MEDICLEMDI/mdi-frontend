@@ -41,6 +41,7 @@ import SignOut from '@/screens/SignOut';
 import PointCharge from '@/screens/service/Point/charge';
 import Routes from '../Routes';
 import EditProfile from "@/screens/service/Profile/edit";
+import WalletSetting from '@/screens/service/Wallet/components/Setting';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
@@ -191,7 +192,7 @@ const SettingStack = () => {
       screenOptions={{ headerShown: false }}
       initialRouteName={Routes.MYPAGE}>
       <Stack.Screen name={Routes.MYPAGE} component={Profile} />
-      <Stack.Screen name={Routes.EDIT_PROFILE} component={EditProfile}/>
+      <Stack.Screen name={Routes.EDIT_PROFILE} component={EditProfile} />
       <Stack.Screen name={Routes.POINT} component={Point} />
       <Stack.Screen name={Routes.RECEIPT} component={Receipt} />
       <Stack.Screen name={Routes.SUBSCRIBE} component={Subscribe} />
@@ -239,6 +240,7 @@ function WalletStack() {
       <Stack.Group>
         <Stack.Screen name={Routes.WALLET_HOME} component={WalletHome} />
         <Stack.Screen name={Routes.WALLET_WELCOME} component={WalletWelcome} />
+        <Stack.Screen name={Routes.WALLET_SETTING} component={WalletSetting} />
       </Stack.Group>
       {/* <Stack.Group screenOptions={modalGroupOptions}>
           <Stack.Screen

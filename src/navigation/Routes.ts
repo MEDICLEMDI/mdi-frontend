@@ -57,6 +57,7 @@ enum Routes {
   WALLET_HOME = 'WalletHome',
   WALLET_CREATE_PASSWORD = 'WalletCreatePassword',
   WALLET_IMPORT = 'WalletImport',
+  WALLET_SETTING = 'WalletSetting',
 }
 
 export const NATIVE_ROUTES = Object.values(Routes);

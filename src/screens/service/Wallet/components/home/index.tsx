@@ -169,9 +169,13 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                 </View>
                 <View style={styles.topRightLayer}>
                   {/* 셋팅버튼은 누르면 셋팅라우트로 이동 */}
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPress={() => {
                       handleDeleteWallet();
+                    }}> */}
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate(Routes.WALLET_SETTING);
                     }}>
                     <Image source={SettingIcon} style={styles.settingIcon} />
                   </TouchableOpacity>
