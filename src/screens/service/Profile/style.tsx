@@ -55,6 +55,15 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+
+  itemStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    backgroundColor: Colors.Medicle.Brown.Light,
+    marginBottom: 15,
+  },
+
   // Edit page
   profileHeader: {
     borderBottomWidth: 10,

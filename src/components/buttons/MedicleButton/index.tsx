@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicator,
+  ActivityIndicator, GestureResponderEvent,
   StyleProp,
   StyleSheet,
   TextStyle,
@@ -17,8 +17,8 @@ import { fontStyleCreator } from '@/utils/fonts';
 import style from './style';
 
 interface Props {
-  onPress: () => void;
-  onLongPress?: () => void;
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
+  onLongPress?: ((event: GestureResponderEvent) => void) | undefined;
   text: string;
   buttonStyle?: StyleProp<ViewStyle>;
   iconStyle?: StyleProp<ViewStyle>;

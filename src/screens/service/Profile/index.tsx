@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Platform,
-  SafeAreaView,
+  SafeAreaView, ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -11,70 +11,69 @@ import {
 import BoxDropShadow from '@/components/BoxDropShadow';
 import GridList from '@/components/GridList';
 import Header from '@/components/Header';
-import { profileMenus } from '@/components/Menus';
+import { myPageMenus } from '@/constants/menus';
 import { Colors } from '@/constants/theme';
 import Icons from '@/icons';
 import Routes from '@/navigation/Routes';
 
 import style from './style';
+import {ScrollViewGrid} from "@/components/GridLayout";
 
 const Profile = ({ navigation }) => {
   const { t, i18n } = useTranslation();
 
-  const [menus, setMenus] = React.useState([]);
-
-  React.useEffect(() => {
-    initialize();
-  }, [i18n.language]);
-
-  const initialize = () => {
-    setMenus(profileMenus(t));
-  };
+  const numColumns = 3;
+  const menuPadding = 50;
+  const gap = 30;
 
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={false} title={t('header.profile')} />
-      <View style={style.contentWrap}>
-        <BoxDropShadow
-          color={
-            Platform.OS === 'ios'
-              ? Colors.Medicle.Gray.SemiLight
-              : Colors.Medicle.Gray.Standard
-          }
-          offset={[0, 7]}
-          elevation={10}
-          opacity={0.95}
-          radius={10}
-          style={style.profileWrap}>
-          <View style={style.profileNameWrap}>
-            <Icons name="userCircle" />
-            <Text style={style.name}>Preview</Text>
-          </View>
+      <ScrollView>
 
-          <TouchableOpacity onPress={() => navigation.navigate(Routes.POINT_CHARGE)}>
-            <View style={style.pointBtn}>
-              <Icons name="mdiIcon" />
-              <Text style={{ marginHorizontal: 10 }}>{t('profile.myPoint')}</Text>
-              <Text>0 P</Text>
-              <Icons name="arrowRight" />
+        <View style={style.contentWrap}>
+          <BoxDropShadow
+            color={
+              Platform.OS === 'ios'
+                ? Colors.Medicle.Gray.SemiLight
+                : Colors.Medicle.Gray.Standard
+            }
+            offset={[0, 7]}
+            elevation={10}
+            opacity={0.95}
+            radius={10}
+            style={style.profileWrap}>
+            <View style={style.profileNameWrap}>
+              <Icons name="userCircle" />
+              <Text style={style.name}>Preview</Text>
             </View>
+
+            <TouchableOpacity onPress={() => navigation.navigate(Routes.POINT_CHARGE)}>
+              <View style={style.pointBtn}>
+                <Icons name="mdiIcon" />
+                <Text style={{ marginHorizontal: 10 }}>{t('profile.myPoint')}</Text>
+                <Text>0 P</Text>
+                <Icons name="arrowRight" />
+              </View>
+            </TouchableOpacity>
+          </BoxDropShadow>
+
+          <TouchableOpacity
+            style={style.editProfileBtn}
+            onPress={() => navigation.navigate(Routes.EDIT_PROFILE)}>
+            <Text>{t('profile.editProfile')}</Text>
+            <Icons name="arrowRight" />
           </TouchableOpacity>
-        </BoxDropShadow>
-
-        <TouchableOpacity
-          style={style.editProfileBtn}
-          onPress={() => navigation.navigate(Routes.EDIT_PROFILE)}>
-          <Text>{t('profile.editProfile')}</Text>
-          <Icons name="arrowRight" />
-        </TouchableOpacity>
-
-        <GridList
-          data={menus}
-          itemStyle={style.menuItems}
-          onPress={() => null}
-          type="circle"
+        </View>
+        <ScrollViewGrid
+          itemStyle={style.itemStyle}
+          numColumns={numColumns}
+          padding={menuPadding}
+          gap={gap}
+          data={myPageMenus}
+          renderItem='circle'
         />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

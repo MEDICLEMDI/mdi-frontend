@@ -34,6 +34,7 @@ export const Colors = {
     Brown: {
       Light: '#FCF4E9',
       SemiLight: '#EDDFCC',
+      Standard: '#97876D'
     },
     Switch: {
       TrackAble: '#FCF4E9',
