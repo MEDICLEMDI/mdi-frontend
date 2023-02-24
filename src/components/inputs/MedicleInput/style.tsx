@@ -14,6 +14,6 @@ export default StyleSheet.create({
   textArea: {
     minHeight: 80,
     paddingTop: 15,
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
   },
 });

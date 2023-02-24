@@ -59,6 +59,8 @@ export type RootStackParamList = {
   [Routes.WALLET_IMPORT]: { password: string };
   [Routes.WALLET_SETTING]: undefined;
   [Routes.WALLET_MNEMONIC]: undefined;
+  [Routes.WALLET_SEND]: undefined;
+  [Routes.WALLET_INFO]: undefined;
   [Routes.SERVICE_DOCUMENT]: undefined;
   [Routes.PERSONAL_DOCUMENT]: undefined;
   [Routes.MARKETING]: undefined;
