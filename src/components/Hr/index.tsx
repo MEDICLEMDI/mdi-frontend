@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ViewStyle } from 'react-native';
 
 import style from './style';
+
 interface Hr {
   color?: string;
   thickness?: number;
@@ -13,7 +14,7 @@ const Hr = ({ color, thickness, style }: Hr) => {
     <View
       style={[
         style,
-        { borderBottomColor: color ? color : 'blcak' },
+        { borderBottomColor: color ? color : 'black' },
         { borderBottomWidth: thickness ? thickness : 1 },
       ]}
     />
