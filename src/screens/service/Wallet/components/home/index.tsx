@@ -21,6 +21,7 @@ import SettingIcon from '@/assets/images/setting_icon.png';
 import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import { CopiedToast } from '@/components/common';
+import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
 import { CustomModal, DatePicker } from '@/components/Modals';
@@ -34,7 +35,6 @@ import { addCustomToken, getBalance, getTokenInfo } from '@/redux/slices/user';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import SearchBar from '@/components/forms/SearchHeader';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { assets, assetsLoading } = useAppSelector(state => state.user);
@@ -169,7 +169,10 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               <View style={styles.cardMiddleLayer}>
                 {/* 누르면 다른화면 표현 */}
                 {mdi && (
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate(Routes.WALLET_INFO);
+                    }}>
                     <Text style={styles.mdiBalanceText}>
                       {mdiValue + ' MDI'}
                     </Text>
