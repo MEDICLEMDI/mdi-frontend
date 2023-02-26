@@ -7,6 +7,7 @@ interface TopLabelInputProps extends TextInputProps {
   readonly direction?: 'row' | 'column' | undefined;
   label?: string | undefined;
   style?: ViewStyle | ViewStyle[];
+  password?: boolean;
 }
 
 const MedicleInput = ({
@@ -19,6 +20,9 @@ const MedicleInput = ({
   numberOfLines,
   onChange,
   onPressIn,
+  password,
+  onChangeText,
+  value,
 }: TopLabelInputProps) => {
   const flexDirection = {
     flexDirection: direction === undefined ? 'column' : direction,
@@ -35,12 +39,15 @@ const MedicleInput = ({
         numberOfLines={numberOfLines}
         onChange={onChange}
         onPressIn={onPressIn}
-        style={[defaultStyle.inputStyle, multiline ? defaultStyle.textArea : null ]}
+        onChangeText={onChangeText}
+        secureTextEntry={password}
+        style={[defaultStyle.inputStyle, multiline ? defaultStyle.textArea : null,]}
         // ios settings
         clearButtonMode="always"
         enablesReturnKeyAutomatically={true}
         // android settings
         disableFullscreenUI={true}
+        value={value}
       />
     </View>
   );

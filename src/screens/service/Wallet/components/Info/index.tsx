@@ -30,7 +30,7 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
           onPress={() => {
             navigation.navigate(Routes.WALLET_SEND);
           }}>
-          <Text>보내기</Text>
+          <Text>보내ㅇㅇㅇㅇ기</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

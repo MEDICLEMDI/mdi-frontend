@@ -82,6 +82,7 @@ const WalletCreatePassword = ({
         dispatch(createWallet({ password, icpPrice }))
           .unwrap()
           .then(async result => {
+            console.log(result);
             if (result.wallet) {
               const encryptKey = AES.encrypt(
                 password,
