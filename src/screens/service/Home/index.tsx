@@ -16,6 +16,7 @@ import { ScrollViewGrid } from "@/components/GridLayout";
 import Tab from "@/components/Tab";
 import {fontStyleCreator} from "@/utils/fonts";
 import {Colors} from "@/constants/theme";
+import {MedicleInput} from "@/components/inputs";
 
 const Home = ({ navigation }) => {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ const Home = ({ navigation }) => {
 
   const numColumns = 3;
   const categoryPadding = 30;
-  const gap = 10;
+  const gap = 15;
   const categories = [dentist, dermatology];
 
   return (
@@ -50,6 +51,9 @@ const Home = ({ navigation }) => {
             placeholder={t('home.inputPlaceholder')}
             icon="search"
           />
+          <MedicleInput
+            placeholder={t('home.inputPlaceholder')}
+          />
 
           <Tab
             data={tabs}
@@ -63,6 +67,7 @@ const Home = ({ navigation }) => {
           <ScrollViewGrid
             columnWrapperStyle={style.categoryWrap}
             itemStyle={style.itemStyle}
+            itemBackground='#F3F1EB'
             iconStyle={style.iconStyle}
             textStyle={style.textStyle}
             numColumns={numColumns}

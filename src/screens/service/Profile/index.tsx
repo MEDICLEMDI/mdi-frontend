@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 
 import BoxDropShadow from '@/components/BoxDropShadow';
-import GridList from '@/components/GridList';
 import Header from '@/components/Header';
 import { myPageMenus } from '@/constants/menus';
 import { Colors } from '@/constants/theme';
@@ -67,10 +66,12 @@ const Profile = ({ navigation }) => {
         </View>
         <ScrollViewGrid
           itemStyle={style.itemStyle}
+          itemBackground={Colors.Medicle.Brown.Light}
           numColumns={numColumns}
           padding={menuPadding}
           gap={gap}
           data={myPageMenus}
+          onPress={({ route }) => navigation.navigate(route)}
           renderItem='circle'
         />
       </ScrollView>

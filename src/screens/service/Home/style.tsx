@@ -28,7 +28,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     paddingVertical: 20,
-    backgroundColor: '#F3F1EB',
   },
   iconStyle: {
     marginBottom: 15,

@@ -1,19 +1,28 @@
 import { Platform, StyleSheet } from 'react-native';
-
 import { Colors } from '@/constants/theme';
-
 export default StyleSheet.create({
   inputStyle: {
-    marginTop: 10,
+    flex: 1,
+    paddingLeft: 8,
     paddingVertical: Platform.OS == 'ios' ? 10 : 5,
-    paddingLeft: 15,
-
-    backgroundColor: Colors.Medicle.Gray.Light,
-    borderRadius: 10,
   },
   textArea: {
     minHeight: 80,
     paddingTop: 15,
     textAlignVertical: 'top'
   },
+  errText: {
+    color: '#FF2D2D',
+    fontWeight: '400',
+    fontSize: 12,
+  },
+  inputWrapFlex: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    borderRadius: 10,
+    marginTop: 10,
+    paddingHorizontal: 8,
+  }
 });

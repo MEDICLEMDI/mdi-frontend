@@ -1,33 +1,40 @@
-import {Text, TextStyle, TouchableOpacity, View, ViewStyle} from "react-native";
+import {GestureResponderEvent, Text, TextStyle, TouchableOpacity, View, ViewStyle} from "react-native";
 import Icon from "@/icons";
 import * as React from "react";
 
 const ItemCircle = ({
+  index,
   item,
   style,
   iconStyle,
   textStyle,
   circleStyle,
+  onPress,
 }:{
-  item: any;
+  readonly index: number;
+  readonly item: any;
   style?: ViewStyle | ViewStyle[];
   iconStyle?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle | TextStyle[];
   circleStyle?: ViewStyle | ViewStyle[];
+  onPress?: Function;
 }) => {
-
   const isNullItem = item.route === '';
+
+  const onPressEventHandler = () => {
+    if(onPress !== undefined) onPress(item, index);
+  };
 
   return (
     <TouchableOpacity
-      onPress={() => null}
+      onPress={() => onPressEventHandler()}
       style={[style, isNullItem && { backgroundColor: '#FFFFFF00' }]}
       disabled={isNullItem}
     >
       <View style={circleStyle}>
-        {item.icon !== '' && (<Icon name={item.icon} style={iconStyle} />)}
+        {item.icon !== undefined && item.icon !== '' && (<Icon name={item.icon} style={iconStyle} />)}
       </View>
-      {item.name !== '' && (<Text style={textStyle}>{item.name}</Text>)}
+      {item.name !== undefined && item.name !== '' && (<Text style={textStyle}>{item.name}</Text>)}
     </TouchableOpacity>
   )
 }

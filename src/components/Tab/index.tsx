@@ -11,11 +11,11 @@ const Tab = ({
   response,
 }:{
   readonly data: {label: string}[];
+  readonly index: number;
+  readonly tabSelectedStyle: [TextStyle, ViewStyle];
   readonly tabStyle?: ViewStyle | ViewStyle[];
   readonly buttonStyle?: ViewStyle | ViewStyle[];
   readonly textStyle?: TextStyle | TextStyle[];
-  readonly tabSelectedStyle: [TextStyle, ViewStyle];
-  readonly index: number;
   response?: React.ComponentState;
 }) => {
   const selected_style_text = tabSelectedStyle[0];

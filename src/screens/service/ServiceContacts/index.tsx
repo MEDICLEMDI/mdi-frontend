@@ -11,6 +11,7 @@ import { Colors } from '@/constants/theme';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
+import Icons from "@/icons";
 
 export default () => {
   const { t } = useTranslation();

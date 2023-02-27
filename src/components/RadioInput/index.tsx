@@ -10,7 +10,7 @@ const RadioInput = ({
   response,
   style,
 }:{
-  readonly data: { label: string }[],
+  readonly data: { name: string }[],
   readonly response: React.ComponentState,
   size?: number,
   borderColor?: string,
@@ -38,6 +38,7 @@ const RadioInput = ({
     radioWrap: {
       flexDirection: 'row',
       alignItems: 'center',
+      marginVertical: 10,
     },
   });
 
@@ -47,13 +48,13 @@ const RadioInput = ({
   }
 
   return (
-    data.map(({label}, key) => (
+    data.map(({name}, key) => (
     <View style={style}>
       <Pressable style={defaultStyle.radioWrap} onPress={() => radioChangeHandler(key)}>
         <View style={defaultStyle.radioCircleWrap}>
           {selectIndex === key && (<View style={defaultStyle.radioCircle}></View>)}
         </View>
-        <Text>{label}</Text>
+        <Text>{name}</Text>
       </Pressable>
     </View>
     ))
