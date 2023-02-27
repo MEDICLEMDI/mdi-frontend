@@ -148,7 +148,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
         <View style={styles.sendLayer}>
           <MedicleInput
             placeholder={'보낼 주소를 입력해 주세요.'}
-            style={{ width: '100%' }}
+            style={{ }}
             maxLength={63}
             onChangeText={value => {
               onChangeReceiver(value);
@@ -158,8 +158,10 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
           />
           <View style={styles.sendLayerMiddle}>
             <MedicleInput
+              label='TEXT'
+              direction='row'
               placeholder={'보낼 수량을 입력해주세요.'}
-              style={{ backgroundColor: 'red' }}
+              style={{ flex: 1, alignItems: 'center' }}
               onChangeText={value => {
                 onChangeAmount(Number(value));
               }}
@@ -169,11 +171,10 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
             <MedicleButton
               text={'전액'}
               buttonStyle={{
+                paddingHorizontal: 12,
+                paddingVertical: 10,
                 borderRadius: 10,
-                flex: 1,
-                marginLeft: 20,
-                height: 37,
-                // marginTop: 10,
+                marginBottom: 14,
               }}
             />
           </View>
