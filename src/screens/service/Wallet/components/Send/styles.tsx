@@ -15,20 +15,23 @@ export default StyleSheet.create({
     // marginTop: 7,
   },
   sendLayerMiddle: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     backgroundColor: 'blue',
+    // height: 100,
+    marginTop: 10,
   },
   sendLayerBottom: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: 'orange',
     // marginTop: 7,
   },
   totalText: {
     fontSize: 17,
     fontWeight: '700',
     color: '#333333',
-    marginTop: 10,
-    marginLeft: 10,
+    // marginTop: 10,
+    // marginLeft: 10,
   },
 });

@@ -170,6 +170,10 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
               radius={10}
               style={[styles.bottomBox, { padding: 0 }]}></BoxDropShadow>
           </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(Routes.WALLET_SEND)}>
+            <Text>gd</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
