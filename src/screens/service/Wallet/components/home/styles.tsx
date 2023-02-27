@@ -1,14 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 import { Colors } from '@/constants/theme';
-import alert from '@/redux/slices/alert';
 
 export default StyleSheet.create({
   cardContainer: {
     // marginTop: 17,
     paddingHorizontal: 30,
     // backgroundColor: 'red',
-    flex: 1,
+    height: Dimensions.get('window').height * 0.245,
+    maxHeight: 1067 * 0.245,
   },
   card: {
     flex: 1,
@@ -52,7 +52,7 @@ export default StyleSheet.create({
     marginTop: 10,
     height: 23,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   krwBalanceLayer: {
     backgroundColor: 'rgba(0,0,0, 0.3)',
@@ -260,6 +260,5 @@ export default StyleSheet.create({
     // top: 25,
     // left: 100,
   },
-  toastPointerStyle: {
-  },
+  toastPointerStyle: {},
 });
