@@ -1,44 +1,55 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import Config from 'react-native-config';
 
-import MedicleLogo from '@/assets/icons/wallet_logo.png';
 import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
 import Hr from '@/components/Hr';
 import { MedicleInput } from '@/components/inputs';
 import Li from '@/components/Li';
 import { RootScreenProps } from '@/interfaces/navigation';
+import { Asset } from '@/interfaces/redux';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { sendToken } from '@/redux/slices/user';
+import { isOwnAddress, validatePrincipalId } from '@/utils/ids';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import { sendToken } from '@/redux/slices/user';
-import { Asset } from '@/interfaces/redux';
+
+export interface Receiver {
+  id: string; // PrincipalId only
+  name?: string;
+  image?: string;
+  icnsId?: string;
+  isValid?: boolean;
+}
 
 const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [mdiAmount, setMdiAmount] = useState(0);
-  const { assets, assetsLoading } = useAppSelector(state => state.user);
+  const { assets, contacts } = useAppSelector(state => state.user);
   const [sendAmount, setSendAmount] = useState<string>();
-  const [receiverId, setReceiverId] = useState<string>();
+  const [receiver, setReceiver] = useState<Receiver>();
+  const [receiverVaild, setReceiverVaild] = useState(false);
+  const { currentWallet } = useAppSelector(state => state.keyring);
   const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
   const { icpPrice } = useAppSelector(state => state.icp);
   const [selectedToken, setSelectedToken] = useState<Asset | undefined>();
-  const liChild =
-    '송금시 발생하는 <strong>수수료는 000 MDI<strong> 입니다.#주소를 정확히 입력해야만 입금되며, 잘못 입력하는 경우 복구가 불가능합니다. #전송 시간은 네트워크 상황에 따라 소요 시간이 달라질 수 있습니다.';
+  const liChild = `송금시 발생하는 <strong>수수료는 ${Config.SEND_FEE} MDI<strong> 입니다.#주소를 정확히 입력해야만 입금되며, 잘못 입력하는 경우 복구가 불가능합니다. #전송 시간은 네트워크 상황에 따라 소요 시간이 달라질 수 있습니다.`;
 
   const [mdi, setMdi] = useState<Asset | null>(null);
+  const [sendDisabled, setSendDisabled] = useState(true);
+  const [total, setTotal] = useState();
+  const [principalVaildMessage, setPrincipalVaildMessage] = useState<
+    string | null
+  >(null);
+  const [amountVaildMessage, setAmountVaildMessage] = useState<string | null>(
+    null
+  );
   useEffect(() => {
     assets.map(token => {
       if (token.name === 'MDI') {
@@ -50,20 +61,61 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
   }, [assets]);
 
   useEffect(() => {
-    console.log(sendAmount);
-  }, [sendAmount])
+    if (receiver?.isValid) {
+      setPrincipalVaildMessage(null);
+    } else if (!receiver?.isValid && receiver?.id.length === 63) {
+      setPrincipalVaildMessage('*유효하지 않은 주소입니다.');
+    }
+    console.log(receiver);
+  }, [receiver]);
 
   const saveMdiAmount = async (amount: number) => {
     await AsyncStorage.setItem('MDI_AMOUNT', amount.toString());
   };
 
+  const onChangeReceiver = (text: string) => {
+    if (!text) {
+      setPrincipalVaildMessage(null);
+      return setReceiver(undefined);
+    }
+
+    if (text.length === 63) {
+      const savedContact = contacts?.find(c => c.id === text);
+      const isOwn = isOwnAddress(text, currentWallet!);
+
+      if (savedContact && !isOwn) {
+        setReceiver({
+          ...savedContact,
+          isValid: true,
+        });
+      } else {
+        const isValid = !isOwn && validatePrincipalId(text);
+        setReceiver({ id: text, isValid });
+      }
+    } else {
+      setPrincipalVaildMessage('*principal 주소는 63자리 입니다.');
+    }
+  };
+
+  const onChangeAmount = (_amount: number) => {
+    let amount = _amount;
+    const _regex = /^\d*\.?\d{0,4}$/;
+    if (amount > mdiAmount) {
+      setAmountVaildMessage('*보유 MDI보다 많은 수량은 전송할 수 없습니다.');
+    } else if (!_regex.test(amount.toString())) {
+      setAmountVaildMessage('*정확한 수량을 입력하여 주세요.');
+    } else {
+      setAmountVaildMessage(null);
+    }
+  };
+
   const handleSendToken = () => {
-    if (sendAmount && receiverId && mdi) {
+    if (sendAmount && receiver && mdi) {
       // setLoading(true);
       const amount = Number(sendAmount);
       dispatch(
         sendToken({
-          to: receiverId,
+          to: receiver.id,
           amount,
           canisterId: canisterId,
           icpPrice,
@@ -73,9 +125,13 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
                 ? mdi.fee * Math.pow(10, mdi.decimals)
                 : 0, // TODO: Change this to selectedToken.fee only when dab is ready
           },
-          onSuccess: () => { console.log('성공') },
+          onSuccess: () => {
+            console.log('성공');
+          },
           // setLoading(false),
-          onFailure: () => { console.log('실패') },
+          onFailure: () => {
+            console.log('실패');
+          },
         })
       );
     }
@@ -93,19 +149,22 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
           <MedicleInput
             placeholder={'보낼 주소를 입력해 주세요.'}
             style={{ width: '100%' }}
+            maxLength={63}
             onChangeText={value => {
-              setReceiverId(value);
+              onChangeReceiver(value);
             }}
-            value={receiverId}
+            // value={receiver?.id}
+            errText={principalVaildMessage!}
           />
           <View style={styles.sendLayerMiddle}>
             <MedicleInput
               placeholder={'보낼 수량을 입력해주세요.'}
-              style={{ width: '75%' }}
+              style={{ backgroundColor: 'red' }}
               onChangeText={value => {
-                setSendAmount(value);
+                onChangeAmount(Number(value));
               }}
               value={sendAmount}
+              errText={amountVaildMessage!}
             />
             <MedicleButton
               text={'전액'}
@@ -114,7 +173,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
                 flex: 1,
                 marginLeft: 20,
                 height: 37,
-                marginTop: 10,
+                // marginTop: 10,
               }}
             />
           </View>
@@ -134,16 +193,17 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
           textStyle={{ fontSize: 12, fontWeight: '400', color: '#989898' }}
           highlightStyle={{ fontWeight: '700' }}
         />
-
       </ScrollView>
       <MedicleButton
-        text='보내기'
+        text="보내기"
         buttonStyle={{
           height: 50,
         }}
-        onPress={handleSendToken} />
+        disabled={sendDisabled}
+        onPress={handleSendToken}
+      />
     </SafeAreaView>
   );
 };
-1
+1;
 export default WalletSend;

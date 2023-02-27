@@ -4,16 +4,21 @@ import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
   inputStyle: {
-    marginTop: 10,
+    // marginTop: 10,
     paddingVertical: Platform.OS == 'ios' ? 10 : 5,
     paddingLeft: 15,
 
-    backgroundColor: Colors.Medicle.Gray.Light,
+    // backgroundColor: Colors.Medicle.Gray.Light,
     borderRadius: 10,
   },
   textArea: {
     minHeight: 80,
     paddingTop: 15,
     textAlignVertical: 'top',
+  },
+  errText: {
+    color: '#FF2D2D',
+    fontWeight: '400',
+    fontSize: 12,
   },
 });

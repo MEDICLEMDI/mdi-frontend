@@ -12,18 +12,22 @@ export default StyleSheet.create({
   },
   sendLayer: {
     // backgroundColor: 'green',
-    marginTop: 5,
+    // marginTop: 7,
   },
   sendLayerMiddle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    alignContent: 'center',
+    // marginTop: 7,
+    backgroundColor: 'orange',
+    height: 100,
   },
   sendLayerBottom: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 5,
+    // marginTop: 7,
   },
   totalText: {
     fontSize: 17,
@@ -31,5 +35,5 @@ export default StyleSheet.create({
     color: '#333333',
     marginTop: 10,
     marginLeft: 10,
-  }
+  },
 });
