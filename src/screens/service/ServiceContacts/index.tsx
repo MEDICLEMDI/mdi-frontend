@@ -21,6 +21,7 @@ export default () => {
     color: Colors.Medicle.Font.Gray.Standard,
   });
   const FONT_WHITE = fontStyleCreator({ color: Colors.Medicle.White });
+  const INPUT_BOTTOM_MARGIN = 20;
 
   const [docAgree, setDocAgree] = React.useState({
     doc1: false,
@@ -53,16 +54,19 @@ export default () => {
             label={t('input.name')}
             style={[style.input]}
             placeholder={t('input.namePlaceholder')}
+            marginBottom={INPUT_BOTTOM_MARGIN}
           />
           <MedicleInput
             label={t('input.company')}
             style={[style.input]}
             placeholder={t('input.companyPlaceholder')}
+            marginBottom={INPUT_BOTTOM_MARGIN}
           />
           <MedicleInput
             label={t('input.phone')}
             style={[style.input]}
             placeholder={t('input.phonePlaceholder')}
+            marginBottom={INPUT_BOTTOM_MARGIN}
           />
           <MedicleInput
             label={t('input.comment')}

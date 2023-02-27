@@ -11,6 +11,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 30,
   },
+  searchInput: {
+    marginVertical: 20,
+    paddingHorizontal: 30,
+  },
   tabButton: {
     paddingBottom: 10,
     marginBottom: 20,

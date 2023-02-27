@@ -17,6 +17,7 @@ import Tab from "@/components/Tab";
 import {fontStyleCreator} from "@/utils/fonts";
 import {Colors} from "@/constants/theme";
 import {MedicleInput} from "@/components/inputs";
+import Icons from "@/icons";
 
 const Home = ({ navigation }) => {
   const { t } = useTranslation();
@@ -46,14 +47,13 @@ const Home = ({ navigation }) => {
         <View>
           <ImageSlide />
 
-          <InputIcon
-            onPress={() => console.log('Test')}
-            placeholder={t('home.inputPlaceholder')}
-            icon="search"
-          />
-          <MedicleInput
-            placeholder={t('home.inputPlaceholder')}
-          />
+          <View style={style.searchInput}>
+            <MedicleInput
+              placeholder={t('home.inputPlaceholder')}
+              rightInputNode={<Icons name="search" />}
+              direction='row'
+            />
+          </View>
 
           <Tab
             data={tabs}
