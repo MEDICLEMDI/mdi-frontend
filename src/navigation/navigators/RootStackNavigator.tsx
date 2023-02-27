@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
+
 import Icons from '@/icons';
 import {
   RootStackParamList,
@@ -28,7 +29,9 @@ import MedicalState from '@/screens/service/MedicalState';
 import Notice from '@/screens/service/Notice';
 import NoticeDetail from '@/screens/service/Notice/detail';
 import Point from '@/screens/service/Point';
+import PointCharge from '@/screens/service/Point/charge';
 import Profile from '@/screens/service/Profile';
+import EditProfile from '@/screens/service/Profile/edit';
 import Receipt from '@/screens/service/Receipt';
 import ServiceContacts from '@/screens/service/ServiceContacts';
 import Setting from '@/screens/service/Setting';
@@ -36,11 +39,14 @@ import Subscribe from '@/screens/service/Subscribe';
 import WalletCreatePassword from '@/screens/service/Wallet/components/CreatePassword';
 import WalletHome from '@/screens/service/Wallet/components/Home';
 import WalletImport from '@/screens/service/Wallet/components/Import';
+import WalletNmemonic from '@/screens/service/Wallet/components/Nmemonic';
+import WalletSetting from '@/screens/service/Wallet/components/Setting';
 import WalletWelcome from '@/screens/service/Wallet/components/Welcome';
 import SignOut from '@/screens/SignOut';
-import PointCharge from '@/screens/service/Point/charge';
+
 import Routes from '../Routes';
-import EditProfile from "@/screens/service/Profile/edit";
+import WalletSend from '@/screens/service/Wallet/components/Send';
+import WalletInfo from '@/screens/service/Wallet/components/Info';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
@@ -69,6 +75,11 @@ const RootStackNavigator = () => {
           component={WalletCreatePassword}
         />
         <Stack.Screen name={Routes.WALLET_IMPORT} component={WalletImport} />
+        <Stack.Screen
+          name={Routes.WALLET_MNEMONIC}
+          component={WalletNmemonic}
+        />
+        <Stack.Screen name={Routes.WALLET_SEND} component={WalletSend} />
         <Stack.Screen name={Routes.POINT_CHARGE} component={PointCharge} />
       </Stack.Group>
     </Stack.Navigator>
@@ -118,10 +129,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.home'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons
-              name="home"
-              style={{ fill: tabActiveController(focused) }}
-            />
+            <Icons name="home" style={{ fill: tabActiveController(focused) }} />
           ),
         }}
       />
@@ -191,7 +199,7 @@ const SettingStack = () => {
       screenOptions={{ headerShown: false }}
       initialRouteName={Routes.MYPAGE}>
       <Stack.Screen name={Routes.MYPAGE} component={Profile} />
-      <Stack.Screen name={Routes.EDIT_PROFILE} component={EditProfile}/>
+      <Stack.Screen name={Routes.EDIT_PROFILE} component={EditProfile} />
       <Stack.Screen name={Routes.POINT} component={Point} />
       <Stack.Screen name={Routes.RECEIPT} component={Receipt} />
       <Stack.Screen name={Routes.SUBSCRIBE} component={Subscribe} />
@@ -239,6 +247,9 @@ function WalletStack() {
       <Stack.Group>
         <Stack.Screen name={Routes.WALLET_HOME} component={WalletHome} />
         <Stack.Screen name={Routes.WALLET_WELCOME} component={WalletWelcome} />
+        <Stack.Screen name={Routes.WALLET_SETTING} component={WalletSetting} />
+        <Stack.Screen name={Routes.WALLET_INFO} component={WalletInfo} />
+
       </Stack.Group>
       {/* <Stack.Group screenOptions={modalGroupOptions}>
           <Stack.Screen

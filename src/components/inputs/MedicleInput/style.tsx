@@ -9,7 +9,7 @@ export default StyleSheet.create({
   textArea: {
     minHeight: 80,
     paddingTop: 15,
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
   },
   errText: {
     color: '#FF2D2D',

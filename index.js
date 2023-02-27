@@ -7,6 +7,10 @@ import { AppRegistry, Text, TextInput } from 'react-native';
 
 import App from './App';
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 AppRegistry.registerComponent('Plug', () => App);
 
 // Disable fontScaling.

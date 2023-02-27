@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Dimensions,
@@ -11,7 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Modalize } from 'react-native-modalize';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
 import CloseButton from '@/assets/images/ic_close.png';
@@ -21,25 +21,17 @@ import SettingIcon from '@/assets/images/setting_icon.png';
 import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import { CopiedToast } from '@/components/common';
+import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
-import { CustomModal } from '@/components/Modals';
+import { CustomModal, DatePicker } from '@/components/Modals';
 import { Colors } from '@/constants/theme';
 import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
 import { Asset } from '@/interfaces/redux';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { reset as resetICPStore } from '@/redux/slices/icp';
-import { reset as resetKeyringStore } from '@/redux/slices/keyring';
-import {
-  addCustomToken,
-  getBalance,
-  getTokenInfo,
-  reset as resetUserStore,
-} from '@/redux/slices/user';
-import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
-import { clearStorage } from '@/utils/localStorage';
+import { addCustomToken, getBalance, getTokenInfo } from '@/redux/slices/user';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
@@ -47,7 +39,6 @@ import styles from './styles';
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const { assets, assetsLoading } = useAppSelector(state => state.user);
   const [mdi, setMdi] = useState<Asset | null>(null);
-  const deleteWalletRef = useRef<Modalize>(null);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
@@ -84,12 +75,19 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   // set mdi
   useEffect(() => {
     assets.map(token => {
-      token.name === 'MDI' ? setMdi(token) : null;
+      if (token.name === 'MDI') {
+        setMdi(token);
+        saveMdiAmount();
+      }
     });
     if (mdi === null) {
       addMdiToken();
     }
   }, [assets]);
+
+  const saveMdiAmount = async () => {
+    await AsyncStorage.setItem('MDI_AMOUNT', mdi!.amount.toString());
+  };
 
   const addMdiToken = async () => {
     dispatch(
@@ -129,19 +127,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     return parts.join('.');
   }
 
-  const handleDeleteWallet = () => {
-    clearStorage();
-    dispatch(resetUserStore());
-    dispatch(resetICPStore());
-    dispatch(resetWalletConnectStore());
-    dispatch(resetKeyringStore());
-    deleteWalletRef.current?.close();
-    navigation.reset({
-      index: 0,
-      routes: [{ name: Routes.WALLET_WELCOME }],
-    });
-  };
-
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Header goBack={false} title={t('header.wallet')} />
@@ -169,9 +154,13 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                 </View>
                 <View style={styles.topRightLayer}>
                   {/* 셋팅버튼은 누르면 셋팅라우트로 이동 */}
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPress={() => {
                       handleDeleteWallet();
+                    }}> */}
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate(Routes.WALLET_SETTING);
                     }}>
                     <Image source={SettingIcon} style={styles.settingIcon} />
                   </TouchableOpacity>
@@ -180,7 +169,10 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               <View style={styles.cardMiddleLayer}>
                 {/* 누르면 다른화면 표현 */}
                 {mdi && (
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate(Routes.WALLET_INFO);
+                    }}>
                     <Text style={styles.mdiBalanceText}>
                       {mdiValue + ' MDI'}
                     </Text>
@@ -231,6 +223,15 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
           </ImageBackground>
         </View>
 
+        {/* <SearchBar onPress={() => setVisible(true)} />
+        <DatePicker
+          name="dataPicker"
+          modalDirection="flex-end"
+          visible={true}
+          // onRequestClose={() => setVisible(false)}
+          animationType="slide"
+          dateResponse={console.log}
+        /> */}
         <View style={styles.historyContainer}>
           <View style={styles.historyTopLayer}>
             <Text style={styles.historyTitle}>

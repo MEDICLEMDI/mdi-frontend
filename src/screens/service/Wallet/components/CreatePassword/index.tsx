@@ -82,13 +82,13 @@ const WalletCreatePassword = ({
         dispatch(createWallet({ password, icpPrice }))
           .unwrap()
           .then(async result => {
+            console.log(result);
             if (result.wallet) {
               const encryptKey = AES.encrypt(
                 password,
                 Config.AES_KEY
               ).toString();
               AsyncStorage.setItem('password', encryptKey);
-              // navigation.navigate(Routes.WALLET_HOME);
             }
           });
       } catch (e) {
