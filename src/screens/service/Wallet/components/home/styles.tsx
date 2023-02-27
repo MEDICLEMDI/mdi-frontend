@@ -71,7 +71,7 @@ export default StyleSheet.create({
     marginLeft: 10,
   },
   historyContainer: {
-    marginTop: 30,
+    marginTop: 20,
     flex: 2,
   },
   menuButton: {
