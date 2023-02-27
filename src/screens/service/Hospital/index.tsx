@@ -21,7 +21,7 @@ const Hospital = ({ navigation }) => {
         <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          data={dentist()}
+          data={dentist}
           renderItem={({item}) => (
             <Text style={{paddingHorizontal: 12, paddingVertical: 4}}>
               {item.name}

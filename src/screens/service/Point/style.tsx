@@ -74,4 +74,30 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  categoryWrap: {
+    marginBottom: 20,
+  },
+  itemStyle: {
+    borderRadius: 10,
+    paddingVertical: 10,
+  },
+  textStyle: {
+    textAlign: 'center',
+  },
+  selectBox: {
+    marginHorizontal: 30,
+    marginBottom: 20,
+    borderWidth: 0,
+    backgroundColor: Colors.Medicle.Gray.Light,
+  },
+  dropdownStyles: {
+    marginHorizontal: 30,
+    marginTop: -20,
+    marginBottom: 20,
+    borderWidth: 0,
+    backgroundColor: Colors.Medicle.Gray.Light,
+  },
+  selectInput: {
+    color: Colors.Medicle.Font.Gray.Standard,
+  }
 });

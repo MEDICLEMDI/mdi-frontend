@@ -3,10 +3,9 @@ import * as React from 'react';
 import {
   Dimensions,
   FlatList,
-  FlatListProps, TextStyle, View, ViewStyle,
+  FlatListProps, GestureResponderEvent, TextStyle, View, ViewStyle,
 } from 'react-native';
-import { ItemBox } from "@/components/GridLayout/items";
-import ItemCircle from "@/components/GridLayout/items/itemCircle";
+import { ItemBox, ItemCircle } from "@/components/GridLayout/items";
 
 export const deviceWidthCalculator = ({
   padding = 0,
@@ -41,16 +40,22 @@ export const ScrollViewGrid = ({
   data,
   renderItem,
   itemStyle,
+  itemSelected,
+  itemBackground,
   iconStyle,
   textStyle,
   columnWrapperStyle,
   gap = 0,
   padding = 0,
   numColumns = 1,
+  onPress,
 } : {
-  data: any[];
-  renderItem: 'box' | 'circle' | 'button';
+  readonly data: any[];
+  readonly renderItem: 'box' | 'circle' | 'button';
+  onPress: Function;
   itemStyle?: ViewStyle | ViewStyle[];
+  itemSelected?: {key: number, color: string};
+  itemBackground: string;
   iconStyle?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle | TextStyle[];
   columnWrapperStyle?: ViewStyle | ViewStyle[];
@@ -59,42 +64,53 @@ export const ScrollViewGrid = ({
   numColumns?: number;
 }) => {
   const size = deviceWidthCalculator({padding: padding, gap: gap, numColumns: numColumns});
-
-  const ItemType = (item) => {
-
+  const ItemType = (item, key) => {
+    const isItemSelected = itemSelected !== undefined && itemSelected?.key === key;
+    const background = isItemSelected ? itemSelected?.color : itemBackground;
+    const defaultItemBoxStyle = {
+      width: size,
+      marginVertical: gap / 2,
+      backgroundColor: background,
+    };
+    const defaultItemCircleStyle = {
+      width: size,
+      height: size,
+      backgroundColor: background,
+    }
 
     switch (renderItem){
       case 'box':
         return (
           <ItemBox
-          item={item}
-          iconStyle={iconStyle}
-          textStyle={textStyle}
-          style={[
-            itemStyle,
-            {
-              width: size,
-              marginVertical: gap / 2,
-            }
+            key={key}
+            index={key}
+            item={item}
+            onPress={onPress}
+            iconStyle={iconStyle}
+            textStyle={textStyle}
+            style={[
+              itemStyle,
+              defaultItemBoxStyle,
           ]} />
         )
       case 'circle':
         return (
           <ItemCircle
+            key={key}
+            index={key}
             item={item}
+            onPress={onPress}
             iconStyle={iconStyle}
             textStyle={textStyle}
             circleStyle={[
               itemStyle,
-              {
-                width: size,
-                height: size,
-              }
+              defaultItemCircleStyle,
             ]}
             style={{
                 alignItems: 'center',
                 marginVertical: gap / 2,
-              }}/>
+              }
+          }/>
         )
       case 'button':
         return
@@ -112,8 +128,8 @@ export const ScrollViewGrid = ({
         paddingHorizontal: padding,
       }
     ]}>
-      {data.map((item) => (
-        ItemType(item)
+      {data.map((item, key) => (
+        ItemType(item, key)
       ))}
     </View>
   )

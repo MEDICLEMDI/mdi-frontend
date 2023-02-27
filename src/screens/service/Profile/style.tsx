@@ -60,7 +60,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    backgroundColor: Colors.Medicle.Brown.Light,
     marginBottom: 15,
   },
 
