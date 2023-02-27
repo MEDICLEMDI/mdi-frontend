@@ -8,6 +8,7 @@ export default StyleSheet.create({
     width: '100%',
     borderRadius: 10,
     paddingHorizontal: 8,
+    backgroundColor: Colors.Medicle.Gray.Light,
   },
   inputRowDirection: {
     flex: 1,

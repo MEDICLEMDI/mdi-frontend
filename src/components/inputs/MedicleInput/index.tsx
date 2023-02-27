@@ -11,10 +11,10 @@ interface TopLabelInputProps extends TextInputProps {
   style?: ViewStyle | ViewStyle[];
   password?: boolean;
   errText?: string;
-  leftInputNode?: React.ReactNode;
-  rightInputNode?: React.ReactNode;
-  inputButtonNode?: React.ReactNode;
-  marginBottom?: number;
+  readonly leftInputNode?: React.ReactNode;
+  readonly rightInputNode?: React.ReactNode;
+  readonly inputButtonNode?: React.ReactNode;
+  textInputStyle?: ViewStyle | ViewStyle[];
 }
 const MedicleInput = ({
   direction = 'column',
@@ -34,7 +34,7 @@ const MedicleInput = ({
   leftInputNode,
   rightInputNode,
   inputButtonNode,
-  marginBottom = 0,
+  textInputStyle,
 }: TopLabelInputProps) => {
   const ERROR_TEXT = fontStyleCreator({
     color: '#FF2D2D',
@@ -67,11 +67,10 @@ const MedicleInput = ({
         <View
           style={[
             defaultStyle.inputContainer,
+            textInputStyle,
             direction === 'row' && defaultStyle.inputRowDirection,
             multiline ? defaultStyle.textArea : null,
-            {
-              backgroundColor: errText ? '#FFE8E8' : Colors.Medicle.Gray.Light,
-            },
+            { backgroundColor: errText && '#FFE8E8' },
           ]}>
           {!multiline && leftInputNode && <View>{leftInputNode}</View>}
           <TextInput

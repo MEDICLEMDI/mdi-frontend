@@ -183,6 +183,8 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
               style={{ flex: 1 }}
               placeholder="수수료가 포함된 최종 수량입니다."
               editable={false}
+              textInputStyle={{backgroundColor: 'red', borderWidth: 1,}}
+              errText='asd'
             />
           </View>
         </View>
