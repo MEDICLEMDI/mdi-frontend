@@ -178,13 +178,12 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
             />
           </View>
           <View style={styles.sendLayerBottom}>
-            <Text style={styles.totalText}>TOTAL</Text>
             <MedicleInput
+              label={<Text style={styles.totalText}>TOTAL</Text>}
+              direction='row'
               style={{ flex: 1 }}
               placeholder="수수료가 포함된 최종 수량입니다."
               editable={false}
-              textInputStyle={{backgroundColor: 'red', borderWidth: 1,}}
-              errText='asd'
             />
           </View>
         </View>

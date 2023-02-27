@@ -51,27 +51,20 @@ export default () => {
         <View>
           {/* Input Wrap */}
           <MedicleInput
-            label={t('input.name')}
-            style={[style.input]}
+            label={<Text>{t('input.name')}</Text>}
             placeholder={t('input.namePlaceholder')}
-            marginBottom={INPUT_BOTTOM_MARGIN}
           />
           <MedicleInput
-            label={t('input.company')}
-            style={[style.input]}
+            label={<Text>{t('input.company')}</Text>}
             placeholder={t('input.companyPlaceholder')}
-            marginBottom={INPUT_BOTTOM_MARGIN}
           />
           <MedicleInput
-            label={t('input.phone')}
-            style={[style.input]}
+            label={<Text>{t('input.phone')}</Text>}
             placeholder={t('input.phonePlaceholder')}
-            marginBottom={INPUT_BOTTOM_MARGIN}
           />
           <MedicleInput
-            label={t('input.comment')}
+            label={<Text>{t('input.comment')}</Text>}
             placeholder={t('input.commentPlaceholder')}
-            style={[style.input]}
             editable={true}
             multiline={true}
             numberOfLines={4}

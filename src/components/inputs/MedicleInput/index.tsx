@@ -7,14 +7,14 @@ import { fontStyleCreator } from '@/utils/fonts';
 import defaultStyle from './style';
 interface TopLabelInputProps extends TextInputProps {
   readonly direction?: 'row' | 'column' | undefined;
-  label?: string | undefined;
-  style?: ViewStyle | ViewStyle[];
+  label?: React.ReactNode;
+  style?: ViewStyle
   password?: boolean;
   errText?: string;
   readonly leftInputNode?: React.ReactNode;
   readonly rightInputNode?: React.ReactNode;
   readonly inputButtonNode?: React.ReactNode;
-  textInputStyle?: ViewStyle | ViewStyle[];
+  textInputStyle?: ViewStyle;
 }
 const MedicleInput = ({
   direction = 'column',
@@ -41,6 +41,10 @@ const MedicleInput = ({
     size: 12,
     weight: 'normal',
   });
+  const ERROR_INPUT_BACKGROUND = '#FFE8E8';
+  const INPUT_BACKGROUND = Colors.Medicle.Gray.Light;
+  const INPUT_BACKGROUND_WHITE = Colors.Medicle.White;
+
   const [errorMargin, setErrorMargin] = React.useState(0);
   const flexStyle: ViewStyle = {
     flexDirection: direction,
@@ -52,25 +56,31 @@ const MedicleInput = ({
     setErrorMargin(width);
   };
 
+  const backgroundColorListener = () => {
+    if(errText) return ERROR_INPUT_BACKGROUND;
+    if(textInputStyle) return textInputStyle?.backgroundColor;
+    return INPUT_BACKGROUND
+  }
+
   return (
     <View style={style}>
       <View style={[flexStyle, defaultStyle.inputWrap]}>
         {label && (
-          <Text
+          <View
             onLayout={onLabelLayout}
             style={
               direction === 'row' ? { paddingRight: 10 } : { marginBottom: 10 }
             }>
             {label}
-          </Text>
+          </View>
         )}
         <View
           style={[
-            defaultStyle.inputContainer,
             textInputStyle,
+            defaultStyle.inputContainer,
             direction === 'row' && defaultStyle.inputRowDirection,
-            multiline ? defaultStyle.textArea : null,
-            { backgroundColor: errText && '#FFE8E8' },
+            multiline && defaultStyle.textArea,
+            { backgroundColor: backgroundColorListener() }
           ]}>
           {!multiline && leftInputNode && <View>{leftInputNode}</View>}
           <TextInput

@@ -16,7 +16,6 @@ export default StyleSheet.create({
   },
   sendLayerMiddle: {
     // flexDirection: 'row',
-    backgroundColor: 'blue',
     // height: 100,
     marginTop: 10,
   },
@@ -24,7 +23,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'orange',
     // marginTop: 7,
   },
   totalText: {
