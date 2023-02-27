@@ -1,28 +1,28 @@
 import { Platform, StyleSheet } from 'react-native';
 import { Colors } from '@/constants/theme';
 export default StyleSheet.create({
-  inputStyle: {
+  inputWrap: {
+    justifyContent: 'space-between',
+  },
+  inputContainer: {
+    width: '100%',
+    borderRadius: 10,
+    paddingHorizontal: 8,
+  },
+  inputRowDirection: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  input: {
+    width: '100%',
     paddingLeft: 8,
     paddingVertical: Platform.OS == 'ios' ? 10 : 5,
   },
   textArea: {
     minHeight: 80,
-    paddingTop: 15,
+    paddingTop: 5,
     textAlignVertical: 'top',
   },
-  errText: {
-    color: '#FF2D2D',
-    fontWeight: '400',
-    fontSize: 12,
-  },
-  inputWrapFlex: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-
-    borderRadius: 10,
-    marginTop: 10,
-    paddingHorizontal: 8,
-  }
 });
