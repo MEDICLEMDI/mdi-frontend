@@ -86,6 +86,7 @@ import WhiteningIcon from './svg/Whitening.svg';
 import WICPIcon from './svg/WICP.svg';
 import XTCIcon from './svg/XTC.svg';
 import YZoneIcon from './svg/YZone.svg';
+import ArrowUpIcon from './svg/ArrowUp.svg';
 
 export const IconTypes = (type: string) =>
   ({
@@ -132,6 +133,7 @@ export const IconTypes = (type: string) =>
     mdiHorizontal: MdiLogoIcon,
     arrowLeft: ArrowLeftIcon,
     arrowDown: ArrowDownIcon,
+    arrowUp: ArrowUpIcon,
     alarm: AlarmIcon,
     search: SearchIcon,
     refresh: RefreshIcon,

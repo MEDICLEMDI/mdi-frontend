@@ -40,8 +40,7 @@ const EditProfile = () => {
           {/* Input Wrap */}
           <View style={style.inputGroup}>
             <MedicleInput
-              direction="column"
-              label={t('input.password')}
+              label={<Text>{t('input.password')}</Text>}
               placeholder={t('input.resetPasswordPlaceholder')}
             />
             <MedicleInput placeholder={t('input.resetPasswordConfirmPlaceholder')} />

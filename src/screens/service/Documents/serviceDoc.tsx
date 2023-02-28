@@ -15,6 +15,7 @@ import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
 import Icons from "@/icons";
+import Accordion from "@/components/Accordion";
 
 export default () => {
   const { t } = useTranslation();
@@ -89,6 +90,15 @@ export default () => {
           </View>
           <Icons name="arrowDown" />
         </BoxDropShadow>
+        <Accordion>
+          <Accordion.Header>
+            <Text style={[FONT_BLACK_B]}>{t('setting.doc1')}</Text>
+            <Text style={[FONT_GRAY]}>[현행] 2022년 11월 15일 시행안</Text>
+          </Accordion.Header>
+          <Accordion.Body>
+            <Text>Test Body</Text>
+          </Accordion.Body>
+        </Accordion>
       </View>
     </SafeAreaView>
   );

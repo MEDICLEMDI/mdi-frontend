@@ -43,7 +43,6 @@ const MedicleInput = ({
   });
   const ERROR_INPUT_BACKGROUND = '#FFE8E8';
   const INPUT_BACKGROUND = Colors.Medicle.Gray.Light;
-  const INPUT_BACKGROUND_WHITE = Colors.Medicle.White;
 
   const [errorMargin, setErrorMargin] = React.useState(0);
   const flexStyle: ViewStyle = {
