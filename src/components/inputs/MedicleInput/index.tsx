@@ -8,13 +8,13 @@ import defaultStyle from './style';
 interface TopLabelInputProps extends TextInputProps {
   readonly direction?: 'row' | 'column' | undefined;
   label?: React.ReactNode;
-  style?: ViewStyle
+  style?: ViewStyle;
   password?: boolean;
   errText?: string;
   readonly leftInputNode?: React.ReactNode;
   readonly rightInputNode?: React.ReactNode;
   readonly inputButtonNode?: React.ReactNode;
-  textInputStyle?: ViewStyle;
+  textInputStyle?: ViewStyle | ViewStyle[];
 }
 const MedicleInput = ({
   direction = 'column',
@@ -43,7 +43,6 @@ const MedicleInput = ({
   });
   const ERROR_INPUT_BACKGROUND = '#FFE8E8';
   const INPUT_BACKGROUND = Colors.Medicle.Gray.Light;
-  const INPUT_BACKGROUND_WHITE = Colors.Medicle.White;
 
   const [errorMargin, setErrorMargin] = React.useState(0);
   const flexStyle: ViewStyle = {
@@ -57,10 +56,18 @@ const MedicleInput = ({
   };
 
   const backgroundColorListener = () => {
-    if(errText) return ERROR_INPUT_BACKGROUND;
-    if(textInputStyle) return textInputStyle?.backgroundColor;
-    return INPUT_BACKGROUND
-  }
+    if (errText) {
+      return ERROR_INPUT_BACKGROUND;
+    }
+    if (textInputStyle) {
+      return textInputStyle.forEach(value => {
+        if (value.backgroundColor !== undefined) {
+          return value.backgroundColor;
+        }
+      });
+    }
+    return INPUT_BACKGROUND;
+  };
 
   return (
     <View style={style}>
@@ -80,7 +87,7 @@ const MedicleInput = ({
             defaultStyle.inputContainer,
             direction === 'row' && defaultStyle.inputRowDirection,
             multiline && defaultStyle.textArea,
-            { backgroundColor: backgroundColorListener() }
+            { backgroundColor: backgroundColorListener() },
           ]}>
           {!multiline && leftInputNode && <View>{leftInputNode}</View>}
           <TextInput
