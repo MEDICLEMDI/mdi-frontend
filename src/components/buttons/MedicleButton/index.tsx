@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  ActivityIndicator, GestureResponderEvent,
+  ActivityIndicator,
+  GestureResponderEvent,
   StyleProp,
   StyleSheet,
   TextStyle,
@@ -54,7 +55,11 @@ const MedicleButton = ({
       disabled={disabled || disableAnimation}
       onPress={onPress}
       onLongPress={onLongPress || onPress}
-      style={[style.button, buttonStyle]}>
+      style={[
+        style.button,
+        buttonStyle,
+        disabled && { backgroundColor: Colors.Medicle.Gray.Standard },
+      ]}>
       {loading ? (
         <ActivityIndicator style={StyleSheet.absoluteFill} color="black" />
       ) : (

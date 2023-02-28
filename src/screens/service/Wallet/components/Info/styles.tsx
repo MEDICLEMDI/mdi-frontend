@@ -111,5 +111,47 @@ export default StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#E8E8E8',
+    paddingHorizontal: 25,
+    paddingVertical: 20,
+  },
+  flexRowSpaceBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  flexRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 3,
+    alignItems: 'center',
+  },
+  userId: {
+    fontWeight: '700',
+    fontSize: 14,
+    color: '#443927',
+  },
+  mdiAmount: {
+    fontWeight: '400',
+    fontSize: 18,
+    color: '#443927',
+  },
+  waveImage: {
+    width: 10,
+    height: 10,
+    marginRight: 4,
+  },
+  mdiKrwAmount: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#706148',
+  },
+  sendButton: {
+    height: 35,
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  sendButtonText: {
+    color: '#333333',
+    fontWeight: '500',
+    fontSize: 12,
   },
 });

@@ -18,7 +18,9 @@ import CopyIcon from '@/assets/images/copy.png';
 import Phone from '@/assets/images/ic_phone.png';
 import Profile from '@/assets/images/ic_profile.png';
 import WalletCard from '@/assets/images/wallet_card.png';
+import Wave from '@/assets/images/wave.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
+import MedicleButton from '@/components/buttons/MedicleButton';
 import { CopiedToast, CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
 import Hr from '@/components/Hr';
@@ -27,6 +29,7 @@ import { RootScreenProps } from '@/interfaces/navigation';
 import { Asset } from '@/interfaces/redux';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { fontStyleCreator } from '@/utils/fonts';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
@@ -44,6 +47,12 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
   const { currentWallet } = useAppSelector(state => state.keyring);
   const { principal } = currentWallet || {};
   const [visibility, setVisibility] = useState(false);
+
+  const normal = fontStyleCreator({
+    size: 14,
+    color: '#333333',
+    weight: 'normal',
+  });
 
   // set mdi
   useEffect(() => {
@@ -133,7 +142,7 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
                   <Image style={styles.authImage} source={Profile} />
                   <Text>본인 인증</Text>
                 </View>
-                <CustomCheckbox selected={true} />
+                <CustomCheckbox selected={false} />
               </View>
             </BoxDropShadow>
             <BoxDropShadow
@@ -168,12 +177,35 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
               elevation={10}
               opacity={0.95}
               radius={10}
-              style={[styles.bottomBox, { padding: 0 }]}></BoxDropShadow>
+              style={[styles.bottomBox, { padding: 0 }]}>
+              <View style={[styles.flexRowSpaceBetween, { marginBottom: 15 }]}>
+                <Text style={normal}>아이디</Text>
+                <Text style={styles.userId}>MDI</Text>
+              </View>
+              <View
+                style={[styles.flexRowSpaceBetween, { alignItems: 'center' }]}>
+                <Text style={normal}>보유 MDI</Text>
+                <View>
+                  <Text style={styles.mdiAmount}>
+                    {mdiValue} <Text style={{ fontWeight: '700' }}> MDI</Text>
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.flexRow}>
+                <Image style={styles.waveImage} source={Wave} />
+                <Text style={styles.mdiKrwAmount}>
+                  {mdiKrwValue}
+                  <Text style={{ fontWeight: '400' }}> KRW</Text>
+                </Text>
+              </View>
+              <MedicleButton
+                onPress={() => navigation.navigate(Routes.WALLET_SEND)}
+                buttonStyle={styles.sendButton}
+                textStyle={styles.sendButtonText}
+                text="보내기"
+              />
+            </BoxDropShadow>
           </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(Routes.WALLET_SEND)}>
-            <Text>gd</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
