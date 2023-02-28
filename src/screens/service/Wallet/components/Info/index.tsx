@@ -142,7 +142,7 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
                   <Image style={styles.authImage} source={Profile} />
                   <Text>본인 인증</Text>
                 </View>
-                <CustomCheckbox selected={true} />
+                <CustomCheckbox selected={false} />
               </View>
             </BoxDropShadow>
             <BoxDropShadow
