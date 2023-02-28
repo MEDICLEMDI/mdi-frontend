@@ -9,6 +9,6 @@ export default StyleSheet.create({
     backgroundColor: Colors.Medicle.Primary,
   },
   disabled: {
-    opacity: 0.2,
+    color: '#FFFFFF',
   },
 });

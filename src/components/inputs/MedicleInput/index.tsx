@@ -60,11 +60,15 @@ const MedicleInput = ({
       return ERROR_INPUT_BACKGROUND;
     }
     if (textInputStyle) {
-      return textInputStyle.forEach(value => {
-        if (value.backgroundColor !== undefined) {
-          return value.backgroundColor;
-        }
-      });
+      if (textInputStyle[0] !== undefined) {
+        return textInputStyle.forEach(value => {
+          if (value.backgroundColor !== undefined) {
+            return value.backgroundColor;
+          }
+        });
+      } else {
+        return textInputStyle?.backgroundColor;
+      }
     }
     return INPUT_BACKGROUND;
   };

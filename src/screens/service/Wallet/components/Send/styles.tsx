@@ -12,18 +12,18 @@ export default StyleSheet.create({
   },
   sendLayer: {
     // backgroundColor: 'green',
-    // marginTop: 7,
+    marginTop: 20,
   },
   sendLayerMiddle: {
     // flexDirection: 'row',
     // height: 100,
-    marginTop: 10,
+    marginTop: 20,
   },
   sendLayerBottom: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // marginTop: 7,
+    marginTop: 20,
   },
   totalText: {
     fontSize: 17,
@@ -31,5 +31,14 @@ export default StyleSheet.create({
     color: '#333333',
     // marginTop: 10,
     // marginLeft: 10,
+  },
+  sendInput: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#989898',
+  },
+  sendInputText: {
+    fontWeight: '700',
+    fontSize: 15,
+    color: '#333333',
   },
 });
