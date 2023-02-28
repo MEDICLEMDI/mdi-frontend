@@ -1,9 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import {
+  Button,
+  Image,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Config from 'react-native-config';
 
+import Close from '@/assets/images/close.png';
 import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
 import Hr from '@/components/Hr';
@@ -47,6 +57,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
 
   const [mdi, setMdi] = useState<Asset | null>(null);
   const [sendDisabled, setSendDisabled] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [total, setTotal] = useState();
   const [principalVaildMessage, setPrincipalVaildMessage] = useState<
     string | null
@@ -54,6 +65,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
   const [principalInputBorder, setPrincipalInputBorder] = useState(1);
   const [amountInputBorder, setAmountInputBorder] = useState(1);
   const [amountVaildMessage, setAmountVaildMessage] = useState<string | null>();
+  const [amoutVaild, setAmountVaild] = useState(false);
   useEffect(() => {
     assets.map(token => {
       if (token.name === 'MDI') {
@@ -63,6 +75,14 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
       }
     });
   }, [assets]);
+
+  useEffect(() => {
+    if (receiver?.isValid && amoutVaild) {
+      setSendDisabled(false);
+    } else {
+      setSendDisabled(true);
+    }
+  }, [receiver?.isValid, amoutVaild]);
 
   useEffect(() => {
     if (receiver?.isValid) {
@@ -77,6 +97,14 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
 
   const saveMdiAmount = async (amount: number) => {
     await AsyncStorage.setItem('MDI_AMOUNT', amount.toString());
+  };
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
   };
 
   const onChangeReceiver = (text: string) => {
@@ -107,6 +135,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
   };
 
   const onChangeAmount = (_amount: string) => {
+    setAmountVaild(false);
     if (!_amount) {
       setAmountInputBorder(1);
       setAmountVaildMessage('');
@@ -124,6 +153,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
     } else {
       setAmountVaildMessage('');
       setAmountInputBorder(1);
+      setAmountVaild(true);
     }
   };
 
@@ -234,9 +264,30 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
           height: 50,
         }}
         textStyle={styles.sendInputText}
-        disabled={sendDisabled}
-        onPress={handleSendToken}
+        // disabled={sendDisabled}
+        disabled={false}
+        onPress={handleOpenModal}
       />
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={handleCloseModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <View style={styles.modalHeader}>
+              <View style={styles.modalHeaderCenter}>
+                <Text style={styles.modalTitle}>보내기</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.modalHeaderRight}
+                onPress={handleCloseModal}>
+                <Image style={styles.modalCloseButton} source={Close} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };

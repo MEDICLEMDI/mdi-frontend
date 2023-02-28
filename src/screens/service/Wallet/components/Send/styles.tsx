@@ -41,4 +41,39 @@ export default StyleSheet.create({
     fontSize: 15,
     color: '#333333',
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
+  modal: {
+    width: 277,
+    height: 256,
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#443927',
+  },
+  modalCloseButton: {
+    width: 15,
+    height: 15,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  modalHeaderCenter: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  modalHeaderRight: {
+    position: 'absolute',
+    right: 0,
+  },
 });
