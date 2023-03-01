@@ -7,11 +7,9 @@ export default StyleSheet.create({
     // maxWidth: 420,
     flex: 1,
     paddingHorizontal: 30,
-    backgroundColor: 'red',
   },
   titleContainer: {
     marginTop: 20,
-    backgroundColor: 'orange',
   },
   titleText: {
     fontSize: 20,
@@ -25,7 +23,7 @@ export default StyleSheet.create({
     color: '#333333',
   },
   warningCard: {
-    backgroundColor: 'pink',
+    backgroundColor: 'rgba(255, 45, 45, 0.1)',
     height: 64,
     marginTop: 10,
     padding: 15,
@@ -43,16 +41,6 @@ export default StyleSheet.create({
     marginLeft: 6,
     lineHeight: 16,
   },
-  btn: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  btnText: {
-    fontSize: 16,
-    fontWeight: '700',
-  },
   btnContainer: {
     height: 52,
     position: 'absolute',
@@ -60,4 +48,18 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
   },
+  middleContainer: {
+    marginTop: 20,
+  },
+  contentText: {
+    marginBottom: 10,
+    color: '#333333',
+    fontWeight: '400',
+    fontSize: 13,
+  },
+  passwordInput: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#989898',
+  }
 });

@@ -208,7 +208,7 @@ const WalletSetting = ({
 
             <TouchableOpacity
               onPress={() => {
-                handleDeleteWallet();
+                // handleDeleteWallet();
               }}>
               <BoxDropShadow
                 color={

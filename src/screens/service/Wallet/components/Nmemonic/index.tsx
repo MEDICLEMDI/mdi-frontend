@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Image,
@@ -10,18 +10,51 @@ import {
 } from 'react-native';
 
 import Warning from '@/assets/icons/info-circle.png';
+import CryptoJS from 'crypto-js';
 import Header from '@/components/Header';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import MedicleButton from '@/components/buttons/MedicleButton';
+import { MedicleInput } from '@/components/inputs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Config from 'react-native-config';
+
 
 const WalletNmemonic = ({
   navigation,
   goBack,
 }: RootScreenProps<Routes.WALLET_MNEMONIC>) => {
   const { t } = useTranslation();
+
+  const [password, setPassword] = useState('');
+  const [passwordVaild, setPasswordVaild] = useState(false);
+  const [page, setPage] = useState('password');
+  const [walletPassword, setWalletPassword] = useState('');
+
+
+  useEffect(() => {
+    getWalletPassword();
+  }, [])
+
+  useEffect(() => {
+    setPasswordVaild(password === walletPassword && password !== '');
+  }, [password])
+
+
+  const getWalletPassword = async () => {
+    const encryptKey = await AsyncStorage.getItem('password').then(res => {
+      setWalletPassword(CryptoJS.AES.decrypt(res!, Config.AES_KEY).toString(
+        CryptoJS.enc.Utf8
+      ));
+    })
+  }
+
+
+
+
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Header goBack={true} title={t('header.wallet')} />
@@ -41,23 +74,31 @@ const WalletNmemonic = ({
             </Text>
           </View>
         </View>
+
+        <View style={styles.middleContainer}>
+          {page === 'password'
+            ?
+            <>
+              <Text style={styles.contentText}>게속하려면 암호 입력</Text>
+              <MedicleInput placeholder='암호를 입력해주세요.'
+                textInputStyle={styles.passwordInput} password={true}
+                onChangeText={text => {
+                  setPassword(text);
+                }} />
+            </> :
+            <Text style={styles.contentText}>비공개 비밀 복구 구문</Text>
+          }
+        </View>
+
         <View style={styles.btnContainer}>
-          <TouchableOpacity
-            style={[
-              styles.btn,
-              // { backgroundColor: !isMnemonicValid ? '#989898' : '#E7E1D5' },
-            ]}
-            // disabled={!isMnemonicValid}
-            // onPress={importWalletFromSeedPhrase}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                // { color: !isMnemonicValid ? '#FFFFFF' : '#000000' },
-              ]}>
-              {t('wallet.import.importButton')}
-            </Text>
-          </TouchableOpacity>
+          <MedicleButton buttonStyle={{ height: 50, marginTop: 'auto' }} onPress={
+            () => {
+              page === 'password' ?
+                setPage('show')
+                :
+                navigation.navigate(Routes.WALLET_HOME);
+            }
+          } text={page === 'password' ? '다음' : '홈으로'} disabled={!passwordVaild} />
         </View>
       </View>
       {/* </ScrollView> */}
