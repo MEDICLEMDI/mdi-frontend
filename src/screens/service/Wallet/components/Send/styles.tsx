@@ -52,7 +52,6 @@ export default StyleSheet.create({
     height: 256,
     backgroundColor: '#FFF',
     borderRadius: 10,
-    padding: 20,
   },
   modalTitle: {
     fontSize: 16,
@@ -60,8 +59,8 @@ export default StyleSheet.create({
     color: '#443927',
   },
   modalCloseButton: {
-    width: 15,
-    height: 15,
+    width: 13,
+    height: 13,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -76,4 +75,39 @@ export default StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
+  modalPaddingLayer: {
+    paddingHorizontal: 20,
+    marginTop: 24,
+  },
+  modalPasswordLayer: {
+    paddingTop: 30,
+  },
+  passwordTitle: {
+    marginBottom: 10,
+    color: '#000000',
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  modalSend: {
+    height: 40,
+    marginTop: 'auto',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  resultPage: {
+    flex: 1,
+    // backgroundColor: 'red',
+    alignItems: 'center',
+  },
+  resultImage: {
+    marginTop: 150,
+    marginBottom: 50,
+    width: 80,
+    height: 80,
+  },
+  resultText: {
+    color: '#443927',
+    fontSize: 16,
+    fontWeight: '600',
+  }
 });

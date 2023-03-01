@@ -15,6 +15,7 @@ interface TopLabelInputProps extends TextInputProps {
   readonly rightInputNode?: React.ReactNode;
   readonly inputButtonNode?: React.ReactNode;
   textInputStyle?: ViewStyle | ViewStyle[];
+  clearButton?: boolean;
 }
 const MedicleInput = ({
   direction = 'column',
@@ -35,6 +36,7 @@ const MedicleInput = ({
   rightInputNode,
   inputButtonNode,
   textInputStyle,
+  clearButton,
 }: TopLabelInputProps) => {
   const ERROR_TEXT = fontStyleCreator({
     color: '#FF2D2D',
@@ -111,7 +113,7 @@ const MedicleInput = ({
             secureTextEntry={password}
             value={value}
             // ios settings
-            clearButtonMode="always"
+            clearButtonMode={clearButton === false? 'never' : 'always'}
             enablesReturnKeyAutomatically={true}
             // android settings
             disableFullscreenUI={true}

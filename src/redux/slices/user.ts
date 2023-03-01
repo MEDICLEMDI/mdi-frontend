@@ -88,11 +88,14 @@ export const sendToken = createAsyncThunk(
         dispatch(getTransactions({ icpPrice }));
       }
       onSuccess?.();
+      console.log('sendSuccess');
       return {
         status: TRANSACTION_STATUS.success,
       };
+
     } catch (e: any) {
       console.log('e', e);
+      console.log('sendFail')
       onFailure?.();
       return rejectWithValue({
         status: TRANSACTION_STATUS.error,
@@ -511,13 +514,13 @@ export const addConnectedApp = createAsyncThunk(
       return currentConnectedApps.map(connectedApp =>
         connectedApp.name === name
           ? {
-              ...connectedApp,
-              canisterList: uniqueConcat(
-                connectedApp.canisterList,
-                canisterList
-              ),
-              lastConnection,
-            }
+            ...connectedApp,
+            canisterList: uniqueConcat(
+              connectedApp.canisterList,
+              canisterList
+            ),
+            lastConnection,
+          }
           : connectedApp
       );
     }
@@ -630,9 +633,9 @@ export const userSlice = createSlice({
           .map(col =>
             col.canisterId === nft.canister
               ? {
-                  ...col,
-                  tokens: col.tokens.filter(tok => tok.index !== nft.index),
-                }
+                ...col,
+                tokens: col.tokens.filter(tok => tok.index !== nft.index),
+              }
               : col
           )
           .filter(col => col.tokens.length);
