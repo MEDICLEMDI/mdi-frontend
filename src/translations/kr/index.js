@@ -1,11 +1,3 @@
-import { getNumberFormatSettings } from 'react-native-localize';
-
-import { ACTIVITY_STATUS } from '@/constants/business';
-import { ERROR_TYPES, MIN_PASSWORD_LENGTH } from '@/constants/general';
-import Routes from '@/navigation/Routes';
-
-const { decimalSeparator } = getNumberFormatSettings();
-
 const translations = {
   input: {
     // Service Contact Inputs
@@ -28,13 +20,13 @@ const translations = {
     password: '비밀번호',
     resetPasswordPlaceholder: '현재 비밀번호를 입력해주세요',
     resetPasswordConfirmPlaceholder: '새 비밀번호를 입력해주세요. (영문/숫자/특수문자 혼합 8~20자)',
-    address: 'Address',
-    addressPlaceholder: 'address',
-    postCodePlaceholder: 'pose code',
-    addressDetailPlaceholder: 'detail address',
+    address: '주소',
+    addressPlaceholder: '주소',
+    postCodePlaceholder: '우편번호',
+    addressDetailPlaceholder: '상세주소',
 
     // Home search input
-    searchInputPlaceHolder: 'Search for hospitals or treatments',
+    searchInputPlaceHolder: '궁금한 시술, 병원 이름을 검색해주세요.',
 
     // Date picker modal
     all: '전체',
@@ -110,9 +102,6 @@ const translations = {
     exchange: '거래소',
     community: '커뮤니티',
     settings: '환경설정',
-  },
-  home: {
-    inputPlaceholder: '궁금한 시술, 병원 이름을 검색해주세요.',
   },
   wallet: {
     pastYear: '최근 1년',

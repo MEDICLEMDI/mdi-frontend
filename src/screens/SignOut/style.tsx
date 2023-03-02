@@ -5,6 +5,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    paddingHorizontal: 30.
   },
   signOutWrap: {
     paddingHorizontal: 30,
@@ -31,7 +32,7 @@ export default StyleSheet.create({
   pointWrap: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 30,
+    marginBottom: 30,
   },
   alertWrap: {
     paddingHorizontal: 20,

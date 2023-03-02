@@ -49,7 +49,7 @@ const Home = ({ navigation }) => {
 
           <View style={style.searchInput}>
             <MedicleInput
-              placeholder={t('home.inputPlaceholder')}
+              placeholder={t('input.searchInputPlaceHolder')}
               rightInputNode={<Icons name="search" />}
               direction='row'
             />

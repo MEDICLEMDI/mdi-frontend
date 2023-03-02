@@ -20,6 +20,7 @@ import Icons from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
+import Accordion from "@/components/Accordion";
 
 export default () => {
   const { t } = useTranslation();
@@ -46,29 +47,29 @@ export default () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Header goBack={true} title={t('setting.sighOut')} />
+      <Header goBack={true} title={t('setting.signOut')} />
       <View style={style.container}>
-        <BoxDropShadow
-          color={
-            Platform.OS === 'ios'
-              ? Colors.Medicle.Gray.SemiLight
-              : Colors.Medicle.Gray.Standard
-          }
-          offset={[0, 7]}
-          elevation={10}
-          opacity={0.95}
-          radius={10}
-          style={[style.signOutWrap, { opacity: 0.99 }]}>
-          <View>
+        <Accordion>
+          <Accordion.Header>
             <Text style={[SIGNOUT_ALERT_FONT_HEADER, { marginBottom: 5 }]}>
               유의사항
             </Text>
             <Text style={SIGNOUT_ALERT_FONT_DESCRIPT}>
               회원 탈퇴 전에 꼭 확인하세요.
             </Text>
-          </View>
-          <Icons name="arrowDown" />
-        </BoxDropShadow>
+          </Accordion.Header>
+          <Accordion.Body>
+            <Text style={{ padding: 10 }}>
+              {
+                `[회원탈퇴 유의사항]
+                
+[탈퇴 이후 포인트 사용 불가능]
+회원탈퇴 이후에는 포인트 사용이 불가능합니다. 회원탈퇴 전, 사용 가능한 포인트가 있다면 반드시 사용해야 하며, 사용하지 않은 포인트는 회원탈퇴 이후 소멸됩니다.
+
+...`}
+            </Text>
+          </Accordion.Body>
+        </Accordion>
         <View style={[style.flexDirection, style.pointWrap]}>
           <Text>보유 포인트</Text>
           <Text style={BOLD}>{0}원</Text>
