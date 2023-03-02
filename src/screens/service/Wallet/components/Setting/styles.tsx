@@ -81,5 +81,73 @@ export default StyleSheet.create({
     color: '#333333',
     fontWeight: '400',
   },
-  
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
+  modal: {
+    width: 277,
+    height: 318,
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+  },
+  modalTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#443927',
+  },
+  modalCloseButton: {
+    width: 13,
+    height: 13,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  modalHeaderCenter: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  modalHeaderRight: {
+    position: 'absolute',
+    right: 0,
+  },
+  modalPaddingLayer: {
+    paddingHorizontal: 20,
+    marginTop: 24,
+  },
+  modalTextLayer: {
+    marginTop: 25,
+  },
+  textTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: 40,
+  },
+  warningImage: {
+    // marginRight: 10,
+    width: 23,
+    height: 23,
+  },
+  warningTitle: {
+    color: '#FF2D2D',
+    fontWeight: '700',
+    fontSize: 19,
+  },
+  deleteButton: {
+    marginTop: 'auto',
+    height: 40,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  warningDescript: {
+    color: '#000000',
+    fontWeight: '400',
+    fontSize: 10,
+    textAlign: 'center',
+  }
 });

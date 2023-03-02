@@ -21,6 +21,7 @@ import styles from './styles';
 import Config from 'react-native-config';
 import { AES } from 'crypto-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NmemonicInput from '@/components/inputs/NmemonicInput';
 
 const WalletImport = ({
   route,
@@ -87,19 +88,7 @@ const WalletImport = ({
           <Text style={styles.subText}>{t('wallet.import.subTitle')}</Text>
         </View>
         <View style={styles.mnemonicContainer}>
-          <TextInput
-            style={styles.mnemonicInput}
-            multiline
-            placeholder={t('wallet.import.mnemonicInput')}
-            placeholderTextColor={'#989898'}
-            selectionColor={'#989898'}
-            numberOfLines={4}
-            value={seedPhrase}
-            onChangeText={onChangeText}
-            onFocus={() => setError(false)}
-            onSubmitEditing={importWalletFromSeedPhrase}
-          />
-          {error && <Text style={styles.errMsg}>{errorMsg}</Text>}
+          <NmemonicInput error="nmemonic" />
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity

@@ -113,7 +113,7 @@ const MedicleInput = ({
             secureTextEntry={password}
             value={value}
             // ios settings
-            clearButtonMode={clearButton === false? 'never' : 'always'}
+            clearButtonMode={clearButton === false ? 'never' : 'always'}
             enablesReturnKeyAutomatically={true}
             // android settings
             disableFullscreenUI={true}

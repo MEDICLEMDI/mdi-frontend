@@ -36,17 +36,17 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
-  errMsg: {
-    color: 'red',
-    fontSize: 12,
-    fontWeight: '400',
-  },
-  mnemonicInput: {
-    borderColor: '#989898',
-    borderRadius: 10,
-    borderWidth: 1,
-    height: 150,
-    paddingHorizontal: 14,
-    textAlignVertical: 'top',
-  },
+  // errMsg: {
+  //   color: 'red',
+  //   fontSize: 12,
+  //   fontWeight: '400',
+  // },
+  // mnemonicInput: {
+  //   borderColor: '#989898',
+  //   borderRadius: 10,
+  //   borderWidth: 1,
+  //   height: 150,
+  //   paddingHorizontal: 14,
+  //   textAlignVertical: 'top',
+  // },
 });
