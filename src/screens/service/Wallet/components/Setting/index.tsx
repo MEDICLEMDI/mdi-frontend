@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Animated,
   Image,
+  Modal,
   Platform,
   SafeAreaView,
   ScrollView,
@@ -12,9 +13,13 @@ import {
   View,
 } from 'react-native';
 
+import Warning from '@/assets/icons/info-circle.png';
 import Arrow from '@/assets/images/arrow-right.png';
+import Close from '@/assets/images/close.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
+import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
+import { MedicleInput } from '@/components/inputs';
 import { Colors } from '@/constants/theme';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
@@ -45,6 +50,7 @@ const WalletSetting = ({
   const principal = useAppSelector(
     state => state.keyring?.currentWallet?.principal
   );
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     getMdiAmount();
@@ -53,6 +59,14 @@ const WalletSetting = ({
   const getMdiAmount = async () => {
     const amount = await AsyncStorage.getItem('MDI_AMOUNT');
     setMdiAmount(Number(amount));
+  };
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
   };
 
   const handleDeleteWallet = () => {
@@ -208,7 +222,7 @@ const WalletSetting = ({
 
             <TouchableOpacity
               onPress={() => {
-                // handleDeleteWallet();
+                handleOpenModal();
               }}>
               <BoxDropShadow
                 color={
@@ -232,6 +246,52 @@ const WalletSetting = ({
           </View>
         </View>
       </ScrollView>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={handleCloseModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <View style={styles.modalPaddingLayer}>
+              <View style={styles.modalHeader}>
+                <TouchableOpacity
+                  style={styles.modalHeaderRight}
+                  onPress={handleCloseModal}>
+                  <Image style={styles.modalCloseButton} source={Close} />
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.modalTextLayer}>
+                <View style={styles.textTop}>
+                  <Image source={Warning} style={styles.warningImage} />
+                  <Text style={styles.warningTitle}>
+                    지갑을 삭제하시겠습니까?
+                  </Text>
+                </View>
+                <Text style={styles.warningDescript}>
+                  {`기존 지갑, 계정 및 자산은 이 앱에서 영구히 삭제됩니다.
+
+이작업은 취소할 수 없습니다. 
+
+
+ 
+이 지갑은 비밀 복구 구문으로만 복구할 수 있습니다.
+
+MEDICLE에는 비밀 복구 구문이 저장되어있지 않습니다.`}
+                </Text>
+              </View>
+            </View>
+            <MedicleButton
+              text="지갑 삭제"
+              buttonStyle={styles.deleteButton}
+              onPress={() => {
+                handleDeleteWallet();
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
