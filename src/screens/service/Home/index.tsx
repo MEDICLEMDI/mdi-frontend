@@ -1,11 +1,9 @@
 import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import {Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import Config from 'react-native-config';
+import {Image, SafeAreaView, ScrollView, View} from 'react-native';
 
 import ReviewImage from '@/assets/images/Review.png';
-import CategoryTab from '@/components/CategoryTab';
 import Header from '@/components/Header';
 import ImageSlide from '@/components/ImageSlide';
 import InputIcon from '@/components/inputs/InputIcon';
@@ -38,7 +36,7 @@ const Home = ({ navigation }) => {
   const numColumns = 3;
   const categoryPadding = 30;
   const gap = 15;
-  const categories = [dentist, dermatology];
+  const categories = [dentist(t), dermatology(t)];
 
   return (
     <SafeAreaView style={style.container}>
@@ -56,7 +54,7 @@ const Home = ({ navigation }) => {
           </View>
 
           <Tab
-            data={tabs}
+            data={tabs(t)}
             tabStyle={style.tabWrap}
             buttonStyle={style.tabButton}
             textStyle={TAB_FONT}

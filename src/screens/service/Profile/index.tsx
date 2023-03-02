@@ -70,7 +70,7 @@ const Profile = ({ navigation }) => {
           numColumns={numColumns}
           padding={menuPadding}
           gap={gap}
-          data={myPageMenus}
+          data={myPageMenus(t)}
           onPress={({ route }) => navigation.navigate(route)}
           renderItem='circle'
         />

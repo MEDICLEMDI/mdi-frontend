@@ -36,6 +36,10 @@ const translations = {
     pastMonth: '1개월',
     pastWeek: '1주일',
   },
+  button: {
+    change: '',
+    addressChange: ''
+  },
   errorMessage: {
     unknownError: '*오류가 발생하였습니다, 나중에 다시 시도해주세요.',
     nmemonicError: '*구문이 일치하지 않습니다. 다시 입력해주세요.',

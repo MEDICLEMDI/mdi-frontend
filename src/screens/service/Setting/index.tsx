@@ -28,6 +28,7 @@ const Setting = ({ navigation }) => {
       i18n.changeLanguage('kr');
     }
   };
+
   const pageRoute = (route: string) => {
     navigation.navigate(route);
   };

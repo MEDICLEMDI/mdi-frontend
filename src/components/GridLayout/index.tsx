@@ -63,7 +63,7 @@ export const ScrollViewGrid = ({
   padding?: number;
   numColumns?: number;
 }) => {
-  const size = deviceWidthCalculator({padding: padding, gap: gap, numColumns: numColumns});
+  const size = deviceWidthCalculator({padding: padding, gap: gap, numColumns: numColumns})
   const ItemType = (item, key) => {
     const isItemSelected = itemSelected !== undefined && itemSelected?.key === key;
     const background = isItemSelected ? itemSelected?.color : itemBackground;
@@ -71,11 +71,18 @@ export const ScrollViewGrid = ({
       width: size,
       marginVertical: gap / 2,
       backgroundColor: background,
+      overFlow: 'hidden',
     };
     const defaultItemCircleStyle = {
       width: size,
       height: size,
       backgroundColor: background,
+      overFlow: 'hidden',
+    }
+    const defaultTextStyle = {
+      maxWidth: size,
+      textAlign: 'center',
+      paddingHorizontal: renderItem === 'box' ? 10 : 0 ,
     }
 
     switch (renderItem){
@@ -87,7 +94,7 @@ export const ScrollViewGrid = ({
             item={item}
             onPress={onPress}
             iconStyle={iconStyle}
-            textStyle={textStyle}
+            textStyle={[textStyle, defaultTextStyle]}
             style={[
               itemStyle,
               defaultItemBoxStyle,
@@ -101,7 +108,7 @@ export const ScrollViewGrid = ({
             item={item}
             onPress={onPress}
             iconStyle={iconStyle}
-            textStyle={textStyle}
+            textStyle={[textStyle, defaultTextStyle]}
             circleStyle={[
               itemStyle,
               defaultItemCircleStyle,

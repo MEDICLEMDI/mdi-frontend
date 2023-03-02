@@ -54,7 +54,7 @@ const EditProfile = () => {
           <View style={style.inputGroup}>
             <MedicleInput
               direction="column"
-              label={t('input.address')}
+              label={<Text>{t('input.address')}</Text>}
               placeholder={t('input.postCodePlaceholder')}
             />
             <MedicleInput placeholder={t('input.addressPlaceholder')} />
@@ -69,7 +69,7 @@ const EditProfile = () => {
           <View style={style.inputGroup}>
             <MedicleInput
               direction="column"
-              label={t('input.phone')}
+              label={<Text>{t('input.phone')}</Text>}
               placeholder={t('input.phonePlaceholder')}
             />
             <MedicleButton
