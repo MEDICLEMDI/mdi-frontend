@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Animated, Platform, Text, TouchableOpacity, View} from 'react-native';
+import {Animated, LayoutAnimation, Platform, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Icons from "@/icons";
 import BoxDropShadow from "@/components/BoxDropShadow";
 import {Colors} from "@/constants/theme";
@@ -13,30 +13,12 @@ const Accordion = ({
   children?: React.ReactNode;
   bodyHeight?: number;
 }) => {
-  const [accordionToggle, setAccordionToggle] = React.useState(false)
-  const height = React.useRef(new Animated.Value(0)).current;
+  const [expanded, setExpanded] = React.useState(false);
+  const [animation, setAnimation] = React.useState(new Animated.Value(bodyHeight));
 
-  React.useEffect(() => {
-    if(accordionToggle) slideOn();
-    else slideOff();
-  }, [accordionToggle])
-
-  const slideOff = () => {
-    // Will change fadeAnim value to 1 in 5 seconds
-    Animated.timing(height, {
-      toValue: 0,
-      duration: 2000,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const slideOn = () => {
-    // Will change fadeAnim value to 1 in 5 seconds
-    Animated.timing(height, {
-      toValue: bodyHeight,
-      duration: 1000,
-      useNativeDriver: false,
-    }).start();
+  const toggleAccordion = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpanded(!expanded);
   };
 
   return (
@@ -51,29 +33,39 @@ const Accordion = ({
       opacity={0.95}
       radius={20}
       style={style.accordionCard}>
+      <TouchableOpacity onPress={() => toggleAccordion()}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         {React.Children.map(children, (child) => {
           if (child.type.name === 'AccordionHeader') {
             return child;
           }
         })}
-        <TouchableOpacity onPress={() => setAccordionToggle(!accordionToggle)}>
+        <View>
           {
-            !accordionToggle
+            expanded
             ?
-              <Icons name="arrowDown" />
+            <Icons name="arrowUp" />
             :
-              <Icons name="arrowUp" />
+            <Icons name="arrowDown" />
           }
-        </TouchableOpacity>
+        </View>
       </View>
-      <Animated.View style={{ height: height }}>
-        {React.Children.map(children, (child) => {
-          if (child.type.name === 'AccordionBody') {
-            return child;
-          }
-        })}
-      </Animated.View>
+      </TouchableOpacity>
+      <View style={{ overflow: 'hidden' }}>
+        {expanded && (
+          <Animated.View style={{ height: animation }}>
+            <View style={{ padding: 5, marginTop: 10 }}>
+              <ScrollView horizontal={false}>
+                {React.Children.map(children, (child) => {
+                  if (child.type.name === 'AccordionBody') {
+                    return child;
+                  }
+                })}
+              </ScrollView>
+            </View>
+          </Animated.View>
+        )}
+      </View>
     </BoxDropShadow>
   );
 }
