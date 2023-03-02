@@ -258,7 +258,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
         {/* <ScrollView horizontal={false} style={CommonStyle.contentWrap}> */}
           <View style={styles.resultPage}>
             <Image source={Result} style={styles.resultImage} />
-            <Text style={styles.resultText}>전송이 완료되었습니다.</Text>
+            <Text style={styles.resultText}>전송이 요청되었습니다.</Text>
           </View>
         {/* </ScrollView> */}
       </SafeAreaView>

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
-import CopyIcon from '@/assets/images/copy.png';
+import CopyIcon from '@/assets/images/copy_beige.png';
 import Phone from '@/assets/images/ic_phone.png';
 import Profile from '@/assets/images/ic_profile.png';
 import WalletCard from '@/assets/images/wallet_card.png';
