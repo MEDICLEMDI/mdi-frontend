@@ -1,7 +1,7 @@
 import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import {Image, SafeAreaView, ScrollView, View} from 'react-native';
+import {Image, Platform, SafeAreaView, ScrollView, Text, View} from 'react-native';
 
 import ReviewImage from '@/assets/images/Review.png';
 import Header from '@/components/Header';
@@ -16,6 +16,8 @@ import {fontStyleCreator} from "@/utils/fonts";
 import {Colors} from "@/constants/theme";
 import {MedicleInput} from "@/components/inputs";
 import Icons from "@/icons";
+import BoxDropShadow from "@/components/BoxDropShadow";
+import ListItem from "@/components/ListItem";
 
 const Home = ({ navigation }) => {
   const { t } = useTranslation();
@@ -73,6 +75,7 @@ const Home = ({ navigation }) => {
             gap={gap}
             data={categories[tabIndex]}
             renderItem='box'
+            onPress={({ route }) => navigation.navigate(route)}
           />
 
           <View style={style.reviewWrap}>
@@ -82,10 +85,19 @@ const Home = ({ navigation }) => {
               style={style.reviewImage}
             />
           </View>
-          {/*<View style={style.listWrap}>*/}
-          {/*  <Icon name="refresh" />*/}
-          {/*  <Text>{t('comingSoon')}</Text>*/}
-          {/*</View>*/}
+
+          <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
+
+            <ListItem
+              type="고객평가우수병원"
+              location="서울"
+              label="서울 치과"
+              description="치아 미백으로!"
+              discount={20}
+              price="22만원"/>
+
+          </View>
+
         </View>
       </ScrollView>
     </SafeAreaView>

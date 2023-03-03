@@ -10,7 +10,7 @@ const Tab = ({
   index,
   response,
 }:{
-  readonly data: {label: string}[];
+  readonly data: any[];
   readonly index: number;
   readonly tabSelectedStyle: [TextStyle, ViewStyle];
   readonly tabStyle?: ViewStyle | ViewStyle[];
@@ -24,12 +24,12 @@ const Tab = ({
   return (
     <View style={tabStyle}>
       {
-        data.map(({label}, key) => (
+        data.map((prop, key) => (
           <TouchableOpacity
             key={key}
             onPress={() => response(key)}
             style={[buttonStyle, index === key && selected_style_tab]}>
-            <Text style={[textStyle, index === key && selected_style_text]}>{label}</Text>
+            <Text style={[textStyle, index === key && selected_style_text]}>{prop.label ? prop.label : prop.name }</Text>
           </TouchableOpacity>
         ))
       }

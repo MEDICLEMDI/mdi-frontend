@@ -27,7 +27,6 @@ const ItemCircle = ({
 
   return (
     <TouchableOpacity
-      onLayout={(e)=>console.log(e.nativeEvent.layout)}
       onPress={() => onPressEventHandler()}
       style={[style, isNullItem && { backgroundColor: '#FFFFFF00' }]}
       disabled={isNullItem}
