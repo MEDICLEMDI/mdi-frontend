@@ -17,7 +17,7 @@ interface NmemonicInputProps extends TextInputProps {
   editable?: boolean;
   nmemonicValue?: string;
   onPress?: TouchableWithoutFeedbackProps['onPress'];
-  error?: 'nmemonic' | 'unknown';
+  error?: 'nmemonic' | 'unknown' | 'over' | undefined;
 }
 
 const NmemonicInput = ({

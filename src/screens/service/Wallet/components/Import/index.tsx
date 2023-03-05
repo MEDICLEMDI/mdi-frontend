@@ -33,22 +33,27 @@ const WalletImport = ({
   const { icpPrice } = useAppSelector(state => state.icp);
   const [seedPhrase, setSeedPhrase] = useState<string>();
   const [invalidSeedPhrase, setInvalidSeedPhrase] = useState(false);
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [error, setError] = useState<
+    'nmemonic' | 'unknown' | 'over' | undefined
+  >(undefined);
   const password = route?.params.password;
   const [loading, setLoading] = useState(false);
 
   const onChangeText = (text: string) => {
     setSeedPhrase(text);
     setInvalidSeedPhrase(false);
+    setError(undefined);
+    if (text.trim().split(/\s+/g).length > 12) {
+      setError('over');
+    }
   };
+
   const isMnemonicValid =
     !!seedPhrase &&
     seedPhrase.trim().split(/\s+/g).length === 12 &&
     !invalidSeedPhrase;
 
   const importWalletFromSeedPhrase = async () => {
-    // Alert.alert(password);
     setLoading(true);
     setTimeout(() => {
       dispatch(
@@ -69,11 +74,10 @@ const WalletImport = ({
 
         if (res.error) {
           if (res.payload === 'The provided mnemonic is invalid') {
-            setErrorMsg(t('errorMessage.nmemonicError'));
+            setError('nmemonic');
           } else {
-            setErrorMsg(t('errorMessage.unknownError'));
+            setError('unknown');
           }
-          setError(true);
         }
       });
     }, 500);
@@ -88,7 +92,7 @@ const WalletImport = ({
           <Text style={styles.subText}>{t('wallet.import.subTitle')}</Text>
         </View>
         <View style={styles.mnemonicContainer}>
-          <NmemonicInput error="nmemonic" />
+          <NmemonicInput error={error && error} onChangeText={onChangeText} />
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity

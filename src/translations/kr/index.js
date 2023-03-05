@@ -19,7 +19,8 @@ const translations = {
     // Edit Profile Inputs
     password: '비밀번호',
     resetPasswordPlaceholder: '현재 비밀번호를 입력해주세요',
-    resetPasswordConfirmPlaceholder: '새 비밀번호를 입력해주세요. (영문/숫자/특수문자 혼합 8~20자)',
+    resetPasswordConfirmPlaceholder:
+      '새 비밀번호를 입력해주세요. (영문/숫자/특수문자 혼합 8~20자)',
     address: '주소',
     addressPlaceholder: '주소',
     postCodePlaceholder: '우편번호',
@@ -38,7 +39,7 @@ const translations = {
   },
   button: {
     change: '',
-    addressChange: ''
+    addressChange: '',
   },
   errorMessage: {
     unknownError: '*오류가 발생하였습니다, 나중에 다시 시도해주세요.',
@@ -46,6 +47,7 @@ const translations = {
     passwordConfirmError: '*비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
     passwordValidError: '*영문/숫자/특수문자 혼합 8~20자로 입력해주세요.',
     invalidNumberMessage: '*인증번호가 일치하지 않습니다. 다시 입력해주세요.',
+    overError: '*니모닉 문구는 12개의 단어 입니다.',
   },
   navigation: {
     home: '홈',
