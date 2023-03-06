@@ -75,8 +75,11 @@ export const sendToken = createAsyncThunk(
     try {
       const { user } = getState() as State;
       const instance = KeyRing.getInstance();
+      console.log('1');
       const token = user.assets.find(asset => asset.canisterId === canisterId);
+      console.log('12');
       const parsedAmount = parseToBigIntString(amount, token!.decimals);
+      console.log('123');
       const response = await instance?.send({
         to,
         amount: parsedAmount,
@@ -88,14 +91,11 @@ export const sendToken = createAsyncThunk(
         dispatch(getTransactions({ icpPrice }));
       }
       onSuccess?.();
-      console.log('sendSuccess');
       return {
         status: TRANSACTION_STATUS.success,
       };
-
     } catch (e: any) {
       console.log('e', e);
-      console.log('sendFail')
       onFailure?.();
       return rejectWithValue({
         status: TRANSACTION_STATUS.error,
@@ -514,13 +514,13 @@ export const addConnectedApp = createAsyncThunk(
       return currentConnectedApps.map(connectedApp =>
         connectedApp.name === name
           ? {
-            ...connectedApp,
-            canisterList: uniqueConcat(
-              connectedApp.canisterList,
-              canisterList
-            ),
-            lastConnection,
-          }
+              ...connectedApp,
+              canisterList: uniqueConcat(
+                connectedApp.canisterList,
+                canisterList
+              ),
+              lastConnection,
+            }
           : connectedApp
       );
     }
@@ -633,9 +633,9 @@ export const userSlice = createSlice({
           .map(col =>
             col.canisterId === nft.canister
               ? {
-                ...col,
-                tokens: col.tokens.filter(tok => tok.index !== nft.index),
-              }
+                  ...col,
+                  tokens: col.tokens.filter(tok => tok.index !== nft.index),
+                }
               : col
           )
           .filter(col => col.tokens.length);

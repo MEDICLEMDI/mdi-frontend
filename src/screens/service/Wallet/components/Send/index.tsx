@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CryptoJS from 'crypto-js';
 import {
+  ActivityIndicator,
   Alert,
   Button,
   Image,
@@ -35,6 +36,7 @@ import {
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import LoadingModal from '@/components/LoadingModal';
 
 export interface Receiver {
   id: string; // PrincipalId only
@@ -67,11 +69,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
 
   const [receiver, setReceiver] = useState<Receiver>();
 
-  const [password, setPassword] = useState<string>('');
-  const [passwordVaild, setPasswordVaild] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>('');
-
-  const [total, setTotal] = useState<Number | null>(null);
+  const [total, setTotal] = useState<number | null>(null);
   const [totalVaild, setTotalVaild] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -79,6 +77,8 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
 
   const sendFee = Number(Config.SEND_FEE);
   const liChild = `송금시 발생하는 <strong>수수료는 ${Config.SEND_FEE} MDI<strong> 입니다.#주소를 정확히 입력해야만 입금되며, 잘못 입력하는 경우 복구가 불가능합니다. #전송 시간은 네트워크 상황에 따라 소요 시간이 달라질 수 있습니다.`;
+  const [loading, setLoading] = useState(false);
+  const [sendStatus, setSendStatus] = useState(false);
 
   useEffect(() => {
     assets.map(token => {
@@ -120,26 +120,6 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
     console.log('리시버');
   }, [receiver]);
 
-  useEffect(() => {
-    const bool = passwordCheck(password).then(res => {
-      setPasswordVaild(res);
-    });
-  }, [password]);
-
-  const passwordCheck = async (password: string) => {
-    const encryptKey = await AsyncStorage.getItem('password');
-    const walletPassword = CryptoJS.AES.decrypt(
-      encryptKey!,
-      Config.AES_KEY
-    ).toString(CryptoJS.enc.Utf8);
-
-    if (password === walletPassword) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   const saveMdiAmount = async (amount: number) => {
     await AsyncStorage.setItem('MDI_AMOUNT', amount.toString());
   };
@@ -159,7 +139,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
       return setReceiver(undefined);
     }
 
-    if (text.length === 63 || text.length === 64) {
+    if (text.length === 63) {
       const savedContact = contacts?.find(c => c.id === text);
       const isOwn = isOwnAddress(text, currentWallet!);
 
@@ -174,7 +154,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
         setReceiver({ id: text, isValid });
       }
     } else {
-      setPrincipalVaildMessage('*지갑주소는 63~64자리 입니다.');
+      setPrincipalVaildMessage('*지갑주소는 63자리 입니다.');
       setPrincipalInputBorder(0);
     }
   };
@@ -210,21 +190,25 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
   };
 
   const handleAllSend = () => {
-    const limit = mdiAmount - sendFee;
-    setSendAmount(limit.toString());
-    onChangeAmount(limit.toString());
+    if (mdiAmount > sendFee) {
+      const limit = mdiAmount - sendFee;
+      setSendAmount(limit.toString());
+      onChangeAmount(limit.toString());
+    }
   };
 
   const handleSendToken = () => {
+    setSendStatus(true);
     if (sendAmount && receiver && mdi) {
-      // setLoading(true);
+      setLoading(true);
+      handleCloseModal();
       const amount = Number(sendAmount);
       dispatch(
         sendToken({
           to: receiver.id,
-          amount,
+          amount: amount,
           canisterId: canisterId,
-          icpPrice,
+          icpPrice: icpPrice,
           opts: {
             fee:
               mdi?.fee && mdi?.decimals
@@ -239,7 +223,8 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
           },
         })
       ).then(res => {
-        handleCloseModal();
+        setLoading(false);
+        setSendStatus(false);
         setPage('result');
       });
     }
@@ -255,6 +240,15 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
           <Text style={styles.resultText}>전송이 요청되었습니다.</Text>
         </View>
         {/* </ScrollView> */}
+        <MedicleButton
+          text="홈으로"
+          buttonStyle={{
+            height: 50,
+          }}
+          onPress={() => {
+            navigation.navigate(Routes.WALLET_HOME);
+          }}
+        />
       </SafeAreaView>
     );
   }
@@ -271,7 +265,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
           <MedicleInput
             placeholder={'보낼 주소를 입력해 주세요.'}
             style={{}}
-            maxLength={64}
+            maxLength={63}
             onChangeText={value => {
               onChangeReceiver(value);
             }}
@@ -321,7 +315,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
               placeholder="수수료가 포함된 최종 수량입니다."
               editable={false}
               value={total ? total.toString() : undefined}
-              // clearButton={false}
+              clearButton={false}
             />
           </View>
         </View>
@@ -361,28 +355,53 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
                   <Image style={styles.modalCloseButton} source={Close} />
                 </TouchableOpacity>
               </View>
-              <View style={styles.modalPasswordLayer}>
-                <Text style={styles.passwordTitle}>
-                  비밀번호를 입력해주세요.
-                </Text>
-                <MedicleInput
-                  placeholder="비밀번호를 입력해주세요."
-                  password={true}
-                  onChangeText={text => setPassword(text)}
-                />
+              <View style={styles.modalContentLayer}>
+                <Text style={styles.checkInfotitle}>보낼 주소</Text>
+                <Text>{receiver && receiver.id}</Text>
+                <Hr style={{ marginTop: 10, marginBottom: 10 }} />
+                <Text style={styles.checkInfotitle}>보내는 수량</Text>
+                <View>
+                  <Text style={styles.checkInfoContent}>
+                    {mdiAmount}
+                    <Text style={styles.mdi}> MDI</Text>
+                  </Text>
+                </View>
+                <Hr style={{ marginTop: 10, marginBottom: 10 }} />
+                <View style={styles.totalLayer}>
+                  <Text style={styles.modalTotal}>TOTAL{'  '}</Text>
+                  <Text style={styles.fee}>
+                    수수료가 포함된 최종 수량입니다.
+                  </Text>
+                </View>
+                <View>
+                  <Text style={styles.checkInfoContent}>
+                    {total}
+                    <Text style={styles.mdi}> MDI</Text>
+                  </Text>
+                </View>
               </View>
             </View>
-            <MedicleButton
-              buttonStyle={styles.modalSend}
-              onPress={() => {
-                handleSendToken();
-              }}
-              disabled={!passwordVaild}
-              text="보내기"
-            />
+            <View style={{ flexDirection: 'row', marginTop: 'auto' }}>
+              <MedicleButton
+                buttonStyle={styles.modalCancel}
+                textStyle={styles.modalCancelText}
+                onPress={handleCloseModal}
+                text="취소"
+              />
+              <MedicleButton
+                buttonStyle={styles.modalSend}
+                onPress={() => {
+                  if (!sendStatus) {
+                    handleSendToken();
+                  }
+                }}
+                text="보내기"
+              />
+            </View>
           </View>
         </View>
       </Modal>
+      {loading && <LoadingModal />}
     </SafeAreaView>
   );
 };

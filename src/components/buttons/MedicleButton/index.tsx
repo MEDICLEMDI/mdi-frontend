@@ -41,7 +41,7 @@ const MedicleButton = ({
   onPress,
   onLongPress,
   text,
-  textStyle = DEFAULT_FONT_STYLE,
+  textStyle,
   iconName,
   buttonStyle,
   iconStyle,
@@ -64,7 +64,12 @@ const MedicleButton = ({
         <ActivityIndicator style={StyleSheet.absoluteFill} color="black" />
       ) : (
         <>
-          <Text type="button" style={[textStyle, disabled && style.disabled]}>
+          <Text
+            type="button"
+            style={[
+              textStyle ? textStyle : DEFAULT_FONT_STYLE,
+              disabled && style.disabled,
+            ]}>
             {text}
           </Text>
           {iconName && (
