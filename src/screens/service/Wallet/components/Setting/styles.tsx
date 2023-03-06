@@ -66,6 +66,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+    marginTop: 10,
   },
   nmemonicButtonText: {
     fontSize: 12,
