@@ -29,10 +29,11 @@ import { reset as resetKeyringStore } from '@/redux/slices/keyring';
 import { reset as resetUserStore } from '@/redux/slices/user';
 import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
 import { clearStorage } from '@/utils/localStorage';
+import { passwordCheck } from '@/utils/passwordCheck';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import { passwordCheck } from '@/utils/passwordCheck';
+import Accordion from '@/components/Accordion';
 
 const WalletSetting = ({
   navigation,
@@ -54,6 +55,9 @@ const WalletSetting = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [passwordVaild, setPasswordVaild] = useState(false);
   const [password, setPassword] = useState<string | undefined>(undefined);
+  const [passwordErrMessage, setPasswordErrMessage] = useState<
+    string | undefined
+  >(undefined);
 
   useEffect(() => {
     getMdiAmount();
@@ -89,12 +93,14 @@ const WalletSetting = ({
         routes: [{ name: Routes.WALLET_WELCOME }],
       });
     } else {
-      console.log('비번에러');
+      setPasswordErrMessage('*비밀번호가 일치하지 않습니다.');
     }
   };
 
   const handlePasswordonChageText = (text: string) => {
+    setPasswordErrMessage(undefined);
     setPasswordVaild(text.length > 7);
+    setPassword(text);
   };
 
   const toggleExpanded = (
@@ -234,6 +240,16 @@ const WalletSetting = ({
                 </Animated.View>
               </View>
             </BoxDropShadow>
+            <Accordion>
+              <Accordion.Header>
+                <Text style={styles.animatedTitleBoxText}>지갑 정보</Text>
+              </Accordion.Header>
+              <Accordion.Body>
+                <View style={styles.arccodionContent}>
+                  <Text>gd</Text>
+                </View>
+              </Accordion.Body>
+            </Accordion>
 
             <TouchableOpacity
               onPress={() => {
@@ -296,15 +312,19 @@ const WalletSetting = ({
 MEDICLE에는 비밀 복구 구문이 저장되어있지 않습니다.`}
                 </Text>
               </View>
-              <Text>비밀번호를 입력해주세요.</Text>
-              <MedicleInput
-                placeholder="비밀번호를 입력해주세요."
-                onChangeText={(text: string) => {
-                  handlePasswordonChageText(text);
-                  setPassword(text);
-                }}
-                password={true}
-              />
+              <View style={styles.passwordLayer}>
+                <Text style={{ marginBottom: 10 }}>
+                  비밀번호를 입력해주세요.
+                </Text>
+                <MedicleInput
+                  placeholder="비밀번호를 입력해주세요."
+                  onChangeText={(text: string) => {
+                    handlePasswordonChageText(text);
+                  }}
+                  errText={passwordErrMessage && passwordErrMessage}
+                  password={true}
+                />
+              </View>
             </View>
             <MedicleButton
               text="지갑 삭제"
