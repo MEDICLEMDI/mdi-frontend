@@ -3,7 +3,6 @@ import {Animated, LayoutAnimation, Platform, ScrollView, Text, TouchableOpacity,
 import Icons from "@/icons";
 import BoxDropShadow from "@/components/BoxDropShadow";
 import {Colors} from "@/constants/theme";
-import style from './style'
 import {fontStyleCreator} from "@/utils/fonts";
 
 const Accordion = ({
@@ -22,17 +21,7 @@ const Accordion = ({
   };
 
   return (
-    <BoxDropShadow
-      color={
-        Platform.OS === 'ios'
-          ? Colors.Medicle.Gray.SemiLight
-          : Colors.Medicle.Gray.Standard
-      }
-      offset={[0, 7]}
-      elevation={8}
-      opacity={0.95}
-      radius={20}
-      style={style.accordionCard}>
+    <View>
       <TouchableOpacity onPress={() => toggleAccordion()}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         {React.Children.map(children, (child) => {
@@ -66,7 +55,7 @@ const Accordion = ({
           </Animated.View>
         )}
       </View>
-    </BoxDropShadow>
+    </View>
   );
 }
 
