@@ -89,7 +89,7 @@ export default StyleSheet.create({
   },
   modal: {
     width: 277,
-    height: 318,
+    height: 409,
     backgroundColor: '#FFF',
     borderRadius: 10,
   },

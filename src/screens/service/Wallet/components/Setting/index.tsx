@@ -32,6 +32,7 @@ import { clearStorage } from '@/utils/localStorage';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import { passwordCheck } from '@/utils/passwordCheck';
 
 const WalletSetting = ({
   navigation,
@@ -51,10 +52,16 @@ const WalletSetting = ({
     state => state.keyring?.currentWallet?.principal
   );
   const [modalVisible, setModalVisible] = useState(false);
+  const [passwordVaild, setPasswordVaild] = useState(false);
+  const [password, setPassword] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     getMdiAmount();
   }, [mdiAmount]);
+
+  useEffect(() => {
+    console.log(password);
+  }, [password]);
 
   const getMdiAmount = async () => {
     const amount = await AsyncStorage.getItem('MDI_AMOUNT');
@@ -69,17 +76,25 @@ const WalletSetting = ({
     setModalVisible(false);
   };
 
-  const handleDeleteWallet = () => {
-    clearStorage();
-    dispatch(resetUserStore());
-    dispatch(resetICPStore());
-    dispatch(resetWalletConnectStore());
-    dispatch(resetKeyringStore());
-    deleteWalletRef.current?.close();
-    navigation.reset({
-      index: 0,
-      routes: [{ name: Routes.WALLET_WELCOME }],
-    });
+  const handleDeleteWallet = async () => {
+    if (await passwordCheck(password!)) {
+      clearStorage();
+      dispatch(resetUserStore());
+      dispatch(resetICPStore());
+      dispatch(resetWalletConnectStore());
+      dispatch(resetKeyringStore());
+      deleteWalletRef.current?.close();
+      navigation.reset({
+        index: 0,
+        routes: [{ name: Routes.WALLET_WELCOME }],
+      });
+    } else {
+      console.log('비번에러');
+    }
+  };
+
+  const handlePasswordonChageText = (text: string) => {
+    setPasswordVaild(text.length > 7);
   };
 
   const toggleExpanded = (
@@ -281,10 +296,20 @@ const WalletSetting = ({
 MEDICLE에는 비밀 복구 구문이 저장되어있지 않습니다.`}
                 </Text>
               </View>
+              <Text>비밀번호를 입력해주세요.</Text>
+              <MedicleInput
+                placeholder="비밀번호를 입력해주세요."
+                onChangeText={(text: string) => {
+                  handlePasswordonChageText(text);
+                  setPassword(text);
+                }}
+                password={true}
+              />
             </View>
             <MedicleButton
               text="지갑 삭제"
               buttonStyle={styles.deleteButton}
+              disabled={!passwordVaild}
               onPress={() => {
                 handleDeleteWallet();
               }}
