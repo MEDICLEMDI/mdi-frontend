@@ -151,9 +151,6 @@ const WalletSetting = ({
                   ? Colors.Medicle.Gray.SemiLight
                   : Colors.Medicle.Gray.Dark
               }
-              offset={[0, 7]}
-              elevation={10}
-              opacity={0.95}
               radius={10}
               style={[styles.profileWrap, { padding: 0 }]}>
               <View style={styles.walletInfo}>
@@ -194,9 +191,6 @@ const WalletSetting = ({
                   ? Colors.Medicle.Gray.SemiLight
                   : Colors.Medicle.Gray.Dark
               }
-              offset={[0, 7]}
-              elevation={10}
-              opacity={0.95}
               radius={10}
               style={[styles.profileWrap, { padding: 0, marginTop: 10 }]}>
               <View style={styles.walletInfo}>
@@ -261,9 +255,6 @@ const WalletSetting = ({
                     ? Colors.Medicle.Gray.SemiLight
                     : Colors.Medicle.Gray.Dark
                 }
-                offset={[0, 7]}
-                elevation={10}
-                opacity={0.95}
                 radius={10}
                 style={[
                   styles.profileWrap,
