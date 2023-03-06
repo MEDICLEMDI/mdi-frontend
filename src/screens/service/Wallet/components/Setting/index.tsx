@@ -234,16 +234,18 @@ const WalletSetting = ({
                 </Animated.View>
               </View>
             </BoxDropShadow>
-            <Accordion>
-              <Accordion.Header>
-                <Text style={styles.animatedTitleBoxText}>지갑 정보</Text>
-              </Accordion.Header>
-              <Accordion.Body>
-                <View style={styles.arccodionContent}>
-                  <Text>gd</Text>
-                </View>
-              </Accordion.Body>
-            </Accordion>
+            <BoxDropShadow>
+              <Accordion bodyHeight={100}>
+                <Accordion.Header>
+                  <Text style={styles.animatedTitleBoxText}>지갑 정보</Text>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <View style={styles.arccodionContent}>
+                    <Text>gd</Text>
+                  </View>
+                </Accordion.Body>
+              </Accordion>
+            </BoxDropShadow>
 
             <TouchableOpacity
               onPress={() => {

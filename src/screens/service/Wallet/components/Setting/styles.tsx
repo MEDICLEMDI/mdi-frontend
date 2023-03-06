@@ -158,7 +158,5 @@ export default StyleSheet.create({
   arccodionContent: {
     backgroundColor: 'red',
     flex: 1,
-    height: '100%',
-    width: '100%',
   }
 });
