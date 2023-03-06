@@ -89,7 +89,7 @@ export default StyleSheet.create({
   },
   modal: {
     width: 277,
-    height: 409,
+    height: 400,
     backgroundColor: '#FFF',
     borderRadius: 10,
   },
@@ -149,5 +149,8 @@ export default StyleSheet.create({
     fontWeight: '400',
     fontSize: 10,
     textAlign: 'center',
+  },
+  passwordLayer: {
+    marginTop: 30,
   }
 });
