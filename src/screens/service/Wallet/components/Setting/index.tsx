@@ -151,9 +151,6 @@ const WalletSetting = ({
                   ? Colors.Medicle.Gray.SemiLight
                   : Colors.Medicle.Gray.Dark
               }
-              offset={[0, 7]}
-              elevation={10}
-              opacity={0.95}
               radius={10}
               style={[styles.profileWrap, { padding: 0 }]}>
               <View style={styles.walletInfo}>
@@ -194,9 +191,6 @@ const WalletSetting = ({
                   ? Colors.Medicle.Gray.SemiLight
                   : Colors.Medicle.Gray.Dark
               }
-              offset={[0, 7]}
-              elevation={10}
-              opacity={0.95}
               radius={10}
               style={[styles.profileWrap, { padding: 0, marginTop: 10 }]}>
               <View style={styles.walletInfo}>
@@ -240,16 +234,18 @@ const WalletSetting = ({
                 </Animated.View>
               </View>
             </BoxDropShadow>
-            <Accordion>
-              <Accordion.Header>
-                <Text style={styles.animatedTitleBoxText}>지갑 정보</Text>
-              </Accordion.Header>
-              <Accordion.Body>
-                <View style={styles.arccodionContent}>
-                  <Text>gd</Text>
-                </View>
-              </Accordion.Body>
-            </Accordion>
+            <BoxDropShadow>
+              <Accordion bodyHeight={100}>
+                <Accordion.Header>
+                  <Text style={styles.animatedTitleBoxText}>지갑 정보</Text>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <View style={styles.arccodionContent}>
+                    <Text>gd</Text>
+                  </View>
+                </Accordion.Body>
+              </Accordion>
+            </BoxDropShadow>
 
             <TouchableOpacity
               onPress={() => {
@@ -261,9 +257,6 @@ const WalletSetting = ({
                     ? Colors.Medicle.Gray.SemiLight
                     : Colors.Medicle.Gray.Dark
                 }
-                offset={[0, 7]}
-                elevation={10}
-                opacity={0.95}
                 radius={10}
                 style={[
                   styles.profileWrap,

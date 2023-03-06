@@ -132,9 +132,6 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
                   ? Colors.Medicle.Gray.SemiLight
                   : Colors.Medicle.Gray.Dark
               }
-              offset={[0, 7]}
-              elevation={10}
-              opacity={0.95}
               radius={10}
               style={[styles.identityBox, { padding: 0 }]}>
               <View style={styles.shadowBoxCommon}>
@@ -151,9 +148,6 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
                   ? Colors.Medicle.Gray.SemiLight
                   : Colors.Medicle.Gray.Dark
               }
-              offset={[0, 7]}
-              elevation={10}
-              opacity={0.95}
               radius={10}
               style={[styles.phoneBox, { padding: 0 }]}>
               <View style={styles.shadowBoxCommon}>
@@ -173,9 +167,6 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
                   ? Colors.Medicle.Gray.SemiLight
                   : Colors.Medicle.Gray.Dark
               }
-              offset={[0, 7]}
-              elevation={10}
-              opacity={0.95}
               radius={10}
               style={[styles.bottomBox, { padding: 0 }]}>
               <View style={[styles.flexRowSpaceBetween, { marginBottom: 15 }]}>

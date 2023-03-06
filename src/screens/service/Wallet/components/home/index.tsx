@@ -261,9 +261,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                             ? Colors.Medicle.Gray.Light
                             : Colors.Medicle.Gray.Standard
                         }
-                        offset={[0, 7]}
-                        elevation={10}
-                        opacity={0.95}
                         radius={20}
                         style={[
                           styles.historyCard,
