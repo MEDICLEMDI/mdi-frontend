@@ -38,8 +38,9 @@ const translations = {
     pastWeek: '1주일',
   },
   button: {
-    change: '',
-    addressChange: '',
+    change: '변경',
+    addressChange: '주소 변경',
+    submit: '입력완료',
   },
   errorMessage: {
     unknownError: '*오류가 발생하였습니다, 나중에 다시 시도해주세요.',

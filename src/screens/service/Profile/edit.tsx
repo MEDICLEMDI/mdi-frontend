@@ -40,10 +40,11 @@ const EditProfile = () => {
           {/* Input Wrap */}
           <View style={style.inputGroup}>
             <MedicleInput
+              style={style.input}
               label={<Text>{t('input.password')}</Text>}
               placeholder={t('input.resetPasswordPlaceholder')}
             />
-            <MedicleInput placeholder={t('input.resetPasswordConfirmPlaceholder')} />
+            <MedicleInput style={style.input} placeholder={t('input.resetPasswordConfirmPlaceholder')} />
             <MedicleButton
               onPress={() => console.log()}
               text={t('button.change')}
@@ -53,12 +54,13 @@ const EditProfile = () => {
 
           <View style={style.inputGroup}>
             <MedicleInput
+              style={style.input}
               direction="column"
               label={<Text>{t('input.address')}</Text>}
               placeholder={t('input.postCodePlaceholder')}
             />
-            <MedicleInput placeholder={t('input.addressPlaceholder')} />
-            <MedicleInput placeholder={t('input.addressDetailPlaceholder')} />
+            <MedicleInput style={style.input} placeholder={t('input.addressPlaceholder')} />
+            <MedicleInput style={style.input} placeholder={t('input.addressDetailPlaceholder')} />
             <MedicleButton
               onPress={() => console.log()}
               text={t('button.addressChange')}
@@ -74,7 +76,7 @@ const EditProfile = () => {
             />
             <MedicleButton
               onPress={() => console.log()}
-              text={t('button.submitType1')}
+              text={t('button.submit')}
               buttonStyle={[style.inputButton]}
             />
           </View>

@@ -76,6 +76,9 @@ export default StyleSheet.create({
   inputGroup: {
     marginBottom: 30,
   },
+  input: {
+    marginBottom: 10,
+  },
   inputButton: {
     borderRadius: 10,
     paddingVertical: 8,
