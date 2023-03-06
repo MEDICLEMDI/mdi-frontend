@@ -1,19 +1,22 @@
 import * as React from 'react';
-import {Animated, LayoutAnimation, Platform, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {Animated, LayoutAnimation, Platform, ScrollView, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
 import Icons from "@/icons";
-import BoxDropShadow from "@/components/BoxDropShadow";
-import {Colors} from "@/constants/theme";
-import {fontStyleCreator} from "@/utils/fonts";
+import {useEffect} from "react";
 
 const Accordion = ({
   children,
-  bodyHeight = 200,
+  isOpen = false,
+  style,
 }:{
   children?: React.ReactNode;
-  bodyHeight?: number;
+  isOpen?: boolean;
+  style?: ViewStyle | ViewStyle[];
 }) => {
   const [expanded, setExpanded] = React.useState(false);
-  const [animation, setAnimation] = React.useState(new Animated.Value(bodyHeight));
+
+  useEffect(() => {
+    if(isOpen) setExpanded(true);
+  }, [])
 
   const toggleAccordion = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -21,7 +24,7 @@ const Accordion = ({
   };
 
   return (
-    <View>
+    <View style={style}>
       <TouchableOpacity onPress={() => toggleAccordion()}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         {React.Children.map(children, (child) => {
@@ -42,7 +45,7 @@ const Accordion = ({
       </TouchableOpacity>
       <View style={{ overflow: 'hidden' }}>
         {expanded && (
-          <Animated.View style={{ height: animation }}>
+          <Animated.View style={{ maxHeight: 200 }}>
             <View style={{ marginTop: 10 }}>
               <ScrollView horizontal={false}>
                 {React.Children.map(children, (child) => {
