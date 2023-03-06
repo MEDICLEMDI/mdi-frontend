@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Image,
@@ -26,8 +26,11 @@ const NmemonicInput = ({
   nmemonicValue,
   error,
   onChangeText,
+  onSubmitEditing,
 }: NmemonicInputProps) => {
   const { t } = useTranslation();
+  const nmemonicRef = useRef(null);
+  
   return (
     <View>
       <View style={styles.view}>
@@ -41,6 +44,9 @@ const NmemonicInput = ({
           numberOfLines={4}
           value={nmemonicValue && nmemonicValue}
           onChangeText={onChangeText}
+          ref={nmemonicRef}
+          returnKeyType="done"
+          onSubmitEditing={onSubmitEditing}
         />
         {editable === false && (
           <TouchableOpacity onPress={onPress}>

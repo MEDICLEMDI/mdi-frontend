@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
+  Keyboard,
   SafeAreaView,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
 
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
@@ -83,37 +84,47 @@ const WalletImport = ({
     }, 500);
   };
 
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <SafeAreaView style={CommonStyle.container}>
-      <Header goBack={true} title={t('wallet.import.header')} />
-      <View style={styles.mainContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>{t('wallet.import.title')}</Text>
-          <Text style={styles.subText}>{t('wallet.import.subTitle')}</Text>
-        </View>
-        <View style={styles.mnemonicContainer}>
-          <NmemonicInput error={error && error} onChangeText={onChangeText} />
-        </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-            style={[
-              styles.btn,
-              { backgroundColor: !isMnemonicValid ? '#989898' : '#E7E1D5' },
-            ]}
-            disabled={!isMnemonicValid}
-            onPress={importWalletFromSeedPhrase}>
-            <Text
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <SafeAreaView style={CommonStyle.container}>
+        <Header goBack={true} title={t('wallet.import.header')} />
+        <View style={styles.mainContainer}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>{t('wallet.import.title')}</Text>
+            <Text style={styles.subText}>{t('wallet.import.subTitle')}</Text>
+          </View>
+          <View style={styles.mnemonicContainer}>
+            <NmemonicInput
+              error={error && error}
+              onChangeText={onChangeText}
+              onSubmitEditing={importWalletFromSeedPhrase}
+            />
+          </View>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
               style={[
-                styles.btnText,
-                { color: !isMnemonicValid ? '#FFFFFF' : '#000000' },
-              ]}>
-              {t('wallet.import.importButton')}
-            </Text>
-          </TouchableOpacity>
+                styles.btn,
+                { backgroundColor: !isMnemonicValid ? '#989898' : '#E7E1D5' },
+              ]}
+              disabled={!isMnemonicValid}
+              onPress={importWalletFromSeedPhrase}>
+              <Text
+                style={[
+                  styles.btnText,
+                  { color: !isMnemonicValid ? '#FFFFFF' : '#000000' },
+                ]}>
+                {t('wallet.import.importButton')}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      {loading && <LoadingModal name="loading" visible={loading} />}
-    </SafeAreaView>
+        {loading && <LoadingModal name="loading" visible={loading} />}
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
