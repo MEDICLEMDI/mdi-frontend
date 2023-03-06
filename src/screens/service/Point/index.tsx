@@ -29,7 +29,7 @@ export default ({ navigation }) => {
   const [date, setDate] = React.useState();
 
   React.useEffect(() => {
-    console.log(date);
+    // console.log(date);
   }, [date]);
 
   const FONT_BASIC_BLACK = fontStyleCreator({
@@ -40,17 +40,7 @@ export default ({ navigation }) => {
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.point')} />
-      <BoxDropShadow
-        color={
-          Platform.OS === 'ios'
-            ? Colors.Medicle.Gray.SemiLight
-            : Colors.Medicle.Gray.Standard
-        }
-        offset={[0, 7]}
-        elevation={10}
-        opacity={0.95}
-        radius={10}
-        style={[style.pointWrap]}>
+      <BoxDropShadow style={[style.pointWrap]}>
         <View style={[style.flexRow]}>
           <Text>메디클 포인트</Text>
           <TouchableOpacity style={style.infoButton}>

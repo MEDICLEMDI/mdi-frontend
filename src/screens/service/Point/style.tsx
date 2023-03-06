@@ -67,9 +67,12 @@ export default StyleSheet.create({
     paddingVertical: 20,
   },
   sectionHeader: {
-    marginBottom: 20,
+    // marginBottom: 20,
   },
-  balanceWrapper: {
+  mdiBalance: {
+    marginBottom: 10,
+  },
+  inputWrap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -99,5 +102,34 @@ export default StyleSheet.create({
   },
   selectInput: {
     color: Colors.Medicle.Font.Gray.Standard,
-  }
+  },
+  totalWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  price: {
+    fontWeight: 'bold',
+  },
+  totalPriceWrap: {
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.Medicle.Gray.Light,
+    marginBottom: 20,
+    paddingBottom: 20,
+  },
+  totalPrice: {
+    fontWeight: 'bold',
+    color: '#FFB61B',
+  },
+  checkDocsWrap: {
+    marginTop: 10,
+    paddingTop: 10,
+    borderTopColor: Colors.Medicle.Gray.Light,
+    borderTopWidth: 1,
+  },
+  checkDoc: {
+    marginBottom: 10,
+  },
+  checkDocLabel: {
+    marginLeft: 20,
+  },
 });
