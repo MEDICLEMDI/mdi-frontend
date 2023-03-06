@@ -120,6 +120,9 @@ const WalletNmemonic = ({
                   handleCopy();
                 }}
                 // value={}
+                color="red"
+                imgHeight={20}
+                imgWidth={20}
                 nmemonicValue={words && words}
               />
             </>

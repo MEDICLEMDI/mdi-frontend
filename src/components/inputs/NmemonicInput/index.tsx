@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Image,
@@ -13,11 +13,15 @@ import { TextInput } from 'react-native-gesture-handler';
 import CopyIcon from '@/assets/images/copy_gray.png';
 
 import styles from './style';
+import CopyButton from '@/components/CopyButton';
 interface NmemonicInputProps extends TextInputProps {
   editable?: boolean;
   nmemonicValue?: string;
   onPress?: TouchableWithoutFeedbackProps['onPress'];
   error?: 'nmemonic' | 'unknown' | 'over' | undefined;
+  color?: string | undefined;
+  imgHeight?: number;
+  imgWidth?: number;
 }
 
 const NmemonicInput = ({
@@ -27,10 +31,20 @@ const NmemonicInput = ({
   error,
   onChangeText,
   onSubmitEditing,
+  color,
+  imgHeight,
+  imgWidth,
 }: NmemonicInputProps) => {
   const { t } = useTranslation();
   const nmemonicRef = useRef(null);
-  
+  const [image, setImage] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (color && imgHeight && imgWidth && !editable) {
+      setImage(true);
+    }
+  }, []);
+
   return (
     <View>
       <View style={styles.view}>
@@ -48,10 +62,8 @@ const NmemonicInput = ({
           returnKeyType="done"
           onSubmitEditing={onSubmitEditing}
         />
-        {editable === false && (
-          <TouchableOpacity onPress={onPress}>
-            <Image source={CopyIcon} style={styles.copyButton} />
-          </TouchableOpacity>
+        {image && (
+          <CopyButton color={color} imgHeight={imgHeight} imgWidth={imgWidth} />
         )}
       </View>
       {error && (

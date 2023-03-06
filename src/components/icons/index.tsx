@@ -190,9 +190,9 @@ interface Props {
   // height?: number;
 }
 
-const Icon = ({ name, color, ...props }: Props) => {
+const Icon = ({ name, color, style, ...props }: Props) => {
   const IconElement = IconTypes(name) as React.FunctionComponent<any>;
-  return <IconElement {...props} name={name} color={color} />;
+  return <IconElement {...props} name={name} color={color} style={style} />;
 };
 
 export default Icon;
