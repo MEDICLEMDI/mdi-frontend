@@ -61,5 +61,12 @@ export default StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#989898',
-  }
+  },
+  toastStyle: {
+    top: -35,
+    left: '12%',
+  },
+  toastPointerStyle: {
+    top: 20,
+  },
 });

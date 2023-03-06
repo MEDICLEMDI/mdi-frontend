@@ -1,10 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import CryptoJS from 'crypto-js';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, SafeAreaView, Text, View } from 'react-native';
-import Config from 'react-native-config';
-import { useToast } from 'react-native-toast-notifications';
 
 import Warning from '@/assets/icons/info-circle.png';
 import MedicleButton from '@/components/buttons/MedicleButton';
@@ -17,8 +13,8 @@ import { useAppDispatch } from '@/redux/hooks';
 import { getMnemonic } from '@/redux/slices/keyring';
 import { clearState } from '@/redux/slices/walletconnect';
 import { copy } from '@/utils/copy';
+import { passwordCheck } from '@/utils/passwordCheck';
 
-// import { copy, showToast } from '@/utils/copy';
 import CommonStyle from '../../common_style';
 import styles from './styles';
 
@@ -30,18 +26,12 @@ const WalletNmemonic = ({
 
   const [password, setPassword] = useState('');
   const [passwordVaild, setPasswordVaild] = useState(false);
-  const [page, setPage] = useState('password');
-  const [walletPassword, setWalletPassword] = useState('');
+  const [page, setPage] = useState('passwod');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
   const dispatch = useAppDispatch();
   const [words, setWords] = useState<string | undefined>(undefined);
-  const toast = useToast();
-
-  useEffect(() => {
-    getWalletPassword();
-  }, []);
 
   useEffect(() => {
     setErrorMessage(undefined);
@@ -54,8 +44,8 @@ const WalletNmemonic = ({
 
   useEffect(() => {}, [words]);
 
-  const handleCheckPassword = () => {
-    if (walletPassword === password) {
+  const handleCheckPassword = async () => {
+    if (await passwordCheck(password)) {
       handleGetMnemonic();
       setPage('nmemonic');
     } else {
@@ -81,15 +71,6 @@ const WalletNmemonic = ({
 
   const handleCopy = () => {
     copy(words);
-    toast.show('복사완료');
-  };
-
-  const getWalletPassword = async () => {
-    const encryptKey = await AsyncStorage.getItem('password').then(res => {
-      setWalletPassword(
-        CryptoJS.AES.decrypt(res!, Config.AES_KEY).toString(CryptoJS.enc.Utf8)
-      );
-    });
   };
 
   return (
