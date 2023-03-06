@@ -54,7 +54,7 @@ const Accordion = ({
       <View style={{ overflow: 'hidden' }}>
         {expanded && (
           <Animated.View style={{ height: animation }}>
-            <View style={{ padding: 5, marginTop: 10 }}>
+            <View style={{ marginTop: 10 }}>
               <ScrollView horizontal={false}>
                 {React.Children.map(children, (child) => {
                   if (child.type.name === 'AccordionBody') {
@@ -80,7 +80,7 @@ const AccordionHeader = ({ children }) => {
 const AccordionBody = ({ children }) => {
   return (
     <View>
-      <Text>{children}</Text>
+      {children}
     </View>
   );
 };
