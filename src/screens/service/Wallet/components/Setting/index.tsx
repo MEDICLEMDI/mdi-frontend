@@ -235,14 +235,32 @@ const WalletSetting = ({
               </View>
             </BoxDropShadow>
             <BoxDropShadow>
-              <Accordion bodyHeight={100}>
+              <Accordion>
                 <Accordion.Header>
                   <Text style={styles.animatedTitleBoxText}>지갑 정보</Text>
                 </Accordion.Header>
                 <Accordion.Body>
-                  <View style={styles.arccodionContent}>
-                    <Text>gd</Text>
+                  <View style={styles.animatedContents}>
+                    <Text style={styles.animatedContentsText}>보유 MDI</Text>
+                    <Text style={styles.animatedContentsText}>
+                      {mdiAmount + ' MDI'}
+                    </Text>
                   </View>
+                  <View style={styles.animatedContents}>
+                    <Text style={styles.animatedContentsText}>지갑주소</Text>
+                    <Text style={styles.animatedContentsText}>
+                      {principal?.slice(0, 8) + '...'}
+                    </Text>
+                  </View>
+                </Accordion.Body>
+              </Accordion>
+            </BoxDropShadow>
+            <BoxDropShadow>
+              <Accordion>
+                <Accordion.Header>
+                  <Text style={styles.animatedTitleBoxText}>보안 정보</Text>
+                </Accordion.Header>
+                <Accordion.Body>
                 </Accordion.Body>
               </Accordion>
             </BoxDropShadow>

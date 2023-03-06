@@ -57,6 +57,7 @@ export default StyleSheet.create({
   animatedContents: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 13,
   },
   nmemonicButton: {
     backgroundColor: '#E7E1D5',
@@ -158,5 +159,5 @@ export default StyleSheet.create({
   arccodionContent: {
     backgroundColor: 'red',
     flex: 1,
-  }
+  },
 });
