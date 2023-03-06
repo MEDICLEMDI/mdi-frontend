@@ -210,9 +210,11 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
   };
 
   const handleAllSend = () => {
-    const limit = mdiAmount - sendFee;
-    setSendAmount(limit.toString());
-    onChangeAmount(limit.toString());
+    if (mdiAmount > sendFee) {
+      const limit = mdiAmount - sendFee;
+      setSendAmount(limit.toString());
+      onChangeAmount(limit.toString());
+    }
   };
 
   const handleSendToken = () => {
@@ -222,9 +224,9 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
       dispatch(
         sendToken({
           to: receiver.id,
-          amount,
+          amount: amount,
           canisterId: canisterId,
-          icpPrice,
+          icpPrice: icpPrice,
           opts: {
             fee:
               mdi?.fee && mdi?.decimals
@@ -321,7 +323,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
               placeholder="수수료가 포함된 최종 수량입니다."
               editable={false}
               value={total ? total.toString() : undefined}
-              // clearButton={false}
+              clearButton={false}
             />
           </View>
         </View>
