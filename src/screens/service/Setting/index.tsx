@@ -77,17 +77,7 @@ const Setting = ({ navigation }) => {
             data={data}
             renderItem={({item}) => (
               <TouchableOpacity onPress={item.onPress ? item.onPress : null} >
-                <BoxDropShadow
-                    color={
-                      Platform.OS === 'ios'
-                          ? Colors.Medicle.Gray.SemiLight
-                          : Colors.Medicle.Gray.Dark
-                    }
-                    offset={[0, 7]}
-                    elevation={10}
-                    opacity={0.95}
-                    radius={10}
-                    style={[style.profileWrap, { opacity: 0.99 }]}>
+                <BoxDropShadow style={[style.profileWrap, { opacity: 0.99 }]}>
                   <Text>{item.name}</Text>
                   <Icons name="arrowRight" />
                 </BoxDropShadow>

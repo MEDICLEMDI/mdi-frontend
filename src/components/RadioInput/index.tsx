@@ -49,7 +49,7 @@ const RadioInput = ({
 
   return (
     data.map(({name}, key) => (
-    <View style={style}>
+    <View style={style} key={key}>
       <Pressable style={defaultStyle.radioWrap} onPress={() => radioChangeHandler(key)}>
         <View style={defaultStyle.radioCircleWrap}>
           {selectIndex === key && (<View style={defaultStyle.radioCircle}></View>)}
