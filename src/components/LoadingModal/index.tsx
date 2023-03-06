@@ -3,7 +3,7 @@ import * as React from 'react';
 import { ActivityIndicator, Modal, ModalBaseProps, View } from 'react-native';
 
 interface ModalProps extends ModalBaseProps {
-  name: string;
+  name?: string;
 }
 
 const LoadingModal = (props: ModalProps) => {
@@ -21,8 +21,9 @@ const LoadingModal = (props: ModalProps) => {
           style={{
             flex: 1,
             justifyContent: 'center',
+            backgroundColor: '#00000080',
           }}>
-          <ActivityIndicator size="large" color="#111111" />
+          <ActivityIndicator size="large" color="#FFFFFF" />
         </View>
       </Modal>
     </Portal>

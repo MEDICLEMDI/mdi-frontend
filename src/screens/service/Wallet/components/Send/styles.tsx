@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/theme';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -48,8 +49,8 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   modal: {
-    width: 277,
-    height: 256,
+    width: 312,
+    height: 368,
     backgroundColor: '#FFF',
     borderRadius: 10,
   },
@@ -79,24 +80,27 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 24,
   },
-  modalPasswordLayer: {
+  modalContentLayer: {
     paddingTop: 30,
-  },
-  passwordTitle: {
-    marginBottom: 10,
-    color: '#000000',
-    fontSize: 15,
-    fontWeight: '700',
   },
   modalSend: {
     height: 40,
-    marginTop: 'auto',
-    borderBottomLeftRadius: 10,
+    flex: 1,
     borderBottomRightRadius: 10,
+  },
+  modalCancel: {
+    height: 40,
+    flex: 1,
+    borderBottomLeftRadius: 10,
+    backgroundColor: '#989898',
+  },
+  modalCancelText: {
+    color: Colors.Medicle.White,
+    fontSize: 14,
+    weight: 'bold',
   },
   resultPage: {
     flex: 1,
-    // backgroundColor: 'red',
     alignItems: 'center',
   },
   resultImage: {
@@ -109,5 +113,37 @@ export default StyleSheet.create({
     color: '#443927',
     fontSize: 16,
     fontWeight: '600',
-  }
+  },
+  checkInfotitle: {
+    color: '#2D2D2D',
+    fontSize: 12,
+    fontWeight: '700',
+    marginBottom: 10,
+  },
+  checkInfoContent: {
+    marginLeft: 'auto',
+    fontWeight: '700',
+    fontSize: 18,
+    color: '#000000',
+  },
+  mdi: {
+    fontWeight: '400',
+    fontSize: 12,
+    color: '#333333',
+  },
+  modalTotal: {
+    fontWeight: '700',
+    fontSize: 16,
+    color: '#333333',
+  },
+  fee: {
+    fontSize: 10,
+    fontWeight: '400',
+    color: '#989898',
+    alignSelf: 'center',
+  },
+  totalLayer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
 });
