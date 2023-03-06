@@ -30,6 +30,8 @@ export default StyleSheet.create({
   content: {
     justifyContent: 'space-around',
     bottom: 5,
+    backgroundColor: 'red',
+    flex: 1,
   },
   contentText: {
     fontSize: 18,
@@ -152,5 +154,11 @@ export default StyleSheet.create({
   },
   passwordLayer: {
     marginTop: 30,
+  },
+  arccodionContent: {
+    backgroundColor: 'red',
+    flex: 1,
+    height: '100%',
+    width: '100%',
   }
 });
