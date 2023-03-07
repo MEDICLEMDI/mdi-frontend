@@ -22,6 +22,7 @@ import { createWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import MedicleButton from '@/components/buttons/MedicleButton';
 
 const WalletCreatePassword = ({
   route,
@@ -41,18 +42,7 @@ const WalletCreatePassword = ({
   const dispatch = useAppDispatch();
   const { icpPrice } = useAppSelector(state => state.icp);
   const flow = route.params?.flow;
-  const [buttonText, setButtonText] = useState('');
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (flow) {
-      setButtonText(t('wallet.create.importButton'));
-    } else {
-      setButtonText(t('wallet.create.newCreateButton'));
-    }
-  }, []);
-
-  // const [confirmPasswordVaild, setDisable] = useState(true);
 
   const confirmPasswordInputRef = useRef();
 
@@ -76,7 +66,6 @@ const WalletCreatePassword = ({
       navigation.navigate(Routes.WALLET_IMPORT, {
         password,
       });
-      setLoading(false);
     } else {
       try {
         dispatch(createWallet({ password, icpPrice }))
@@ -92,9 +81,7 @@ const WalletCreatePassword = ({
             }
           });
       } catch (e) {
-        console.log('실패');
         setShowCreateError(true);
-        setLoading(false);
       }
     }
   };
@@ -149,26 +136,23 @@ const WalletCreatePassword = ({
               </Text>
             ) : null}
           </View>
-          <View style={styles.btnContainer}>
-            <TouchableOpacity
-              style={[
-                styles.btn,
-                { backgroundColor: disable ? '#989898' : '#E7E1D5' },
-              ]}
-              disabled={disable}
-              onPress={handleCreateWallet}>
-              <Text
-                style={[
-                  styles.btnText,
-                  { color: disable ? '#FFFFFF' : '#000000' },
-                ]}>
-                {buttonText}
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
-        {loading && <LoadingModal name="loading" visible={loading} />}
+        <View style={styles.btnContainer}>
+          <MedicleButton
+            text={
+              flow === 'create'
+                ? t('wallet.create.newCreateButton')
+                : t('wallet.create.importButton')
+            }
+            buttonStyle={styles.nextButton}
+            disabled={disable}
+            onPress={() => {
+              handleCreateWallet();
+            }}
+          />
+        </View>
       </SafeAreaView>
+      <LoadingModal name="loading" visible={loading} />
     </>
   );
 };
