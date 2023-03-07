@@ -84,7 +84,14 @@ const WalletCreatePassword = ({
   return (
     <>
       <SafeAreaView style={CommonStyle.container}>
-        <Header goBack={true} title={t('wallet.create.header')} />
+        <Header
+          goBack={true}
+          title={
+            flow === 'create'
+              ? t('wallet.create.header')
+              : t('wallet.import.header')
+          }
+        />
         <View style={styles.mainContainer}>
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{t('wallet.create.title')}</Text>
