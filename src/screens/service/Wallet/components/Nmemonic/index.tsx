@@ -17,6 +17,7 @@ import { passwordCheck } from '@/utils/passwordCheck';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import { CopiedToast } from '@/components/common';
 
 const WalletNmemonic = ({
   navigation,
@@ -119,11 +120,16 @@ const WalletNmemonic = ({
                 onPress={() => {
                   handleCopy();
                 }}
-                // value={}
-                color="red"
+                color="#989898"
                 imgHeight={20}
                 imgWidth={20}
                 nmemonicValue={words && words}
+              />
+              <CopiedToast
+                visibility={visibility}
+                setVisibility={setVisibility}
+                customStyle={styles.toastStyle}
+                customPointerStyle={styles.toastPointerStyle}
               />
             </>
           )}

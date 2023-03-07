@@ -19,7 +19,7 @@ interface NmemonicInputProps extends TextInputProps {
   nmemonicValue?: string;
   onPress?: TouchableWithoutFeedbackProps['onPress'];
   error?: 'nmemonic' | 'unknown' | 'over' | undefined;
-  color?: string | undefined;
+  color?: string;
   imgHeight?: number;
   imgWidth?: number;
 }
@@ -37,13 +37,6 @@ const NmemonicInput = ({
 }: NmemonicInputProps) => {
   const { t } = useTranslation();
   const nmemonicRef = useRef(null);
-  const [image, setImage] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (color && imgHeight && imgWidth && !editable) {
-      setImage(true);
-    }
-  }, []);
 
   return (
     <View>
@@ -62,8 +55,14 @@ const NmemonicInput = ({
           returnKeyType="done"
           onSubmitEditing={onSubmitEditing}
         />
-        {image && (
-          <CopyButton color={color} imgHeight={imgHeight} imgWidth={imgWidth} />
+        {color && imgHeight && imgWidth && (
+          <CopyButton
+            color={color}
+            imgHeight={imgHeight}
+            imgWidth={imgWidth}
+            style={{ marginLeft: 'auto' }}
+            onPress={onPress}
+          />
         )}
       </View>
       {error && (
