@@ -152,9 +152,9 @@ const WalletCreatePassword = ({
               handleCreateWallet();
             }}
           />
+          <LoadingModal name="loading" visible={loading} />
         </View>
       </SafeAreaView>
-      <LoadingModal name="loading" visible={loading} />
     </>
   );
 };

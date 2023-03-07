@@ -79,9 +79,6 @@ export default StyleSheet.create({
     height: 24,
   },
   historyTopLayer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     paddingHorizontal: 30,
   },
   historyTitle: {
@@ -104,7 +101,7 @@ export default StyleSheet.create({
   },
   historyList: {
     flex: 1,
-    marginTop: 10,
+    // marginTop: 10,
   },
   emptyText: {
     color: '#333333',

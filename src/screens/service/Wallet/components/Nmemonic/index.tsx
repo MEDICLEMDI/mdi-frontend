@@ -12,12 +12,11 @@ import Routes from '@/navigation/Routes';
 import { useAppDispatch } from '@/redux/hooks';
 import { getMnemonic } from '@/redux/slices/keyring';
 import { clearState } from '@/redux/slices/walletconnect';
-import { copy } from '@/utils/copy';
+// import { copy } from '@/utils/copy';
 import { passwordCheck } from '@/utils/passwordCheck';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import { CopiedToast } from '@/components/common';
 
 const WalletNmemonic = ({
   navigation,
@@ -71,7 +70,7 @@ const WalletNmemonic = ({
   };
 
   const handleCopy = () => {
-    copy(words);
+    // copy(words);
   };
 
   return (

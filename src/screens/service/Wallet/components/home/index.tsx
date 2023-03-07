@@ -14,8 +14,6 @@ import {
 } from 'react-native';
 
 import MedicleLogo from '@/assets/icons/il_medicle.png';
-import CloseButton from '@/assets/images/ic_close.png';
-import Menu from '@/assets/images/ic_menu.png';
 import Refresh from '@/assets/images/refresh.png';
 import SettingIcon from '@/assets/images/setting_icon.png';
 import WalletCard from '@/assets/images/wallet_card.png';
@@ -24,7 +22,7 @@ import { CopiedToast } from '@/components/common';
 import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
-import { CustomModal, DatePicker } from '@/components/Modals';
+import { DatePicker } from '@/components/Modals';
 import { Colors } from '@/constants/theme';
 import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
@@ -37,25 +35,14 @@ import CommonStyle from '../../common_style';
 import styles from './styles';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
-  const { assets, assetsLoading } = useAppSelector(state => state.user);
+  const { assets } = useAppSelector(state => state.user);
   const [mdi, setMdi] = useState<Asset | null>(null);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
   const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
   const standard: FungibleStandard = 'DIP20';
-  const data = [
-    { num: 1 },
-    { num: 2 },
-    { num: 3 },
-    { num: 4 },
-    { num: 5 },
-    { num: 6 },
-    { num: 7 },
-    { num: 8 },
-    { num: 9 },
-    { num: 10 },
-  ];
-  const [modalActive, setModalActive] = useState(false);
+  const data = [];
   const [historyList, setHistoryList] = useState(data.slice(0, 4));
   const [isMoreData, setIsMoreData] = useState(
     data.length > historyList.length
@@ -69,21 +56,21 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const mdiKrwValue = numberWithCommas(Math.floor(Number(mdi?.value) * 10));
   const lengthKRW = (mdiKrwValue.length + 4) * 9.5;
 
-  const periodList = ['1년', '6개월', '3개월', '1개월', '1주일'];
-  const [period, setPeriod] = useState('1년');
+  const [visible, setVisible] = useState(false);
 
   // set mdi
   useEffect(() => {
-    assets.map(token => {
-      if (token.name === 'MDI') {
-        setMdi(token);
-        saveMdiAmount();
-      }
-    });
-    if (mdi === null) {
+    const mdiAsset = assets.find(token => token.name === 'MDI');
+    if (mdiAsset === undefined) {
       addMdiToken();
+    } else {
+      setMdi(mdiAsset);
     }
   }, [assets]);
+
+  useEffect(() => {
+    handleRefresh();
+  }, []);
 
   const saveMdiAmount = async () => {
     await AsyncStorage.setItem('MDI_AMOUNT', mdi!.amount.toString());
@@ -112,8 +99,11 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     );
   };
 
-  const handleRefresh = () => {
-    dispatch(getBalance());
+  const handleRefresh = async () => {
+    setLoading(true);
+    dispatch(getBalance()).then(() => {
+      setLoading(false);
+    });
   };
 
   // 나중에 히스토리 객체 타입지정 해놔야할듯
@@ -153,11 +143,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                   <Text style={styles.mdiTitleText}>MDI</Text>
                 </View>
                 <View style={styles.topRightLayer}>
-                  {/* 셋팅버튼은 누르면 셋팅라우트로 이동 */}
-                  {/* <TouchableOpacity
-                    onPress={() => {
-                      handleDeleteWallet();
-                    }}> */}
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate(Routes.WALLET_SETTING);
@@ -192,24 +177,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                 <TouchableOpacity onPress={handleRefresh}>
                   <Image source={Refresh} style={styles.refreshButton} />
                 </TouchableOpacity>
-                {/* {principal && (
-                <>
-                  <Text style={styles.walletAddress}>
-                    {principal?.slice(0, 35) + '....'}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={async () => {
-                      Clipboard.setString(principal!);
-                      setVisibility(true);
-                    }}>
-                    <Image
-                      style={styles.copyImage}
-                      source={Copy}
-                      resizeMode="contain"
-                    />
-                  </TouchableOpacity>
-                </>
-              )} */}
               </View>
               <View style={{ alignItems: 'center' }}>
                 <CopiedToast
@@ -223,28 +190,21 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
           </ImageBackground>
         </View>
 
-        {/* <SearchBar onPress={() => setVisible(true)} />
-        <DatePicker
-          name="dataPicker"
-          modalDirection="flex-end"
-          visible={true}
-          // onRequestClose={() => setVisible(false)}
-          animationType="slide"
-          dateResponse={console.log}
-        /> */}
         <View style={styles.historyContainer}>
           <View style={styles.historyTopLayer}>
-            <Text style={styles.historyTitle}>
-              {t('wallet.home.transactionHistory')}
-              <Text style={styles.historySubText}>{' 최근 ' + period}</Text>
-            </Text>
-            {/* 히스토리 기간설정하기 */}
-            <TouchableOpacity
-              onPress={() => {
-                setModalActive(true);
-              }}>
-              <Image source={Menu} style={styles.menuButton} />
-            </TouchableOpacity>
+            <SearchBar
+              onPress={() => setVisible(true)}
+              title="거래내역"
+              period="1년 "
+            />
+            <DatePicker
+              name="dataPicker"
+              modalDirection="flex-end"
+              visible={visible}
+              onRequestClose={() => setVisible(false)}
+              animationType="slide"
+              dateResponse={console.log}
+            />
           </View>
 
           <View style={styles.historyList}>
@@ -318,66 +278,8 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             )}
           </View>
         </View>
+        <LoadingModal name="loading" visible={loading} />
       </View>
-      {modalActive && (
-        <CustomModal
-          name="test"
-          visible={modalActive}
-          transparent={true}
-          animationType="slide"
-          modalDirection="flex-end"
-          onShow={() => {}}>
-          <View style={styles.borderForground}>
-            <View style={styles.modalCalendarLayer}>
-              <View style={styles.calenderTopLayer}>
-                <Text style={styles.historyTitle}>
-                  전체
-                  <Text style={styles.historySubText}>{' 최근 ' + period}</Text>
-                </Text>
-                <TouchableOpacity onPress={() => setModalActive(false)}>
-                  <Image style={styles.closeButton} source={CloseButton} />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.calenderMiddleLayer}>
-                {periodList.map(item => (
-                  <TouchableOpacity
-                    style={
-                      period.indexOf(item) !== -1
-                        ? styles.periodActive
-                        : styles.periodDisabled
-                    }
-                    onPress={() => {
-                      setPeriod(item);
-                      console.log(period, item, period.indexOf(item));
-                    }}>
-                    <Text
-                      style={
-                        period.indexOf(item) !== -1
-                          ? styles.periodActiceText
-                          : styles.periodDisabledText
-                      }>
-                      {item}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-              <View style={styles.calenderBottomLayer}>
-                <Text>전체</Text>
-              </View>
-            </View>
-
-            <View style={styles.modalButtonLayer}>
-              <TouchableOpacity style={styles.resetButton}>
-                <Text>초기화</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.applyButton}>
-                <Text>적용하기</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </CustomModal>
-      )}
-      {assetsLoading && <LoadingModal name="loading" visible={assetsLoading} />}
     </SafeAreaView>
   );
 };
