@@ -27,7 +27,7 @@ const WalletNmemonic = ({
 
   const [password, setPassword] = useState('');
   const [passwordVaild, setPasswordVaild] = useState(false);
-  const [page, setPage] = useState('passwod');
+  const [page, setPage] = useState('password');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
@@ -124,6 +124,8 @@ const WalletNmemonic = ({
                 imgHeight={20}
                 imgWidth={20}
                 nmemonicValue={words && words}
+                copyText={words}
+                toastMessage="복사완료"
               />
             </>
           )}

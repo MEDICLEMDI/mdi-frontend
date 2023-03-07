@@ -1,13 +1,18 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import * as React from 'react';
 import { TouchableWithoutFeedbackProps, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Path, Svg } from 'react-native-svg';
+
+import Toast from '../Toast';
 
 interface CopyButtonProps extends TouchableWithoutFeedbackProps {
   color: string;
   imgHeight: number;
   imgWidth: number;
   style: ViewStyle;
+  copyText: string;
+  toastMessage: string;
 }
 
 const CopyButton = ({
@@ -15,9 +20,15 @@ const CopyButton = ({
   imgHeight,
   imgWidth,
   style,
-  onPress,
-  value,
+  copyText,
+  toastMessage,
 }: CopyButtonProps) => {
+  const toastRef = React.useRef(null);
+
+  const onPress = React.useCallback(() => {
+    Clipboard.setString(copyText);
+    toastRef.current.show(toastMessage);
+  }, []);
   return (
     <>
       <TouchableOpacity style={style} onPress={onPress}>
@@ -42,6 +53,7 @@ const CopyButton = ({
           />
         </Svg>
       </TouchableOpacity>
+      <Toast ref={toastRef} />
     </>
   );
 };
