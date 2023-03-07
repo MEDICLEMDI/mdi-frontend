@@ -125,12 +125,6 @@ const WalletNmemonic = ({
                 imgWidth={20}
                 nmemonicValue={words && words}
               />
-              <CopiedToast
-                visibility={visibility}
-                setVisibility={setVisibility}
-                customStyle={styles.toastStyle}
-                customPointerStyle={styles.toastPointerStyle}
-              />
             </>
           )}
         </View>
