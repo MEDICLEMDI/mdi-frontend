@@ -2,16 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AES } from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  NativeModules,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import Config from 'react-native-config';
 import { TextInput } from 'react-native-gesture-handler';
 
+import MedicleButton from '@/components/buttons/MedicleButton';
 // import MedicleLogo from '@/assets/icons/wallet_logo.png';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
@@ -22,7 +17,6 @@ import { createWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import MedicleButton from '@/components/buttons/MedicleButton';
 
 const WalletCreatePassword = ({
   route,
@@ -66,12 +60,12 @@ const WalletCreatePassword = ({
       navigation.navigate(Routes.WALLET_IMPORT, {
         password,
       });
+      setLoading(false);
     } else {
       try {
         dispatch(createWallet({ password, icpPrice }))
           .unwrap()
           .then(async result => {
-            console.log(result);
             if (result.wallet) {
               const encryptKey = AES.encrypt(
                 password,
@@ -82,6 +76,7 @@ const WalletCreatePassword = ({
           });
       } catch (e) {
         setShowCreateError(true);
+        setLoading(false);
       }
     }
   };
