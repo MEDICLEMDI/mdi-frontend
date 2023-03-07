@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/theme';
 import { Dimensions, StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -23,29 +24,44 @@ export default StyleSheet.create({
     // backgroundColor: 'yellow',
     marginTop: 30,
   },
-  createBtn: {
-    backgroundColor: '#E7E1D5',
+  // createBtn: {
+  //   backgroundColor: '#E7E1D5',
+  //   height: 50,
+  //   borderRadius: 10,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // createBtnText: {
+  //   color: '#000000',
+  //   fontSize: 16,
+  //   fontWeight: '500',
+  // },
+  // importBtn: {
+  //   marginTop: 12,
+  //   backgroundColor: '#5F5F5F',
+  //   height: 50,
+  //   borderRadius: 10,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // importBtnText: {
+  //   color: '#FFFFFF',
+  //   fontSize: 16,
+  //   fontWeight: '500',
+  // },
+  createButton: {
     height: 50,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 12,
   },
-  createBtnText: {
-    color: '#000000',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  importBtn: {
-    marginTop: 12,
-    backgroundColor: '#5F5F5F',
+  importButton: {
     height: 50,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: Colors.Medicle.Gray.SemiDark,
   },
-  importBtnText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '500',
+  importButtonText: {
+    color: Colors.Medicle.Font.White,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
