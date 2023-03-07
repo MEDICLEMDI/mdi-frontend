@@ -11,6 +11,7 @@ import ArrowDownIcon from './svg/ArrowDown.svg';
 import ArrowDownRoundedIcon from './svg/ArrowDownRounded.svg';
 import ArrowLeftIcon from './svg/ArrowLeft.svg';
 import ArrowRightIcon from './svg/ArrowRight.svg';
+import ArrowUpIcon from './svg/ArrowUp.svg';
 import BackIcon from './svg/Back.svg';
 import BookIcon from './svg/Book.svg';
 import BracesIcon from './svg/Braces.svg';
@@ -86,7 +87,6 @@ import WhiteningIcon from './svg/Whitening.svg';
 import WICPIcon from './svg/WICP.svg';
 import XTCIcon from './svg/XTC.svg';
 import YZoneIcon from './svg/YZone.svg';
-import ArrowUpIcon from './svg/ArrowUp.svg';
 
 export const IconTypes = (type: string) =>
   ({
