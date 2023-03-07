@@ -1,7 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AES } from 'crypto-js';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Alert,
   Keyboard,
   SafeAreaView,
   Text,
@@ -9,8 +10,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 
+import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
+import NmemonicInput from '@/components/inputs/NmemonicInput';
 import LoadingModal from '@/components/LoadingModal';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
@@ -19,16 +23,8 @@ import { importWallet } from '@/redux/slices/keyring';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import Config from 'react-native-config';
-import { AES } from 'crypto-js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import NmemonicInput from '@/components/inputs/NmemonicInput';
 
-const WalletImport = ({
-  route,
-  navigation,
-  goBack,
-}: RootScreenProps<Routes.WALLET_IMPORT>) => {
+const WalletImport = ({ route }: RootScreenProps<Routes.WALLET_IMPORT>) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { icpPrice } = useAppSelector(state => state.icp);
@@ -104,25 +100,16 @@ const WalletImport = ({
               onSubmitEditing={importWalletFromSeedPhrase}
             />
           </View>
-          <View style={styles.btnContainer}>
-            <TouchableOpacity
-              style={[
-                styles.btn,
-                { backgroundColor: !isMnemonicValid ? '#989898' : '#E7E1D5' },
-              ]}
-              disabled={!isMnemonicValid}
-              onPress={importWalletFromSeedPhrase}>
-              <Text
-                style={[
-                  styles.btnText,
-                  { color: !isMnemonicValid ? '#FFFFFF' : '#000000' },
-                ]}>
-                {t('wallet.import.importButton')}
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
-        {loading && <LoadingModal name="loading" visible={loading} />}
+        <View style={styles.btnContainer}>
+          <MedicleButton
+            text={t('wallet.import.importButton')}
+            disabled={!isMnemonicValid}
+            buttonStyle={{ height: 50 }}
+            onPress={importWalletFromSeedPhrase}
+          />
+        </View>
+        <LoadingModal name="loading" visible={loading} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
