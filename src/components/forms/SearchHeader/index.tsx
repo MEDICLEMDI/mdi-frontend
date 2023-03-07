@@ -1,6 +1,10 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Text, TouchableOpacity, View } from 'react-native';
+import {
+  GestureResponderEvent,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { Colors } from '@/constants/theme';
 import Icons from '@/icons';
@@ -8,8 +12,15 @@ import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
 
-const SearchBar = ({ onPress }) => {
-  const { t } = useTranslation();
+const SearchBar = ({
+  onPress,
+  title,
+  period,
+}: {
+  onPress: (event: GestureResponderEvent) => void;
+  title: string;
+  period: string;
+}) => {
   const SEARCH_TYPE_FONT = fontStyleCreator({
     color: Colors.Medicle.Font.Gray.Dark,
     weight: 'bold',
@@ -23,10 +34,8 @@ const SearchBar = ({ onPress }) => {
   return (
     <View style={[style.searchBar]}>
       <View style={[style.searchCondition]}>
-        <Text style={SEARCH_TYPE_FONT}>{t('input.all')}</Text>
-        <Text style={[DATE_FONT, { marginLeft: 10 }]}>
-          {t('input.pastYear')}
-        </Text>
+        <Text style={SEARCH_TYPE_FONT}>{title}</Text>
+        <Text style={[DATE_FONT, { marginLeft: 10 }]}>{period}</Text>
       </View>
       <TouchableOpacity onPress={onPress}>
         <Icons name="menu" />
