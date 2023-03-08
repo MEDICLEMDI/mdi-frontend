@@ -5,7 +5,7 @@ import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
-import Icons from '@/icons';
+import Icon from '@/icons';
 
 import style from './style';
 import { fontStyleCreator } from "@/utils/fonts";

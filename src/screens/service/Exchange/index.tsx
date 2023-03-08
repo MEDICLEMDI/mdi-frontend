@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 
 import Header from '@/components/Header';
-import Icons from '@/icons';
+import Icon from '@/icons';
 
 import style from './style';
 import BoxDropShadow from "@/components/BoxDropShadow";
@@ -20,10 +20,10 @@ export default () => {
       <View style={style.content}>
         <BoxDropShadow>
           <Row align='center'>
-            <Icons name='facebook' />
+            <Icon name='facebook' />
             <Row justify='space-between' align='center' style={{ flex: 1 }}>
               <Text style={{ marginLeft: 15, }}>거래소</Text>
-              <Icons name='arrowRight' />
+              <Icon name='arrowRight' />
             </Row>
           </Row>
         </BoxDropShadow>

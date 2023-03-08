@@ -1,4 +1,4 @@
-import {GestureResponderEvent, Text, TextStyle, TouchableOpacity, View, ViewStyle} from "react-native";
+import {GestureResponderEvent, StyleProp, Text, TextStyle, TouchableOpacity, View, ViewStyle} from "react-native";
 import Icon from "@/icons";
 import * as React from "react";
 
@@ -13,10 +13,10 @@ const ItemBox = ({
 }:{
   readonly index: number;
   readonly item: any;
-  style?: ViewStyle | ViewStyle[];
-  iconStyle?: ViewStyle | ViewStyle[];
+  style?: StyleProp<ViewStyle>;
+  iconStyle?: StyleProp<ViewStyle>;
   iconColor?: string;
-  textStyle?: TextStyle | TextStyle[];
+  textStyle?: StyleProp<TextStyle>;
   onPress?: Function;
 }) => {
   const isNullItem = item.route === '';
@@ -29,7 +29,7 @@ const ItemBox = ({
       style={[style, isNullItem && { backgroundColor: '#FFFFFF00' }]}
       disabled={isNullItem}
     >
-      {item.icon !== undefined && item.icon !== '' && (<Icon name={item.icon} color={iconColor} style={iconStyle} />)}
+      {item.icon !== undefined && item.icon !== '' && (<Icon name={item.icon} fill={iconColor} style={iconStyle} />)}
       {item.name !== undefined && item.name !== '' && (<Text style={textStyle}>{item.name}</Text>)}
     </TouchableOpacity>
   )

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import Header from '@/components/Header';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import Routes from '@/navigation/Routes';
 
 import style from './style';
@@ -41,7 +41,7 @@ export default ({ navigation }) => {
             style={style.noticeWrap}
             onPress={() => navigation.navigate(Routes.NOTICE_DETAIL, item)}>
             <Text>{item.title}</Text>
-            <Icons name="arrowRight" />
+            <Icon name="arrowRight" />
           </TouchableOpacity>
         )}
       />

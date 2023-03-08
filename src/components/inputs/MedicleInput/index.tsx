@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, TextInput, TextInputProps, View, ViewStyle } from 'react-native';
+import {StyleProp, Text, TextInput, TextInputProps, View, ViewStyle} from 'react-native';
 
 import { Colors } from '@/constants/theme';
 import { fontStyleCreator } from '@/utils/fonts';
@@ -8,13 +8,13 @@ import defaultStyle from './style';
 interface TopLabelInputProps extends TextInputProps {
   readonly direction?: 'row' | 'column' | undefined;
   label?: React.ReactNode;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   password?: boolean;
   errText?: string;
   readonly leftInputNode?: React.ReactNode;
   readonly rightInputNode?: React.ReactNode;
   readonly inputButtonNode?: React.ReactNode;
-  textInputStyle?: ViewStyle | ViewStyle[];
+  textInputStyle?: StyleProp<ViewStyle>;
   clearButton?: boolean;
 }
 const MedicleInput = ({

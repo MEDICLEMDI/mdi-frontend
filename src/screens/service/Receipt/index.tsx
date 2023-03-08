@@ -14,7 +14,7 @@ import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
 import { DatePicker } from '@/components/Modals';
 import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -112,7 +112,7 @@ export default () => {
                   <Text style={[DATE_FONT]}>2022.11.09</Text>
                   <Text style={[RECEIPT_CONDITION_FONT, {marginLeft: 10}]}>결제 완료</Text>
                 </View>
-                <Icons name="arrowRight" />
+                <Icon name="arrowRight" />
               </View>
               <View style={[style.flexRow, style.infoWrap]}>
                 <View style={style.emptyImage}>

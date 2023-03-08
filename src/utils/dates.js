@@ -11,3 +11,7 @@ export const formatLongDate = date => {
   dayjs.extend(customParseFormat);
   return dayjs(date).format('MMM Do, YYYY');
 };
+
+export const dateZeroFill = date => {
+  return date.toString().padStart(2, '0');
+};

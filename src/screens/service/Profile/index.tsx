@@ -12,7 +12,7 @@ import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
 import { myPageMenus } from '@/constants/menus';
 import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import Routes from '@/navigation/Routes';
 
 import style from './style';
@@ -43,16 +43,16 @@ const Profile = ({ navigation }) => {
             radius={10}
             style={style.profileWrap}>
             <View style={style.profileNameWrap}>
-              <Icons name="userCircle" />
+              <Icon name="userCircle" />
               <Text style={style.name}>Preview</Text>
             </View>
 
             <TouchableOpacity onPress={() => navigation.navigate(Routes.POINT_CHARGE)}>
               <View style={style.pointBtn}>
-                <Icons name="mdiIcon" />
+                <Icon name="mdiIcon" />
                 <Text style={{ marginHorizontal: 10 }}>{t('profile.myPoint')}</Text>
                 <Text>0 P</Text>
-                <Icons name="arrowRight" />
+                <Icon name="arrowRight" />
               </View>
             </TouchableOpacity>
           </BoxDropShadow>
@@ -61,7 +61,7 @@ const Profile = ({ navigation }) => {
             style={style.editProfileBtn}
             onPress={() => navigation.navigate(Routes.EDIT_PROFILE)}>
             <Text>{t('profile.editProfile')}</Text>
-            <Icons name="arrowRight" />
+            <Icon name="arrowRight" />
           </TouchableOpacity>
         </View>
         <ScrollViewGrid

@@ -25,6 +25,7 @@ import Exchange from '@/screens/service/Exchange';
 import FAQ from '@/screens/service/FAQ';
 import DashBoard from '@/screens/service/Home';
 import Hospital from '@/screens/service/Hospital';
+import HospitalDetail from '@/screens/service/Hospital/detail';
 import MarketingConfig from '@/screens/service/MarketingConfig';
 import MedicalState from '@/screens/service/MedicalState';
 import MedicalStateDetail from '@/screens/service/MedicalState/detail';
@@ -70,6 +71,8 @@ const RootStackNavigator = () => {
         />
         <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
         <Stack.Screen name={Routes.REVIEW} component={Review} />
+        <Stack.Screen name={Routes.HOSPITAL_DETAIL} component={HospitalDetail} />
+
       </Stack.Group>
 
       {/* Wallet Group */}
@@ -133,7 +136,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.home'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons name="home" style={{ fill: tabActiveController(focused) }} />
+            <Icons name="home" fill={tabActiveController(focused)} />
           ),
         }}
       />
@@ -146,7 +149,7 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Icons
               name="hospital_b"
-              style={{ stroke: tabActiveController(focused) }}
+              stroke={tabActiveController(focused)}
             />
           ),
         }}
@@ -160,7 +163,7 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Icons
               name="gift"
-              style={{ stroke: tabActiveController(focused) }}
+              stroke={tabActiveController(focused)}
             />
           ),
         }}
@@ -174,7 +177,7 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Icons
               name="wallet"
-              style={{ stroke: tabActiveController(focused) }}
+              stroke={tabActiveController(focused)}
             />
           ),
         }}
@@ -188,7 +191,7 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Icons
               name="user"
-              style={{ stroke: tabActiveController(focused) }}
+              stroke={tabActiveController(focused)}
             />
           ),
         }}

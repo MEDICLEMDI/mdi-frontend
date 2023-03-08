@@ -28,7 +28,7 @@ interface Props {
   disabled?: boolean;
   disableAnimation?: boolean;
   loading?: boolean;
-  iconProps?: { height?: number; width?: number; color?: string };
+  iconProps?: { size?: number; fill?: string; stroke?: string };
 }
 
 const DEFAULT_FONT_STYLE = fontStyleCreator({
@@ -73,7 +73,7 @@ const MedicleButton = ({
             {text}
           </Text>
           {iconName && (
-            <Icon name={iconName} style={iconStyle} {...iconProps} />
+            <Icon name={iconName} style={iconStyle} stroke={iconProps?.stroke} fill={iconProps?.fill} size={iconProps?.size} />
           )}
         </>
       )}

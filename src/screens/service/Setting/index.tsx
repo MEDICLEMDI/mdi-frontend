@@ -13,7 +13,7 @@ import {
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
 import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import Routes from '@/navigation/Routes';
 
 import style from './style';
@@ -79,7 +79,7 @@ const Setting = ({ navigation }) => {
               <TouchableOpacity onPress={item.onPress ? item.onPress : null} >
                 <BoxDropShadow style={[style.profileWrap, { opacity: 0.99 }]}>
                   <Text>{item.name}</Text>
-                  <Icons name="arrowRight" />
+                  <Icon name="arrowRight" />
                 </BoxDropShadow>
               </TouchableOpacity>
             )}

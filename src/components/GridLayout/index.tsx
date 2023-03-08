@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   Dimensions,
   FlatList,
-  FlatListProps, GestureResponderEvent, TextStyle, View, ViewStyle,
+  FlatListProps, GestureResponderEvent, StyleProp, TextStyle, View, ViewStyle,
 } from 'react-native';
 import { ItemBox, ItemCircle } from "@/components/GridLayout/items";
 
@@ -43,6 +43,7 @@ export const ScrollViewGrid = ({
   itemSelected,
   itemBackground,
   iconStyle,
+  iconColor,
   textStyle,
   columnWrapperStyle,
   gap = 0,
@@ -53,12 +54,13 @@ export const ScrollViewGrid = ({
   readonly data: any[];
   readonly renderItem: 'box' | 'circle' | 'button';
   onPress: Function;
-  itemStyle?: ViewStyle | ViewStyle[];
+  itemStyle?: StyleProp<ViewStyle>;
   itemSelected?: {key: number, color: string};
   itemBackground?: string;
-  iconStyle?: ViewStyle | ViewStyle[];
-  textStyle?: TextStyle | TextStyle[];
-  columnWrapperStyle?: ViewStyle | ViewStyle[];
+  iconStyle?: StyleProp<ViewStyle>;
+  iconColor?: string;
+  textStyle?: StyleProp<TextStyle>;
+  columnWrapperStyle?: StyleProp<ViewStyle>;
   gap?: number;
   padding?: number;
   numColumns?: number;
@@ -79,7 +81,7 @@ export const ScrollViewGrid = ({
       backgroundColor: background,
       overFlow: 'hidden',
     }
-    const defaultTextStyle = {
+    const defaultTextStyle: TextStyle = {
       maxWidth: size,
       textAlign: 'center',
       paddingHorizontal: renderItem === 'box' ? 10 : 0 ,
@@ -94,6 +96,7 @@ export const ScrollViewGrid = ({
             item={item}
             onPress={onPress}
             iconStyle={iconStyle}
+            iconColor={iconColor}
             textStyle={[textStyle, defaultTextStyle]}
             style={[
               itemStyle,
@@ -108,6 +111,7 @@ export const ScrollViewGrid = ({
             item={item}
             onPress={onPress}
             iconStyle={iconStyle}
+            iconColor={iconColor}
             textStyle={[textStyle, defaultTextStyle]}
             circleStyle={[
               itemStyle,

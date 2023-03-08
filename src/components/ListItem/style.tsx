@@ -4,9 +4,6 @@ export default StyleSheet.create({
   itemWrap: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#F2F2F2'
   },
   imageBox: {
     backgroundColor: '#f2f2f2',

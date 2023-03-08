@@ -9,6 +9,7 @@ enum Routes {
   SERVICE = 'Service',
   DASHBOARD = 'Dashboard',
   HOSPITAL = 'Hospital',
+  HOSPITAL_DETAIL = 'HospitalDetail',
   EVENT = 'Event',
   WALLET = 'Wallet',
   MYPAGE = 'MyPage',

@@ -1,22 +1,24 @@
-import {GestureResponderEvent, Text, TextStyle, TouchableOpacity, View, ViewStyle} from "react-native";
-import Icon from "@/icons";
+import {GestureResponderEvent, StyleProp, Text, TextStyle, TouchableOpacity, View, ViewStyle} from "react-native";
 import * as React from "react";
+import Icons from "@/icons";
 
 const ItemCircle = ({
   index,
   item,
   style,
   iconStyle,
+  iconColor,
   textStyle,
   circleStyle,
   onPress,
 }:{
   readonly index: number;
   readonly item: any;
-  style?: ViewStyle | ViewStyle[];
-  iconStyle?: ViewStyle | ViewStyle[];
-  textStyle?: TextStyle | TextStyle[];
-  circleStyle?: ViewStyle | ViewStyle[];
+  style?: StyleProp<ViewStyle>;
+  iconStyle?: StyleProp<ViewStyle>;
+  iconColor?: string;
+  textStyle?: StyleProp<TextStyle>;
+  circleStyle?: StyleProp<ViewStyle>;
   onPress?: Function;
 }) => {
   const isNullItem = item.route === '';
@@ -32,7 +34,7 @@ const ItemCircle = ({
       disabled={isNullItem}
     >
       <View style={circleStyle}>
-        {item.icon !== undefined && item.icon !== '' && (<Icon name={item.icon} style={iconStyle} />)}
+        {item.icon !== undefined && item.icon !== '' && (<Icons name={item.icon} style={iconStyle} fill={iconColor} />)}
       </View>
       {item.name !== undefined && item.name !== '' && (<Text style={textStyle}>{item.name}</Text>)}
     </TouchableOpacity>
