@@ -23,16 +23,6 @@ const Home = ({ navigation }) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
 
-  const SELECTED_TAB_FONT = fontStyleCreator({
-    size: 16,
-    weight: 'bold',
-    color: Colors.Medicle.Font.Gray.Dark,
-  });
-  const TAB_FONT = fontStyleCreator({
-    size: 16,
-    color: Colors.Medicle.Font.Gray.Standard,
-  });
-
   const [tabIndex, setTabIndex] = React.useState(0)
 
   const numColumns = 3;
@@ -59,8 +49,6 @@ const Home = ({ navigation }) => {
             data={tabs(t)}
             tabStyle={style.tabWrap}
             buttonStyle={style.tabButton}
-            textStyle={TAB_FONT}
-            tabSelectedStyle={[SELECTED_TAB_FONT, style.tabSelected]}
             index={tabIndex}
             response={setTabIndex}
           />

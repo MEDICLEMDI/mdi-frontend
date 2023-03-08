@@ -1,4 +1,4 @@
-import { Platform, View, ViewStyle } from 'react-native';
+import {Platform, StyleProp, View, ViewStyle} from 'react-native';
 
 import BoxShadow from './style';
 import { Colors } from '@/constants/theme';
@@ -11,12 +11,7 @@ const BoxDropShadow = ({
   elevation = 8,
   opacity = 0.95,
   radius = 20,
-  style = {
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.Medicle.Gray.SemiLight,
-    backgroundColor: '#FFFFFF',
-  },
+  style,
   children,
 }: {
   color?: string;
@@ -24,13 +19,20 @@ const BoxDropShadow = ({
   opacity?: number;
   radius?: number;
   elevation?: number;
-  style?: ViewStyle | ViewStyle[];
+  style?:StyleProp<ViewStyle>;
   children?: React.ReactNode;
 }) => {
+  const defaultStyle = {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.Medicle.Gray.SemiLight,
+    backgroundColor: '#FFFFFF',
+  }
   return (
     <View
       style={[
         BoxShadow(color, offset, opacity, radius, elevation).boxWrap,
+        defaultStyle,
         style,
       ]}>
       {children}

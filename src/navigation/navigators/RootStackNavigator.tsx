@@ -16,6 +16,7 @@ import {
 } from '@/interfaces/navigation';
 import KeyRing from '@/modules/keyring';
 import Chart from '@/screens/service/Chart';
+import ChartDetail from '@/screens/service/Chart/detail';
 import Community from '@/screens/service/Community';
 import PersonalDoc from '@/screens/service/Documents/personalDoc';
 import ServiceDoc from '@/screens/service/Documents/serviceDoc';
@@ -26,6 +27,7 @@ import DashBoard from '@/screens/service/Home';
 import Hospital from '@/screens/service/Hospital';
 import MarketingConfig from '@/screens/service/MarketingConfig';
 import MedicalState from '@/screens/service/MedicalState';
+import MedicalStateDetail from '@/screens/service/MedicalState/detail';
 import Notice from '@/screens/service/Notice';
 import NoticeDetail from '@/screens/service/Notice/detail';
 import Point from '@/screens/service/Point';
@@ -43,6 +45,7 @@ import WalletNmemonic from '@/screens/service/Wallet/components/Nmemonic';
 import WalletSetting from '@/screens/service/Wallet/components/Setting';
 import WalletWelcome from '@/screens/service/Wallet/components/Welcome';
 import SignOut from '@/screens/SignOut';
+import Review from "@/screens/service/Review";
 
 import Routes from '../Routes';
 import WalletSend from '@/screens/service/Wallet/components/Send';
@@ -66,6 +69,7 @@ const RootStackNavigator = () => {
           component={ServiceContacts}
         />
         <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
+        <Stack.Screen name={Routes.REVIEW} component={Review} />
       </Stack.Group>
 
       {/* Wallet Group */}
@@ -204,7 +208,9 @@ const SettingStack = () => {
       <Stack.Screen name={Routes.RECEIPT} component={Receipt} />
       <Stack.Screen name={Routes.SUBSCRIBE} component={Subscribe} />
       <Stack.Screen name={Routes.CHART} component={Chart} />
+      <Stack.Screen name={Routes.CHART_DETAIL} component={ChartDetail} />
       <Stack.Screen name={Routes.MEDICAL_STATE} component={MedicalState} />
+      <Stack.Screen name={Routes.MEDICAL_STATE_DETAIL} component={MedicalStateDetail} />
       <Stack.Screen name={Routes.FAQ} component={FAQ} />
       <Stack.Screen name={Routes.EXCHANGE} component={Exchange} />
       <Stack.Screen name={Routes.COMMUNITY} component={Community} />

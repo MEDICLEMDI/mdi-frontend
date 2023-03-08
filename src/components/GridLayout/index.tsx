@@ -55,7 +55,7 @@ export const ScrollViewGrid = ({
   onPress: Function;
   itemStyle?: ViewStyle | ViewStyle[];
   itemSelected?: {key: number, color: string};
-  itemBackground: string;
+  itemBackground?: string;
   iconStyle?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle | TextStyle[];
   columnWrapperStyle?: ViewStyle | ViewStyle[];

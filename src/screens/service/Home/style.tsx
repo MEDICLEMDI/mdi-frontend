@@ -11,18 +11,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 30,
   },
-  searchInput: {
-    marginVertical: 20,
-    paddingHorizontal: 30,
-  },
   tabButton: {
     paddingBottom: 10,
     marginBottom: 20,
     marginRight: 15,
   },
-  tabSelected: {
-    borderBottomWidth: 3,
-    borderBottomColor: Colors.Medicle.Brown.Standard,
+  searchInput: {
+    marginVertical: 20,
+    paddingHorizontal: 30,
   },
   categoryWrap: {
     marginBottom: 20,

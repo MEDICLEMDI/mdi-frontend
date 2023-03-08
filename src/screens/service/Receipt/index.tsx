@@ -18,6 +18,9 @@ import Icons from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
+import BoxDropShadow from "@/components/BoxDropShadow";
+import MedicleButton from "@/buttons/MedicleButton";
+import Spacing from "@/components/Spacing";
 
 export default () => {
   const { t } = useTranslation();
@@ -30,6 +33,23 @@ export default () => {
     size: 18,
     weight: 'bold',
   });
+  const DATE_FONT = fontStyleCreator({
+    size: 18,
+    weight: 'bold',
+    color: Colors.Medicle.Font.Gray.Dark,
+  })
+  const RECEIPT_CONDITION_FONT = fontStyleCreator({
+    size: 14,
+    color: Colors.Medicle.Font.Gray.Standard,
+  })
+  const ITEM_NAME_FONT = fontStyleCreator({
+    size: 16,
+    weight: 'bold',
+  })
+
+  const data = [
+    { name: 'A', price: 2000 },
+  ]
 
   return (
     <SafeAreaView style={style.container}>
@@ -79,10 +99,42 @@ export default () => {
             <Text>환불완료</Text>
           </View>
         </View>
-        <View style={style.noData}>
-          <Text>결제 목록이 없습니다.</Text>
-        </View>
+        {/*<View style={style.noData}>*/}
+        {/*  <Text>결제 목록이 없습니다.</Text>*/}
+        {/*</View>*/}
       </View>
+      <ScrollView style={style.contentWrap}>
+        {
+          data.map(({name, price}, key) => (
+            <BoxDropShadow style={style.receiptItem} key={key}>
+              <View style={[style.flexRow, style.justifyBetween]}>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                  <Text style={[DATE_FONT]}>2022.11.09</Text>
+                  <Text style={[RECEIPT_CONDITION_FONT, {marginLeft: 10}]}>결제 완료</Text>
+                </View>
+                <Icons name="arrowRight" />
+              </View>
+              <View style={[style.flexRow, style.infoWrap]}>
+                <View style={style.emptyImage}>
+                </View>
+                <View>
+                  <Text style={ITEM_NAME_FONT}>{name}</Text>
+                  <Text>진료 내용</Text>
+                </View>
+              </View>
+              <View style={[style.flexRow, style.justifyBetween]}>
+                <Text>총 결제금액</Text>
+                <Text>{price.toLocaleString()}원</Text>
+              </View>
+              <View style={[style.flexRow, style.receiptButtonWrap]}>
+                <MedicleButton buttonStyle={style.receiptButton} text='진료 예약하기' />
+                <Spacing size={10} />
+                <MedicleButton buttonStyle={style.receiptButton} text='리뷰 남기기' />
+              </View>
+            </BoxDropShadow>
+          ))
+        }
+      </ScrollView>
     </SafeAreaView>
   );
 };

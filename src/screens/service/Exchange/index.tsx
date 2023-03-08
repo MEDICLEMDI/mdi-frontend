@@ -7,6 +7,8 @@ import Header from '@/components/Header';
 import Icons from '@/icons';
 
 import style from './style';
+import BoxDropShadow from "@/components/BoxDropShadow";
+import {Row} from "@/layout";
 
 export default () => {
   const { t } = useTranslation();
@@ -16,9 +18,18 @@ export default () => {
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.exchange')} />
       <View style={style.content}>
-        <View style={style.noData}>
-          <Text>등록된 거래소 정보가 없습니다.</Text>
-        </View>
+        <BoxDropShadow>
+          <Row align='center'>
+            <Icons name='facebook' />
+            <Row justify='space-between' align='center' style={{ flex: 1 }}>
+              <Text style={{ marginLeft: 15, }}>거래소</Text>
+              <Icons name='arrowRight' />
+            </Row>
+          </Row>
+        </BoxDropShadow>
+        {/*<View style={style.noData}>*/}
+        {/*  <Text>등록된 거래소 정보가 없습니다.</Text>*/}
+        {/*</View>*/}
       </View>
     </SafeAreaView>
   );
