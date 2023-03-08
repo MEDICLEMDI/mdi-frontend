@@ -58,50 +58,14 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
   const [visible, setVisible] = useState(false);
 
-  // set mdi
-  useEffect(() => {
-    const mdiAsset = assets.find(token => token.name === 'MDI');
-    if (mdiAsset === undefined) {
-      addMdiToken();
-    } else {
-      setMdi(mdiAsset);
-    }
-  }, [assets]);
-
   useEffect(() => {
     handleRefresh();
   }, []);
 
-  const saveMdiAmount = async () => {
-    await AsyncStorage.setItem('MDI_AMOUNT', mdi!.amount.toString());
-  };
-
-  const addMdiToken = async () => {
-    dispatch(
-      getTokenInfo({
-        token: { canisterId, standard },
-        onSuccess: res => {
-          const token = res.token;
-          dispatch(
-            addCustomToken({
-              token,
-              onSuccess() {},
-              onError(e) {
-                console.log(e);
-              },
-            })
-          );
-        },
-        onError: err => {
-          console.log(err);
-        },
-      })
-    );
-  };
-
   const handleRefresh = async () => {
     setLoading(true);
     dispatch(getBalance()).then(() => {
+      setMdi(assets.find(token => token.name === 'MDI')!);
       setLoading(false);
     });
   };
@@ -121,6 +85,8 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     <SafeAreaView style={CommonStyle.container}>
       <Header goBack={false} title={t('header.wallet')} />
       {/* <ScrollView horizontal={false} style={CommonStyle.contentWrap}> */}
+      <LoadingModal name="loading" visible={loading} />
+
       <View style={styles.homeContainer}>
         <View style={styles.cardContainer}>
           <ImageBackground
@@ -153,7 +119,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
               <View style={styles.cardMiddleLayer}>
                 {/* 누르면 다른화면 표현 */}
-                {mdi && (
+                {!loading && (
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate(Routes.WALLET_INFO);
@@ -167,8 +133,10 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
               <View style={styles.cardBottomLayer}>
                 <View
-                  style={mdi && [styles.krwBalanceLayer, { width: lengthKRW }]}>
-                  {mdi && (
+                  style={
+                    !loading && [styles.krwBalanceLayer, { width: lengthKRW }]
+                  }>
+                  {!loading && (
                     <Text style={styles.krwBalance}>
                       {mdiKrwValue + ' KRW'}
                     </Text>
@@ -278,7 +246,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
             )}
           </View>
         </View>
-        <LoadingModal name="loading" visible={loading} />
       </View>
     </SafeAreaView>
   );

@@ -10,10 +10,12 @@ import MedicleButton from '@/components/buttons/MedicleButton';
 // import MedicleLogo from '@/assets/icons/wallet_logo.png';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
+import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { createWallet } from '@/redux/slices/keyring';
+import { addCustomToken, getTokenInfo } from '@/redux/slices/user';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
@@ -37,6 +39,8 @@ const WalletCreatePassword = ({
   const { icpPrice } = useAppSelector(state => state.icp);
   const flow = route.params?.flow;
   const [loading, setLoading] = useState(false);
+  const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
+  const standard: FungibleStandard = 'DIP20';
 
   const confirmPasswordInputRef = useRef();
 
@@ -67,6 +71,7 @@ const WalletCreatePassword = ({
           .unwrap()
           .then(async result => {
             if (result.wallet) {
+              addMdiToken();
               const encryptKey = AES.encrypt(
                 password,
                 Config.AES_KEY
@@ -79,6 +84,29 @@ const WalletCreatePassword = ({
         setLoading(false);
       }
     }
+  };
+
+  const addMdiToken = async () => {
+    dispatch(
+      getTokenInfo({
+        token: { canisterId, standard },
+        onSuccess: res => {
+          const token = res.token;
+          dispatch(
+            addCustomToken({
+              token,
+              onSuccess() {},
+              onError(e) {
+                console.log(e);
+              },
+            })
+          );
+        },
+        onError: err => {
+          console.log(err);
+        },
+      })
+    );
   };
 
   return (
@@ -117,7 +145,9 @@ const WalletCreatePassword = ({
               maxLength={20}
               onChangeText={word => setConfirmPassword(word)}
               ref={confirmPasswordInputRef}
-              onSubmitEditing={handleCreateWallet}
+              onSubmitEditing={() => {
+                disable && handleCreateWallet;
+              }}
             />
             {showPasswordError ? (
               <Text style={styles.errMsg}>

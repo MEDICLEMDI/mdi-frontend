@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CryptoJS from 'crypto-js';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import CryptoJS from 'crypto-js';
 import {
   ActivityIndicator,
   Alert,
@@ -23,11 +23,12 @@ import Header from '@/components/Header';
 import Hr from '@/components/Hr';
 import { MedicleInput } from '@/components/inputs';
 import Li from '@/components/Li';
+import LoadingModal from '@/components/LoadingModal';
 import { RootScreenProps } from '@/interfaces/navigation';
 import { Asset } from '@/interfaces/redux';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { sendToken } from '@/redux/slices/user';
+import { getBalance, sendToken } from '@/redux/slices/user';
 import {
   isOwnAddress,
   validateAccountId,
@@ -36,7 +37,6 @@ import {
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import LoadingModal from '@/components/LoadingModal';
 
 export interface Receiver {
   id: string; // PrincipalId only
@@ -77,16 +77,19 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
 
   const sendFee = Number(Config.SEND_FEE);
   const liChild = `송금시 발생하는 <strong>수수료는 ${Config.SEND_FEE} MDI<strong> 입니다.#주소를 정확히 입력해야만 입금되며, 잘못 입력하는 경우 복구가 불가능합니다. #전송 시간은 네트워크 상황에 따라 소요 시간이 달라질 수 있습니다.`;
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [sendStatus, setSendStatus] = useState(false);
 
   useEffect(() => {
-    assets.map(token => {
-      if (token.name === 'MDI') {
-        setMdiAmount(token.amount);
-        saveMdiAmount(token.amount);
-        setMdi(token);
-      }
+    dispatch(getBalance()).then(() => {
+      assets.map(token => {
+        if (token.name === 'MDI') {
+          setMdiAmount(token.amount);
+          saveMdiAmount(token.amount);
+          setMdi(token);
+        }
+      });
+      setLoading(false);
     });
   }, [assets]);
 
@@ -130,6 +133,13 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
 
   const handleCloseModal = () => {
     setModalVisible(false);
+  };
+
+  const handleRefresh = async () => {
+    setLoading(true);
+    dispatch(getBalance()).then(() => {
+      setLoading(false);
+    });
   };
 
   const onChangeReceiver = (text: string) => {
@@ -401,7 +411,7 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
           </View>
         </View>
       </Modal>
-      {loading && <LoadingModal />}
+      <LoadingModal visible={loading} />
     </SafeAreaView>
   );
 };

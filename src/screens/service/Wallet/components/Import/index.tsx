@@ -16,10 +16,12 @@ import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
 import NmemonicInput from '@/components/inputs/NmemonicInput';
 import LoadingModal from '@/components/LoadingModal';
+import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { importWallet } from '@/redux/slices/keyring';
+import { addCustomToken, getTokenInfo } from '@/redux/slices/user';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
@@ -35,6 +37,8 @@ const WalletImport = ({ route }: RootScreenProps<Routes.WALLET_IMPORT>) => {
   >(undefined);
   const password = route?.params.password;
   const [loading, setLoading] = useState(false);
+  const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
+  const standard: FungibleStandard = 'DIP20';
 
   const onChangeText = (text: string) => {
     setSeedPhrase(text);
@@ -62,6 +66,7 @@ const WalletImport = ({ route }: RootScreenProps<Routes.WALLET_IMPORT>) => {
             setLoading(false);
           },
           onSuccess: async () => {
+            addMdiToken();
             const encryptKey = AES.encrypt(password, Config.AES_KEY).toString();
             await AsyncStorage.setItem('password', encryptKey);
           },
@@ -82,6 +87,29 @@ const WalletImport = ({ route }: RootScreenProps<Routes.WALLET_IMPORT>) => {
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
+  };
+
+  const addMdiToken = async () => {
+    dispatch(
+      getTokenInfo({
+        token: { canisterId, standard },
+        onSuccess: res => {
+          const token = res.token;
+          dispatch(
+            addCustomToken({
+              token,
+              onSuccess() {},
+              onError(e) {
+                console.log(e);
+              },
+            })
+          );
+        },
+        onError: err => {
+          console.log(err);
+        },
+      })
+    );
   };
 
   return (
