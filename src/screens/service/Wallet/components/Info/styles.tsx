@@ -31,18 +31,18 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
   referralText: {
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
     fontSize: 13,
     fontWeight: '400',
   },
   mdiText: {
-    color: '#706148',
+    color: Colors.Medicle.Font.Brown.Light,
     fontWeight: '700',
     fontSize: 25,
     marginLeft: 5,
   },
   walletTitleText: {
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
     fontWeight: '400',
     fontSize: 13,
   },
@@ -53,7 +53,7 @@ export default StyleSheet.create({
     marginTop: 5,
   },
   walletContentsText: {
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
     fontWeight: '400',
     fontSize: 13,
     marginTop: 3,
@@ -70,21 +70,21 @@ export default StyleSheet.create({
   authStatus: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   identityBox: {
     marginTop: 20,
     paddingHorizontal: 17,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E8E8E8',
+    borderColor: Colors.Medicle.Gray.SemiLight,
   },
   phoneBox: {
     marginTop: 10,
     paddingHorizontal: 17,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E8E8E8',
+    borderColor: Colors.Medicle.Gray.SemiLight,
   },
   authImage: {
     width: 30,
@@ -110,7 +110,7 @@ export default StyleSheet.create({
     marginBottom: 30,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E8E8E8',
+    borderColor: Colors.Medicle.Gray.SemiLight,
     paddingHorizontal: 25,
     paddingVertical: 20,
   },
@@ -127,12 +127,12 @@ export default StyleSheet.create({
   userId: {
     fontWeight: '700',
     fontSize: 14,
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
   },
   mdiAmount: {
     fontWeight: '400',
     fontSize: 18,
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
   },
   waveImage: {
     width: 10,
@@ -142,7 +142,7 @@ export default StyleSheet.create({
   mdiKrwAmount: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#706148',
+    color: Colors.Medicle.Font.Brown.Light,
   },
   sendButton: {
     height: 35,
@@ -150,7 +150,7 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   sendButtonText: {
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
     fontWeight: '500',
     fontSize: 12,
   },

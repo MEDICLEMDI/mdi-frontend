@@ -41,6 +41,9 @@ const translations = {
     change: '변경',
     addressChange: '주소 변경',
     submit: '입력완료',
+    goHome: '홈으로',
+    cancel: '취소',
+    send: '보내기',
   },
   errorMessage: {
     unknownError: '*오류가 발생하였습니다, 나중에 다시 시도해주세요.',
@@ -49,6 +52,12 @@ const translations = {
     passwordValidError: '*영문/숫자/특수문자 혼합 8~20자로 입력해주세요.',
     invalidNumberMessage: '*인증번호가 일치하지 않습니다. 다시 입력해주세요.',
     overError: '*니모닉 문구는 12개의 단어 입니다.',
+    feeOverError: '*수수료 합산시 보유수량을 초과합니다.',
+    addressError: '*유효하지 않은 주소입니다.',
+    principalVaildError: '*지갑주소는 63자리 입니다.',
+    amountZeroError: '*0 이상의 수량을 입력하여 주세요.',
+    amountOverError: '*보유 MDI보다 많은 수량을 전송할 수 없습니다.',
+    amountVaildError: '*정확한 수량을 입력하여 주세요.',
   },
   navigation: {
     home: '홈',
@@ -71,6 +80,7 @@ const translations = {
     profile: 'My 메디클',
     settings: '환경설정',
     editProfile: '내 정보 수정',
+    send: '보내기',
   },
   category: {
     dental: '치과',
@@ -111,7 +121,10 @@ const translations = {
     settings: '환경설정',
   },
   wallet: {
+    mdi: 'MDI',
+    walletAddress: '지갑주소',
     pastYear: '최근 1년',
+    krw: 'KRW',
     welcome: {
       textFirst: '현재 연결 된 지갑이 없습니다.',
       textSecond: '지갑을 생성하거나 연결해주세요.',
@@ -138,6 +151,27 @@ const translations = {
       transactionHistory: '거래내역',
       emptyHistory: '거래 내역이 없습니다.',
     },
+    info: {
+      referralCode: '나의 추천인 코드',
+      authStatus: '인증 상태',
+      identityVerify: '본인 인증',
+      phoneVerify: '핸드폰 인증',
+      id: '아이디',
+      balance: '보유 MDI',
+      send: '보내기',
+    },
+    send: {
+      transferRequest: '전송이 요청되었습니다.',
+      balance: '보유 MDI',
+      receiverInput: '보낼 주소를 입력해 주세요.',
+      amountInput: '보낼 수량을 입력해 주세요.',
+      all: '전액',
+      total: 'TOTAL',
+      totalInput: '수수료가 포함된 최종 수량입니다.',
+      modalTitle: '보내기',
+      modalReceiver: '보낼 주소',
+      modalAmount: '보내는 수량',
+    }
   },
   profile: {
     myPoint: '내 포인트',
@@ -156,6 +190,9 @@ const translations = {
   option: {
     changeLang: '언어 변경',
   },
+  toastMessage: {
+    copy: '복사완료',
+  }
 };
 
 export default translations;

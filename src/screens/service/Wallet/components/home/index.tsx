@@ -18,7 +18,6 @@ import Refresh from '@/assets/images/refresh.png';
 import SettingIcon from '@/assets/images/setting_icon.png';
 import WalletCard from '@/assets/images/wallet_card.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
-import { CopiedToast } from '@/components/common';
 import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
@@ -35,19 +34,19 @@ import CommonStyle from '../../common_style';
 import styles from './styles';
 
 const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
-  const { assets } = useAppSelector(state => state.user);
+  // const { assets } = useAppSelector(state => state.user);
   const [mdi, setMdi] = useState<Asset | null>(null);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
-  const standard: FungibleStandard = 'DIP20';
   const data = [];
   const [historyList, setHistoryList] = useState(data.slice(0, 4));
   const [isMoreData, setIsMoreData] = useState(
     data.length > historyList.length
   );
-  const [visibility, setVisibility] = useState(false);
+  const { assets } = useAppSelector(state => state.user);
+  const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
+  const standard: FungibleStandard = 'DIP20';
   const mockTrasactionBal = numberWithCommas(1200000);
   const mockTxID = 'asdasfkneknqwkenkqwnekqwnekqnewkqnewkqne';
   const mdiValue = numberWithCommas(
@@ -59,15 +58,25 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    handleCheckMdi();
     handleRefresh();
   }, []);
+
+  useEffect(()=>{
+    
+  }, [assets])
 
   const handleRefresh = async () => {
     setLoading(true);
     dispatch(getBalance()).then(() => {
-      setMdi(assets.find(token => token.name === 'MDI')!);
-      setLoading(false);
+      console.log(assets);
+      let _mdiAsset = assets.find(token => token.name === 'MDI');
+      if (_mdiAsset) {
+        setMdi(_mdiAsset);
+        setLoading(false);
+      }
     });
+    await AsyncStorage.setItem('MDI_AMOUNT', mdi!.amount.toString());
   };
 
   // 나중에 히스토리 객체 타입지정 해놔야할듯
@@ -80,6 +89,37 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return parts.join('.');
   }
+
+  const handleCheckMdi = async () => {
+    let _mdiAsset = assets.find(token => token.name === 'MDI');
+    if (_mdiAsset === undefined) {
+      addMdiToken();
+    }
+  };
+
+  const addMdiToken = async () => {
+    dispatch(
+      getTokenInfo({
+        token: { canisterId, standard },
+        onSuccess: res => {
+          const token = res.token;
+          dispatch(
+            addCustomToken({
+              token,
+              onSuccess() {
+              },
+              onError(e) {
+                console.log(e);
+              },
+            })
+          );
+        },
+        onError: err => {
+          console.log(err);
+        },
+      })
+    );
+  };
 
   return (
     <SafeAreaView style={CommonStyle.container}>
@@ -119,7 +159,7 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
               </View>
               <View style={styles.cardMiddleLayer}>
                 {/* 누르면 다른화면 표현 */}
-                {!loading && (
+                {mdi && (
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate(Routes.WALLET_INFO);
@@ -133,10 +173,8 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
               <View style={styles.cardBottomLayer}>
                 <View
-                  style={
-                    !loading && [styles.krwBalanceLayer, { width: lengthKRW }]
-                  }>
-                  {!loading && (
+                  style={mdi && [styles.krwBalanceLayer, { width: lengthKRW }]}>
+                  {mdi && (
                     <Text style={styles.krwBalance}>
                       {mdiKrwValue + ' KRW'}
                     </Text>
@@ -145,14 +183,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
                 <TouchableOpacity onPress={handleRefresh}>
                   <Image source={Refresh} style={styles.refreshButton} />
                 </TouchableOpacity>
-              </View>
-              <View style={{ alignItems: 'center' }}>
-                <CopiedToast
-                  visibility={visibility}
-                  setVisibility={setVisibility}
-                  customStyle={styles.toastStyle}
-                  customPointerStyle={styles.toastPointerStyle}
-                />
               </View>
             </View>
           </ImageBackground>

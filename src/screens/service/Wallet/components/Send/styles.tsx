@@ -9,15 +9,13 @@ export default StyleSheet.create({
   amountText: {
     fontSize: 14,
     fontWeight: '400',
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
+    marginBottom: 10,
   },
   sendLayer: {
-    // backgroundColor: 'green',
     marginTop: 20,
   },
   sendLayerMiddle: {
-    // flexDirection: 'row',
-    // height: 100,
     marginTop: 20,
   },
   sendLayerBottom: {
@@ -29,24 +27,22 @@ export default StyleSheet.create({
   totalText: {
     fontSize: 17,
     fontWeight: '700',
-    color: '#333333',
-    // marginTop: 10,
-    // marginLeft: 10,
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   sendInput: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#989898',
+    backgroundColor: Colors.Medicle.White,
+    borderColor: Colors.Medicle.Font.Gray.Standard,
   },
   sendInputText: {
     fontWeight: '700',
     fontSize: 15,
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: Colors.Medicle.ModalBackground,
   },
   modal: {
     width: 312,
@@ -57,7 +53,7 @@ export default StyleSheet.create({
   modalTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
   },
   modalCloseButton: {
     width: 13,
@@ -92,7 +88,7 @@ export default StyleSheet.create({
     height: 40,
     flex: 1,
     borderBottomLeftRadius: 10,
-    backgroundColor: '#989898',
+    backgroundColor: Colors.Medicle.Font.Gray.Standard,
   },
   modalCancelText: {
     color: Colors.Medicle.White,
@@ -110,12 +106,12 @@ export default StyleSheet.create({
     height: 80,
   },
   resultText: {
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
     fontSize: 16,
     fontWeight: '600',
   },
   checkInfotitle: {
-    color: '#2D2D2D',
+    color: Colors.Medicle.Font.Gray.Dark,
     fontSize: 12,
     fontWeight: '700',
     marginBottom: 10,
@@ -124,22 +120,22 @@ export default StyleSheet.create({
     marginLeft: 'auto',
     fontWeight: '700',
     fontSize: 18,
-    color: '#000000',
+    color: Colors.Medicle.Font.Black,
   },
   mdi: {
     fontWeight: '400',
     fontSize: 12,
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   modalTotal: {
     fontWeight: '700',
     fontSize: 16,
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   fee: {
     fontSize: 10,
     fontWeight: '400',
-    color: '#989898',
+    color: Colors.Medicle.Font.Gray.Standard,
     alignSelf: 'center',
   },
   totalLayer: {

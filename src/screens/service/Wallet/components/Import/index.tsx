@@ -21,7 +21,7 @@ import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { importWallet } from '@/redux/slices/keyring';
-import { addCustomToken, getTokenInfo } from '@/redux/slices/user';
+import { addCustomToken, getBalance, getTokenInfo } from '@/redux/slices/user';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
@@ -66,14 +66,15 @@ const WalletImport = ({ route }: RootScreenProps<Routes.WALLET_IMPORT>) => {
             setLoading(false);
           },
           onSuccess: async () => {
-            addMdiToken();
+            // addMdiToken().then(() => {
+            //   dispatch(getBalance());
+            // });
             const encryptKey = AES.encrypt(password, Config.AES_KEY).toString();
             await AsyncStorage.setItem('password', encryptKey);
           },
         })
       ).then(res => {
         setLoading(false);
-
         if (res.error) {
           if (res.payload === 'The provided mnemonic is invalid') {
             setError('nmemonic');
@@ -84,6 +85,7 @@ const WalletImport = ({ route }: RootScreenProps<Routes.WALLET_IMPORT>) => {
       });
     }, 500);
   };
+
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();

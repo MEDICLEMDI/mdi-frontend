@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/theme';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -17,7 +18,7 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   pwInput: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: Colors.Medicle.Gray.Light,
     height: 40,
     borderRadius: 10,
     paddingHorizontal: 14,

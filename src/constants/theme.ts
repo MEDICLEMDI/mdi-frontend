@@ -23,6 +23,7 @@ export const Colors = {
       },
       Brown: {
         Dark: '#443927',
+        Light: '#706148',
       },
       White: '#FFFFFF',
       Black: '#000000',
@@ -37,7 +38,7 @@ export const Colors = {
     Brown: {
       Light: '#FCF4E9',
       SemiLight: '#EDDFCC',
-      Standard: '#97876D'
+      Standard: '#97876D',
     },
     Switch: {
       TrackAble: '#FCF4E9',
@@ -48,6 +49,8 @@ export const Colors = {
     Input: '#F2F2F2',
     InputText: '#989898',
     DisabledBtn: '#989898',
+
+    ModalBackground: '#00000060',
   },
 
 

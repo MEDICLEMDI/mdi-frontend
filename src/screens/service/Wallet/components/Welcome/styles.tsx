@@ -15,40 +15,14 @@ export default StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
     lineHeight: 25,
     fontSize: 14,
     fontWeight: '500',
   },
   btnContainer: {
-    // backgroundColor: 'yellow',
     marginTop: 30,
   },
-  // createBtn: {
-  //   backgroundColor: '#E7E1D5',
-  //   height: 50,
-  //   borderRadius: 10,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  // createBtnText: {
-  //   color: '#000000',
-  //   fontSize: 16,
-  //   fontWeight: '500',
-  // },
-  // importBtn: {
-  //   marginTop: 12,
-  //   backgroundColor: '#5F5F5F',
-  //   height: 50,
-  //   borderRadius: 10,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  // importBtnText: {
-  //   color: '#FFFFFF',
-  //   fontSize: 16,
-  //   fontWeight: '500',
-  // },
   createButton: {
     height: 50,
     borderRadius: 10,

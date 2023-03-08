@@ -21,7 +21,8 @@ import WalletCard from '@/assets/images/wallet_card.png';
 import Wave from '@/assets/images/wave.png';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import MedicleButton from '@/components/buttons/MedicleButton';
-import { CopiedToast, CustomCheckbox } from '@/components/common';
+import { CustomCheckbox } from '@/components/common';
+import CopyButton from '@/components/CopyButton';
 import Header from '@/components/Header';
 import Hr from '@/components/Hr';
 import { Colors } from '@/constants/theme';
@@ -37,13 +38,11 @@ import styles from './styles';
 const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
   const { assets } = useAppSelector(state => state.user);
   const [mdi, setMdi] = useState<Asset | null>(null);
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const mdiValue = numberWithCommas(
     Math.floor(Number(mdi?.amount) * 10000) / 10000
   );
   const mdiKrwValue = numberWithCommas(Math.floor(Number(mdi?.value) * 10));
-  const lengthKRW = (mdiKrwValue.length + 4) * 9.5;
   const { currentWallet } = useAppSelector(state => state.keyring);
   const { principal } = currentWallet || {};
   const [visibility, setVisibility] = useState(false);
@@ -89,7 +88,9 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
               resizeMode="contain"
               style={styles.card}>
               <View style={styles.cardTopLayer}>
-                <Text style={styles.referralText}>나의 추천인 코드</Text>
+                <Text style={styles.referralText}>
+                  {t('wallet.info.referralCode')}
+                </Text>
               </View>
               <View style={styles.cardMiddleLayer}>
                 <Image
@@ -97,35 +98,30 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
                   resizeMode="contain"
                   style={styles.mdiLogo}
                 />
-                <Text style={styles.mdiText}>MDI</Text>
+                <Text style={styles.mdiText}>{t('wallet.mdi')}</Text>
               </View>
               <View style={styles.cardBottomLayer}>
-                <Text style={styles.walletTitleText}>지갑주소</Text>
+                <Text style={styles.walletTitleText}>
+                  {t('wallet.walletAddress')}
+                </Text>
                 <View style={styles.walletBottomLayer}>
                   <Text style={styles.walletContentsText}>
                     {principal?.slice(0, 28) + '....'}
                   </Text>
-                  <TouchableOpacity
-                    onPress={async () => {
-                      Clipboard.setString(principal!);
-                      setVisibility(true);
-                    }}>
-                    <Image style={styles.copyIcon} source={CopyIcon} />
-                  </TouchableOpacity>
+                  <CopyButton
+                    color="#97876D"
+                    imgHeight={18}
+                    imgWidth={18}
+                    copyText={principal!}
+                    toastMessage={t('toastMessage.copy')}
+                  />
                 </View>
               </View>
-              <View style={{ alignItems: 'center' }}>
-                <CopiedToast
-                  visibility={visibility}
-                  setVisibility={setVisibility}
-                  // customStyle={styles.toastStyle}
-                  // customPointerStyle={styles.toastPointerStyle}
-                />
-              </View>
+              <View style={{ alignItems: 'center' }} />
             </ImageBackground>
           </View>
           <View style={styles.authContainer}>
-            <Text style={styles.authStatus}>인증 상태</Text>
+            <Text style={styles.authStatus}>{t('wallet.info.authStatus')}</Text>
             <BoxDropShadow
               color={
                 Platform.OS === 'ios'
@@ -137,7 +133,7 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
               <View style={styles.shadowBoxCommon}>
                 <View style={styles.shadowInnerCommon}>
                   <Image style={styles.authImage} source={Profile} />
-                  <Text>본인 인증</Text>
+                  <Text>{t('wallet.info.identityVerify')}</Text>
                 </View>
                 <CustomCheckbox selected={false} />
               </View>
@@ -153,7 +149,7 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
               <View style={styles.shadowBoxCommon}>
                 <View style={styles.shadowInnerCommon}>
                   <Image style={styles.authImage} source={Phone} />
-                  <Text>핸드폰 인증</Text>
+                  <Text>{t('wallet.info.phoneVerify')}</Text>
                 </View>
                 <CustomCheckbox selected={true} />
               </View>
@@ -170,15 +166,16 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
               radius={10}
               style={[styles.bottomBox, { padding: 0 }]}>
               <View style={[styles.flexRowSpaceBetween, { marginBottom: 15 }]}>
-                <Text style={normal}>아이디</Text>
-                <Text style={styles.userId}>MDI</Text>
+                <Text style={normal}>{t('wallet.info.id')}</Text>
+                <Text style={styles.userId}>{t('wallet.mdi')}</Text>
               </View>
               <View
                 style={[styles.flexRowSpaceBetween, { alignItems: 'center' }]}>
-                <Text style={normal}>보유 MDI</Text>
+                <Text style={normal}>{t('wallet.info.balance')}</Text>
                 <View>
                   <Text style={styles.mdiAmount}>
-                    {mdiValue} <Text style={{ fontWeight: '700' }}> MDI</Text>
+                    {mdiValue}{' '}
+                    <Text style={{ fontWeight: '700' }}>{t('wallet.mdi')}</Text>
                   </Text>
                 </View>
               </View>
@@ -186,14 +183,14 @@ const WalletInfo = ({ navigation }: RootScreenProps<Routes.WALLET_INFO>) => {
                 <Image style={styles.waveImage} source={Wave} />
                 <Text style={styles.mdiKrwAmount}>
                   {mdiKrwValue}
-                  <Text style={{ fontWeight: '400' }}> KRW</Text>
+                  <Text style={{ fontWeight: '400' }}> {t('wallet.krw')}</Text>
                 </Text>
               </View>
               <MedicleButton
                 onPress={() => navigation.navigate(Routes.WALLET_SEND)}
                 buttonStyle={styles.sendButton}
                 textStyle={styles.sendButtonText}
-                text="보내기"
+                text={t('wallet.info.send')}
               />
             </BoxDropShadow>
           </View>
