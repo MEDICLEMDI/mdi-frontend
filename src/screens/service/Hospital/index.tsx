@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useIsFocused} from "@react-navigation/native";
 import {useTranslation} from "react-i18next";
-import {Image, SafeAreaView, ScrollView, Text, View, FlatList, TouchableOpacity} from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 
 import ListItem from "@/components/ListItem";
 import Tab from "@/components/Tab";
@@ -10,20 +10,9 @@ import Header from "@/components/Header";
 import style from "./style";
 
 import {dentist} from "@/constants/category";
-import {fontStyleCreator} from "@/utils/fonts";
-import {Colors} from "@/constants/theme";
 
 const Hospital = ({ navigation }) => {
   const { t } = useTranslation();
-  const SELECTED_TAB_FONT = fontStyleCreator({
-    size: 14,
-    color: Colors.Medicle.Font.Gray.Dark,
-  });
-  const TAB_FONT = fontStyleCreator({
-    size: 14,
-    color: Colors.Medicle.Font.Gray.Standard,
-  });
-
   const [index, setIndex] = React.useState(0);
 
   return (
@@ -39,8 +28,6 @@ const Hospital = ({ navigation }) => {
             data={dentist(t)}
             tabStyle={style.tabWrap}
             buttonStyle={style.tabButton}
-            textStyle={TAB_FONT}
-            tabSelectedStyle={[SELECTED_TAB_FONT, style.tabSelected]}
             index={index}
             response={setIndex}
           />

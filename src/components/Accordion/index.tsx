@@ -1,5 +1,13 @@
 import * as React from 'react';
-import {Animated, LayoutAnimation, Platform, ScrollView, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
+import {
+  Animated, Dimensions,
+  LayoutAnimation,
+  ScrollView,
+  StyleProp,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
 import Icons from "@/icons";
 import {useEffect} from "react";
 
@@ -10,7 +18,7 @@ const Accordion = ({
 }:{
   children?: React.ReactNode;
   isOpen?: boolean;
-  style?: ViewStyle | ViewStyle[];
+  style?: StyleProp<ViewStyle>;
 }) => {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -45,7 +53,7 @@ const Accordion = ({
       </TouchableOpacity>
       <View style={{ overflow: 'hidden' }}>
         {expanded && (
-          <Animated.View style={{ maxHeight: 200 }}>
+          <Animated.View style={{ maxHeight: Dimensions.get('screen').height - 300 }}>
             <View style={{ marginTop: 10 }}>
               <ScrollView horizontal={false}>
                 {React.Children.map(children, (child) => {

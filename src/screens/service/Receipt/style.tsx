@@ -9,8 +9,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  justifyBetween: {
+    justifyContent: 'space-between',
+  },
   contentWrap: {
-    flex: 1,
     padding: 30,
   },
   searchBar: {
@@ -34,6 +36,33 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.Medicle.Brown.Light,
     marginBottom: 15,
+  },
+  receiptWrap: {
+    marginVertical: 30,
+  },
+  receiptItem: {
+    marginBottom: 15,
+  },
+  infoWrap: {
+    paddingVertical: 20,
+    marginBottom: 20,
+    borderBottomColor: Colors.Medicle.Gray.Light,
+    borderBottomWidth: 1,
+  },
+  emptyImage: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+    borderRadius: 10,
+    backgroundColor: Colors.Medicle.Gray.Light,
+  },
+  receiptButtonWrap: {
+    marginTop: 20,
+  },
+  receiptButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 10,
   },
   noData: {
     justifyContent: 'center',

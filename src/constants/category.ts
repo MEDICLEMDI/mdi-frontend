@@ -18,6 +18,19 @@ export const dentist = (t) => [
   { icon: 'laminate', name: t('category.laminate'), route: Routes.HOSPITAL },
 ];
 
+export const subscribe = (t) => [
+  { name: t('category.implant'), route: Routes.HOSPITAL },
+  { name: t('category.crown'), route: Routes.HOSPITAL },
+  { name: t('category.cavity'), route: Routes.HOSPITAL },
+  { name: t('category.scaling'), route: Routes.HOSPITAL },
+  { name: t('category.denture'), route: Routes.HOSPITAL },
+  { name: t('category.tmj'), route: Routes.HOSPITAL },
+  { name: t('category.whitening'), route: Routes.HOSPITAL },
+  { name: t('category.braces'), route: Routes.HOSPITAL },
+  { name: t('category.laminate'), route: Routes.HOSPITAL },
+  { name: t('category.hospital'), route: Routes.HOSPITAL },
+];
+
 export const dermatology = (t) => [
   { icon: 'skin', name: t('category.skin'), route: Routes.HOSPITAL },
   { icon: 'face', name: t('category.face'), route: Routes.HOSPITAL },
