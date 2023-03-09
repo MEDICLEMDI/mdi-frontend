@@ -6,18 +6,15 @@ import {Image, Platform, SafeAreaView, ScrollView, Text, View} from 'react-nativ
 import ReviewImage from '@/assets/images/Review.png';
 import Header from '@/components/Header';
 import ImageSlide from '@/components/ImageSlide';
-import InputIcon from '@/components/inputs/InputIcon';
 import { dentist, dermatology, tabs } from '@/constants/category';
 
 import style from './style';
 import { ScrollViewGrid } from "@/components/GridLayout";
 import Tab from "@/components/Tab";
-import {fontStyleCreator} from "@/utils/fonts";
-import {Colors} from "@/constants/theme";
 import {MedicleInput} from "@/components/inputs";
-import Icons from "@/icons";
-import BoxDropShadow from "@/components/BoxDropShadow";
+import Icon from "@/icons";
 import ListItem from "@/components/ListItem";
+import {Colors} from "@/constants/theme";
 
 const Home = ({ navigation }) => {
   const { t } = useTranslation();
@@ -40,7 +37,7 @@ const Home = ({ navigation }) => {
           <View style={style.searchInput}>
             <MedicleInput
               placeholder={t('input.searchInputPlaceHolder')}
-              rightInputNode={<Icons name="search" />}
+              rightInputNode={<Icon name="search" />}
               direction='row'
             />
           </View>
@@ -57,6 +54,7 @@ const Home = ({ navigation }) => {
             itemStyle={style.itemStyle}
             itemBackground='#F3F1EB'
             iconStyle={style.iconStyle}
+            iconColor={{ fill: Colors.Medicle.Black }}
             textStyle={style.textStyle}
             numColumns={numColumns}
             padding={categoryPadding}

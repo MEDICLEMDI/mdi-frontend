@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import * as React from 'react';
 import { Image, SafeAreaView, Text, View } from 'react-native';
 
-import Icons from '@/icons';
+import Icon from '@/icons';
 
 import style from './style';
 
@@ -10,7 +10,7 @@ const Landing = () => {
   return (
     <SafeAreaView style={style.container}>
       <View>
-        <Icons name="mdiLogo" />
+        <Icon name="mdiLogo" />
       </View>
     </SafeAreaView>
   );

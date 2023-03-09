@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import Header from '@/components/Header';
-import Icons from '@/icons';
+import Icon from '@/icons';
 
 import style from './style';
 import BoxDropShadow from "@/components/BoxDropShadow";
@@ -61,7 +61,7 @@ export default ({ navigation }) => {
             <BoxDropShadow key={key}>
               <View style={[style.justifyTextWrap, style.itemDate]}>
                 <Text style={ITEM_DATE_FONT}>2022.11.03</Text>
-                <Icons name='arrowRight' />
+                <Icon name='arrowRight' />
               </View>
               <View style={style.infoWrap}>
                 <Text style={ITEM_NAME_FONT}>치과의원</Text>

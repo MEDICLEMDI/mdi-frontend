@@ -6,7 +6,7 @@ import { Platform, SafeAreaView, Text, View } from 'react-native';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
 import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';

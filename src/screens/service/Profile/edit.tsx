@@ -7,7 +7,7 @@ import MedicleButton from '@/buttons/MedicleButton';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -30,7 +30,7 @@ const EditProfile = () => {
       <Header goBack={true} title={t('header.editProfile')} />
       <ScrollView horizontal={false}>
         <View style={[style.contentWrap, style.profileHeader]}>
-          <Icons name="userCircle" />
+          <Icon name="userCircle" />
           <View style={{ marginLeft: 15 }}>
             <Text style={USER_NAME_FONT}>UserName</Text>
             <Text style={USER_EMAIL_FONT}>userEmail@email.com</Text>

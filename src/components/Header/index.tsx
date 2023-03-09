@@ -23,7 +23,7 @@ const Header = ({ goBack, title }: IHeader) => {
         <View style={style.ic_left_arrow} />
       )}
       {title === undefined ? (
-        <Icon name="mdiHorizontal" />
+        <Icon name="mdiHorizontal" fill={'#000'} />
       ) : (
         <Text>{title}</Text>
       )}

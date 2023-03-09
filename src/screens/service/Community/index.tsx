@@ -15,7 +15,7 @@ import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
 import ImageSlide from '@/components/ImageSlide';
 import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import Icon from '@/icons';
 
 import style from './style';
 
@@ -24,7 +24,7 @@ export default () => {
   const isFocus = useIsFocused();
 
   const socialMedias = [
-    { icon: <Icons name="twitter" />, name: '트위터' },
+    { icon: <Icon name="twitter" />, name: '트위터' },
     { icon: <Icons name="facebook" />, name: '페이스북' },
     { icon: <Icons name="instagram" />, name: '인스타그램' },
     { icon: <Icons name="telegram" />, name: '텔레그램' },

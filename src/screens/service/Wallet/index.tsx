@@ -5,7 +5,7 @@ import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { CountUp } from 'use-count-up';
 
 import Header from '@/components/Header';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import KeyRing from '@/modules/keyring';
 
 import HomeWallet from './components/Home';

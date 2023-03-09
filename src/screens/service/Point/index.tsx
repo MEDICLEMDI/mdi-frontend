@@ -16,7 +16,7 @@ import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
 import { DatePicker } from '@/components/Modals';
 import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -48,7 +48,7 @@ export default ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={[style.flexRow, { marginVertical: 15 }]}>
-          <Icons name="mdiIcon" />
+          <Icon name="mdiIcon" />
           <Text style={[style.point]}>{0}원</Text>
         </View>
         <Text style={style.pointText}>적립 예정 포인트</Text>

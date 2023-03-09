@@ -10,6 +10,7 @@ import Header from "@/components/Header";
 import style from "./style";
 
 import {dentist} from "@/constants/category";
+import Routes from "@/navigation/Routes";
 
 const Hospital = ({ navigation }) => {
   const { t } = useTranslation();
@@ -46,7 +47,9 @@ const Hospital = ({ navigation }) => {
           label="서울 치과"
           description="치아 미백으로!"
           discount={20}
-          price="22만원"/>
+          price="22만원"
+          onPress={() => navigation.navigate(Routes.HOSPITAL_DETAIL)}
+        />
 
       </ScrollView>
       {/*<View style={style.noData}>*/}

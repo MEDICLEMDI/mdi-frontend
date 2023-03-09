@@ -9,7 +9,7 @@ import { DatePicker } from '@/components/Modals';
 
 import style from './style';
 import BoxDropShadow from "@/components/BoxDropShadow";
-import Icons from "@/icons";
+import Icon from "@/icons";
 import MedicleButton from "@/buttons/MedicleButton";
 import Routes from "@/navigation/Routes";
 import {fontStyleCreator} from "@/utils/fonts";
@@ -69,7 +69,7 @@ export default ({ navigation }) => {
                     &nbsp;{chartType}
                   </Text>
                 </Text>
-                <Icons name='arrowRight' />
+                <Icon name='arrowRight' />
               </View>
               <View style={style.infoWrap}>
                 <Text style={ITEM_NAME_FONT}>치과의원</Text>

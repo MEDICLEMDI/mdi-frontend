@@ -18,6 +18,8 @@ import Icons from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
+import Calendar from "../../../Calendar";
+import {dateZeroFill} from "@/utils/dates";
 
 interface ModalProps extends ModalBaseProps {
   name: string;
@@ -44,21 +46,7 @@ const DatePicker = ({
     { label: '1개월', value: 3 },
     { label: '1주일', value: 4 },
   ];
-  const week = ['일', '월', '화', '수', '목', '금', '토'];
-  const month = [
-    '1월',
-    '2월',
-    '3월',
-    '4월',
-    '5월',
-    '6월',
-    '7월',
-    '8월',
-    '9월',
-    '10월',
-    '11월',
-    '12월',
-  ];
+
   const FONT_WHITE = fontStyleCreator({
     color: Colors.Medicle.White,
     weight: 'bold',
@@ -77,25 +65,13 @@ const DatePicker = ({
     setDateType('');
   }, [visible]);
 
+  React.useEffect(() => {
+    dateResponse(date);
+  }, [date])
+
   const dataPickerHandler = (type: string) => {
     setDatePickerVisible(true);
     setDateType(type);
-  };
-
-  const dateZeroFill = (date: number) => {
-    return date.toString().padStart(2, '0');
-  };
-
-  const dataPickerListener = (moment: any) => {
-    let year = dateZeroFill(moment.year());
-    let month = dateZeroFill(moment.month() + 1);
-    let day = dateZeroFill(moment.date());
-
-    setDate({
-      ...date,
-      [dateType]: `${year}-${month}-${day}`,
-    });
-    dateResponse(date);
   };
 
   if (!visible) {
@@ -198,18 +174,7 @@ const DatePicker = ({
                   opacity={0.95}
                   radius={10}
                   style={style.datePickerWrap}>
-                  <CalendarPicker
-                    onDateChange={moment => dataPickerListener(moment)}
-                    previousComponent={<Icons name="arrowLeft" />}
-                    nextComponent={<Icons name="arrowRight" />}
-                    selectedDayTextColor={Colors.Medicle.White}
-                    selectedDayColor="#FFB61B"
-                    textStyle={{ color: Colors.Medicle.Font.Gray.Dark }}
-                    weekdays={week}
-                    months={month}
-                    width={330}
-                    height={330}
-                  />
+                  <Calendar date={date} dateResponse={setDate} dateType={dateType} />
                 </BoxDropShadow>
               )}
             </View>
