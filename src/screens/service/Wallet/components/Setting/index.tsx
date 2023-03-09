@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 
 import Warning from '@/assets/icons/info-circle.png';
-import Arrow from '@/assets/images/arrow-right.png';
 import Close from '@/assets/images/close.png';
+import Accordion from '@/components/Accordion';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
@@ -33,19 +33,12 @@ import { passwordCheck } from '@/utils/passwordCheck';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import Accordion from '@/components/Accordion';
 
 const WalletSetting = ({
   navigation,
   goBack,
 }: RootScreenProps<Routes.WALLET_SETTING>) => {
   const { t } = useTranslation();
-  const [walletExpanded, setWalletExpanded] = useState(false);
-  const [securityExpanded, setSecurityExpanded] = useState(false);
-  const walletInfoHeight = useRef(new Animated.Value(0)).current;
-  const walletInfoOpacity = useRef(new Animated.Value(0)).current;
-  const SecurityInfoHeight = useRef(new Animated.Value(0)).current;
-  const SecurityInfoOpacity = useRef(new Animated.Value(0)).current;
   const [mdiAmount, setMdiAmount] = useState(0);
   const dispatch = useAppDispatch();
   const deleteWalletRef = useRef<Modalize>(null);
@@ -93,7 +86,7 @@ const WalletSetting = ({
         routes: [{ name: Routes.WALLET_WELCOME }],
       });
     } else {
-      setPasswordErrMessage('*비밀번호가 일치하지 않습니다.');
+      setPasswordErrMessage(t('errorMessage.passwordShortError'));
     }
   };
 
@@ -103,62 +96,38 @@ const WalletSetting = ({
     setPassword(text);
   };
 
-  // const toggleExpanded = (
-  //   height: Animated.Value,
-  //   opacity: Animated.Value,
-  //   target: string
-  // ) => {
-  //   if (target === 'wallet') {
-  //     setWalletExpanded(!walletExpanded);
-  //     Animated.timing(height, {
-  //       toValue: walletExpanded ? 0 : 70, // 뷰의 높이를 0 또는 100으로 조정
-  //       duration: 400, // 애니메이션 지속 시간
-  //       useNativeDriver: false, // 네이티브 드라이버 사용 여부
-  //     }).start();
-  //     Animated.timing(opacity, {
-  //       toValue: walletExpanded ? 0 : 1, // 뷰의 높이를 0 또는 100으로 조정
-  //       duration: walletExpanded ? 200 : 600, // 애니메이션 지속 시간
-  //       useNativeDriver: false, // 네이티브 드라이버 사용 여부
-  //     }).start();
-  //   } else {
-  //     setSecurityExpanded(!securityExpanded);
-  //     Animated.timing(height, {
-  //       toValue: securityExpanded ? 0 : 70, // 뷰의 높이를 0 또는 100으로 조정
-  //       duration: 400, // 애니메이션 지속 시간
-  //       useNativeDriver: false, // 네이티브 드라이버 사용 여부
-  //     }).start();
-  //     Animated.timing(opacity, {
-  //       toValue: securityExpanded ? 0 : 1, // 뷰의 높이를 0 또는 100으로 조정
-  //       duration: securityExpanded ? 200 : 600, // 애니메이션 지속 시간
-  //       useNativeDriver: false, // 네이티브 드라이버 사용 여부
-  //     }).start();
-  //   }
-  // };
-
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <Header goBack={true} title={t('header.wallet')} />
+      <Header goBack={true} title={t('header.walletSettings')} />
       <ScrollView horizontal={true}>
         <View style={styles.mainContainer}>
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>지갑 설정</Text>
+            <Text style={styles.titleText}>
+              {t('wallet.setting.walletSetting')}
+            </Text>
           </View>
 
           <View style={styles.menuContainer}>
             <BoxDropShadow>
               <Accordion>
                 <Accordion.Header>
-                  <Text style={styles.animatedTitleBoxText}>지갑 정보</Text>
+                  <Text style={styles.animatedTitleBoxText}>
+                    {t('wallet.setting.walletInfo')}
+                  </Text>
                 </Accordion.Header>
                 <Accordion.Body>
                   <View style={styles.animatedContents}>
-                    <Text style={styles.animatedContentsText}>보유 MDI</Text>
                     <Text style={styles.animatedContentsText}>
-                      {mdiAmount + ' MDI'}
+                      {t('wallet.setting.balance')}
+                    </Text>
+                    <Text style={styles.animatedContentsText}>
+                      {mdiAmount + ' ' + t('wallet.mdi')}
                     </Text>
                   </View>
                   <View style={styles.animatedContents}>
-                    <Text style={styles.animatedContentsText}>지갑주소</Text>
+                    <Text style={styles.animatedContentsText}>
+                      {t('wallet.walletAddress')}
+                    </Text>
                     <Text style={styles.animatedContentsText}>
                       {principal?.slice(0, 8) + '...'}
                     </Text>
@@ -166,16 +135,16 @@ const WalletSetting = ({
                 </Accordion.Body>
               </Accordion>
             </BoxDropShadow>
-            <View style={{marginTop: 10}}>
+            <View style={{ marginTop: 10 }}>
               <BoxDropShadow>
                 <Accordion>
                   <Accordion.Header>
-                    <Text style={styles.animatedTitleBoxText}>보안 정보</Text>
+                    <Text style={styles.animatedTitleBoxText}>{t('wallet.setting.securityInfo')}</Text>
                   </Accordion.Header>
                   <Accordion.Body>
                     <View style={styles.animatedContents}>
                       <Text style={styles.animatedContentsText}>
-                        비밀 복구 구문 공개
+                      {t('wallet.setting.nmemonicDisclosure')}
                       </Text>
                     </View>
                     <View style={styles.animatedContents}>
@@ -185,7 +154,7 @@ const WalletSetting = ({
                           navigation.navigate(Routes.WALLET_MNEMONIC);
                         }}>
                         <Text style={styles.nmemonicButtonText}>
-                          비밀 복구 구문 공개
+                        {t('wallet.setting.nmemonicDisclosure')}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -210,7 +179,7 @@ const WalletSetting = ({
                   { padding: 0, marginTop: 10, opacity: 0.99 },
                 ]}>
                 <View style={styles.walletDeleteButton}>
-                  <Text style={styles.animatedTitleBoxText}>지갑 삭제하기</Text>
+                  <Text style={styles.animatedTitleBoxText}>{t('wallet.setting.deleteWallet')}</Text>
                 </View>
               </BoxDropShadow>
             </TouchableOpacity>
@@ -237,7 +206,7 @@ const WalletSetting = ({
                 <View style={styles.textTop}>
                   <Image source={Warning} style={styles.warningImage} />
                   <Text style={styles.warningTitle}>
-                    지갑을 삭제하시겠습니까?
+                    {t('wallet.setting.deleteWalletCheck')}
                   </Text>
                 </View>
                 <Text style={styles.warningDescript}>
@@ -254,10 +223,10 @@ MEDICLE에는 비밀 복구 구문이 저장되어있지 않습니다.`}
               </View>
               <View style={styles.passwordLayer}>
                 <Text style={{ marginBottom: 10 }}>
-                  비밀번호를 입력해주세요.
+                  {t('wallet.setting.password')}
                 </Text>
                 <MedicleInput
-                  placeholder="비밀번호를 입력해주세요."
+                  placeholder={t('wallet.setting.password')}
                   onChangeText={(text: string) => {
                     handlePasswordonChageText(text);
                   }}
@@ -267,7 +236,7 @@ MEDICLE에는 비밀 복구 구문이 저장되어있지 않습니다.`}
               </View>
             </View>
             <MedicleButton
-              text="지갑 삭제"
+              text={t('button.deleteWallet')}
               buttonStyle={styles.deleteButton}
               disabled={!passwordVaild}
               onPress={() => {

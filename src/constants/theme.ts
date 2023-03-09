@@ -27,6 +27,7 @@ export const Colors = {
       },
       White: '#FFFFFF',
       Black: '#000000',
+      Red: '#FF2D2D',
     },
     Gray: {
       Light: '#F2F2F2',
@@ -51,6 +52,7 @@ export const Colors = {
     DisabledBtn: '#989898',
 
     ModalBackground: '#00000060',
+    WarningCard: '#FF2D2D10',
   },
 
 

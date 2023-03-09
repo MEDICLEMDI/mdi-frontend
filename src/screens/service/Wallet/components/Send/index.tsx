@@ -216,9 +216,9 @@ const WalletSend = ({ navigation }: RootScreenProps<Routes.WALLET_SEND>) => {
           onFailure: () => {},
         })
       ).then(() => {
-        setLoading(false);
         setSendStatus(false);
         setPage('result');
+        setLoading(false);
       });
     }
   };

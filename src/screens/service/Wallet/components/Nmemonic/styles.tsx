@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/theme';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -14,16 +15,16 @@ export default StyleSheet.create({
   titleText: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   subTitleText: {
     fontSize: 14,
     fontWeight: '400',
     marginTop: 22,
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   warningCard: {
-    backgroundColor: 'rgba(255, 45, 45, 0.1)',
+    backgroundColor: Colors.Medicle.WarningCard,
     height: 64,
     marginTop: 10,
     padding: 15,
@@ -35,7 +36,7 @@ export default StyleSheet.create({
     height: 15,
   },
   warningText: {
-    color: '#FF2D2D',
+    color: Colors.Medicle.Font.Red,
     fontSize: 12,
     fontWeight: '400',
     marginLeft: 6,
@@ -53,14 +54,14 @@ export default StyleSheet.create({
   },
   contentText: {
     marginBottom: 10,
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
     fontWeight: '400',
     fontSize: 13,
   },
   passwordInput: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.Medicle.White,
     borderWidth: 1,
-    borderColor: '#989898',
+    borderColor: Colors.Medicle.Gray.Standard,
   },
   toastStyle: {
     top: -35,

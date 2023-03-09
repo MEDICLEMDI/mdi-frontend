@@ -66,9 +66,9 @@ const WalletImport = ({ route }: RootScreenProps<Routes.WALLET_IMPORT>) => {
             setLoading(false);
           },
           onSuccess: async () => {
-            // addMdiToken().then(() => {
-            //   dispatch(getBalance());
-            // });
+            addMdiToken().then(() => {
+              dispatch(getBalance());
+            });
             const encryptKey = AES.encrypt(password, Config.AES_KEY).toString();
             await AsyncStorage.setItem('password', encryptKey);
           },
@@ -85,7 +85,6 @@ const WalletImport = ({ route }: RootScreenProps<Routes.WALLET_IMPORT>) => {
       });
     }, 500);
   };
-
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();

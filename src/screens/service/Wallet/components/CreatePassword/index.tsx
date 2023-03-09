@@ -163,8 +163,7 @@ const WalletCreatePassword = ({
 
             {showCreateError ? (
               <Text style={[styles.errMsg, { marginTop: 5 }]}>
-                {/* {t('errorMessage.passwordConfirmError')} */}
-                *지갑생성 중 오류가 발생하였습니다. 다시 시도해주세요.
+                {t('errorMessage.unknownError')}
               </Text>
             ) : null}
           </View>

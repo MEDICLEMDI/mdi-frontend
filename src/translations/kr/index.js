@@ -44,11 +44,17 @@ const translations = {
     goHome: '홈으로',
     cancel: '취소',
     send: '보내기',
+    deleteWallet: '지갑 삭제',
+    next: '다음',
+  },
+  toast: {
+    copy: '복사완료',
   },
   errorMessage: {
     unknownError: '*오류가 발생하였습니다, 나중에 다시 시도해주세요.',
     nmemonicError: '*구문이 일치하지 않습니다. 다시 입력해주세요.',
     passwordConfirmError: '*비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
+    passwordShortError: '*비밀번호가 일치하지 않습니다.',
     passwordValidError: '*영문/숫자/특수문자 혼합 8~20자로 입력해주세요.',
     invalidNumberMessage: '*인증번호가 일치하지 않습니다. 다시 입력해주세요.',
     overError: '*니모닉 문구는 12개의 단어 입니다.',
@@ -81,6 +87,8 @@ const translations = {
     settings: '환경설정',
     editProfile: '내 정보 수정',
     send: '보내기',
+    walletSettings: '설정',
+    securityWallet: '보안 정보',
   },
   category: {
     dental: '치과',
@@ -171,7 +179,25 @@ const translations = {
       modalTitle: '보내기',
       modalReceiver: '보낼 주소',
       modalAmount: '보내는 수량',
-    }
+    },
+    setting: {
+      walletSetting: '지갑 설정',
+      walletInfo: '지갑 정보',
+      balance: '보유 MDI',
+      securityInfo: '보안 정보',
+      nmemonicDisclosure: '비밀 복구 구문 공개',
+      deleteWallet: '지갑 삭제하기',
+      deleteWalletCheck: '지갑을 삭제하시겠습니까?',
+      password: '비밀번호를 입력해주세요',
+    },
+    nmemonic: {
+      title: '비밀 복구 구문 공개',
+      subTitle: `계정을 연결하려면 이 비밀 복구 구문이 필요합니다.\n기밀이 보장된안전한 곳에 보관하세요.`,
+      warningText: `이 구문은 누구와도 공유하지 마세요!\n이 구문은 계정 전체를 도용하는데 사용 될 수 있습니다.`,
+      continue: '계속하려면 암호 입력',
+      password: '암호를 입력해주세요.',
+      nmemonicDisclosure: '비공개 비밀 복구 구문',
+    },
   },
   profile: {
     myPoint: '내 포인트',
@@ -192,7 +218,7 @@ const translations = {
   },
   toastMessage: {
     copy: '복사완료',
-  }
+  },
 };
 
 export default translations;
