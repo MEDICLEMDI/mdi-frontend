@@ -10,7 +10,7 @@ interface CopyButtonProps extends TouchableWithoutFeedbackProps {
   color: string;
   imgHeight: number;
   imgWidth: number;
-  style: ViewStyle;
+  style?: ViewStyle;
   copyText: string;
   toastMessage: string;
 }

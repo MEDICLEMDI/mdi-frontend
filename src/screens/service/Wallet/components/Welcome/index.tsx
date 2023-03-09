@@ -10,15 +10,15 @@ import {
 } from 'react-native';
 
 import MedicleLogo from '@/assets/icons/wallet_logo.png';
+import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
 import { RootScreenProps } from '@/interfaces/navigation';
+import KeyRing from '@/modules/keyring';
 import Routes from '@/navigation/Routes';
 import { useAppSelector } from '@/redux/hooks';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import KeyRing from '@/modules/keyring';
-import { useNavigation } from '@react-navigation/native';
 
 const WalletWelcome = ({
   navigation,
@@ -46,8 +46,6 @@ const WalletWelcome = ({
     }
   }, [isInitialized]);
 
-
-
   if (keyring.isInitialized) {
     navigation.navigate(Routes.WALLET_HOME);
   }
@@ -72,20 +70,17 @@ const WalletWelcome = ({
           </View>
 
           <View style={styles.btnContainer}>
-            <TouchableOpacity
-              style={styles.createBtn}
-              onPress={onPress('create')}>
-              <Text style={styles.createBtnText}>
-                {t('wallet.welcome.createButton')}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.importBtn}
-              onPress={onPress('import')}>
-              <Text style={styles.importBtnText}>
-                {t('wallet.welcome.importButton')}
-              </Text>
-            </TouchableOpacity>
+            <MedicleButton
+              text={t('wallet.welcome.createButton')}
+              buttonStyle={styles.createButton}
+              onPress={onPress('create')}
+            />
+            <MedicleButton
+              text={t('wallet.welcome.importButton')}
+              buttonStyle={styles.importButton}
+              textStyle={styles.importButtonText}
+              onPress={onPress('import')}
+            />
           </View>
         </View>
       </ScrollView>

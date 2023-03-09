@@ -12,12 +12,11 @@ import Routes from '@/navigation/Routes';
 import { useAppDispatch } from '@/redux/hooks';
 import { getMnemonic } from '@/redux/slices/keyring';
 import { clearState } from '@/redux/slices/walletconnect';
-import { copy } from '@/utils/copy';
+// import { copy } from '@/utils/copy';
 import { passwordCheck } from '@/utils/passwordCheck';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import { CopiedToast } from '@/components/common';
 
 const WalletNmemonic = ({
   navigation,
@@ -50,7 +49,7 @@ const WalletNmemonic = ({
       handleGetMnemonic();
       setPage('nmemonic');
     } else {
-      setErrorMessage('*비밀번호가 올바르지 않습니다.');
+      setErrorMessage(t('errorMessage.passwordShortError'));
     }
   };
 
@@ -71,25 +70,23 @@ const WalletNmemonic = ({
   };
 
   const handleCopy = () => {
-    copy(words);
+    // copy(words);
   };
 
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <Header goBack={true} title={t('header.wallet')} />
+      <Header goBack={true} title={t('header.securityWallet')} />
       {/* <ScrollView horizontal={false} style={CommonStyle.contentWrap}> */}
       <View style={styles.mainContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>비밀 복구 구문 공개</Text>
+          <Text style={styles.titleText}>{t('wallet.nmemonic.title')}</Text>
           <Text style={styles.subTitleText}>
-            계정을 연결하려면 이 비밀 복구 구문이 필요합니다. {'\n'}
-            기밀이 보장된안전한 곳에 보관하세요.
+            {t('wallet.nmemonic.subTitle')}
           </Text>
           <View style={styles.warningCard}>
             <Image source={Warning} style={styles.warningImage} />
             <Text style={styles.warningText}>
-              이 구문은 누구와도 공유하지 마세요! {'\n'}이 구문은 계정 전체를
-              도용하는데 사용 될 수 있습니다.
+              {t('wallet.nmemonic.warningText')}
             </Text>
           </View>
         </View>
@@ -97,9 +94,11 @@ const WalletNmemonic = ({
         <View style={styles.middleContainer}>
           {page === 'password' ? (
             <>
-              <Text style={styles.contentText}>게속하려면 암호 입력</Text>
+              <Text style={styles.contentText}>
+                {t('wallet.nmemonic.continue')}
+              </Text>
               <MedicleInput
-                placeholder="암호를 입력해주세요."
+                placeholder={t('wallet.nmemonic.password')}
                 textInputStyle={[
                   styles.passwordInput,
                   { borderWidth: errorMessage ? 0 : 1 },
@@ -114,7 +113,9 @@ const WalletNmemonic = ({
             </>
           ) : (
             <>
-              <Text style={styles.contentText}>비공개 비밀 복구 구문</Text>
+              <Text style={styles.contentText}>
+                {t('wallet.nmemonic.nmemonicDisclosure')}
+              </Text>
               <NmemonicInput
                 editable={false}
                 onPress={() => {
@@ -125,7 +126,7 @@ const WalletNmemonic = ({
                 imgWidth={20}
                 nmemonicValue={words && words}
                 copyText={words}
-                toastMessage="복사완료"
+                toastMessage={t('toast.copy')}
               />
             </>
           )}
@@ -139,7 +140,7 @@ const WalletNmemonic = ({
                 ? handleCheckPassword()
                 : navigation.navigate(Routes.WALLET_HOME);
             }}
-            text={page === 'password' ? '다음' : '홈으로'}
+            text={page === 'password' ? t('button.next') : t('button.goHome')}
             disabled={!passwordVaild}
           />
         </View>

@@ -15,7 +15,7 @@ export default StyleSheet.create({
   titleText: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   menuContainer: {
     // backgroundColor: 'green',
@@ -25,7 +25,7 @@ export default StyleSheet.create({
   animatedTitleBoxText: {
     fontWeight: '700',
     fontSize: 17,
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   content: {
     justifyContent: 'space-around',
@@ -60,7 +60,7 @@ export default StyleSheet.create({
     marginTop: 13,
   },
   nmemonicButton: {
-    backgroundColor: '#E7E1D5',
+    backgroundColor: Colors.Medicle.Primary,
     flex: 1,
     height: 35,
     justifyContent: 'center',
@@ -71,25 +71,25 @@ export default StyleSheet.create({
   nmemonicButtonText: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   walletDeleteButton: {
     height: 57,
     paddingHorizontal: 20,
     justifyContent: 'center',
-    backgroundColor: '#E7E1D5',
+    backgroundColor: Colors.Medicle.Primary,
     borderRadius: 10,
   },
   animatedContentsText: {
     fontSize: 14,
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
     fontWeight: '400',
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: Colors.Medicle.ModalBackground,
   },
   modal: {
     width: 277,
@@ -138,7 +138,7 @@ export default StyleSheet.create({
     height: 23,
   },
   warningTitle: {
-    color: '#FF2D2D',
+    color: Colors.Medicle.Font.Red,
     fontWeight: '700',
     fontSize: 19,
   },
@@ -149,7 +149,7 @@ export default StyleSheet.create({
     borderBottomRightRadius: 10,
   },
   warningDescript: {
-    color: '#000000',
+    color: Colors.Medicle.Font.Black,
     fontWeight: '400',
     fontSize: 10,
     textAlign: 'center',

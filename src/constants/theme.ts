@@ -7,6 +7,8 @@ import { MEDIUM, REGULAR, SEMIBOLD } from './fonts';
 export const Colors = {
   ActionBlue: '#3574F4',
   WarningYellow: '#F3AD41',
+
+
   Medicle: {
     White: '#FFFFFF',
     Black: '#15161C',
@@ -21,20 +23,23 @@ export const Colors = {
       },
       Brown: {
         Dark: '#443927',
+        Light: '#706148',
       },
       White: '#FFFFFF',
       Black: '#000000',
+      Red: '#FF2D2D',
     },
     Gray: {
       Light: '#F2F2F2',
       SemiLight: '#E8E8E8',
       Standard: '#989898',
       Dark: '#454545',
+      SemiDark: '#666666',
     },
     Brown: {
       Light: '#FCF4E9',
       SemiLight: '#EDDFCC',
-      Standard: '#97876D'
+      Standard: '#97876D',
     },
     Switch: {
       TrackAble: '#FCF4E9',
@@ -45,7 +50,12 @@ export const Colors = {
     Input: '#F2F2F2',
     InputText: '#989898',
     DisabledBtn: '#989898',
+
+    ModalBackground: '#00000060',
+    WarningCard: '#FF2D2D10',
   },
+
+
   Black: {
     Primary: '#15161C',
     Secondary: '#1E1F27',

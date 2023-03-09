@@ -4,9 +4,7 @@ import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
   cardContainer: {
-    // marginTop: 17,
     paddingHorizontal: 30,
-    // backgroundColor: 'red',
     height: Dimensions.get('window').height * 0.245,
     maxHeight: 1067 * 0.245,
   },
@@ -32,7 +30,7 @@ export default StyleSheet.create({
   mdiTitleText: {
     fontSize: 15,
     fontWeight: '400',
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
     marginLeft: 7,
   },
   settingIcon: {
@@ -44,7 +42,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   mdiBalanceText: {
-    color: '#706148',
+    color: Colors.Medicle.Font.Brown.Light,
     fontSize: 25,
     fontWeight: '700',
   },
@@ -63,7 +61,7 @@ export default StyleSheet.create({
     minWidth: 70,
   },
   krwBalance: {
-    color: '#FFFFFF',
+    color: Colors.Medicle.Font.White,
   },
   refreshButton: {
     height: 23,
@@ -79,20 +77,7 @@ export default StyleSheet.create({
     height: 24,
   },
   historyTopLayer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     paddingHorizontal: 30,
-  },
-  historyTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#333333',
-  },
-  historySubText: {
-    fontSize: 11,
-    fontWeight: '400',
-    color: Colors.Medicle.Gray.Standard,
   },
   emptyHistory: {
     alignItems: 'center',
@@ -104,17 +89,13 @@ export default StyleSheet.create({
   },
   historyList: {
     flex: 1,
-    marginTop: 10,
   },
   emptyText: {
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
     fontWeight: '400',
     fontSize: 14,
   },
   flatList: {
-    // paddingTop: 10,
-    // borderWidth: 1,
-    // borderColor: 'red',
     width: '100%',
   },
   historyCard: {
@@ -143,7 +124,7 @@ export default StyleSheet.create({
     fontWeight: '400',
   },
   trasactionTxID: {
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
   },
   historyCardBottomLayer: {
     justifyContent: 'flex-end',
@@ -151,7 +132,7 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
   },
   trasactionBal: {
-    color: '#443927',
+    color: Colors.Medicle.Font.Brown.Dark,
     fontWeight: '700',
     fontSize: 20,
   },
@@ -159,7 +140,7 @@ export default StyleSheet.create({
     paddingHorizontal: 30,
   },
   moreButton: {
-    backgroundColor: '#E7E1D5',
+    backgroundColor: Colors.Medicle.Primary,
     height: 40,
     marginBottom: 28,
     alignItems: 'center',
@@ -167,98 +148,8 @@ export default StyleSheet.create({
     borderRadius: 10,
   },
   moreButtonText: {
-    color: '#333333',
+    color: Colors.Medicle.Font.Gray.Dark,
     fontWeight: '500',
     fontSize: 14,
   },
-
-  // about Modal
-
-  // mod
-  modalButtonLayer: {
-    flexDirection: 'row',
-    height: 52,
-  },
-  modalCalendarLayer: {
-    height: 199,
-    paddingHorizontal: 30,
-  },
-  resetButton: {
-    flex: 151,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#666666',
-    height: 52,
-  },
-  applyButton: {
-    flex: 209,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 52,
-    backgroundColor: '#E7E1D5',
-  },
-  calenderTopLayer: {
-    marginTop: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  calenderMiddleLayer: {
-    marginTop: 25,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  calenderBottomLayer: { backgroundColor: 'green', marginTop: 29 },
-
-  borderForground: {
-    // position: 'ab'
-    borderTopStartRadius: 10,
-    borderTopEndRadius: 10,
-    backgroundColor: '#FFFFFF',
-  },
-  closeButton: {
-    width: 24,
-    height: 24,
-  },
-  periodDisabled: {
-    backgroundColor: '#F2F2F2',
-    width: 60,
-    height: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-  },
-  periodActive: {
-    backgroundColor: '#EDDFCC',
-    width: 60,
-    height: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-  },
-  periodDisabledText: {
-    fontWeight: '400',
-    fontSize: 13,
-    color: '#989898',
-  },
-  periodActiceText: {
-    fontWeight: '700',
-    fontSize: 13,
-    color: '#333333',
-  },
-  walletAddress: {
-    fontWeight: '400',
-    color: '#706148',
-    fontSize: 13,
-  },
-  copyImage: {
-    width: 18,
-    height: 18,
-    marginLeft: 'auto',
-  },
-  toastStyle: {
-    // top: 25,
-    // left: 100,
-  },
-  toastPointerStyle: {},
 });

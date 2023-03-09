@@ -2,23 +2,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AES } from 'crypto-js';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  NativeModules,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import Config from 'react-native-config';
 import { TextInput } from 'react-native-gesture-handler';
 
+import MedicleButton from '@/components/buttons/MedicleButton';
 // import MedicleLogo from '@/assets/icons/wallet_logo.png';
 import Header from '@/components/Header';
 import LoadingModal from '@/components/LoadingModal';
+import { FungibleStandard } from '@/interfaces/keyring';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { createWallet } from '@/redux/slices/keyring';
+import { addCustomToken, getTokenInfo } from '@/redux/slices/user';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
@@ -41,18 +38,9 @@ const WalletCreatePassword = ({
   const dispatch = useAppDispatch();
   const { icpPrice } = useAppSelector(state => state.icp);
   const flow = route.params?.flow;
-  const [buttonText, setButtonText] = useState('');
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (flow) {
-      setButtonText(t('wallet.create.importButton'));
-    } else {
-      setButtonText(t('wallet.create.newCreateButton'));
-    }
-  }, []);
-
-  // const [confirmPasswordVaild, setDisable] = useState(true);
+  const canisterId: string = 'h4gr6-maaaa-aaaap-aassa-cai';
+  const standard: FungibleStandard = 'DIP20';
 
   const confirmPasswordInputRef = useRef();
 
@@ -82,8 +70,8 @@ const WalletCreatePassword = ({
         dispatch(createWallet({ password, icpPrice }))
           .unwrap()
           .then(async result => {
-            console.log(result);
             if (result.wallet) {
+              addMdiToken();
               const encryptKey = AES.encrypt(
                 password,
                 Config.AES_KEY
@@ -92,17 +80,46 @@ const WalletCreatePassword = ({
             }
           });
       } catch (e) {
-        console.log('실패');
         setShowCreateError(true);
         setLoading(false);
       }
     }
   };
 
+  const addMdiToken = async () => {
+    dispatch(
+      getTokenInfo({
+        token: { canisterId, standard },
+        onSuccess: res => {
+          const token = res.token;
+          dispatch(
+            addCustomToken({
+              token,
+              onSuccess() {},
+              onError(e) {
+                console.log(e);
+              },
+            })
+          );
+        },
+        onError: err => {
+          console.log(err);
+        },
+      })
+    );
+  };
+
   return (
     <>
       <SafeAreaView style={CommonStyle.container}>
-        <Header goBack={true} title={t('wallet.create.header')} />
+        <Header
+          goBack={true}
+          title={
+            flow === 'create'
+              ? t('wallet.create.header')
+              : t('wallet.import.header')
+          }
+        />
         <View style={styles.mainContainer}>
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{t('wallet.create.title')}</Text>
@@ -128,7 +145,9 @@ const WalletCreatePassword = ({
               maxLength={20}
               onChangeText={word => setConfirmPassword(word)}
               ref={confirmPasswordInputRef}
-              onSubmitEditing={handleCreateWallet}
+              onSubmitEditing={() => {
+                disable && handleCreateWallet;
+              }}
             />
             {showPasswordError ? (
               <Text style={styles.errMsg}>
@@ -144,30 +163,26 @@ const WalletCreatePassword = ({
 
             {showCreateError ? (
               <Text style={[styles.errMsg, { marginTop: 5 }]}>
-                {/* {t('errorMessage.passwordConfirmError')} */}
-                *지갑생성 중 오류가 발생하였습니다. 다시 시도해주세요.
+                {t('errorMessage.unknownError')}
               </Text>
             ) : null}
           </View>
-          <View style={styles.btnContainer}>
-            <TouchableOpacity
-              style={[
-                styles.btn,
-                { backgroundColor: disable ? '#989898' : '#E7E1D5' },
-              ]}
-              disabled={disable}
-              onPress={handleCreateWallet}>
-              <Text
-                style={[
-                  styles.btnText,
-                  { color: disable ? '#FFFFFF' : '#000000' },
-                ]}>
-                {buttonText}
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
-        {loading && <LoadingModal name="loading" visible={loading} />}
+        <View style={styles.btnContainer}>
+          <MedicleButton
+            text={
+              flow === 'create'
+                ? t('wallet.create.newCreateButton')
+                : t('wallet.create.importButton')
+            }
+            buttonStyle={styles.nextButton}
+            disabled={disable}
+            onPress={() => {
+              handleCreateWallet();
+            }}
+          />
+          <LoadingModal name="loading" visible={loading} />
+        </View>
       </SafeAreaView>
     </>
   );
