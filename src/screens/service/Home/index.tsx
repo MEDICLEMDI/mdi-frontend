@@ -14,6 +14,7 @@ import Tab from "@/components/Tab";
 import {MedicleInput} from "@/components/inputs";
 import Icon from "@/icons";
 import ListItem from "@/components/ListItem";
+import {Colors} from "@/constants/theme";
 
 const Home = ({ navigation }) => {
   const { t } = useTranslation();
@@ -53,7 +54,7 @@ const Home = ({ navigation }) => {
             itemStyle={style.itemStyle}
             itemBackground='#F3F1EB'
             iconStyle={style.iconStyle}
-            iconColor={'#000'}
+            iconColor={{ fill: Colors.Medicle.Black }}
             textStyle={style.textStyle}
             numColumns={numColumns}
             padding={categoryPadding}

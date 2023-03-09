@@ -26,6 +26,8 @@ import FAQ from '@/screens/service/FAQ';
 import DashBoard from '@/screens/service/Home';
 import Hospital from '@/screens/service/Hospital';
 import HospitalDetail from '@/screens/service/Hospital/detail';
+import HospitalPayment from '@/screens/service/Hospital/payment';
+import HospitalContact from '@/screens/service/Hospital/contact';
 import MarketingConfig from '@/screens/service/MarketingConfig';
 import MedicalState from '@/screens/service/MedicalState';
 import MedicalStateDetail from '@/screens/service/MedicalState/detail';
@@ -72,6 +74,8 @@ const RootStackNavigator = () => {
         <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
         <Stack.Screen name={Routes.REVIEW} component={Review} />
         <Stack.Screen name={Routes.HOSPITAL_DETAIL} component={HospitalDetail} />
+        <Stack.Screen name={Routes.HOSPITAL_PAYMENT} component={HospitalPayment} />
+        <Stack.Screen name={Routes.HOSPITAL_CONTACT} component={HospitalContact} />
 
       </Stack.Group>
 

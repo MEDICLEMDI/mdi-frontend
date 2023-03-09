@@ -69,6 +69,7 @@ const Profile = ({ navigation }) => {
           itemBackground={Colors.Medicle.Brown.Light}
           numColumns={numColumns}
           padding={menuPadding}
+          iconColor={{ stroke: Colors.Medicle.Brown.SemiDark }}
           gap={gap}
           data={myPageMenus(t)}
           onPress={({ route }) => navigation.navigate(route)}

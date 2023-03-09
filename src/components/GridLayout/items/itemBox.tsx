@@ -15,7 +15,7 @@ const ItemBox = ({
   readonly item: any;
   style?: StyleProp<ViewStyle>;
   iconStyle?: StyleProp<ViewStyle>;
-  iconColor?: string;
+  iconColor?: { fill?: string, stroke?: string };
   textStyle?: StyleProp<TextStyle>;
   onPress?: Function;
 }) => {
@@ -29,7 +29,7 @@ const ItemBox = ({
       style={[style, isNullItem && { backgroundColor: '#FFFFFF00' }]}
       disabled={isNullItem}
     >
-      {item.icon !== undefined && item.icon !== '' && (<Icon name={item.icon} fill={iconColor} style={iconStyle} />)}
+      {item.icon !== undefined && item.icon !== '' && (<Icon name={item.icon} fill={iconColor?.fill} stroke={iconColor?.stroke} style={iconStyle} />)}
       {item.name !== undefined && item.name !== '' && (<Text style={textStyle}>{item.name}</Text>)}
     </TouchableOpacity>
   )

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {SafeAreaView, ScrollView, View, Text, Image} from "react-native";
-import CalendarPicker from "react-native-calendar-picker";
+import {SafeAreaView, ScrollView, View, Text, Image, TouchableOpacity} from "react-native";
 
 import Header from "@/components/Header";
 import BoxDropShadow from "@/components/BoxDropShadow";
@@ -18,11 +17,14 @@ import {CustomModal} from "@/components/Modals";
 import Icon from "@/icons";
 import Spacing from "@/components/Spacing";
 import Calendar from "../../../Calendar";
+import {useIsFocused} from "@react-navigation/native";
+import Routes from "@/navigation/Routes";
 
 const HospitalDetail = ({
   navigation,
   route,
 }) => {
+  const isFocus = useIsFocused();
   const SECTION_HEADER_FONT = fontStyleCreator({
     size: 14,
     weight: 'bold',
@@ -56,13 +58,34 @@ const HospitalDetail = ({
     size: 12,
     color: Colors.Medicle.Font.Gray.Standard,
   });
+  const TIME_SELECTED_FONT = fontStyleCreator({
+    size: 13,
+    weight: 'bold',
+    color: Colors.Medicle.Font.Gray.Dark,
+  });
+  const TIME_FONT = fontStyleCreator({
+    size: 12,
+    color: Colors.Medicle.Font.Gray.Standard,
+  })
 
-  const [dateType, setDateType] = React.useState('from');
-  const [date, setDate] = React.useState({ from: '', to: '' });
+  const [date, setDate] = React.useState({ from: '' });
+  const [time, setTime] = React.useState('00:00 ~ 00:00');
+  const [timeKey, setTimeKey] = React.useState(0);
+  const [dateType, setDateType] = React.useState('from')
+  const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
-    console.log(date);
-  }, [date])
+    setDate({ from: '2023-00-00' })
+  }, [isFocus])
+
+
+  const timeList = [
+    {start: '00:00', end: '00:00'},
+    {start: '00:00', end: '00:00'},
+    {start: '00:00', end: '00:00'},
+    {start: '00:00', end: '00:00'},
+    {start: '00:00', end: '00:00'},
+  ]
 
   return (
     <SafeAreaView style={style.container}>
@@ -112,15 +135,17 @@ const HospitalDetail = ({
           <Text style={[RESERVE_COMMENT_FONT, style.reserveComment]}>document</Text>
         </View>
         <View style={style.itemDetailWrap}>
-          <BoxDropShadow>
-            <Text>{date}</Text>
-            <Text></Text>
-            <Text></Text>
-            <View>
-              <Text></Text>
-              <Text>price</Text>
-            </View>
-          </BoxDropShadow>
+          <TouchableOpacity onPress={() => setVisible(true)}>
+            <BoxDropShadow>
+                <Text>{date.from} {time}</Text>
+                <Text></Text>
+                <Text></Text>
+                <View>
+                  <Text></Text>
+                  <Text>price</Text>
+                </View>
+            </BoxDropShadow>
+          </TouchableOpacity>
         </View>
       </ScrollView>
       <Row align='center' justify='space-between'>
@@ -138,6 +163,7 @@ const HospitalDetail = ({
             style.button,
             style.FAQButton,
           ]}
+          onPress={() => navigation.navigate(Routes.HOSPITAL_CONTACT)}
           textStyle={FAQ_BUTTON_FONT}
           text='test' />
         <MedicleButton
@@ -145,26 +171,33 @@ const HospitalDetail = ({
             style.button,
             style.PayButton,
           ]}
+          onPress={() => navigation.navigate(Routes.HOSPITAL_PAYMENT)}
           textStyle={PAY_BUTTON_FONT}
           text='test' />
       </Row>
       <CustomModal
-        visible={true}
+        visible={visible}
+        onRequestClose={() => setVisible(false)}
         name='datePicker'
         modalDirection='center'
       >
         <View style={style.datePickerModal}>
           <Row justify='space-between' align='center' style={style.datePickerHeader}>
             <Text>HEADER</Text>
-            <Icon name='close' />
+            <TouchableOpacity onPress={() => setVisible(false)}>
+              <Icon name='close' />
+            </TouchableOpacity>
           </Row>
-          <View>
+          <View style={style.container}>
             <Row justify='space-between' align='center'>
               <MedicleInput
                 style={style.dataPickerInput}
                 direction='row'
                 rightInputNode={<Icon name='calendar'/>}
                 editable={false}
+                clearButton={false}
+                onPressIn={() => setDateType('from')}
+                value={date.from}
               />
               <Spacing size={10} />
               <MedicleInput
@@ -172,9 +205,33 @@ const HospitalDetail = ({
                 direction='row'
                 rightInputNode={<Icon name='clock'/>}
                 editable={false}
+                clearButton={false}
+                onPressIn={() => setDateType('time')}
+                value={time}
               />
             </Row>
-            <Calendar date={date} dateResponse={setDate} dateType={dateType}/>
+            {
+              dateType === 'from'
+                ?
+                <View style={style.calendarWrap}>
+                  <Calendar date={date} dateResponse={setDate} dateType={dateType}/>
+                </View>
+                :
+                <View style={style.timeWrap}>
+                  {
+                    timeList.map(({start, end}, key) => (
+                      <TouchableOpacity
+                        key={key}
+                        disabled={key === timeKey}
+                        style={style.timeSelectItem}
+                        onPress={() => setTimeKey(key)}
+                      >
+                        <Text style={key === timeKey ? TIME_SELECTED_FONT : TIME_FONT}>{start} ~ {end}</Text>
+                      </TouchableOpacity>
+                    ))
+                  }
+                </View>
+            }
           </View>
         </View>
       </CustomModal>

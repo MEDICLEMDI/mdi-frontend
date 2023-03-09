@@ -16,7 +16,7 @@ const ItemCircle = ({
   readonly item: any;
   style?: StyleProp<ViewStyle>;
   iconStyle?: StyleProp<ViewStyle>;
-  iconColor?: string;
+  iconColor?: { fill?: string, stroke?: string };
   textStyle?: StyleProp<TextStyle>;
   circleStyle?: StyleProp<ViewStyle>;
   onPress?: Function;
@@ -34,7 +34,7 @@ const ItemCircle = ({
       disabled={isNullItem}
     >
       <View style={circleStyle}>
-        {item.icon !== undefined && item.icon !== '' && (<Icons name={item.icon} style={iconStyle} fill={iconColor} />)}
+        {item.icon !== undefined && item.icon !== '' && (<Icons name={item.icon} style={iconStyle} fill={iconColor?.fill} stroke={iconColor?.stroke} />)}
       </View>
       {item.name !== undefined && item.name !== '' && (<Text style={textStyle}>{item.name}</Text>)}
     </TouchableOpacity>

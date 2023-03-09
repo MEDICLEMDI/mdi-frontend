@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Pressable, StyleSheet, Text, View, ViewStyle} from "react-native";
+import {Pressable, StyleProp, StyleSheet, Text, View, ViewStyle} from "react-native";
 import {Colors} from "@/constants/theme";
 
 const RadioInput = ({
@@ -15,7 +15,7 @@ const RadioInput = ({
   size?: number,
   borderColor?: string,
   circleColor?: string,
-  style?: ViewStyle | ViewStyle[]
+  style?: StyleProp<ViewStyle>;
 }) => {
   const [selectIndex, setIndex] = React.useState(0);
   const padding = 2;

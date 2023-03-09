@@ -10,6 +10,8 @@ enum Routes {
   DASHBOARD = 'Dashboard',
   HOSPITAL = 'Hospital',
   HOSPITAL_DETAIL = 'HospitalDetail',
+  HOSPITAL_PAYMENT = 'HospitalPayment',
+  HOSPITAL_CONTACT = 'HospitalContact',
   EVENT = 'Event',
   WALLET = 'Wallet',
   MYPAGE = 'MyPage',

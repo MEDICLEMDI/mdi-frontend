@@ -7,7 +7,7 @@ export default StyleSheet.create({
   inputContainer: {
     width: '100%',
     borderRadius: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10
   },
   inputRowDirection: {
     flex: 1,
@@ -16,7 +16,9 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   input: {
+    fontSize: 12,
     width: '100%',
+    marginLeft: 5,
     paddingVertical: Platform.OS == 'ios' ? 10 : 5,
   },
   textArea: {

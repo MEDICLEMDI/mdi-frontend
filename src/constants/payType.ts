@@ -1,7 +1,11 @@
 import i18n from "@/config/i18n";
+export const chargeType = [
+  {name: 'MDI 결제'},
+  {name: '일반 결제'},
+]
 
 export const payType = [
-  {name: 'MDI 결제'},
+  {name: '메디클 포인트 결제'},
   {name: '일반 결제'},
 ]
 

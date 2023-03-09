@@ -58,7 +58,7 @@ export const ScrollViewGrid = ({
   itemSelected?: {key: number, color: string};
   itemBackground?: string;
   iconStyle?: StyleProp<ViewStyle>;
-  iconColor?: string;
+  iconColor?: { fill?: string, stroke?: string };
   textStyle?: StyleProp<TextStyle>;
   columnWrapperStyle?: StyleProp<ViewStyle>;
   gap?: number;
