@@ -57,20 +57,32 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
   const [visible, setVisible] = useState(false);
 
+  // useEffect(() => {
+  //   handleRefresh();
+  // }, []);
+
+  // // set mdi
+  // useEffect(() => {
+  //   assets.map(token => {
+  //     if (token.name === 'MDI') {
+  //       setMdi(token);
+  //       saveMdiAmount();
+  //     }
+  //   });
+  //   // setLoading(false);
+  // }, [assets]);
+
   useEffect(() => {
-    handleRefresh();
+    dispatch(getBalance()).then(() => {
+      let mdiAsstes = assets.find(token => token.name === 'MDI');
+      console.log(mdiAsstes);
+      console.log('gdgd');
+      setMdi(mdiAsstes!);
+      setLoading(false);
+    });
   }, []);
 
-  // set mdi
-  useEffect(() => {
-    assets.map(token => {
-      if (token.name === 'MDI') {
-        setMdi(token);
-        saveMdiAmount();
-      }
-    });
-    setLoading(false);
-  }, [assets]);
+  useEffect(() => {}, [mdi]);
 
   const saveMdiAmount = async () => {
     await AsyncStorage.setItem('MDI_AMOUNT', mdi!.amount.toString());
@@ -78,7 +90,11 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
 
   const handleRefresh = () => {
     setLoading(true);
-    dispatch(getBalance());
+    dispatch(getBalance()).then(() => {
+      let mdiAsstes = assets.find(token => token.name === 'MDI');
+      setMdi(mdiAsstes!);
+      setLoading(false);
+    });
   };
 
   // 나중에 히스토리 객체 타입지정 해놔야할듯
