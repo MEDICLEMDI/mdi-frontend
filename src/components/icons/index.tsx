@@ -65,80 +65,87 @@ import WhiteningIcon from './svg/Whitening.svg';
 import WICPIcon from './svg/WICP.svg';
 import XTCIcon from './svg/XTC.svg';
 import YZoneIcon from './svg/YZone.svg';
-import {SvgXml} from "react-native-svg";
+import KakaoIcon from './svg/Kakao.svg';
+import GoogleIcon from './svg/Google.svg';
+import NaverIcon from './svg/Naver.svg';
+import EmailIcon from './svg/Email.svg';
 
-export const IconTypes = (type: string) =>
-  ({
-    close: CloseIcon,
-    calendar: CalendarIcon,
-    clock: ClockIcon,
-    facebook: FacebookIcon,
-    instagram: InstagramIcon,
-    github: GithubIcon,
-    twitter: TwitterIcon,
-    telegram: TelegramIcon,
-    menu: MenuIcon,
-    mdi: MDIIcon,
-    xtc: XTCIcon,
-    wicp: WICPIcon,
-    copy: CopyIcon,
-    error: Error,
-    info: InfoIcon,
-    faceIdIcon: FaceIdIcon,
-    arrowRight: ArrowRightIcon,
+export const IconTypes = (type: string) => ({
+  close: CloseIcon,
+  calendar: CalendarIcon,
+  clock: ClockIcon,
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  github: GithubIcon,
+  twitter: TwitterIcon,
+  telegram: TelegramIcon,
+  menu: MenuIcon,
+  mdi: MDIIcon,
+  xtc: XTCIcon,
+  wicp: WICPIcon,
+  copy: CopyIcon,
+  error: Error,
+  info: InfoIcon,
+  faceIdIcon: FaceIdIcon,
+  arrowRight: ArrowRightIcon,
 
-    mdiHorizontal: MdiLogoIcon,
-    arrowLeft: ArrowLeftIcon,
-    arrowDown: ArrowDownIcon,
-    arrowUp: ArrowUpIcon,
-    alarm: AlarmIcon,
-    search: SearchIcon,
-    refresh: RefreshIcon,
-    refresh_s: RefreshSmallIcon,
-    mdiIcon: MdiLogoSmallIcon,
-    userCircle: UserCircleIcon,
+  mdiHorizontal: MdiLogoIcon,
+  arrowLeft: ArrowLeftIcon,
+  arrowDown: ArrowDownIcon,
+  arrowUp: ArrowUpIcon,
+  alarm: AlarmIcon,
+  search: SearchIcon,
+  refresh: RefreshIcon,
+  refresh_s: RefreshSmallIcon,
+  mdiIcon: MdiLogoSmallIcon,
+  userCircle: UserCircleIcon,
 
-    implant: ImplantIcon,
-    crown: CrownIcon,
-    cavity: CavityIcon,
-    scaling: ScalingIcon,
-    denture: DentureIcon,
-    tmj: TMJIcon,
-    whitening: WhiteningIcon,
-    braces: BracesIcon,
-    laminate: LaminateIcon,
+  implant: ImplantIcon,
+  crown: CrownIcon,
+  cavity: CavityIcon,
+  scaling: ScalingIcon,
+  denture: DentureIcon,
+  tmj: TMJIcon,
+  whitening: WhiteningIcon,
+  braces: BracesIcon,
+  laminate: LaminateIcon,
 
-    skin: SkinIcon,
-    face: FaceIcon,
-    eyes: EyesIcon,
-    nose: NoseIcon,
-    mouse: MouseIcon,
-    forehead: ForheadIcon,
-    chest: ChestIcon,
-    back: BackIcon,
-    waxing: WaxingIcon,
-    hair: HairIcon,
-    tooth: ToothIcon,
-    ear: EarIcon,
-    yzone: YZoneIcon,
-    etc: ETCIcon,
+  skin: SkinIcon,
+  face: FaceIcon,
+  eyes: EyesIcon,
+  nose: NoseIcon,
+  mouse: MouseIcon,
+  forehead: ForheadIcon,
+  chest: ChestIcon,
+  back: BackIcon,
+  waxing: WaxingIcon,
+  hair: HairIcon,
+  tooth: ToothIcon,
+  ear: EarIcon,
+  yzone: YZoneIcon,
+  etc: ETCIcon,
 
-    coin: CoinIcon,
-    book: BookIcon,
-    heart: HeartIcon,
-    notePlus: NotePlusIcon,
-    hospital: HospitalIcon,
-    faq: HeadPhoneIcon,
-    exchange: ExchangeIcon,
-    community: CommunityIcon,
-    settings: SettingsIcon,
+  coin: CoinIcon,
+  book: BookIcon,
+  heart: HeartIcon,
+  notePlus: NotePlusIcon,
+  hospital: HospitalIcon,
+  faq: HeadPhoneIcon,
+  exchange: ExchangeIcon,
+  community: CommunityIcon,
+  settings: SettingsIcon,
 
-    home: HomeIcon,
-    gift: GiftIcon,
-    wallet: WalletIcon,
-    user: UserIcon,
-    hospital_b: Hospital_BIcon,
-  }[type]);
+  home: HomeIcon,
+  gift: GiftIcon,
+  wallet: WalletIcon,
+  user: UserIcon,
+  hospital_b: Hospital_BIcon,
+
+  google: GoogleIcon,
+  naver: NaverIcon,
+  kakao: KakaoIcon,
+  email: EmailIcon,
+}[type]);
 
 interface Props {
   name: string;
@@ -149,8 +156,8 @@ interface Props {
 }
 
 const Icon = ({ name, fill = 'none', stroke = 'none', style, ...props }: Props) => {
-    const IconElement = IconTypes(name) as React.FunctionComponent<any>;
-    return <IconElement{...props} name={name} fill={fill} stroke={stroke} style={style} />;
+  const IconElement = IconTypes(name) as React.FunctionComponent<any>;
+  return <IconElement{...props} name={name} fill={fill} stroke={stroke} style={style} />;
 };
 
 export default Icon;

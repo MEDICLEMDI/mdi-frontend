@@ -7,7 +7,8 @@ export default StyleSheet.create({
   inputContainer: {
     width: '100%',
     borderRadius: 10,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    justifyContent: 'center',
   },
   inputRowDirection: {
     flex: 1,

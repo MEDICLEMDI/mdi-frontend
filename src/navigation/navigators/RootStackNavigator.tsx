@@ -1,19 +1,13 @@
 // React native packages
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
-import {
-  createStackNavigator,
-  TransitionPresets,
-} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {useNavigation} from '@react-navigation/native';
+import {createStackNavigator,} from '@react-navigation/stack';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Platform } from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {Platform} from 'react-native';
 
 import Icons from '@/icons';
-import {
-  RootStackParamList,
-  ServiceTabParamList,
-} from '@/interfaces/navigation';
+import {RootStackParamList, ServiceTabParamList,} from '@/interfaces/navigation';
 import KeyRing from '@/modules/keyring';
 import Chart from '@/screens/service/Chart';
 import ChartDetail from '@/screens/service/Chart/detail';
@@ -53,6 +47,9 @@ import Review from "@/screens/service/Review";
 import Routes from '../Routes';
 import WalletSend from '@/screens/service/Wallet/components/Send';
 import WalletInfo from '@/screens/service/Wallet/components/Info';
+import Social from "@/screens/service/SignIn/social";
+import SignIn from "@/screens/service/SignIn";
+import SignUp from "@/screens/service/SignUp";
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
@@ -60,11 +57,16 @@ const Tab = createBottomTabNavigator<ServiceTabParamList>();
 const RootStackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName={Routes.DASHBOARD}
+      initialRouteName={Routes.SOCIAL}
       screenOptions={{
         headerShown: false,
       }}>
       {/* 하단에 탭이 보이는 메뉴는 BottomTabNavigation에 적용되고 탭이 보이지 않는 메뉴는 Root의 Stack에 추가 */}
+      <Stack.Screen name={Routes.SOCIAL} component={Social} />
+      <Stack.Screen name={Routes.SIGNIN} component={SignIn} />
+      <Stack.Screen name={Routes.SIGNUP} component={SignUp} />
+      <Stack.Screen name={Routes.IDCHECK} component={SignIn} />
+      <Stack.Screen name={Routes.PASSWORDCHECK} component={SignIn} />
       <Stack.Screen name={Routes.DASHBOARD} component={BottomTabNavigation} />
       <Stack.Group>
         <Stack.Screen

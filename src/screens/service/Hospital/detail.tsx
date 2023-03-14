@@ -67,6 +67,16 @@ const HospitalDetail = ({
     size: 12,
     color: Colors.Medicle.Font.Gray.Standard,
   })
+  const DATE_FONT = fontStyleCreator({
+    size: 12,
+    weight: 'bold',
+    color: Colors.Medicle.Orange,
+  })
+  const PRODUCT_FONT = fontStyleCreator({
+    size: 16,
+    weight: 'bold',
+    color: Colors.Medicle.Font.Brown.Dark,
+  });
 
   const [date, setDate] = React.useState({ from: '' });
   const [time, setTime] = React.useState('00:00 ~ 00:00');
@@ -137,9 +147,10 @@ const HospitalDetail = ({
         <View style={style.itemDetailWrap}>
           <TouchableOpacity onPress={() => setVisible(true)}>
             <BoxDropShadow>
-                <Text>{date.from} {time}</Text>
-                <Text></Text>
-                <Text></Text>
+                <Text style={DATE_FONT}>{date.from} {time}</Text>
+                <Text style={PRODUCT_FONT}>TEST</Text>
+                <Text>TEST|TEST</Text>
+                <View style={style.hr} />
                 <View>
                   <Text></Text>
                   <Text>price</Text>

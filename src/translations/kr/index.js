@@ -51,7 +51,7 @@ const translations = {
     copy: '복사완료',
   },
   errorMessage: {
-    unknownError: '*오류가 발생하였습니다, 나중에 다시 시도해주세요.',
+    E001: '*오류가 발생하였습니다, 나중에 다시 시도해주세요.',
     nmemonicError: '*구문이 일치하지 않습니다. 다시 입력해주세요.',
     passwordConfirmError: '*비밀번호가 일치하지 않습니다. 다시 입력해주세요.',
     passwordShortError: '*비밀번호가 일치하지 않습니다.',

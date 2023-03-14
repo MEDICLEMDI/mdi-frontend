@@ -61,7 +61,7 @@ const MedicleInput = ({
     if (errText) {
       return ERROR_INPUT_BACKGROUND;
     }
-    if (textInputStyle) {
+    if (textInputStyle?.backgroundColor) {
       if (textInputStyle[0] !== undefined) {
         return textInputStyle.forEach(value => {
           if (value.backgroundColor !== undefined) {
