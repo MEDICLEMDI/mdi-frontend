@@ -8,6 +8,9 @@ import MedicleButton from "@/buttons/MedicleButton";
 
 import style from './style'
 import API from "@/utils/api";
+import {Row} from "@/layout";
+import Spacing from "@/components/Spacing";
+import {sign} from "crypto";
 
 interface ISignUpData {
   reg_type: string;
@@ -26,20 +29,8 @@ interface ISignUpData {
 
 const SignUp = () => {
 
-  const [signUpData, setSignUpData] = React.useState<ISignUpData>({
-    reg_type: 'normal',
-    user_id: 'test00s1',
-    password: '1q2w3e4r!',
-    name: 'honggisldong',
-    registration_number: '9704101011111',
-    phone: '01012374567',
-    email: 'tesst@test.com',
-    address1: 'address1',
-    address2: 'address2',
-    address3: 'address3',
-    post_code: '00523',
-    referral_code: 'refcode',
-  });
+  const [regiNumber, setRegiNumber] = React.useState<string[]>([])
+  const [signUpData, setSignUpData] = React.useState<any>();
 
   const onChange = (value:string, name: string) => {
     setSignUpData({
@@ -50,10 +41,42 @@ const SignUp = () => {
 
 
   const register = async () => {
-    await API.post('/register', signUpData)
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
-      .finally(() => console.log('end second'));
+    try {
+      const data: ISignUpData = await setupSignUpData();
+      console.log(data);
+
+      // await API.post('/register', data)
+      //   .then(res => console.log(res))
+      //   .catch(err => console.log(err))
+      //   .finally(() => console.log('end second'));
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  const setupSignUpData = (): ISignUpData => {
+    return {
+      reg_type: signUpData?.reg_type,
+      user_id: signUpData?.user_id,
+      password: signUpData?.password,
+      name: signUpData?.name,
+      registration_number: `${regiNumber[0]}${regiNumber[1]}`,
+      phone: signUpData?.phone,
+      email: signUpData?.email,
+      address1: signUpData?.address1,
+      address2: signUpData?.address2,
+      address3: signUpData?.address3,
+      post_code: signUpData?.post_code,
+      referral_code: signUpData?.referral_code,
+    }
+  }
+
+  const registrationNumber = (value: string, index: number) => {
+    setRegiNumber({
+      ...regiNumber,
+      [index]: value,
+    });
   }
 
   return (
@@ -65,6 +88,22 @@ const SignUp = () => {
           value={signUpData?.name}
           onChangeText={(text) => onChange(text, 'name')}
         />
+        <View>
+          <Text>주민등록번호</Text>
+          <Row align='center' justify='space-between'>
+            <MedicleInput
+              style={{ flex: 1 }}
+              value={regiNumber[0]}
+              onChangeText={(text) => registrationNumber(text, 0)}
+            />
+            <Spacing size={10} />
+            <MedicleInput
+              style={{ flex: 1 }}
+              value={regiNumber[1]}
+              onChangeText={(text) => registrationNumber(text, 1)}
+            />
+          </Row>
+        </View>
         <View>
           <Text>주소</Text>
           <MedicleInput
