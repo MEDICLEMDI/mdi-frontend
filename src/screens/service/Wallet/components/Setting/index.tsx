@@ -33,6 +33,7 @@ import { passwordCheck } from '@/utils/passwordCheck';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
+import LoadingModal from '@/components/LoadingModal';
 
 const WalletSetting = ({
   navigation,
@@ -139,12 +140,14 @@ const WalletSetting = ({
               <BoxDropShadow>
                 <Accordion>
                   <Accordion.Header>
-                    <Text style={styles.animatedTitleBoxText}>{t('wallet.setting.securityInfo')}</Text>
+                    <Text style={styles.animatedTitleBoxText}>
+                      {t('wallet.setting.securityInfo')}
+                    </Text>
                   </Accordion.Header>
                   <Accordion.Body>
                     <View style={styles.animatedContents}>
                       <Text style={styles.animatedContentsText}>
-                      {t('wallet.setting.nmemonicDisclosure')}
+                        {t('wallet.setting.nmemonicDisclosure')}
                       </Text>
                     </View>
                     <View style={styles.animatedContents}>
@@ -154,7 +157,7 @@ const WalletSetting = ({
                           navigation.navigate(Routes.WALLET_MNEMONIC);
                         }}>
                         <Text style={styles.nmemonicButtonText}>
-                        {t('wallet.setting.nmemonicDisclosure')}
+                          {t('wallet.setting.nmemonicDisclosure')}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -179,7 +182,9 @@ const WalletSetting = ({
                   { padding: 0, marginTop: 10, opacity: 0.99 },
                 ]}>
                 <View style={styles.walletDeleteButton}>
-                  <Text style={styles.animatedTitleBoxText}>{t('wallet.setting.deleteWallet')}</Text>
+                  <Text style={styles.animatedTitleBoxText}>
+                    {t('wallet.setting.deleteWallet')}
+                  </Text>
                 </View>
               </BoxDropShadow>
             </TouchableOpacity>
@@ -240,6 +245,7 @@ MEDICLE에는 비밀 복구 구문이 저장되어있지 않습니다.`}
               buttonStyle={styles.deleteButton}
               disabled={!passwordVaild}
               onPress={() => {
+                handleCloseModal();
                 handleDeleteWallet();
               }}
             />
