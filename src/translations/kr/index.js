@@ -64,6 +64,11 @@ const translations = {
     amountZeroError: '*0 이상의 수량을 입력하여 주세요.',
     amountOverError: '*보유 MDI보다 많은 수량을 전송할 수 없습니다.',
     amountVaildError: '*정확한 수량을 입력하여 주세요.',
+    nameError: '*올바른 이름을 입력해주세요.',
+    phoneError: '*올바른 휴대폰 번호를 입력해주세요.',
+    emailError: '*올바른 이메일을 입력해주세요.',
+    registrationNumber1Error: '*생년월일을 확인해주세요.',
+    registrationNumber2Error: '*올바른 양식이 아닙니다.',
   },
   navigation: {
     home: '홈',
@@ -192,8 +197,10 @@ const translations = {
     },
     nmemonic: {
       title: '비밀 복구 구문 공개',
-      subTitle: `계정을 연결하려면 이 비밀 복구 구문이 필요합니다.\n기밀이 보장된안전한 곳에 보관하세요.`,
-      warningText: `이 구문은 누구와도 공유하지 마세요!\n이 구문은 계정 전체를 도용하는데 사용 될 수 있습니다.`,
+      subTitle:
+        '계정을 연결하려면 이 비밀 복구 구문이 필요합니다.\n기밀이 보장된안전한 곳에 보관하세요.',
+      warningText:
+        '이 구문은 누구와도 공유하지 마세요!\n이 구문은 계정 전체를 도용하는데 사용 될 수 있습니다.',
       continue: '계속하려면 암호 입력',
       password: '암호를 입력해주세요.',
       nmemonicDisclosure: '비공개 비밀 복구 구문',
@@ -218,6 +225,31 @@ const translations = {
   },
   toastMessage: {
     copy: '복사완료',
+  },
+  signUp: {
+    name: '성함을 입력해주세요.',
+    nameLabel: '성함',
+    registrationNumber: '생년월일 6자리',
+    registrationNumberLabel: '주민등록번호',
+    address1: '우편번호',
+    address2: '시/군/구 + 도로명, 동명',
+    address3: '상세주소',
+    addressLabel: '주소',
+    addressSearch: '주소 찾기',
+    phone: "'-'를 제외한 숫자만 입력해주세요.",
+    phoneLabel: '휴대폰 번호',
+    phoneRequestSms: '인증문자받기',
+    phoneRequestSmsAgain: '인증문자 재요청',
+    phoneAuthNumInput: '인증번호를 입력해주세요',
+    phoneAuthNumCheck: '인증번호확인',
+    email: '이메일을 입력해주세요',
+    emailLabel: '이메일 아이디',
+    password: '영문/숫자/특수문자 혼합 8~20자',
+    confirmPassword: '비밀번호를 한번 더 입력해주세요',
+    passwordLabel: '비밀번호',
+    referral: '추천인 코드를 입력해주세요',
+    referralLabel: '추천인 코드',
+    agreeAll: '약관 전체 동의하기',
   },
 };
 

@@ -37,6 +37,7 @@ const MedicleInput = ({
   inputButtonNode,
   textInputStyle,
   clearButton,
+  onBlur,
 }: TopLabelInputProps) => {
   const ERROR_TEXT = fontStyleCreator({
     color: '#FF2D2D',
@@ -110,6 +111,7 @@ const MedicleInput = ({
             onChange={onChange}
             onPressIn={onPressIn}
             onChangeText={onChangeText}
+            onBlur={onBlur}
             secureTextEntry={password}
             value={value}
             // ios settings
