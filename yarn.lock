@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@actbase/react-daum-postcode@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@actbase/react-daum-postcode/-/react-daum-postcode-1.0.4.tgz#fad5c595e35e835f0a7e205be698183420f42e5f"
+  integrity sha512-cTUnwfnKLM9LMh4dBPxbfGeCjpbJQcq/R6oW2aEJO20qz4i8cA7sPf0HkUyYqENfuGFU+vbsSJ8LJwNhTYoFLQ==
+
 "@ampproject/remapping@^2.1.0":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.1.2.tgz#4edca94973ded9630d20101cd8559cedb8d8bd34"

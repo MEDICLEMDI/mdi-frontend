@@ -66,4 +66,40 @@ export default StyleSheet.create({
   mt10: {
     marginTop: 10,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.Medicle.ModalBackground,
+  },
+  modal: {
+    width: 360,
+    height: 500,
+    // flex: 1,
+    backgroundColor: Colors.Medicle.White,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  modalClose: {
+    width: 15,
+    height: 15,
+  },
+  modalTitle: {
+    fontWeight: '700',
+    fontSize: 16,
+    color: Colors.Medicle.Font.Gray.Dark,
+  },
+  postCode: {
+    width: 320,
+    height: 320,
+    flex: 1,
+    borderWidth: 1,
+  }
 });
