@@ -69,6 +69,7 @@ const translations = {
     emailError: '*올바른 이메일을 입력해주세요.',
     smsRegexError: '*인증번호 양식이 올바르지 않습니다.',
     smsCheckError: '*인증번호가 일치하지 않습니다.',
+    smsTimeoutError: '*인증시간이 만료되었습니다, 다시 요청해주세요.',
     registrationNumber1Error: '*생년월일을 확인해주세요.',
     registrationNumber2Error: '*올바른 양식이 아닙니다.',
   },
@@ -241,7 +242,7 @@ const translations = {
     phone: "'-'를 제외한 숫자만 입력해주세요.",
     phoneLabel: '휴대폰 번호',
     phoneRequestSms: '인증문자받기',
-    phoneRequestSmsAgain: '재요청',
+    phoneRequestSmsAgain: '재전송',
     phoneRequestChange: '번호수정',
     phoneAuthNumInput: '인증번호를 입력해주세요',
     phoneAuthNumCheck: '인증번호확인',
@@ -255,6 +256,7 @@ const translations = {
     referralLabel: '추천인 코드',
     agreeAll: '약관 전체 동의하기',
     addressModal: '우편번호 찾기',
+    result: '메디클 회원가입이 완료되었습니다.',
   },
 };
 

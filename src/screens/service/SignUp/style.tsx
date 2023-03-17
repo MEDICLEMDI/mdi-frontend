@@ -101,5 +101,20 @@ export default StyleSheet.create({
     height: 320,
     flex: 1,
     borderWidth: 1,
-  }
+  },
+  resultPage: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  resultImage: {
+    marginTop: 150,
+    marginBottom: 50,
+    width: 80,
+    height: 80,
+  },
+  resultText: {
+    color: Colors.Medicle.Font.Brown.Dark,
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });

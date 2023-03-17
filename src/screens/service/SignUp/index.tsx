@@ -12,6 +12,7 @@ import {
 import { TouchableOpacity } from 'react-native';
 
 import Close from '@/assets/images/close.png';
+import Result from '@/assets/images/result_icon.png';
 import MedicleButton from '@/buttons/MedicleButton';
 import { CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
@@ -19,6 +20,7 @@ import Hr from '@/components/Hr';
 import { MedicleInput } from '@/components/inputs';
 import LoadingModal from '@/components/LoadingModal';
 import Spacing from '@/components/Spacing';
+import Timer from '@/components/Timer';
 import { Colors } from '@/constants/theme';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
@@ -102,15 +104,24 @@ const SignUp = ({ navigation }) => {
   const [sms, setSms] = React.useState<string | undefined>(undefined);
   const [smsAuthDisabled, setSmsAuthDisabled] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [success, setSuccess] = React.useState<boolean>(false);
+  const [initialTime, setInitialTime] = React.useState<number>(3);
 
   const [smsCheckDisabled, setSmsCheckDisabled] =
     React.useState<boolean>(false);
   const [smsStatus, setSmsStatus] = React.useState<
-    'before' | 'progress' | 'completed'
+    'before' | 'progress' | 'timeout' | 'completed'
   >('before');
+  const [smsAuthText, setSmsAuthText] = React.useState<string>(
+    t('signUp.phoneRequestSms')
+  );
   const [confirmPassword, setConfirmPassword] = React.useState<
     string | undefined
   >(undefined);
+  const minutes = Math.floor(initialTime / 60)
+    .toString()
+    .padStart(1, '0');
+  const seconds = (initialTime % 60).toString().padStart(2, '0');
 
   React.useEffect(() => {
     setAgreeAll(privacyPolicy && termsOfService && marketing);
@@ -165,6 +176,27 @@ const SignUp = ({ navigation }) => {
     smsStatus,
     confirmPassword,
   ]);
+
+  React.useEffect(() => {
+    if (smsStatus === 'completed') {
+      setSmsAuthText(t('signUp.phoneAuthCompleted'));
+    } else if (smsStatus !== 'before') {
+      setSmsAuthText(t('signUp.phoneRequestSmsAgain'));
+    }
+  }, [smsStatus]);
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (initialTime > 0) {
+        setInitialTime(initialTime - 1);
+        if (initialTime === 1) {
+          handleSmsTiomeOut();
+        }
+      }
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [initialTime]);
 
   const onChange = (value: string, name: string) => {
     setSignUpData({
@@ -272,14 +304,13 @@ const SignUp = ({ navigation }) => {
     try {
       const data: ISignUpData = setupSignUpData();
       await API.post('/register', data)
-        .then(() => {
-          navigation.navigate(Routes.SIGNIN);
-          // 실패 성공 여부를 어떻게 할것인지?
+        .then(res => {
+          console.log(res);
         })
         .catch(err => {
           console.log(err);
         })
-        .finally(() => console.log('end second'));
+        .finally(() => setSuccess(true));
     } catch (e) {
       console.log(e);
     }
@@ -302,6 +333,14 @@ const SignUp = ({ navigation }) => {
       referral_code: signUpData?.referral_code,
       is_marketing_agree: signUpData?.is_marketing_agree,
     };
+  };
+
+  const handleRequestSms = () => {
+    console.log('눌럿당');
+    errorClear('phone');
+    errorClear('sms');
+    setInitialTime(3);
+    setSmsStatus('progress');
   };
 
   const handleSmsValid = (text: string) => {
@@ -328,6 +367,36 @@ const SignUp = ({ navigation }) => {
       });
     }
   };
+
+  const handleSmsTiomeOut = () => {
+    errorSet('sms', 'smsTimeout');
+    setSmsStatus('timeout');
+    setSms(undefined);
+    setSmsCheckDisabled(false);
+  };
+
+  if (success) {
+    return (
+      <SafeAreaView style={style.container}>
+        <Header goBack={true} />
+        {/* <ScrollView horizontal={false} style={CommonStyle.contentWrap}> */}
+        <View style={style.resultPage}>
+          <Image source={Result} style={style.resultImage} />
+          <Text style={style.resultText}>{t('signUp.result')}</Text>
+        </View>
+        {/* </ScrollView> */}
+        <MedicleButton
+          text={t('button.goHome')}
+          buttonStyle={{
+            height: 50,
+          }}
+          onPress={() => {
+            navigation.navigate(Routes.SIGNIN);
+          }}
+        />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={style.container}>
@@ -420,68 +489,49 @@ const SignUp = ({ navigation }) => {
             direction="row"
             maxLength={11}
             errText={error.phone !== undefined ? error.phone : undefined}
-            editable={smsStatus === 'before'}
-            clearButton={smsStatus === 'before'}
+            editable={smsStatus !== 'completed'}
+            clearButton={smsStatus !== 'completed'}
             inputButtonNode={
-              <>
-                {smsStatus !== 'progress' ? (
-                  <MedicleButton
-                    buttonStyle={style.button}
-                    text={
-                      smsStatus === 'before'
-                        ? t('signUp.phoneRequestSms')
-                        : t('signUp.phoneAuthCompleted')
-                    }
-                    disabled={smsStatus === 'before' ? !smsAuthDisabled : true}
-                    onPress={() => {
-                      setSmsStatus('progress');
-                      //발송로직시작
-                    }}
-                  />
-                ) : (
-                  <View style={{ flexDirection: 'row' }}>
-                    <MedicleButton
-                      buttonStyle={[style.button, { marginRight: 5 }]}
-                      text={t('signUp.phoneRequestChange')}
-                      disabled={!smsAuthDisabled}
-                      onPress={() => {
-                        setSmsStatus('before');
-                        onChange('', 'phone');
-                      }}
-                    />
-                    <MedicleButton
-                      buttonStyle={style.button}
-                      text={t('signUp.phoneRequestSmsAgain')}
-                      disabled={!smsAuthDisabled}
-                      onPress={() => {
-                        //발송재요청시작
-                      }}
-                    />
-                  </View>
-                )}
-              </>
+              <MedicleButton
+                buttonStyle={style.button}
+                text={smsAuthText}
+                disabled={smsStatus === 'completed' ? true : !smsAuthDisabled}
+                onPress={handleRequestSms}
+              />
             }
           />
-          {smsStatus === 'progress' && (
-            <MedicleInput
-              style={style.mt10}
-              value={sms}
-              onChangeText={text => handleSmsValid(text)}
-              placeholder={t('signUp.phoneAuthNumInput')}
-              direction="row"
-              maxLength={6}
-              errText={error.sms !== undefined ? error.sms : undefined}
-              inputButtonNode={
-                <MedicleButton
-                  buttonStyle={style.button}
-                  text={t('signUp.phoneAuthNumCheck')}
-                  disabled={!smsCheckDisabled}
-                  onPress={() => {
-                    handleSmsCheck(sms!);
-                  }}
-                />
-              }
-            />
+          {(smsStatus === 'progress' || smsStatus === 'timeout') && (
+            <>
+              <MedicleInput
+                style={style.mt10}
+                value={sms}
+                onChangeText={text => handleSmsValid(text)}
+                placeholder={t('signUp.phoneAuthNumInput')}
+                direction="row"
+                maxLength={6}
+                editable={smsStatus === 'timeout' ? false : true}
+                errText={error.sms !== undefined ? error.sms : undefined}
+                rightInputNode={
+                  <View>
+                    <Text
+                      style={[
+                        style.timer,
+                        initialTime === 0 && { color: Colors.Medicle.Font.Red },
+                      ]}>{`${minutes}:${seconds}`}</Text>
+                  </View>
+                }
+                inputButtonNode={
+                  <MedicleButton
+                    buttonStyle={style.button}
+                    text={t('signUp.phoneAuthNumCheck')}
+                    disabled={!smsCheckDisabled}
+                    onPress={() => {
+                      handleSmsCheck(sms!);
+                    }}
+                  />
+                }
+              />
+            </>
           )}
           <Text style={style.labelText}>{t('signUp.emailLabel')}</Text>
           <MedicleInput

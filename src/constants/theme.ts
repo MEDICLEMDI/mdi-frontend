@@ -8,7 +8,6 @@ export const Colors = {
   ActionBlue: '#3574F4',
   WarningYellow: '#F3AD41',
 
-
   Medicle: {
     White: '#FFFFFF',
     Black: '#15161C',
@@ -23,6 +22,7 @@ export const Colors = {
       },
       Brown: {
         Dark: '#443927',
+        Standard: '#97876D',
         Light: '#706148',
       },
       White: '#FFFFFF',
