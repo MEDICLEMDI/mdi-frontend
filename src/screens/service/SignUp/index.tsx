@@ -20,7 +20,6 @@ import Hr from '@/components/Hr';
 import { MedicleInput } from '@/components/inputs';
 import LoadingModal from '@/components/LoadingModal';
 import Spacing from '@/components/Spacing';
-import Timer from '@/components/Timer';
 import { Colors } from '@/constants/theme';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
@@ -105,7 +104,7 @@ const SignUp = ({ navigation }) => {
   const [smsAuthDisabled, setSmsAuthDisabled] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [success, setSuccess] = React.useState<boolean>(false);
-  const [initialTime, setInitialTime] = React.useState<number>(3);
+  const [initialTime, setInitialTime] = React.useState<number>(300);
 
   const [smsCheckDisabled, setSmsCheckDisabled] =
     React.useState<boolean>(false);
@@ -122,6 +121,7 @@ const SignUp = ({ navigation }) => {
     .toString()
     .padStart(1, '0');
   const seconds = (initialTime % 60).toString().padStart(2, '0');
+  const intervalRef = React.useRef<NodeJS.Timeout | undefined>();
 
   React.useEffect(() => {
     setAgreeAll(privacyPolicy && termsOfService && marketing);
@@ -186,16 +186,16 @@ const SignUp = ({ navigation }) => {
   }, [smsStatus]);
 
   React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (initialTime > 0) {
-        setInitialTime(initialTime - 1);
-        if (initialTime === 1) {
-          handleSmsTiomeOut();
-        }
-      }
+    intervalRef.current = setInterval(() => {
+      setInitialTime(initialTime - 1);
     }, 1000);
 
-    return () => clearTimeout(timeout);
+    if (initialTime === 0) {
+      clearInterval(intervalRef.current);
+      handleSmsTiomeOut();
+    }
+
+    return () => clearInterval(intervalRef.current!);
   }, [initialTime]);
 
   const onChange = (value: string, name: string) => {
@@ -336,10 +336,8 @@ const SignUp = ({ navigation }) => {
   };
 
   const handleRequestSms = () => {
-    console.log('눌럿당');
-    errorClear('phone');
     errorClear('sms');
-    setInitialTime(3);
+    setInitialTime(5);
     setSmsStatus('progress');
   };
 
@@ -359,6 +357,7 @@ const SignUp = ({ navigation }) => {
 
   const handleSmsCheck = (text: string) => {
     if (text === '111111') {
+      clearInterval(intervalRef.current!);
       setSmsStatus('completed');
     } else {
       setError({
@@ -642,10 +641,6 @@ const SignUp = ({ navigation }) => {
                   style={style.postCode}
                   jsOptions={{ animation: true }}
                   onSelected={data => {
-                    let _data = JSON.stringify(data);
-                    console.log(data);
-                    console.log(data.sido);
-                    console.log(data.roadAddress.slice(data.sido.length + 1));
                     setSignUpData({
                       ...signUpData,
                       address1: data.sido,

@@ -117,4 +117,9 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  timer: {
+    color: Colors.Medicle.Font.Brown.Standard,
+    fontWeight: '700',
+    fontSize: 12,
+  },
 });
