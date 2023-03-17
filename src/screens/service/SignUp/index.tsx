@@ -21,6 +21,7 @@ import LoadingModal from '@/components/LoadingModal';
 import Spacing from '@/components/Spacing';
 import { Colors } from '@/constants/theme';
 import { Row } from '@/layout';
+import Routes from '@/navigation/Routes';
 import API from '@/utils/api';
 
 import style from './style';
@@ -53,7 +54,7 @@ interface FormError {
   [key: string]: string | undefined;
 }
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
   const [signUpData, setSignUpData] = React.useState<ISignUpData>({
     reg_type: 'normal',
     password: undefined,
@@ -271,7 +272,10 @@ const SignUp = () => {
     try {
       const data: ISignUpData = setupSignUpData();
       await API.post('/register', data)
-        .then(res => console.log(res))
+        .then(() => {
+          navigation.navigate(Routes.SIGNIN);
+          // 실패 성공 여부를 어떻게 할것인지?
+        })
         .catch(err => {
           console.log(err);
         })
