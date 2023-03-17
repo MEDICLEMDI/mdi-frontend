@@ -1,21 +1,14 @@
 import Postcode from '@actbase/react-daum-postcode';
-import axios from 'axios';
-import { sign } from 'crypto';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Alert,
   Image,
   Modal,
-  NativeSyntheticEvent,
   SafeAreaView,
   ScrollView,
   Text,
-  TextInputChangeEventData,
-  TextInputFocusEventData,
   View,
 } from 'react-native';
-import { Button } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 
 import Close from '@/assets/images/close.png';
@@ -24,13 +17,13 @@ import { CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
 import Hr from '@/components/Hr';
 import { MedicleInput } from '@/components/inputs';
+import LoadingModal from '@/components/LoadingModal';
 import Spacing from '@/components/Spacing';
 import { Colors } from '@/constants/theme';
 import { Row } from '@/layout';
 import API from '@/utils/api';
 
 import style from './style';
-import LoadingModal from '@/components/LoadingModal';
 
 interface ISignUpData {
   reg_type?: string;
@@ -61,7 +54,6 @@ interface FormError {
 }
 
 const SignUp = () => {
-  const [regiNumber, setRegiNumber] = React.useState<string[]>([]);
   const [signUpData, setSignUpData] = React.useState<ISignUpData>({
     reg_type: 'normal',
     password: undefined,
@@ -87,24 +79,6 @@ const SignUp = () => {
     registrationNumber2: undefined,
     sms: undefined,
   });
-  const [termsOfService, setTermsOfService] = React.useState<boolean>(false);
-  const [privacyPolicy, setPrivacyPolicy] = React.useState<boolean>(false);
-  const [marketing, setMarketing] = React.useState<boolean>(false);
-  const [agreeAll, setAgreeAll] = React.useState<boolean>(false);
-  const [registerDisabed, setRegisterDisabed] = React.useState<boolean>(false);
-  const [addressModal, setAddressModal] = React.useState<boolean>(false);
-  const [sms, setSms] = React.useState<string | undefined>(undefined);
-  const [smsAuthDisabled, setSmsAuthDisabled] = React.useState<boolean>(false);
-  const [smsCheckDisabled, setSmsCheckDisabled] =
-    React.useState<boolean>(false);
-  const [smsStatus, setSmsStatus] = React.useState<
-    'before' | 'progress' | 'completed'
-  >('before');
-  const [confirmPassword, setConfirmPassword] = React.useState<
-    string | undefined
-  >(undefined);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const { t } = useTranslation();
 
   const regex: { [key: string]: RegExp } = {
     name: /^[가-힣]{2,10}$/,
@@ -117,12 +91,28 @@ const SignUp = () => {
       /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()+\-=\[\]\{\}\|\:\;\"\'\<\>\,\.\?\/]).{8,20}$/,
     sms: /^[0-9]*$/,
   };
+  const { t } = useTranslation();
+  const [termsOfService, setTermsOfService] = React.useState<boolean>(false);
+  const [privacyPolicy, setPrivacyPolicy] = React.useState<boolean>(false);
+  const [marketing, setMarketing] = React.useState<boolean>(false);
+  const [agreeAll, setAgreeAll] = React.useState<boolean>(false);
+  const [registerDisabed, setRegisterDisabed] = React.useState<boolean>(false);
+  const [addressModal, setAddressModal] = React.useState<boolean>(false);
+  const [sms, setSms] = React.useState<string | undefined>(undefined);
+  const [smsAuthDisabled, setSmsAuthDisabled] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  const [smsCheckDisabled, setSmsCheckDisabled] =
+    React.useState<boolean>(false);
+  const [smsStatus, setSmsStatus] = React.useState<
+    'before' | 'progress' | 'completed'
+  >('before');
+  const [confirmPassword, setConfirmPassword] = React.useState<
+    string | undefined
+  >(undefined);
 
   React.useEffect(() => {
     setAgreeAll(privacyPolicy && termsOfService && marketing);
-  }, [privacyPolicy, termsOfService, marketing]);
-
-  React.useEffect(() => {
     if (marketing) {
       setSignUpData({
         ...signUpData,
@@ -134,9 +124,7 @@ const SignUp = () => {
         is_marketing_agree: '0',
       });
     }
-  }, [marketing]);
-
-  React.useEffect(() => {}, [signUpData]);
+  }, [privacyPolicy, termsOfService, marketing]);
 
   React.useEffect(() => {
     setRegisterDisabed(false);
@@ -212,72 +200,70 @@ const SignUp = () => {
     if (_regex.test(value!)) {
       errorClear(name);
     } else {
-      setError({
-        ...error,
-        [name]: t(`errorMessage.${name}Error`),
-      });
+      errorSet(name);
     }
   };
 
   const handlePhoneVaild = (value: string) => {
     errorClear('phone');
-
-    if (value === '' || value === '0' || value === '01') {
-      return;
-    }
-
-    if (!regex.phone.test(value)) {
-      setError({
-        ...error,
-        phone: t('errorMessage.phoneError'),
-      });
+    if (
+      value !== '' &&
+      value !== '0' &&
+      value !== '01' &&
+      !regex.phone.test(value)
+    ) {
+      errorSet('phone');
     }
   };
 
   const handlePasswordVaild = (value: string) => {
     errorClear('password');
-    if (value === '') {
-      return;
-    }
-
-    if (!regex.password.test(value)) {
-      setError({
-        ...error,
-        password: t('errorMessage.passwordValidError'),
-      });
+    if (value !== '' && !regex.password.test(value)) {
+      errorSet('password', 'passwordValid');
     }
   };
 
-  const handleConfirmPasswordVaild = (text: string) => {
+  const handleConfirmPasswordVaild = (_text: string) => {
     errorClear('confirmPassword');
-    setConfirmPassword(text);
+    setConfirmPassword(_text);
     if (
-      text === '' ||
-      text === undefined ||
+      _text === '' ||
+      _text === undefined ||
       signUpData.password === '' ||
       signUpData.password === undefined
     ) {
       return;
     }
-    if (text !== signUpData.password) {
-      setError({
-        ...error,
-        confirmPassword: t('errorMessage.passwordShortError'),
-      });
+    if (_text !== signUpData.password) {
+      errorSet('confirmPassword', 'passwordShort');
     }
   };
 
-  const errorClear = (type: string) => {
+  const errorSet = (_type: string, _error?: string) => {
+    let _errorMessage;
+    if (_error) {
+      _errorMessage = _error;
+    } else {
+      _errorMessage = _type;
+    }
+
     setError({
       ...error,
-      [type]: undefined,
+      [_type]: t(`errorMessage.${_errorMessage}Error`),
     });
   };
 
-  const handleAgreeAll = (status: boolean) => {
-    setTermsOfService(!status);
-    setPrivacyPolicy(!status);
-    setMarketing(!status);
+  const errorClear = (_type: string) => {
+    setError({
+      ...error,
+      [_type]: undefined,
+    });
+  };
+
+  const handleAgreeAll = (_status: boolean) => {
+    setTermsOfService(!_status);
+    setPrivacyPolicy(!_status);
+    setMarketing(!_status);
   };
 
   const register = async () => {
@@ -299,7 +285,7 @@ const SignUp = () => {
   const setupSignUpData = (): ISignUpData => {
     return {
       reg_type: signUpData?.reg_type,
-      user_id: signUpData?.emaㅁㄴㅇil,
+      user_id: signUpData?.email,
       password: signUpData?.password,
       name: signUpData?.name,
       registration_number: `${signUpData.registrationNumber1}${signUpData.registrationNumber2}`,
@@ -313,13 +299,6 @@ const SignUp = () => {
       is_marketing_agree: signUpData?.is_marketing_agree,
     };
   };
-
-  // const registrationNumber = (value: string, index: number) => {
-  //   setRegiNumber({
-  //     ...regiNumber,
-  //     [index]: value,
-  //   });
-  // };
 
   const handleSmsValid = (text: string) => {
     errorClear('sms');
@@ -366,7 +345,7 @@ const SignUp = () => {
             <Row justify="space-between">
               <MedicleInput
                 style={{ flex: 1 }}
-                value={regiNumber[0]}
+                value={signUpData?.registrationNumber1}
                 onChangeText={text => onChange(text, 'registrationNumber1')}
                 // onBlur={() => handleBlur('registrationNumber1')}
                 errText={
@@ -380,7 +359,7 @@ const SignUp = () => {
               <Spacing size={10} />
               <MedicleInput
                 style={{ flex: 1 }}
-                value={regiNumber[1]}
+                value={signUpData?.registrationNumber2}
                 maxLength={7}
                 password={true}
                 onChangeText={text => onChange(text, 'registrationNumber2')}
