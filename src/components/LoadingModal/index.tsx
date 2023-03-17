@@ -21,7 +21,7 @@ const LoadingModal = (props: ModalProps) => {
           style={{
             flex: 1,
             justifyContent: 'center',
-            backgroundColor: '#00000080',
+            backgroundColor: '#00000060',
           }}>
           <ActivityIndicator size="large" color="#FFFFFF" />
         </View>

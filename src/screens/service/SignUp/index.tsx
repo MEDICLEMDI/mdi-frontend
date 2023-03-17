@@ -30,6 +30,7 @@ import { Row } from '@/layout';
 import API from '@/utils/api';
 
 import style from './style';
+import LoadingModal from '@/components/LoadingModal';
 
 interface ISignUpData {
   reg_type?: string;
@@ -102,6 +103,7 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = React.useState<
     string | undefined
   >(undefined);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const { t } = useTranslation();
 
   const regex: { [key: string]: RegExp } = {
@@ -279,9 +281,9 @@ const SignUp = () => {
   };
 
   const register = async () => {
+    setLoading(true);
     try {
       const data: ISignUpData = setupSignUpData();
-      console.log(data);
       await API.post('/register', data)
         .then(res => console.log(res))
         .catch(err => {
@@ -291,12 +293,13 @@ const SignUp = () => {
     } catch (e) {
       console.log(e);
     }
+    setLoading(false);
   };
 
   const setupSignUpData = (): ISignUpData => {
     return {
       reg_type: signUpData?.reg_type,
-      user_id: 'gdgdgd',
+      user_id: signUpData?.emaㅁㄴㅇil,
       password: signUpData?.password,
       name: signUpData?.name,
       registration_number: `${signUpData.registrationNumber1}${signUpData.registrationNumber2}`,
@@ -307,7 +310,6 @@ const SignUp = () => {
       address3: signUpData?.address3,
       post_code: signUpData?.post_code,
       referral_code: signUpData?.referral_code,
-      // referral_code: 'gdgddd',
       is_marketing_agree: signUpData?.is_marketing_agree,
     };
   };
@@ -635,6 +637,7 @@ const SignUp = () => {
         onPress={() => register()}
         disabled={!registerDisabed}
       />
+      <LoadingModal visible={loading} />
     </SafeAreaView>
   );
 };
