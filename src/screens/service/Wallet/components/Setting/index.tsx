@@ -33,7 +33,6 @@ import { passwordCheck } from '@/utils/passwordCheck';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
-import LoadingModal from '@/components/LoadingModal';
 
 const WalletSetting = ({
   navigation,
