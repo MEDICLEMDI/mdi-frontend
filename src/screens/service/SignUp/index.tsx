@@ -104,8 +104,10 @@ const SignUp = ({ navigation }) => {
   const [sms, setSms] = React.useState<string | undefined>(undefined);
   const [smsAuthDisabled, setSmsAuthDisabled] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [success, setSuccess] = React.useState<boolean>(true);
-  const [initialTime, setInitialTime] = React.useState<number>(300);
+  const [success, setSuccess] = React.useState<boolean>(false);
+  const [initialTime, setInitialTime] = React.useState<number | undefined>(
+    undefined
+  );
 
   const [smsCheckDisabled, setSmsCheckDisabled] =
     React.useState<boolean>(false);
@@ -348,7 +350,7 @@ const SignUp = ({ navigation }) => {
 
   const handleRequestSms = () => {
     errorClear('sms');
-    setInitialTime(5);
+    setInitialTime(300);
     setSmsStatus('progress');
   };
 
