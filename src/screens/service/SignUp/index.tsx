@@ -319,7 +319,7 @@ const SignUp = ({ navigation }) => {
           console.log(err.data);
         })
         .finally(() => {
-          // setSuccess(true)
+          setSuccess(true)
         });
     } catch (e: any) {
       console.log('에러e');
@@ -332,8 +332,8 @@ const SignUp = ({ navigation }) => {
   const setupSignUpData = (): ISignUpData => {
     return {
       reg_type: signUpData?.reg_type,
-      // user_id: signUpData?.email,
-      user_id: 'gdgd',
+      user_id: signUpData?.email,
+      // user_id: 'gdgd',
       password: signUpData?.password,
       name: signUpData?.name,
       registration_number: `${signUpData.registrationNumber1}${signUpData.registrationNumber2}`,
