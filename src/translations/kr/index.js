@@ -256,7 +256,11 @@ const translations = {
     referralLabel: '추천인 코드',
     agreeAll: '약관 전체 동의하기',
     addressModal: '우편번호 찾기',
+    register: '동의하고 회원가입',
     result: '메디클 회원가입이 완료되었습니다.',
+  },
+  findAccount: {
+    next: '다음',
   },
 };
 

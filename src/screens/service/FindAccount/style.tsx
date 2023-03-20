@@ -7,6 +7,7 @@ export default StyleSheet.create({
   },
   content: {
     flex: 1,
+    paddingTop: 10,
   },
   userInfo: {
     paddingHorizontal: 30,

@@ -31,8 +31,9 @@ export type RootStackParamList = {
   [Routes.SOCIAL]: undefined;
   [Routes.SIGNIN]: undefined;
   [Routes.SIGNUP]: undefined;
-  [Routes.IDCHECK]: undefined;
-  [Routes.PASSWORDCHECK]: undefined;
+  [Routes.FINDACCOUNT]: undefined;
+  // [Routes.IDCHECK]: undefined;
+  // [Routes.PASSWORDCHECK]: undefined;
   [Routes.DASHBOARD]: undefined;
   [Routes.SERVICE]: undefined;
   [Routes.BACKUP_SEED_PHRASE]: { mnemonic: string };

@@ -308,11 +308,20 @@ const SignUp = ({ navigation }) => {
           console.log(res);
         })
         .catch(err => {
+          console.log(typeof err);
+          console.log(err.message);
+          console.log('에러');
           console.log(err);
+          console.log('에러');
+          console.log(err.data);
         })
-        .finally(() => setSuccess(true));
-    } catch (e) {
+        .finally(() => {
+          // setSuccess(true)
+        });
+    } catch (e: any) {
+      console.log('에러e');
       console.log(e);
+      console.log('에러e');
     }
     setLoading(false);
   };
@@ -320,7 +329,8 @@ const SignUp = ({ navigation }) => {
   const setupSignUpData = (): ISignUpData => {
     return {
       reg_type: signUpData?.reg_type,
-      user_id: signUpData?.email,
+      // user_id: signUpData?.email,
+      user_id: 'gdgd',
       password: signUpData?.password,
       name: signUpData?.name,
       registration_number: `${signUpData.registrationNumber1}${signUpData.registrationNumber2}`,
@@ -657,14 +667,14 @@ const SignUp = ({ navigation }) => {
             </View>
           </Modal>
         )}
+        <MedicleButton
+          // disabled={true}
+          text={t('signUp.register')}
+          buttonStyle={style.signUpButton}
+          onPress={() => register()}
+          disabled={!registerDisabed}
+        />
       </ScrollView>
-      <MedicleButton
-        // disabled={true}
-        text="동의하고 회원가입"
-        buttonStyle={style.signUpButton}
-        onPress={() => register()}
-        disabled={!registerDisabed}
-      />
       <LoadingModal visible={loading} />
     </SafeAreaView>
   );

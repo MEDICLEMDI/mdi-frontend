@@ -11,6 +11,7 @@ enum Routes {
   SIGNUP = 'SignUp',
   IDCHECK = 'IdCheck',
   PASSWORDCHECK = 'PasswordCheck',
+  FINDACCOUNT = 'FindAccount',
   SERVICE = 'Service',
   DASHBOARD = 'Dashboard',
   HOSPITAL = 'Hospital',

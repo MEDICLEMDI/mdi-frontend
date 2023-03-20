@@ -1,13 +1,16 @@
 // React native packages
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useNavigation} from '@react-navigation/native';
-import {createStackNavigator,} from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {Platform} from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Platform } from 'react-native';
 
 import Icons from '@/icons';
-import {RootStackParamList, ServiceTabParamList,} from '@/interfaces/navigation';
+import {
+  RootStackParamList,
+  ServiceTabParamList,
+} from '@/interfaces/navigation';
 import KeyRing from '@/modules/keyring';
 import Chart from '@/screens/service/Chart';
 import ChartDetail from '@/screens/service/Chart/detail';
@@ -17,11 +20,12 @@ import ServiceDoc from '@/screens/service/Documents/serviceDoc';
 import Event from '@/screens/service/Event';
 import Exchange from '@/screens/service/Exchange';
 import FAQ from '@/screens/service/FAQ';
+import FindAccount from '@/screens/service/FindAccount';
 import DashBoard from '@/screens/service/Home';
 import Hospital from '@/screens/service/Hospital';
+import HospitalContact from '@/screens/service/Hospital/contact';
 import HospitalDetail from '@/screens/service/Hospital/detail';
 import HospitalPayment from '@/screens/service/Hospital/payment';
-import HospitalContact from '@/screens/service/Hospital/contact';
 import MarketingConfig from '@/screens/service/MarketingConfig';
 import MedicalState from '@/screens/service/MedicalState';
 import MedicalStateDetail from '@/screens/service/MedicalState/detail';
@@ -32,24 +36,24 @@ import PointCharge from '@/screens/service/Point/charge';
 import Profile from '@/screens/service/Profile';
 import EditProfile from '@/screens/service/Profile/edit';
 import Receipt from '@/screens/service/Receipt';
+import Review from '@/screens/service/Review';
 import ServiceContacts from '@/screens/service/ServiceContacts';
 import Setting from '@/screens/service/Setting';
+import SignIn from '@/screens/service/SignIn';
+import Social from '@/screens/service/SignIn/social';
+import SignUp from '@/screens/service/SignUp';
 import Subscribe from '@/screens/service/Subscribe';
 import WalletCreatePassword from '@/screens/service/Wallet/components/CreatePassword';
 import WalletHome from '@/screens/service/Wallet/components/Home';
 import WalletImport from '@/screens/service/Wallet/components/Import';
+import WalletInfo from '@/screens/service/Wallet/components/Info';
 import WalletNmemonic from '@/screens/service/Wallet/components/Nmemonic';
+import WalletSend from '@/screens/service/Wallet/components/Send';
 import WalletSetting from '@/screens/service/Wallet/components/Setting';
 import WalletWelcome from '@/screens/service/Wallet/components/Welcome';
 import SignOut from '@/screens/SignOut';
-import Review from "@/screens/service/Review";
 
 import Routes from '../Routes';
-import WalletSend from '@/screens/service/Wallet/components/Send';
-import WalletInfo from '@/screens/service/Wallet/components/Info';
-import Social from "@/screens/service/SignIn/social";
-import SignIn from "@/screens/service/SignIn";
-import SignUp from "@/screens/service/SignUp";
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
@@ -65,8 +69,9 @@ const RootStackNavigator = () => {
       <Stack.Screen name={Routes.SOCIAL} component={Social} />
       <Stack.Screen name={Routes.SIGNIN} component={SignIn} />
       <Stack.Screen name={Routes.SIGNUP} component={SignUp} />
-      <Stack.Screen name={Routes.IDCHECK} component={SignIn} />
-      <Stack.Screen name={Routes.PASSWORDCHECK} component={SignIn} />
+      <Stack.Screen name={Routes.FINDACCOUNT} component={FindAccount} />
+      {/* <Stack.Screen name={Routes.IDCHECK} component={SignIn} />
+      <Stack.Screen name={Routes.PASSWORDCHECK} component={SignIn} /> */}
       <Stack.Screen name={Routes.DASHBOARD} component={BottomTabNavigation} />
       <Stack.Group>
         <Stack.Screen
@@ -75,10 +80,18 @@ const RootStackNavigator = () => {
         />
         <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
         <Stack.Screen name={Routes.REVIEW} component={Review} />
-        <Stack.Screen name={Routes.HOSPITAL_DETAIL} component={HospitalDetail} />
-        <Stack.Screen name={Routes.HOSPITAL_PAYMENT} component={HospitalPayment} />
-        <Stack.Screen name={Routes.HOSPITAL_CONTACT} component={HospitalContact} />
-
+        <Stack.Screen
+          name={Routes.HOSPITAL_DETAIL}
+          component={HospitalDetail}
+        />
+        <Stack.Screen
+          name={Routes.HOSPITAL_PAYMENT}
+          component={HospitalPayment}
+        />
+        <Stack.Screen
+          name={Routes.HOSPITAL_CONTACT}
+          component={HospitalContact}
+        />
       </Stack.Group>
 
       {/* Wallet Group */}
@@ -153,10 +166,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.hospital'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons
-              name="hospital_b"
-              stroke={tabActiveController(focused)}
-            />
+            <Icons name="hospital_b" stroke={tabActiveController(focused)} />
           ),
         }}
       />
@@ -167,10 +177,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.event'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons
-              name="gift"
-              stroke={tabActiveController(focused)}
-            />
+            <Icons name="gift" stroke={tabActiveController(focused)} />
           ),
         }}
       />
@@ -181,10 +188,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.wallet'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons
-              name="wallet"
-              stroke={tabActiveController(focused)}
-            />
+            <Icons name="wallet" stroke={tabActiveController(focused)} />
           ),
         }}
       />
@@ -195,10 +199,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.profile'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons
-              name="user"
-              stroke={tabActiveController(focused)}
-            />
+            <Icons name="user" stroke={tabActiveController(focused)} />
           ),
         }}
       />
@@ -219,7 +220,10 @@ const SettingStack = () => {
       <Stack.Screen name={Routes.CHART} component={Chart} />
       <Stack.Screen name={Routes.CHART_DETAIL} component={ChartDetail} />
       <Stack.Screen name={Routes.MEDICAL_STATE} component={MedicalState} />
-      <Stack.Screen name={Routes.MEDICAL_STATE_DETAIL} component={MedicalStateDetail} />
+      <Stack.Screen
+        name={Routes.MEDICAL_STATE_DETAIL}
+        component={MedicalStateDetail}
+      />
       <Stack.Screen name={Routes.FAQ} component={FAQ} />
       <Stack.Screen name={Routes.EXCHANGE} component={Exchange} />
       <Stack.Screen name={Routes.COMMUNITY} component={Community} />
@@ -264,7 +268,6 @@ function WalletStack() {
         <Stack.Screen name={Routes.WALLET_WELCOME} component={WalletWelcome} />
         <Stack.Screen name={Routes.WALLET_SETTING} component={WalletSetting} />
         <Stack.Screen name={Routes.WALLET_INFO} component={WalletInfo} />
-
       </Stack.Group>
       {/* <Stack.Group screenOptions={modalGroupOptions}>
           <Stack.Screen
