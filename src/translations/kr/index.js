@@ -261,6 +261,11 @@ const translations = {
   },
   findAccount: {
     next: '다음',
+    resultTextId: '님의 아이디는 다음과 같습니다.',
+    resultPassowrdButton: '재설정 완료하기',
+    resultTextPassword: '회원님의 비밀번호를 재설정 해주세요',
+    resultTextPassword2:
+      '비밀번호 재설정이 완료되었습니다.\n재설정하신 비밀번호로 로그인하시면\n서비스 이용이 가능합니다.',
   },
 };
 

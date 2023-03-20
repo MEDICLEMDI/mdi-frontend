@@ -52,6 +52,32 @@ export default StyleSheet.create({
     backgroundColor: Colors.Medicle.White,
   },
   inputLayer: {
-
-  }
+    paddingHorizontal: 30,
+  },
+  labelText: {
+    fontWeight: '400',
+    fontSize: 14,
+    color: Colors.Medicle.Font.Brown.Dark,
+    marginBottom: 10,
+    marginTop: 20,
+  },
+  button: {
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  timer: {
+    color: Colors.Medicle.Font.Brown.Standard,
+    fontWeight: '700',
+    fontSize: 12,
+  },
+  mt10: {
+    marginTop: 10,
+  },
+  resultId: {
+    marginTop: 30,
+  },
+  resultPassword: {
+    marginTop: 40,
+  },
 });
