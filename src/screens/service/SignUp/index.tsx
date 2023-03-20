@@ -19,6 +19,7 @@ import Header from '@/components/Header';
 import Hr from '@/components/Hr';
 import { MedicleInput } from '@/components/inputs';
 import LoadingModal from '@/components/LoadingModal';
+import ResultPage from '@/components/Result';
 import Spacing from '@/components/Spacing';
 import { Colors } from '@/constants/theme';
 import { Row } from '@/layout';
@@ -103,7 +104,7 @@ const SignUp = ({ navigation }) => {
   const [sms, setSms] = React.useState<string | undefined>(undefined);
   const [smsAuthDisabled, setSmsAuthDisabled] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [success, setSuccess] = React.useState<boolean>(false);
+  const [success, setSuccess] = React.useState<boolean>(true);
   const [initialTime, setInitialTime] = React.useState<number>(300);
 
   const [smsCheckDisabled, setSmsCheckDisabled] =
@@ -386,24 +387,13 @@ const SignUp = ({ navigation }) => {
 
   if (success) {
     return (
-      <SafeAreaView style={style.container}>
-        <Header goBack={true} />
-        {/* <ScrollView horizontal={false} style={CommonStyle.contentWrap}> */}
-        <View style={style.resultPage}>
-          <Image source={Result} style={style.resultImage} />
-          <Text style={style.resultText}>{t('signUp.result')}</Text>
-        </View>
-        {/* </ScrollView> */}
-        <MedicleButton
-          text={t('button.goHome')}
-          buttonStyle={{
-            height: 50,
-          }}
-          onPress={() => {
-            navigation.navigate(Routes.SIGNIN);
-          }}
-        />
-      </SafeAreaView>
+      <ResultPage
+        navigation={navigation}
+        resultText={t('signUp.result')}
+        buttonText={t('button.goHome')}
+        buttonDisabled={true}
+        buttonRoute={Routes.SIGNIN}
+      />
     );
   }
 
