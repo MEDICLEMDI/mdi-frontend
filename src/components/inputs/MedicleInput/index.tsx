@@ -114,6 +114,7 @@ const MedicleInput = ({
             onBlur={onBlur}
             secureTextEntry={password}
             value={value}
+            autoCapitalize='none'
             // ios settings
             clearButtonMode={clearButton === false ? 'never' : 'always'}
             enablesReturnKeyAutomatically={true}
