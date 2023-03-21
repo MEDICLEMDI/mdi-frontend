@@ -306,7 +306,8 @@ const SignUp = ({ navigation }) => {
     setLoading(true);
     try {
       const data: ISignUpData = setupSignUpData();
-      await API.post('/register', data)
+      const api = new API();
+      await api.post('/register', data)
         .then(res => {
           console.log(res);
         })
