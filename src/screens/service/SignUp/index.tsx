@@ -28,7 +28,7 @@ import API from '@/utils/api';
 
 import style from './style';
 
-interface ISignUpData {
+export interface ISignUpData {
   reg_type?: string;
   password?: string;
   name?: string;
@@ -41,11 +41,11 @@ interface ISignUpData {
   address3?: string;
   post_code?: string;
   referral_code?: string;
-  is_marketing_agree: string;
+  is_marketing_agree?: string;
   [key: string]: string | undefined;
 }
 
-interface FormError {
+export interface FormError {
   phone?: string;
   password?: string;
   confirmPassword?: string;
@@ -190,7 +190,7 @@ const SignUp = ({ navigation }) => {
 
   React.useEffect(() => {
     intervalRef.current = setInterval(() => {
-      setInitialTime(initialTime - 1);
+      setInitialTime(initialTime! - 1);
     }, 1000);
 
     if (initialTime === 0) {
@@ -319,7 +319,7 @@ const SignUp = ({ navigation }) => {
           console.log(err.data);
         })
         .finally(() => {
-          setSuccess(true)
+          setSuccess(true);
         });
     } catch (e: any) {
       console.log('에러e');

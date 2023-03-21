@@ -13,31 +13,28 @@ interface ResultProps {
   resultText: string;
   buttonText: string;
   buttonDisabled: boolean;
-  buttonRoute: Routes;
   headerText?: string;
   navigation: any;
   readonly children?: React.ReactNode;
+  onPress?: () => void;
 }
 
 const ResultPage = (props: ResultProps) => {
-  const { t } = useTranslation();
-  const { navigation, buttonRoute } = props;
   return (
     <SafeAreaView style={style.mainContainer}>
       <Header goBack={false} title={props.headerText && props.headerText} />
       <View style={style.contents}>
         <Image source={ResultImage} style={style.image} />
         <Text style={style.resultText}>{props.resultText}</Text>
-        {props.children && props.children}
+        <View style={style.children}>{props.children && props.children}</View>
       </View>
       <MedicleButton
         text={props.buttonText}
         buttonStyle={{
           height: 50,
         }}
-        onPress={() => {
-          navigation.navigate(buttonRoute);
-        }}
+        disabled={!props.buttonDisabled}
+        onPress={props.onPress}
       />
     </SafeAreaView>
   );

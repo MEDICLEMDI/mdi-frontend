@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { Colors } from '@/constants/theme';
+
 export default StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -15,6 +17,12 @@ export default StyleSheet.create({
     marginBottom: 50,
   },
   resultText: {
-    marginBottom: 50,
+    fontWeight: '400',
+    fontSize: 16,
+    color: Colors.Medicle.Font.Brown.Dark,
+  },
+  children: {
+    width: '100%',
+    paddingHorizontal: 30,
   },
 });

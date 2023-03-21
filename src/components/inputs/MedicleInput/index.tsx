@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {StyleProp, Text, TextInput, TextInputProps, View, ViewStyle} from 'react-native';
+import {
+  StyleProp,
+  Text,
+  TextInput,
+  TextInputProps,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 import { Colors } from '@/constants/theme';
 import { fontStyleCreator } from '@/utils/fonts';
@@ -37,6 +44,7 @@ const MedicleInput = ({
   inputButtonNode,
   textInputStyle,
   clearButton,
+  textAlign,
   onBlur,
 }: TopLabelInputProps) => {
   const ERROR_TEXT = fontStyleCreator({
@@ -102,6 +110,7 @@ const MedicleInput = ({
               defaultStyle.input,
               direction === 'row' && { flex: 1 },
               multiline ? defaultStyle.textArea : null,
+              textAlign && { textAlign: textAlign },
             ]}
             placeholder={placeholder}
             maxLength={maxLength}
