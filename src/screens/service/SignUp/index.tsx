@@ -12,7 +12,6 @@ import {
 import { TouchableOpacity } from 'react-native';
 
 import Close from '@/assets/images/close.png';
-import Result from '@/assets/images/result_icon.png';
 import MedicleButton from '@/buttons/MedicleButton';
 import { CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
@@ -50,7 +49,8 @@ export interface FormError {
   password?: string;
   confirmPassword?: string;
   email?: string;
-  sms?: string;
+  smsCode?: string;
+  mailCode?: string;
   registrationNumber1?: string;
   registrationNumber2?: string;
   [key: string]: string | undefined;
@@ -80,7 +80,8 @@ const SignUp = ({ navigation }) => {
     email: undefined,
     registrationNumber1: undefined,
     registrationNumber2: undefined,
-    sms: undefined,
+    smsCode: undefined,
+    mailCode: undefined,
   });
 
   const regex: { [key: string]: RegExp } = {
@@ -101,30 +102,48 @@ const SignUp = ({ navigation }) => {
   const [agreeAll, setAgreeAll] = React.useState<boolean>(false);
   const [registerDisabed, setRegisterDisabed] = React.useState<boolean>(false);
   const [addressModal, setAddressModal] = React.useState<boolean>(false);
-  const [sms, setSms] = React.useState<string | undefined>(undefined);
+  const [smsCode, setSmsCode] = React.useState<string | undefined>(undefined);
+  const [mailCode, setMailCode] = React.useState<string | undefined>(undefined);
   const [smsAuthDisabled, setSmsAuthDisabled] = React.useState<boolean>(false);
+  const [emailAuthDisabled, setEmailAuthDisabled] =
+    React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [success, setSuccess] = React.useState<boolean>(false);
-  const [initialTime, setInitialTime] = React.useState<number | undefined>(
-    undefined
-  );
+  const [smsInitialTime, setSmsInitialTime] = React.useState<
+    number | undefined
+  >(undefined);
+  const [mailInitialTime, setMailInitialTime] = React.useState<
+    number | undefined
+  >(undefined);
 
   const [smsCheckDisabled, setSmsCheckDisabled] =
     React.useState<boolean>(false);
+  const [mailCheckDisabled, setMailCheckDisabled] =
+    React.useState<boolean>(false);
   const [smsStatus, setSmsStatus] = React.useState<
+    'before' | 'progress' | 'timeout' | 'completed'
+  >('before');
+  const [emailStatus, setEmailStatus] = React.useState<
     'before' | 'progress' | 'timeout' | 'completed'
   >('before');
   const [smsAuthText, setSmsAuthText] = React.useState<string>(
     t('signUp.phoneRequestSms')
   );
+  const [emailAuthText, setEmailAuthText] =
+    React.useState<string>('인증메일받기');
   const [confirmPassword, setConfirmPassword] = React.useState<
     string | undefined
   >(undefined);
-  const minutes = Math.floor(initialTime / 60)
+  const smsMinutes = Math.floor(smsInitialTime! / 60)
     .toString()
     .padStart(1, '0');
-  const seconds = (initialTime % 60).toString().padStart(2, '0');
-  const intervalRef = React.useRef<NodeJS.Timeout | undefined>();
+  const smsSeconds = (smsInitialTime! % 60).toString().padStart(2, '0');
+  const mailMinutes = Math.floor(mailInitialTime! / 60)
+    .toString()
+    .padStart(1, '0');
+  const mailSeconds = (mailInitialTime! % 60).toString().padStart(2, '0');
+  const smsIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
+  const mailIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
 
   React.useEffect(() => {
     setAgreeAll(privacyPolicy && termsOfService && marketing);
@@ -169,6 +188,7 @@ const SignUp = ({ navigation }) => {
         privacyPolicy &&
         termsOfService &&
         smsStatus === 'completed' &&
+        emailStatus === 'completed' &&
         signUpData.password === confirmPassword
     );
   }, [
@@ -178,6 +198,7 @@ const SignUp = ({ navigation }) => {
     termsOfService,
     smsStatus,
     confirmPassword,
+    emailStatus,
   ]);
 
   React.useEffect(() => {
@@ -189,17 +210,38 @@ const SignUp = ({ navigation }) => {
   }, [smsStatus]);
 
   React.useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setInitialTime(initialTime! - 1);
+    if (emailStatus === 'completed') {
+      setEmailAuthText('인증완료');
+    } else if (emailStatus !== 'before') {
+      setEmailAuthText('재전송');
+    }
+  }, [emailStatus]);
+
+  React.useEffect(() => {
+    smsIntervalRef.current = setInterval(() => {
+      setSmsInitialTime(smsInitialTime! - 1);
     }, 1000);
 
-    if (initialTime === 0) {
-      clearInterval(intervalRef.current);
+    if (smsInitialTime === 0) {
+      clearInterval(smsIntervalRef.current);
       handleSmsTiomeOut();
     }
 
-    return () => clearInterval(intervalRef.current!);
-  }, [initialTime]);
+    return () => clearInterval(smsIntervalRef.current!);
+  }, [smsInitialTime]);
+
+  React.useEffect(() => {
+    mailIntervalRef.current = setInterval(() => {
+      setMailInitialTime(mailInitialTime! - 1);
+    }, 1000);
+
+    if (mailInitialTime === 0) {
+      clearInterval(mailIntervalRef.current);
+      handleMailTiomeOut();
+    }
+
+    return () => clearInterval(mailIntervalRef.current!);
+  }, [mailInitialTime]);
 
   const onChange = (value: string, name: string) => {
     setSignUpData({
@@ -208,8 +250,12 @@ const SignUp = ({ navigation }) => {
     });
 
     if (name === 'phone') {
-      setSmsAuthDisabled(regex.phone.test(value) && value.length === 11);
       handlePhoneVaild(value);
+      return;
+    }
+
+    if (name === 'email') {
+      handleEmailVaild(value);
       return;
     }
 
@@ -250,6 +296,16 @@ const SignUp = ({ navigation }) => {
     ) {
       errorSet('phone');
     }
+    setSmsAuthDisabled(regex.phone.test(value) && value.length === 11);
+  };
+
+  const handleEmailVaild = (value: string) => {
+    errorClear('email');
+    if (!regex.email.test(value) && value !== '') {
+      errorSet('email');
+    }
+
+    setEmailAuthDisabled(regex.email.test(value));
   };
 
   const handlePasswordVaild = (value: string) => {
@@ -307,17 +363,14 @@ const SignUp = ({ navigation }) => {
     try {
       const data: ISignUpData = setupSignUpData();
       const api = new API();
-      await api.post('/register', data)
+      await api
+        .post('/register', data)
         .then(res => {
           console.log(res);
         })
         .catch(err => {
           console.log(typeof err);
           console.log(err.message);
-          console.log('에러');
-          console.log(err);
-          console.log('에러');
-          console.log(err.data);
         })
         .finally(() => {
           setSuccess(true);
@@ -350,42 +403,81 @@ const SignUp = ({ navigation }) => {
   };
 
   const handleRequestSms = () => {
-    errorClear('sms');
-    setInitialTime(300);
+    errorClear('smsCode');
+    setSmsInitialTime(10);
     setSmsStatus('progress');
   };
 
+  const handleRequestEmail = () => {
+    errorClear('mailCode');
+    setMailInitialTime(10);
+    setEmailStatus('progress');
+  };
+
   const handleSmsValid = (text: string) => {
-    errorClear('sms');
-    setSms(text);
+    errorClear('smsCode');
+    setSmsCode(text);
     let _regex = regex.sms;
     setSmsCheckDisabled(_regex.test(text) && text.length === 6);
 
     if (!_regex.test(text)) {
       setError({
         ...error,
-        ['sms']: t('errorMessage.smsRegexError'),
+        ['smsCode']: t('errorMessage.smsRegexError'),
+      });
+    }
+  };
+
+  const handleMailValid = (text: string) => {
+    errorClear('mailCode');
+    setMailCode(text);
+    let _regex = regex.sms;
+    setMailCheckDisabled(_regex.test(text) && text.length === 6);
+
+    if (!_regex.test(text)) {
+      setError({
+        ...error,
+        ['mailCode']: t('errorMessage.smsRegexError'),
       });
     }
   };
 
   const handleSmsCheck = (text: string) => {
     if (text === '111111') {
-      clearInterval(intervalRef.current!);
+      clearInterval(smsIntervalRef.current!);
       setSmsStatus('completed');
     } else {
       setError({
         ...error,
-        ['sms']: t('errorMessage.smsCheckError'),
+        ['smsCode']: t('errorMessage.smsCheckError'),
+      });
+    }
+  };
+
+  const handleMailCheck = (text: string) => {
+    if (text === '111111') {
+      clearInterval(mailIntervalRef.current!);
+      setEmailStatus('completed');
+    } else {
+      setError({
+        ...error,
+        ['mailCode']: t('errorMessage.smsCheckError'),
       });
     }
   };
 
   const handleSmsTiomeOut = () => {
-    errorSet('sms', 'smsTimeout');
+    errorSet('smsCode', 'smsTimeout');
     setSmsStatus('timeout');
-    setSms(undefined);
+    setSmsCode(undefined);
     setSmsCheckDisabled(false);
+  };
+
+  const handleMailTiomeOut = () => {
+    errorSet('mailCode', 'smsTimeout');
+    setEmailStatus('timeout');
+    setMailCode(undefined);
+    setMailCheckDisabled(false);
   };
 
   if (success) {
@@ -395,7 +487,9 @@ const SignUp = ({ navigation }) => {
         resultText={t('signUp.result')}
         buttonText={t('button.goHome')}
         buttonDisabled={true}
-        buttonRoute={Routes.SIGNIN}
+        onPress={() => {
+          navigation.navigate(Routes.SIGNIN);
+        }}
       />
     );
   }
@@ -506,20 +600,24 @@ const SignUp = ({ navigation }) => {
             <>
               <MedicleInput
                 style={style.mt10}
-                value={sms}
+                value={smsCode}
                 onChangeText={text => handleSmsValid(text)}
                 placeholder={t('signUp.phoneAuthNumInput')}
                 direction="row"
                 maxLength={6}
                 editable={smsStatus === 'timeout' ? false : true}
-                errText={error.sms !== undefined ? error.sms : undefined}
+                errText={
+                  error.smsCode !== undefined ? error.smsCode : undefined
+                }
                 rightInputNode={
                   <View>
                     <Text
                       style={[
                         style.timer,
-                        initialTime === 0 && { color: Colors.Medicle.Font.Red },
-                      ]}>{`${minutes}:${seconds}`}</Text>
+                        smsInitialTime === 0 && {
+                          color: Colors.Medicle.Font.Red,
+                        },
+                      ]}>{`${smsMinutes}:${smsSeconds}`}</Text>
                   </View>
                 }
                 inputButtonNode={
@@ -528,7 +626,7 @@ const SignUp = ({ navigation }) => {
                     text={t('signUp.phoneAuthNumCheck')}
                     disabled={!smsCheckDisabled}
                     onPress={() => {
-                      handleSmsCheck(sms!);
+                      handleSmsCheck(smsCode!);
                     }}
                   />
                 }
@@ -540,9 +638,58 @@ const SignUp = ({ navigation }) => {
             value={signUpData?.email}
             onChangeText={text => onChange(text, 'email')}
             placeholder={t('signUp.email')}
-            // onBlur={() => handleBlur('email')}
+            direction="row"
             errText={error.email !== undefined ? error.email : undefined}
+            editable={emailStatus !== 'completed'}
+            clearButton={emailStatus !== 'completed'}
+            inputButtonNode={
+              <MedicleButton
+                buttonStyle={style.button}
+                text={emailAuthText}
+                disabled={
+                  emailStatus === 'completed' ? true : !emailAuthDisabled
+                }
+                onPress={handleRequestEmail}
+              />
+            }
           />
+          {(emailStatus === 'progress' || emailStatus === 'timeout') && (
+            <>
+              <MedicleInput
+                style={style.mt10}
+                value={mailCode}
+                onChangeText={text => handleMailValid(text)}
+                placeholder={t('signUp.phoneAuthNumInput')}
+                direction="row"
+                maxLength={6}
+                editable={emailStatus === 'timeout' ? false : true}
+                errText={
+                  error.mailCode !== undefined ? error.mailCode : undefined
+                }
+                rightInputNode={
+                  <View>
+                    <Text
+                      style={[
+                        style.timer,
+                        mailInitialTime === 0 && {
+                          color: Colors.Medicle.Font.Red,
+                        },
+                      ]}>{`${mailMinutes}:${mailSeconds}`}</Text>
+                  </View>
+                }
+                inputButtonNode={
+                  <MedicleButton
+                    buttonStyle={style.button}
+                    text={t('signUp.phoneAuthNumCheck')}
+                    disabled={!mailCheckDisabled}
+                    onPress={() => {
+                      handleMailCheck(mailCode!);
+                    }}
+                  />
+                }
+              />
+            </>
+          )}
           <Text style={style.labelText}>{t('signUp.passwordLabel')}</Text>
           <MedicleInput
             value={signUpData?.password}

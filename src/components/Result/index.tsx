@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, SafeAreaView, Text, View } from 'react-native';
+import { GestureResponderEvent, Image, SafeAreaView, Text, View } from 'react-native';
 
 import ResultImage from '@/assets/images/result_icon.png';
 import Routes from '@/navigation/Routes';
@@ -16,7 +16,7 @@ interface ResultProps {
   headerText?: string;
   navigation: any;
   readonly children?: React.ReactNode;
-  onPress?: () => void;
+  onPress?: (event: GestureResponderEvent) => void;
 }
 
 const ResultPage = (props: ResultProps) => {
