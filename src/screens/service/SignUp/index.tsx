@@ -206,6 +206,8 @@ const SignUp = ({ navigation }) => {
       setSmsAuthText(t('signUp.phoneAuthCompleted'));
     } else if (smsStatus !== 'before') {
       setSmsAuthText(t('signUp.phoneRequestSmsAgain'));
+    } else {
+      setSmsAuthText('인증문자받기');
     }
   }, [smsStatus]);
 
@@ -369,49 +371,116 @@ const SignUp = ({ navigation }) => {
           console.log(res);
         })
         .catch(err => {
-          console.log(typeof err);
-          console.log(err.message);
+          console.log(err);
         })
         .finally(() => {
           setSuccess(true);
         });
     } catch (e: any) {
-      console.log('에러e');
       console.log(e);
-      console.log('에러e');
     }
     setLoading(false);
   };
 
   const setupSignUpData = (): ISignUpData => {
     return {
-      reg_type: signUpData?.reg_type,
-      user_id: signUpData?.email,
-      // user_id: 'gdgd',
-      password: signUpData?.password,
-      name: signUpData?.name,
+      reg_type: signUpData.reg_type,
+      user_id: signUpData.email,
+      password: signUpData.password,
+      name: signUpData.name,
       registration_number: `${signUpData.registrationNumber1}${signUpData.registrationNumber2}`,
-      phone: signUpData?.phone,
-      email: signUpData?.email,
-      address1: signUpData?.address1,
-      address2: signUpData?.address2,
-      address3: signUpData?.address3,
-      post_code: signUpData?.post_code,
-      referral_code: signUpData?.referral_code,
-      is_marketing_agree: signUpData?.is_marketing_agree,
+      phone: signUpData.phone,
+      email: signUpData.email,
+      address1: signUpData.address1,
+      address2: signUpData.address2,
+      address3: signUpData.address3,
+      post_code: signUpData.post_code,
+      referral_code: signUpData.referral_code,
+      is_marketing_agree: signUpData.is_marketing_agree,
+      sms_auth_code: smsCode,
     };
   };
 
-  const handleRequestSms = () => {
-    errorClear('smsCode');
-    setSmsInitialTime(10);
-    setSmsStatus('progress');
+  const handleRequestSms = async () => {
+    setError({
+      ...error,
+      phone: undefined,
+      smsCode: undefined,
+    });
+
+    let _success = false;
+    let _errorMessage = '처리중 오류가 발생하였습니다.';
+
+    try {
+      const api = new API();
+      const data = {
+        phone: signUpData.phone,
+        type: 'register',
+      };
+      await api
+        .post('/phoneauth/reqcode', data)
+        .then(res => {
+          console.log(res);
+          if (res.result) {
+            setSmsInitialTime(300);
+            setSmsStatus('progress');
+            _success = true;
+          } else {
+            setSmsStatus('before');
+            if (res.message === 'phone auth limit over.') {
+              _errorMessage = '일일 요청 횟수를 초과하였습니다.';
+            }
+          }
+        })
+        .catch(err => console.log(err));
+    } catch (e: any) {
+      console.log(e);
+    }
+
+    if (!_success) {
+      clearInterval(smsIntervalRef.current!);
+      errorSet('phone', _errorMessage);
+    }
   };
 
-  const handleRequestEmail = () => {
-    errorClear('mailCode');
-    setMailInitialTime(10);
-    setEmailStatus('progress');
+  const handleRequestEmail = async () => {
+    setLoading(true);
+    setError({
+      ...error,
+      email: undefined,
+      mailCode: undefined,
+    });
+
+    let _success = false;
+    let _errorMessage = '처리중 오류가 발생하였습니다.';
+
+    try {
+      const api = new API();
+      const data = {
+        email: signUpData.email,
+      };
+      await api
+        .post('/mailauth/reqcode', data)
+        .then(res => {
+          console.log(res);
+          if (res.result) {
+            setMailInitialTime(300);
+            setEmailStatus('progress');
+            _success = true;
+          } else {
+            setEmailStatus('before');
+          }
+        })
+        .catch(err => console.log(err));
+    } catch (e: any) {
+      console.log(e);
+    }
+
+    if (!_success) {
+      clearInterval(mailIntervalRef.current!);
+      errorSet('email', _errorMessage);
+    }
+    setLoading(false);
   };
 
   const handleSmsValid = (text: string) => {
@@ -442,27 +511,105 @@ const SignUp = ({ navigation }) => {
     }
   };
 
-  const handleSmsCheck = (text: string) => {
-    if (text === '111111') {
-      clearInterval(smsIntervalRef.current!);
-      setSmsStatus('completed');
-    } else {
-      setError({
-        ...error,
-        ['smsCode']: t('errorMessage.smsCheckError'),
-      });
+  const handleSmsCheck = async () => {
+    // if (text === '111111') {
+    //   clearInterval(smsIntervalRef.current!);
+    //   setSmsStatus('completed');
+    // } else {
+    //   setError({
+    //     ...error,
+    //     ['smsCode']: t('errorMessage.smsCheckError'),
+    //   });
+    // }
+
+    let _success = false;
+    let _errorMessage = '처리중 오류가 발생하였습니다.';
+
+    try {
+      const api = new API();
+      const data = {
+        phone: signUpData.phone,
+        auth_code: smsCode,
+      };
+      await api
+        .post('/phoneauth/checkcode', data)
+        .then(res => {
+          console.log(res);
+          if (res.result) {
+            clearInterval(smsIntervalRef.current!);
+            setSmsStatus('completed');
+            _success = true;
+          } else {
+            if (res.message === 'expire time over.') {
+              _errorMessage = '인증시간이 만료되었습니다.';
+            } else if (
+              res.message === 'phone auth fail' ||
+              res.message === 'no phone auth data.'
+            ) {
+              _errorMessage = '인증정보가 일치하지 않습니다.';
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (e: any) {
+      console.log(e);
+    }
+
+    if (!_success) {
+      errorSet('smsCode', _errorMessage);
     }
   };
 
-  const handleMailCheck = (text: string) => {
-    if (text === '111111') {
-      clearInterval(mailIntervalRef.current!);
-      setEmailStatus('completed');
-    } else {
-      setError({
-        ...error,
-        ['mailCode']: t('errorMessage.smsCheckError'),
-      });
+  const handleMailCheck = async () => {
+    // if (text === '111111') {
+    //   clearInterval(mailIntervalRef.current!);
+    //   setEmailStatus('completed');
+    // } else {
+    //   setError({
+    //     ...error,
+    //     ['mailCode']: t('errorMessage.smsCheckError'),
+    //   });
+    // }
+
+    let _success = false;
+    let _errorMessage = '처리중 오류가 발생하였습니다.';
+
+    try {
+      const api = new API();
+      const data = {
+        email: signUpData.email,
+        auth_code: mailCode,
+      };
+      await api
+        .post('/mailauth/checkcode', data)
+        .then(res => {
+          console.log(res);
+          if (res.result) {
+            clearInterval(mailIntervalRef.current!);
+            setEmailStatus('completed');
+            _success = true;
+          } else {
+            if (res.message === 'expire time over.') {
+              _errorMessage = '인증시간이 만료되었습니다.';
+            } else if (
+              res.message === 'email auth fail' ||
+              res.message === 'no mail auth data.'
+            ) {
+              _errorMessage = '인증정보가 일치하지 않습니다.';
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (e: any) {
+      console.log(e);
+    }
+
+    if (!_success) {
+      errorSet('mailCode', _errorMessage);
     }
   };
 
@@ -626,7 +773,7 @@ const SignUp = ({ navigation }) => {
                     text={t('signUp.phoneAuthNumCheck')}
                     disabled={!smsCheckDisabled}
                     onPress={() => {
-                      handleSmsCheck(smsCode!);
+                      handleSmsCheck();
                     }}
                   />
                 }
@@ -683,7 +830,7 @@ const SignUp = ({ navigation }) => {
                     text={t('signUp.phoneAuthNumCheck')}
                     disabled={!mailCheckDisabled}
                     onPress={() => {
-                      handleMailCheck(mailCode!);
+                      handleMailCheck();
                     }}
                   />
                 }
