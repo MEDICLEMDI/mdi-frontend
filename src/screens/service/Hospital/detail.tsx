@@ -12,19 +12,21 @@ import {Row} from "@/layout";
 import {Colors} from "@/constants/theme";
 import style from './style';
 
-import SAMPLE_IMAGE from '@/assets/template_image.jpg';
 import {CustomModal} from "@/components/Modals";
 import Icon from "@/icons";
 import Spacing from "@/components/Spacing";
 import Calendar from "../../../Calendar";
 import {useIsFocused} from "@react-navigation/native";
 import Routes from "@/navigation/Routes";
+import product from "@/components/ApiProduct";
+import {convertPrice} from "@/utils/utilities";
 
 const HospitalDetail = ({
   navigation,
   route,
 }) => {
   const isFocus = useIsFocused();
+  const { id } = route.params;
   const SECTION_HEADER_FONT = fontStyleCreator({
     size: 14,
     weight: 'bold',
@@ -79,15 +81,36 @@ const HospitalDetail = ({
   });
 
   const [date, setDate] = React.useState({ from: '' });
+  const [itemData, setItemData] = React.useState<any>();
   const [time, setTime] = React.useState('00:00 ~ 00:00');
   const [timeKey, setTimeKey] = React.useState(0);
   const [dateType, setDateType] = React.useState('from')
   const [visible, setVisible] = React.useState(false);
 
+  const [allAgree, setAllAgree] = React.useState(false);
+  const [agree1, setAgree1] = React.useState(false);
+  const [agree2, setAgree2] = React.useState(false);
+
   React.useEffect(() => {
     setDate({ from: '2023-00-00' })
-  }, [isFocus])
+    getItemDetail();
+  }, [])
 
+  const getItemDetail = async () => {
+    try {
+      const data = await product.getItemInfo(id);
+      setItemData(data);
+    }
+    catch (err){
+      console.log(err)
+    }
+  }
+
+  const agreeAll = () => {
+    setAllAgree(!allAgree);
+    setAgree1(!allAgree);
+    setAgree2(!allAgree);
+  }
 
   const timeList = [
     {start: '00:00', end: '00:00'},
@@ -102,12 +125,12 @@ const HospitalDetail = ({
       <Header goBack={true} title='예약하기' />
       <ScrollView style={style.container}>
         <View>
-          <Image source={SAMPLE_IMAGE} resizeMode='cover' style={style.image}/>
+          <Image source={{ uri: itemData?.pc_image_main }} resizeMode='cover' style={style.image}/>
         </View>
         <View style={[style.itemDetailWrap, style.borderBottom]}>
           <Text></Text>
           <Text style={SECTION_HEADER_FONT}>
-            price
+            {convertPrice(itemData?.pc_price)}
             &nbsp;
             <Text style={SECTION_COMMENT_FONT}>
               &nbsp;
@@ -116,45 +139,48 @@ const HospitalDetail = ({
           </Text>
         </View>
         <View style={[style.itemDetailWrap, style.borderBottom]}>
-          <Text style={[SECTION_HEADER_FONT, style.sectionHeader]}>test</Text>
-          <MedicleInput style={style.input} label={<Text>test</Text>} />
-          <MedicleInput style={style.input} label={<Text>test</Text>} />
-          <MedicleInput style={style.input} label={<Text>test</Text>} />
-          <MedicleInput style={style.input} label={<Text>test</Text>} />
-          <MedicleInput style={style.input} label={<Text>test</Text>} multiline={true} />
+          <Text style={[SECTION_HEADER_FONT, style.sectionHeader]}>예약자 정보</Text>
+          <MedicleInput style={style.input} label={<Text>예약자 성함</Text>} />
+          <MedicleInput style={style.input} label={<Text>연락처</Text>} />
+          <MedicleInput style={style.input} label={<Text>이메일</Text>} />
+          <MedicleInput style={style.input} label={<Text>예약 일자</Text>} />
+          <MedicleInput style={style.input} label={<Text>요청사항</Text>} multiline={true} />
         </View>
         <View style={[style.itemDetailWrap, style.borderBottom]}>
-          <Text style={[SECTION_HEADER_FONT, style.sectionHeader]}>test</Text>
-          <MedicleInput style={style.input} label={<Text>test</Text>} editable={false} />
-          <MedicleInput style={style.input} label={<Text>test</Text>} editable={false} />
-          <MedicleInput style={style.input} label={<Text>test</Text>} editable={false} />
-          <MedicleInput style={style.input} label={<Text>test</Text>} editable={false} />
-          <MedicleInput style={style.input} label={<Text>test</Text>} editable={false} />
+          <Text style={[SECTION_HEADER_FONT, style.sectionHeader]}>판매자 정보</Text>
+          <MedicleInput style={style.input} label={<Text>상호명</Text>} clearButton={false} value={itemData?.company.name} editable={false} />
+          <MedicleInput style={style.input} label={<Text>대표자명</Text>} clearButton={false} value={itemData?.company.ci_owner_name} editable={false} />
+          <MedicleInput style={style.input} label={<Text>사업자번호</Text>} clearButton={false} value={itemData?.company.ci_trader_number} editable={false} />
+          <MedicleInput style={style.input} label={<Text>소재지</Text>} clearButton={false} value={itemData?.company.ci_address} editable={false} />
+          <MedicleInput style={style.input} label={<Text>연락처</Text>} clearButton={false} value={itemData?.company.ci_phone} editable={false} />
         </View>
         <View style={style.itemDetailWrap}>
-            <CustomCheckbox selected={false}>
-              <Text style={[style.checkboxLabel, ALL_CHECK_FONT]}>test</Text>
+            <CustomCheckbox selected={allAgree} onPress={() => agreeAll()}>
+              <Text style={[style.checkboxLabel, ALL_CHECK_FONT]}>약관 전체 동의하기</Text>
             </CustomCheckbox>
           <View style={style.hr} />
-          <CustomCheckbox selected={false} style={style.checkbox}>
-            <Text style={style.checkboxLabel}>test</Text>
+          <CustomCheckbox selected={agree1} style={style.checkbox} onPress={() => setAgree1(!agree1)}>
+            <Text style={style.checkboxLabel}>[필수]개인정보 수집 동의</Text>
           </CustomCheckbox>
-          <CustomCheckbox selected={false} style={style.checkbox}>
-            <Text style={style.checkboxLabel}>test</Text>
+          <CustomCheckbox selected={agree2} style={style.checkbox} onPress={() => setAgree2(!agree2)}>
+            <Text style={style.checkboxLabel}>[필수]개인정보 제공 동의</Text>
           </CustomCheckbox>
-          <Text style={[RESERVE_COMMENT_FONT, style.reserveComment]}>document</Text>
+          <Text style={[RESERVE_COMMENT_FONT, style.reserveComment]}>예약 서비스 이용시 필요한 개인정보 수집 및 제3자 제공규정을 확인하였으며 이에 동의합니다.</Text>
         </View>
         <View style={style.itemDetailWrap}>
           <TouchableOpacity onPress={() => setVisible(true)}>
             <BoxDropShadow>
                 <Text style={DATE_FONT}>{date.from} {time}</Text>
-                <Text style={PRODUCT_FONT}>TEST</Text>
-                <Text>TEST|TEST</Text>
+                <Text style={PRODUCT_FONT}>{itemData?.company.name}</Text>
+                <Text>{
+                  itemData?.company.ci_address.split(' ')[0]}
+                  &nbsp;|&nbsp;
+                  {itemData?.company.ci_address.split(' ')[1]}</Text>
                 <View style={style.hr} />
-                <View>
-                  <Text></Text>
-                  <Text>price</Text>
-                </View>
+                <Row justify='space-between'>
+                  <Text>진료 항목</Text>
+                  <Text>{itemData?.pc_name} {convertPrice(itemData?.pc_price)}</Text>
+                </Row>
             </BoxDropShadow>
           </TouchableOpacity>
         </View>
@@ -168,23 +194,23 @@ const HospitalDetail = ({
           ]}
           iconName='heart'
           iconProps={{ stroke: '#CECECE' }}
-          text='test' />
+          text='위시리스트' />
         <MedicleButton
           buttonStyle={[
             style.button,
             style.FAQButton,
           ]}
-          onPress={() => navigation.navigate(Routes.HOSPITAL_CONTACT)}
+          onPress={() => navigation.navigate(Routes.HOSPITAL_CONTACT, {itemData: itemData})}
           textStyle={FAQ_BUTTON_FONT}
-          text='test' />
+          text='진료 문의하기' />
         <MedicleButton
           buttonStyle={[
             style.button,
             style.PayButton,
           ]}
-          onPress={() => navigation.navigate(Routes.HOSPITAL_PAYMENT)}
+          onPress={() => navigation.navigate(Routes.HOSPITAL_PAYMENT, {itemData: itemData})}
           textStyle={PAY_BUTTON_FONT}
-          text='test' />
+          text='앱에서 결제하기' />
       </Row>
       <CustomModal
         visible={visible}

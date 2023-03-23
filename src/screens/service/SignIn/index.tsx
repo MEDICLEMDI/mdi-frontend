@@ -2,15 +2,12 @@ import * as React from 'react';
 import {
   View,
   SafeAreaView,
-  ScrollView,
   Text,
   TouchableOpacity,
-  GestureResponderEvent,
 } from 'react-native';
 import Header from '@/components/Header';
 
 import style from './style';
-import Icon from '@/icons';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import { MedicleInput } from '@/components/inputs';

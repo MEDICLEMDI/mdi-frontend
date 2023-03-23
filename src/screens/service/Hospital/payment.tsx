@@ -24,10 +24,16 @@ import {CustomCheckbox} from "@/components/common";
 import {Row} from "@/layout";
 import Icon from "@/icons";
 import Li from "@/components/Li";
+import {convertPrice} from "@/utils/utilities";
 
-export default () => {
+export default ({
+  navigation,
+  route,
+}) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
+  const { itemData } = route.params;
+
   const [radioIndex, setRadioIndex] = React.useState(0);
   const [payIndex, setPayIndex] = React.useState(0);
   const [selectedCard, setSelectedCard] = React.useState();
@@ -50,6 +56,7 @@ export default () => {
     weight: 'normal',
     color: Colors.Medicle.Font.Gray.Light,
   });
+
   const numColumns = 2;
   const padding = 30;
   const gap = 10;
@@ -65,9 +72,13 @@ export default () => {
               <Text>상품정보</Text>
             </Accordion.Header>
             <Accordion.Body>
-              <Text></Text>
+              <Text>
+                {itemData?.company.name}
+                &nbsp;-&nbsp;
+                {itemData?.pc_name}
+              </Text>
               <Text style={SECTION_HEADER_FONT}>
-                price
+                {convertPrice(itemData?.pc_price)}
                 &nbsp;
                 <Text style={SECTION_COMMENT_FONT}>
                   &nbsp;
@@ -234,7 +245,7 @@ export default () => {
             <Accordion.Body>
               <View style={[style.totalWrap]}>
                 <Text>상품 금액</Text>
-                <Text style={style.price}>0원</Text>
+                <Text style={style.price}>{convertPrice(itemData?.pc_price)}</Text>
               </View>
               <View style={[style.totalWrap]}>
                 <Text>결제 수수료</Text>
@@ -245,7 +256,7 @@ export default () => {
 
           <View style={[style.totalWrap]}>
             <Text style={style.totalPrice}>결제 금액</Text>
-            <Text style={style.price}>0원</Text>
+            <Text style={style.price}>{convertPrice(itemData?.pc_price)}</Text>
           </View>
           <Text></Text>
         </View>

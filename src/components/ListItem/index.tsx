@@ -30,10 +30,10 @@ const ListItem = ({
 }) => {
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <BoxDropShadow style={style.itemWrap}>
+    <BoxDropShadow style={{ marginBottom: 10, }}>
+      <TouchableOpacity onPress={onPress} style={style.itemWrap}>
         {image
-          ? <Image source={image} />
+          ? <Image style={style.imageBox} source={{ uri: image }} resizeMode='cover' />
           : <View style={style.imageBox}></View>
         }
         <View style={{ flex: 1 }}>
@@ -70,8 +70,8 @@ const ListItem = ({
             </View>
           </View>
         </View>
-      </BoxDropShadow>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </BoxDropShadow>
   )
 }
 

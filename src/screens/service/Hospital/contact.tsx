@@ -8,8 +8,14 @@ import {fontStyleCreator} from "@/utils/fonts";
 import {Colors} from "@/constants/theme";
 import {CustomCheckbox} from "@/components/common";
 import MedicleButton from "@/buttons/MedicleButton";
+import {convertPrice} from "@/utils/utilities";
 
-export default () => {
+export default ({
+  navigation,
+  route,
+}) => {
+  const { itemData } = route.params;
+
   const SECTION_HEADER_FONT = fontStyleCreator({
     size: 14,
     weight: 'bold',
@@ -22,7 +28,7 @@ export default () => {
   });
   return (
     <SafeAreaView style={style.container}>
-      <Header goBack={true} title='예약하기' />
+      <Header goBack={true} title='진료 문의하기' />
       <ScrollView>
         <View style={[style.borderBottom, style.chargeWrap]}>
           <Accordion isOpen={true}>
@@ -30,9 +36,13 @@ export default () => {
               <Text>상품정보</Text>
             </Accordion.Header>
             <Accordion.Body>
-              <Text></Text>
+              <Text>
+                {itemData?.company.name}
+                &nbsp;-&nbsp;
+                {itemData?.pc_name}
+              </Text>
               <Text style={SECTION_HEADER_FONT}>
-                price
+                {convertPrice(itemData?.pc_price)}
                 &nbsp;
                 <Text style={SECTION_COMMENT_FONT}>
                   &nbsp;

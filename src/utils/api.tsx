@@ -35,17 +35,15 @@ class API {
     });
   }
 
-  async get(url: string, data?: any) {
+  async get(url: string) {
     return await fetch(`${this.baseUrl}${url}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: data ? JSON.stringify(data) : null
     })
     .then(response => response.json())
     .then(response => {
-      console.log(response);
       if(
         response.statusCode === 400 ||
         response.statusCode === 401 ||

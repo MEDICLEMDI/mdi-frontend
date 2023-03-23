@@ -43,14 +43,19 @@ const Tab = ({
   const selected_style_text = tabSelectedStyle[0];
   const selected_style_tab = tabSelectedStyle[1];
 
+  const [selected, setSelected] = React.useState(0);
+
   return (
     <View style={tabStyle}>
       {data.map((prop, key) => (
         <TouchableOpacity
           key={key}
-          onPress={() => response(key)}
-          style={[buttonStyle, index === key && selected_style_tab]}>
-          <Text style={[textStyle, index === key && selected_style_text]}>
+          onPress={() => {
+            setSelected(key);
+            response(prop.index ? prop.index : key);
+          }}
+          style={[buttonStyle, selected === key && selected_style_tab]}>
+          <Text style={[textStyle, selected === key && selected_style_text]}>
             {prop.label ? prop.label : prop.name}
           </Text>
         </TouchableOpacity>

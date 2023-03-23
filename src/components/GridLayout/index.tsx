@@ -36,7 +36,7 @@ export const GridLayout = ({
   );
 };
 
-export const ScrollViewGrid = ({
+export const  ScrollViewGrid = ({
   data,
   renderItem,
   itemStyle,
@@ -51,7 +51,7 @@ export const ScrollViewGrid = ({
   numColumns = 1,
   onPress,
 } : {
-  readonly data: any[];
+  readonly data: any;
   readonly renderItem: 'box' | 'circle' | 'button';
   onPress: Function;
   itemStyle?: StyleProp<ViewStyle>;

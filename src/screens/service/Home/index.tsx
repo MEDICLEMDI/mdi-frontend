@@ -15,35 +15,64 @@ import { MedicleInput } from "@/components/inputs";
 import Icon from "@/icons";
 import ListItem from "@/components/ListItem";
 import {Colors} from "@/constants/theme";
-import API from "@/utils/api";
+import product from "@/components/ApiProduct";
+import {convertPrice} from "@/utils/utilities";
 
 const Home = ({ navigation }) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
 
   const [tabIndex, setTabIndex] = React.useState(0)
-  const [productGroups, setProductGroups] = React.useState();
+  const [productGroups, setProductGroups] = React.useState<any>([]);
+  const [newestProduct, setNewestProduct] = React.useState<any>([]);
 
   const numColumns = 3;
   const categoryPadding = 30;
   const gap = 15;
-  const categories = [dentist(t), dermatology(t)];
 
   React.useEffect(() => {
-    getProductGroup();
+    initialize();
   }, [])
 
-  const getProductGroup = React.useCallback(async () => {
-    const Api = new API();
-    try {
-      const res = await Api.get('/products');
-      console.log(res);
-      // setProductGroups(res)
+  const initialize = async () => {
+    try{
+      await getProductGroups();
+      await getNewestProducts();
     }
     catch (err) {
       console.error(err);
     }
-  }, [productGroups]);
+  }
+
+  // constant에 선언되어있는 데이터에 DB에서 불러운 각 항목의 id 값을 추가
+  const getProductGroups = async () => {
+    try {
+      const data = await product.getProductGroups();
+      const productGroupList = dentist(t); // constant 상품 그룹
+
+      productGroupList.map((row: any) => {
+        const index = data.findIndex((item) => item.pg_name === row.name);
+
+        if(index !== -1 ) {
+          productGroupList[index] = {...productGroupList[index], id: Number(data[index].id)}
+        }
+      })
+      setProductGroups(productGroupList);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getNewestProducts = async () => {
+    try {
+      const data = await product.getNewestProducts();
+      setNewestProduct(data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <SafeAreaView style={style.container}>
@@ -77,9 +106,9 @@ const Home = ({ navigation }) => {
             numColumns={numColumns}
             padding={categoryPadding}
             gap={gap}
-            data={categories[tabIndex]}
+            data={productGroups === undefined ? dentist(t) : productGroups}
             renderItem='box'
-            onPress={({ route }) => navigation.navigate(route)}
+            onPress={(item) => console.log(item)}
           />
 
           <View style={style.reviewWrap}>
@@ -91,14 +120,20 @@ const Home = ({ navigation }) => {
           </View>
 
           <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
-
-            <ListItem
-              type="고객평가우수병원"
-              location="서울"
-              label="서울 치과"
-              description="치아 미백으로!"
-              discount={20}
-              price="22만원"/>
+            {
+              newestProduct.map((item, key) => (
+                <ListItem
+                  key={key}
+                  image={item.pc_image_main}
+                  type="고객평가우수병원"
+                  location={item.company.ci_address.substring(0,2)}
+                  label={item.company.name}
+                  description={item.pc_name}
+                  discount={20}
+                  price={convertPrice(item?.pc_price)}
+                />
+              ))
+            }
 
           </View>
 
