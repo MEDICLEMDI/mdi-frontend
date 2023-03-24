@@ -7,7 +7,7 @@ import Tab from "@/components/Tab";
 import Header from "@/components/Header";
 import style from "./style";
 import Routes from "@/navigation/Routes";
-import product from "@/components/ApiProduct";
+import api from "@/components/Api";
 import {convertPrice} from "@/utils/utilities";
 
 const Hospital = ({ navigation }) => {
@@ -32,7 +32,7 @@ const Hospital = ({ navigation }) => {
   const getProductGroups = async () => {
     let tabArray: any = [];
     try {
-      const data = await product.getProductGroups();
+      const data = await api.getProductGroups();
       data.forEach((item, key) => {
         tabArray[key] = { label: item.pg_name.split(' '), index: Number(item.id) }
       })
@@ -45,7 +45,7 @@ const Hospital = ({ navigation }) => {
 
   const getProductGroupItems = React.useCallback(async () => {
     try{
-      const data = await product.getProductGroupItems(index);
+      const data = await api.getProductGroupItems(index);
       setProductItems(data);
     }
     catch (err) {

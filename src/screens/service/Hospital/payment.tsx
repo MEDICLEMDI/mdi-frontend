@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   SafeAreaView,
   ScrollView,
-  Text,
+  Text, TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -24,7 +24,8 @@ import {CustomCheckbox} from "@/components/common";
 import {Row} from "@/layout";
 import Icon from "@/icons";
 import Li from "@/components/Li";
-import {convertPrice} from "@/utils/utilities";
+import {convertNumberLocale, convertPrice} from "@/utils/utilities";
+import BoxDropShadow from "@/components/BoxDropShadow";
 
 export default ({
   navigation,
@@ -38,13 +39,20 @@ export default ({
   const [payIndex, setPayIndex] = React.useState(0);
   const [selectedCard, setSelectedCard] = React.useState();
   const [installment, setInstallment] = React.useState();
+  const [payButtonDisabled, setPayButtonDisabled] = React.useState(true);
+
+  const [documentAgree, setDocumentAgree] = React.useState({
+    doc1: false,
+    doc2: false,
+    doc3: false,
+  });
 
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(undefined)
 
   const FONT_BASIC_BLACK = fontStyleCreator({
-    color: Colors.Medicle.Font.Gray.Dark,
     size: 14,
     weight: 'bold',
+    color: Colors.Medicle.Font.Gray.Dark,
   });
   const SECTION_HEADER_FONT = fontStyleCreator({
     size: 14,
@@ -56,10 +64,20 @@ export default ({
     weight: 'normal',
     color: Colors.Medicle.Font.Gray.Light,
   });
+  const DOCUMENT_HEADER_FONT = fontStyleCreator({
+    size: 11,
+    color: Colors.Medicle.Font.Gray.Standard,
+  })
 
   const numColumns = 2;
   const padding = 30;
   const gap = 10;
+
+  React.useEffect(() => {
+    setPayButtonDisabled(
+      !(documentAgree.doc1 && documentAgree.doc2 && documentAgree.doc3)
+    )
+  }, [documentAgree])
 
   return (
     <SafeAreaView style={style.container}>
@@ -69,15 +87,15 @@ export default ({
         <View style={[style.borderBottom, style.chargeWrap]}>
           <Accordion isOpen={true}>
             <Accordion.Header>
-              <Text>상품정보</Text>
+              <Text style={SECTION_HEADER_FONT}>상품정보</Text>
             </Accordion.Header>
             <Accordion.Body>
-              <Text>
+              <Text style={[SECTION_HEADER_FONT, { marginTop: 15, }]}>
                 {itemData?.company.name}
                 &nbsp;-&nbsp;
                 {itemData?.pc_name}
               </Text>
-              <Text style={SECTION_HEADER_FONT}>
+              <Text style={[SECTION_HEADER_FONT, { marginTop: 10, }]}>
                 {convertPrice(itemData?.pc_price)}
                 &nbsp;
                 <Text style={SECTION_COMMENT_FONT}>
@@ -91,12 +109,27 @@ export default ({
         <View style={[style.borderBottom]}>
           <View style={[style.chargeWrap]}>
             <Text style={[FONT_BASIC_BLACK, style.sectionHeader]}>결제 정보</Text>
-            <RadioInput data={payType} response={setRadioIndex}/>
+            <RadioInput name='메디클 포인트 결제' index={0} selected={radioIndex === 0} response={setRadioIndex}/>
+            {
+              radioIndex === 0 && (
+                <BoxDropShadow style={{ paddingVertical: 35, marginBottom: 30, }}>
+                  <TouchableOpacity>
+                    <Row justify='center' style={{ marginBottom: 25 }}>
+                      <Icon name="mdiHorizontal" fill={'#000'} />
+                      <Text style={{ marginTop: - 8, marginLeft: 10, fontSize: 20, fontWeight: '700' }}>Pay+</Text>
+                    </Row>
+                    <Row justify='center'>
+                      <Text>메디클 포인트를 추가하고 빠르게 결제하세요!</Text>
+                    </Row>
+                  </TouchableOpacity>
+                </BoxDropShadow>
+              )
+            }
+            <RadioInput name='일반 결제' index={1} selected={radioIndex === 1} response={setRadioIndex}/>
           </View>
           {
             radioIndex === 1 && (
               <ScrollViewGrid
-
                 itemStyle={style.itemStyle}
                 itemSelected={{key: payIndex, color: Colors.Medicle.Brown.SemiLight}}
                 itemBackground={Colors.Medicle.Gray.Light}
@@ -219,7 +252,6 @@ export default ({
               </View>
             )
           }
-
         </View>
         <View style={[style.borderBottom, style.chargeWrap]}>
           <Row justify='space-between' align='center'>
@@ -245,7 +277,11 @@ export default ({
             <Accordion.Body>
               <View style={[style.totalWrap]}>
                 <Text>상품 금액</Text>
-                <Text style={style.price}>{convertPrice(itemData?.pc_price)}</Text>
+                <Text style={style.price}>{convertNumberLocale(itemData?.pc_price)}</Text>
+              </View>
+              <View style={[style.totalWrap]}>
+                <Text>할인 합계</Text>
+                <Text style={style.price}>{convertNumberLocale(itemData?.pc_price * itemData?.pc_discount_percent)}</Text>
               </View>
               <View style={[style.totalWrap]}>
                 <Text>결제 수수료</Text>
@@ -256,23 +292,41 @@ export default ({
 
           <View style={[style.totalWrap]}>
             <Text style={style.totalPrice}>결제 금액</Text>
-            <Text style={style.price}>{convertPrice(itemData?.pc_price)}</Text>
+            <Text style={style.price}>{convertNumberLocale(itemData?.pc_discount_price)}</Text>
           </View>
           <Text></Text>
         </View>
         {
           radioIndex === 0 && (
             <View style={style.chargeWrap}>
-              <Text>회원은 ...</Text>
+              <Text style={DOCUMENT_HEADER_FONT}>회원 본인은 구매 조건, 주문 내용 확인 및 결제에 동의합니다.</Text>
               <View style={style.checkDocsWrap}>
-                <CustomCheckbox style={style.checkDoc} selected={false}>
-                  <Text style={style.checkDocLabel}>doc 1</Text>
+                <CustomCheckbox
+                  style={style.checkDoc}
+                  selected={documentAgree.doc1}
+                  onPress={() => setDocumentAgree({...documentAgree, doc1: !documentAgree.doc1})}>
+                  <Text style={style.checkDocLabel}>
+                    개인정보 수집 및 이용 동의&nbsp;
+                    <Text style={style.detailText}>자세히</Text>
+                  </Text>
                 </CustomCheckbox>
-                <CustomCheckbox style={style.checkDoc} selected={false}>
-                  <Text style={style.checkDocLabel}>doc 2</Text>
+                <CustomCheckbox
+                  style={style.checkDoc}
+                  selected={documentAgree.doc2}
+                  onPress={() => setDocumentAgree({...documentAgree, doc2: !documentAgree.doc2})}>
+                  <Text style={style.checkDocLabel}>
+                    개인정보 제 3자 제공 동의&nbsp;
+                    <Text style={style.detailText}>자세히</Text>
+                  </Text>
                 </CustomCheckbox>
-                <CustomCheckbox style={style.checkDoc} selected={false}>
-                  <Text style={style.checkDocLabel}>doc 3</Text>
+                <CustomCheckbox
+                  style={style.checkDoc}
+                  selected={documentAgree.doc3}
+                  onPress={() => setDocumentAgree({...documentAgree, doc3: !documentAgree.doc3})}>
+                  <Text style={style.checkDocLabel}>
+                    전자결제대행 이용 동의&nbsp;
+                    <Text style={style.detailText}>자세히</Text>
+                  </Text>
                 </CustomCheckbox>
               </View>
             </View>
@@ -281,9 +335,9 @@ export default ({
       </ScrollView>
       <MedicleButton
         buttonStyle={{ height: 52 }}
-        onPress={() => console.log()}
-        text="결제하기"
-        disabled={true}
+        onPress={() => console.log('payment')}
+        text={convertNumberLocale(itemData?.pc_discount_price) + ' 결제하기'}
+        disabled={payButtonDisabled}
       />
     </SafeAreaView>
   );

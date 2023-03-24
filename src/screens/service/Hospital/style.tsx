@@ -140,7 +140,8 @@ export default StyleSheet.create({
   },
   totalWrap: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginVertical: 10,
   },
   price: {
     fontWeight: 'bold',
@@ -148,8 +149,8 @@ export default StyleSheet.create({
   totalPriceWrap: {
     borderBottomWidth: 1,
     borderBottomColor: Colors.Medicle.Gray.Light,
-    marginBottom: 20,
-    paddingBottom: 20,
+    marginBottom: 10,
+    paddingBottom: 10,
   },
   totalPrice: {
     fontWeight: 'bold',
@@ -166,5 +167,11 @@ export default StyleSheet.create({
   },
   checkDocLabel: {
     marginLeft: 20,
+    fontSize: 12,
+    color: Colors.Medicle.Font.Gray.Standard,
+  },
+  detailText: {
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
   },
 });

@@ -15,7 +15,7 @@ import { MedicleInput } from "@/components/inputs";
 import Icon from "@/icons";
 import ListItem from "@/components/ListItem";
 import {Colors} from "@/constants/theme";
-import product from "@/components/ApiProduct";
+import api from "@/components/Api";
 import {convertPrice} from "@/utils/utilities";
 
 const Home = ({ navigation }) => {
@@ -47,7 +47,7 @@ const Home = ({ navigation }) => {
   // constant에 선언되어있는 데이터에 DB에서 불러운 각 항목의 id 값을 추가
   const getProductGroups = async () => {
     try {
-      const data = await product.getProductGroups();
+      const data = await api.getProductGroups();
       const productGroupList = dentist(t); // constant 상품 그룹
 
       productGroupList.map((row: any) => {
@@ -66,7 +66,7 @@ const Home = ({ navigation }) => {
 
   const getNewestProducts = async () => {
     try {
-      const data = await product.getNewestProducts();
+      const data = await api.getNewestProducts();
       setNewestProduct(data);
     }
     catch (err) {

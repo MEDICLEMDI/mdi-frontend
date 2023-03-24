@@ -18,8 +18,9 @@ import Spacing from "@/components/Spacing";
 import Calendar from "../../../Calendar";
 import {useIsFocused} from "@react-navigation/native";
 import Routes from "@/navigation/Routes";
-import product from "@/components/ApiProduct";
+import api from "@/components/Api";
 import {convertPrice} from "@/utils/utilities";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HospitalDetail = ({
   navigation,
@@ -80,8 +81,9 @@ const HospitalDetail = ({
     color: Colors.Medicle.Font.Brown.Dark,
   });
 
-  const [date, setDate] = React.useState({ from: '' });
   const [itemData, setItemData] = React.useState<any>();
+  const [userInfo, setUserInfo] = React.useState<any>();
+  const [date, setDate] = React.useState({ from: '' });
   const [time, setTime] = React.useState('00:00 ~ 00:00');
   const [timeKey, setTimeKey] = React.useState(0);
   const [dateType, setDateType] = React.useState('from')
@@ -93,12 +95,22 @@ const HospitalDetail = ({
 
   React.useEffect(() => {
     setDate({ from: '2023-00-00' })
-    getItemDetail();
+    initialize();
   }, [])
+
+  const initialize = async () => {
+    await getUserInfo();
+    await getItemDetail();
+  }
+
+  const getUserInfo = async () => {
+    const data = await AsyncStorage.getItem('@User');
+    if (typeof data === "string") setUserInfo(JSON.parse(data));
+  }
 
   const getItemDetail = async () => {
     try {
-      const data = await product.getItemInfo(id);
+      const data = await api.getItemInfo(id);
       setItemData(data);
     }
     catch (err){
@@ -140,19 +152,23 @@ const HospitalDetail = ({
         </View>
         <View style={[style.itemDetailWrap, style.borderBottom]}>
           <Text style={[SECTION_HEADER_FONT, style.sectionHeader]}>예약자 정보</Text>
-          <MedicleInput style={style.input} label={<Text>예약자 성함</Text>} />
-          <MedicleInput style={style.input} label={<Text>연락처</Text>} />
-          <MedicleInput style={style.input} label={<Text>이메일</Text>} />
-          <MedicleInput style={style.input} label={<Text>예약 일자</Text>} />
-          <MedicleInput style={style.input} label={<Text>요청사항</Text>} multiline={true} />
+          <View style={{ marginTop: 20 }}>
+            <MedicleInput style={style.input} label={<Text>예약자 성함</Text>} clearButton={false} value={userInfo?.name} editable={false} />
+            <MedicleInput style={style.input} label={<Text>연락처</Text>} clearButton={false} value={userInfo?.phone} editable={false} />
+            <MedicleInput style={style.input} label={<Text>이메일</Text>} clearButton={false} value={userInfo?.email} editable={false} />
+            <MedicleInput style={style.input} label={<Text>예약 일자</Text>} clearButton={false} value={date.from} editable={false} />
+            <MedicleInput style={style.input} label={<Text>요청사항</Text>} multiline={true} placeholder='치과 진료에 요청하실 내용을 작성해주세요.' />
+          </View>
         </View>
         <View style={[style.itemDetailWrap, style.borderBottom]}>
           <Text style={[SECTION_HEADER_FONT, style.sectionHeader]}>판매자 정보</Text>
-          <MedicleInput style={style.input} label={<Text>상호명</Text>} clearButton={false} value={itemData?.company.name} editable={false} />
-          <MedicleInput style={style.input} label={<Text>대표자명</Text>} clearButton={false} value={itemData?.company.ci_owner_name} editable={false} />
-          <MedicleInput style={style.input} label={<Text>사업자번호</Text>} clearButton={false} value={itemData?.company.ci_trader_number} editable={false} />
-          <MedicleInput style={style.input} label={<Text>소재지</Text>} clearButton={false} value={itemData?.company.ci_address} editable={false} />
-          <MedicleInput style={style.input} label={<Text>연락처</Text>} clearButton={false} value={itemData?.company.ci_phone} editable={false} />
+          <View style={{ marginTop: 20 }}>
+            <MedicleInput style={style.input} label={<Text>상호명</Text>} clearButton={false} value={itemData?.company.name} editable={false} />
+            <MedicleInput style={style.input} label={<Text>대표자명</Text>} clearButton={false} value={itemData?.company.ci_owner_name} editable={false} />
+            <MedicleInput style={style.input} label={<Text>사업자번호</Text>} clearButton={false} value={itemData?.company.ci_trader_number} editable={false} />
+            <MedicleInput style={style.input} label={<Text>소재지</Text>} clearButton={false} value={itemData?.company.ci_address} editable={false} />
+            <MedicleInput style={style.input} label={<Text>연락처</Text>} clearButton={false} value={itemData?.company.ci_phone} editable={false} />
+          </View>
         </View>
         <View style={style.itemDetailWrap}>
             <CustomCheckbox selected={allAgree} onPress={() => agreeAll()}>
