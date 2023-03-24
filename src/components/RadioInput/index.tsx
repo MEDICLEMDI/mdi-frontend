@@ -5,19 +5,22 @@ import {Colors} from "@/constants/theme";
 const RadioInput = ({
   size = 16,
   borderColor = Colors.Medicle.Gray.Standard,
+  selected = false,
   circleColor = Colors.Medicle.Orange,
-  data,
+  name,
+  index,
   response,
   style,
 }:{
-  readonly data: { name: string }[],
-  readonly response: React.ComponentState,
-  size?: number,
-  borderColor?: string,
-  circleColor?: string,
+  readonly name: string;
+  readonly selected: boolean;
+  readonly response: React.ComponentState;
+  readonly index: number;
+  size?: number;
+  borderColor?: string;
+  circleColor?: string;
   style?: StyleProp<ViewStyle>;
 }) => {
-  const [selectIndex, setIndex] = React.useState(0);
   const padding = 2;
 
   const defaultStyle = StyleSheet.create({
@@ -42,22 +45,21 @@ const RadioInput = ({
     },
   });
 
-  const radioChangeHandler = (key: number) => {
-    setIndex(key);
-    response(key);
+  const radioHandler = () => {
+    response(index);
   }
 
   return (
-    data.map(({name}, key) => (
-    <View style={style} key={key}>
-      <Pressable style={defaultStyle.radioWrap} onPress={() => radioChangeHandler(key)}>
+    <View style={style}>
+      <Pressable style={defaultStyle.radioWrap} onPress={() => radioHandler()}>
         <View style={defaultStyle.radioCircleWrap}>
-          {selectIndex === key && (<View style={defaultStyle.radioCircle}></View>)}
+          {selected && (
+            <View style={defaultStyle.radioCircle}></View>
+          )}
         </View>
         <Text>{name}</Text>
       </Pressable>
     </View>
-    ))
   )
 }
 
