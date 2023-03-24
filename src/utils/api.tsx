@@ -1,15 +1,18 @@
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Api from "@/components/Api";
 
 class API {
   readonly baseUrl: string = 'http://192.168.50.125:3000';
 
-  async post(url: string, data: any) {
-    console.log(JSON.stringify(data));
+  async post(url: string, data?: any) {
+    const token = await AsyncStorage.getItem('@Key');
 
     return fetch(`${this.baseUrl}${url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
       },
       body: JSON.stringify(data)
     })
