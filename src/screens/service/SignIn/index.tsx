@@ -15,7 +15,7 @@ import MedicleButton from '@/buttons/MedicleButton';
 import { fontStyleCreator } from '@/utils/fonts';
 import { Colors } from '@/constants/theme';
 import { useTranslation } from 'react-i18next';
-import API from "@/utils/api";
+import api from "@/components/Api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignIn = ({ navigation }) => {
@@ -26,7 +26,7 @@ const SignIn = ({ navigation }) => {
     color: Colors.Medicle.Font.Brown.Dark,
   });
 
-  const [data, setData] = React.useState<{user_id: string | undefined; password: string | undefined;}>({
+  const [signInData, setSignInData] = React.useState<{user_id: string | undefined; password: string | undefined;}>({
     user_id: undefined,
     password: undefined,
   });
@@ -38,19 +38,19 @@ const SignIn = ({ navigation }) => {
     readonly v: string;
     readonly name: string;
   }) => {
-    setData({
-      ...data,
+    setSignInData({
+      ...signInData,
       [name]:v
     });
   }
 
   const signIn = async () => {
     try {
-      const Api = new API;
-      const res = await Api.post('/auth', {user_id: data.user_id, password: data.password});
+      const data = await api.signIn({user_id: signInData.user_id, password: signInData.password});
 
-      await AsyncStorage.removeItem('@Key');
-      await AsyncStorage.setItem('@Key', res.data[0]);
+      await AsyncStorage.clear();
+      await AsyncStorage.setItem('@Key', data.access_token);
+      await AsyncStorage.setItem('@User', JSON.stringify(data.user));
 
       navigation.navigate(Routes.DASHBOARD);
     }
