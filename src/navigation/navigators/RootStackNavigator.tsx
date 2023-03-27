@@ -40,7 +40,7 @@ import Review from '@/screens/service/Review';
 import ServiceContacts from '@/screens/service/ServiceContacts';
 import Setting from '@/screens/service/Setting';
 import SignIn from '@/screens/service/SignIn';
-import Social from '@/screens/service/SignIn/social';
+// import Social from '@/screens/service/SignIn/social';
 import SignUp from '@/screens/service/SignUp';
 import Subscribe from '@/screens/service/Subscribe';
 import WalletCreatePassword from '@/screens/service/Wallet/components/CreatePassword';
@@ -61,12 +61,12 @@ const Tab = createBottomTabNavigator<ServiceTabParamList>();
 const RootStackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName={Routes.SOCIAL}
+      initialRouteName={Routes.SIGNIN}
       screenOptions={{
         headerShown: false,
       }}>
       {/* 하단에 탭이 보이는 메뉴는 BottomTabNavigation에 적용되고 탭이 보이지 않는 메뉴는 Root의 Stack에 추가 */}
-      <Stack.Screen name={Routes.SOCIAL} component={Social} />
+      {/* <Stack.Screen name={Routes.SOCIAL} component={Social} /> */}
       <Stack.Screen name={Routes.SIGNIN} component={SignIn} />
       <Stack.Screen name={Routes.SIGNUP} component={SignUp} />
       <Stack.Screen name={Routes.FINDACCOUNT} component={FindAccount} />

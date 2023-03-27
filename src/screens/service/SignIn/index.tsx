@@ -61,7 +61,7 @@ const SignIn = ({ navigation }) => {
 
   return (
     <SafeAreaView style={style.container}>
-      <Header goBack={true} />
+      <Header goBack={false} />
       <View style={style.content}>
         <Text style={[HEADER_FONT, { marginBottom: 25 }]}>로그인</Text>
         <View style={style.signInWrap}>

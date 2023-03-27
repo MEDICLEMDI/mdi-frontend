@@ -28,7 +28,7 @@ export type RootStackParamList = {
     password: string;
     shouldSaveBiometrics: boolean;
   };
-  [Routes.SOCIAL]: undefined;
+  // [Routes.SOCIAL]: undefined;
   [Routes.SIGNIN]: undefined;
   [Routes.SIGNUP]: undefined;
   [Routes.FINDACCOUNT]: undefined;
