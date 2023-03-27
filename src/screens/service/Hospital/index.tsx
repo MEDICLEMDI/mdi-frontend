@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useTranslation} from "react-i18next";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import {ActivityIndicator, FlatList, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
 
 import ListItem from "@/components/ListItem";
 import Tab from "@/components/Tab";
@@ -12,18 +12,50 @@ import {convertPrice} from "@/utils/utilities";
 
 const Hospital = ({ navigation }) => {
   const { t } = useTranslation();
-  const [index, setIndex] = React.useState(1);
+  const cooldownRef = React.useRef(null);
 
+  const [index, setIndex] = React.useState(1);
   const [productGroups, setProductGroups] = React.useState<any>([]);
   const [productItems, setProductItems] = React.useState<any>([]);
+  const [page, setPage] = React.useState(1);
+  const [loading, setLoading] = React.useState(false);
+
 
   React.useEffect(() => {
     initialize();
   }, []);
 
   React.useEffect(() => {
+    setPage(1);
     getProductGroupItems();
   }, [index]);
+
+  const getMoreProductItems = async () => {
+    if (cooldownRef.current) {
+      // the function has already been called recently
+      return;
+    }
+
+    // handle button press
+    setLoading(true);
+    const nextPage = page + 1;
+    try {
+      const data = await api.getMoreProductItems(index, nextPage);
+      if(data.length !== 0) setProductItems(productItems.concat(data));
+    }
+    catch (err) {
+      console.error(err);
+    }
+    finally {
+      setLoading(false);
+      setPage(nextPage);
+    }
+
+    // set a timeout to prevent the function from being called again too soon
+    cooldownRef.current = setTimeout(() => {
+      cooldownRef.current = null;
+    }, 3000);
+  };
 
   const initialize = async () => {
     await getProductGroups();
@@ -72,28 +104,28 @@ const Hospital = ({ navigation }) => {
         </ScrollView>
       </View>
 
-      <ScrollView
-        horizontal={false}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        style={{ flex: 1, paddingHorizontal: 20 }}
-      >
-        {
-          productItems.map((item, key) => (
-            <ListItem
-              key={key}
-              image={item.pc_image_main}
-              type="고객평가우수병원"
-              location={item.company.ci_address.substring(0,2)}
-              label={item.company.name}
-              description={item.pc_name}
-              discount={20}
-              price={convertPrice(item?.pc_price)}
-              onPress={() => navigation.navigate(Routes.HOSPITAL_DETAIL, {id: item.id})}
-            />
-          ))
-        }
-      </ScrollView>
+
+      <FlatList
+        style={{ paddingHorizontal: 20, flex: 1 }}
+        keyExtractor={(item, key) => item.id.toString()}
+        onEndReached={getMoreProductItems}
+        onEndReachedThreshold={0.4}
+        ListFooterComponent={<>{loading && <ActivityIndicator />}</>}
+        data={productItems}
+        renderItem={({item}) => (
+          <ListItem
+            key={item.id}
+            image={item.pc_image_main}
+            type="고객평가우수병원"
+            location={item.company?.ci_address.substring(0,2)}
+            label={item.company?.name}
+            description={item.pc_name}
+            discount={item.pc_discount_percent}
+            price={convertPrice(item.pc_price)}
+            onPress={() => navigation.navigate(Routes.HOSPITAL_DETAIL, {id: item.id})}
+          />
+        )}
+      />
       {/*<View style={style.noData}>*/}
       {/*  <Text>등록된 병원이 없습니다.</Text>*/}
       {/*</View>*/}

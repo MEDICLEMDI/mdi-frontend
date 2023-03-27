@@ -1,8 +1,10 @@
 import {Text, View, Image, ImageProps, TouchableOpacity, GestureResponderEvent} from "react-native";
 import BoxDropShadow from "@/components/BoxDropShadow";
 import * as React from "react";
-import Icons from "@/icons";
+import Icon from "@/icons";
 import style from './style';
+import {fontStyleCreator} from "@/utils/fonts";
+import {Colors} from "@/constants/theme";
 
 const ListItem = ({
   image,
@@ -25,9 +27,27 @@ const ListItem = ({
   label?: string;
   description?: string;
   discount?: number;
-  price?: string;
+  price?: string | undefined;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }) => {
+  const DISCOUNT_FONT = fontStyleCreator({
+    size: 14,
+    weight: 'bold',
+    color: Colors.Medicle.Orange,
+  })
+  const ITEM_PRICE_FONT = fontStyleCreator({
+    size: 18,
+    weight: 'bold',
+    color: Colors.Medicle.Font.Brown.Dark,
+  })
+  const DESCRIPTION_FONT = fontStyleCreator({
+    size: 10,
+    color: Colors.Medicle.Font.Gray.Standard,
+  });
+  const ITEM_TITLE_FONT = fontStyleCreator({
+    size: 10,
+    color: Colors.Medicle.Font.Brown.Dark,
+  })
 
   return (
     <BoxDropShadow style={{ marginBottom: 10, }}>
@@ -41,9 +61,9 @@ const ListItem = ({
             price
             ?
             <>
-              <Text>{type}</Text>
-              <Text>{location} | {label}</Text>
-              <Text>{description}</Text>
+              <Text style={DESCRIPTION_FONT}>{type}</Text>
+              <Text style={ITEM_TITLE_FONT}>{location} | {label}</Text>
+              <Text style={ITEM_TITLE_FONT}>{description}</Text>
             </>
             :
             <>
@@ -53,18 +73,22 @@ const ListItem = ({
           }
           <View style={style.itemFooter}>
             <View>
-              <Text style={{ fontWeight: 'bold', fontSize: 14 }}>{discount}%</Text>
+              {
+                Number(discount) !== 0 && (
+                  <Text style={DISCOUNT_FONT}>{discount}%</Text>
+                )
+              }
               <View style={style.priceWrap}>
-                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{price}</Text>
-                <Text>VAT포함</Text>
+                <Text style={ITEM_PRICE_FONT}>{price}</Text>
+                <Text style={DESCRIPTION_FONT}>&nbsp;VAT포함</Text>
               </View>
             </View>
             <View>
               <TouchableOpacity>
                 {
                   like
-                  ?<Icons name="heart" />
-                  :<Icons name="heart" />
+                  ?<Icon name="heart" fill='#EDDFCC'/>
+                  :<Icon name="heart" stroke='#CECECE'/>
                 }
               </TouchableOpacity>
             </View>

@@ -84,23 +84,34 @@ const HospitalDetail = ({
   const [itemData, setItemData] = React.useState<any>();
   const [userInfo, setUserInfo] = React.useState<any>();
   const [date, setDate] = React.useState({ from: '' });
-  const [time, setTime] = React.useState('00:00 ~ 00:00');
+  const [time, setTime] = React.useState('');
   const [timeKey, setTimeKey] = React.useState(0);
   const [dateType, setDateType] = React.useState('from')
   const [visible, setVisible] = React.useState(false);
 
-  const [allAgree, setAllAgree] = React.useState(false);
-  const [agree1, setAgree1] = React.useState(false);
-  const [agree2, setAgree2] = React.useState(false);
+  const [documentAgree, setDocumentAgree] = React.useState({
+    doc1: false,
+    doc2: false,
+  });
+  const [payButtonDisabled, setPayButtonDisabled] = React.useState(true);
 
   React.useEffect(() => {
-    setDate({ from: '2023-00-00' })
     initialize();
   }, [])
+
+  React.useEffect(() => {
+    console.log(date.from === '');
+    console.log(time === undefined);
+
+    setPayButtonDisabled(
+      !(documentAgree.doc1 && documentAgree.doc2 && date.from !== '' && time !== '')
+    )
+  }, [documentAgree, date, time])
 
   const initialize = async () => {
     await getUserInfo();
     await getItemDetail();
+    // setDate({ from: '2023-00-00' })
   }
 
   const getUserInfo = async () => {
@@ -119,17 +130,18 @@ const HospitalDetail = ({
   }
 
   const agreeAll = () => {
-    setAllAgree(!allAgree);
-    setAgree1(!allAgree);
-    setAgree2(!allAgree);
+    setDocumentAgree({
+      doc1: true,
+      doc2: true,
+    });
   }
 
   const timeList = [
-    {start: '00:00', end: '00:00'},
-    {start: '00:00', end: '00:00'},
-    {start: '00:00', end: '00:00'},
-    {start: '00:00', end: '00:00'},
-    {start: '00:00', end: '00:00'},
+    {start: '09:00', end: '10:00'},
+    {start: '11:00', end: '12:00'},
+    {start: '13:00', end: '14:00'},
+    {start: '15:00', end: '16:00'},
+    {start: '17:00', end: '18:00'},
   ]
 
   return (
@@ -156,7 +168,7 @@ const HospitalDetail = ({
             <MedicleInput style={style.input} label={<Text>예약자 성함</Text>} clearButton={false} value={userInfo?.name} editable={false} />
             <MedicleInput style={style.input} label={<Text>연락처</Text>} clearButton={false} value={userInfo?.phone} editable={false} />
             <MedicleInput style={style.input} label={<Text>이메일</Text>} clearButton={false} value={userInfo?.email} editable={false} />
-            <MedicleInput style={style.input} label={<Text>예약 일자</Text>} clearButton={false} value={date.from} editable={false} />
+            <MedicleInput style={style.input} label={<Text>예약 일자</Text>} clearButton={false} value={`${date.from} (${time})`} editable={false} />
             <MedicleInput style={style.input} label={<Text>요청사항</Text>} multiline={true} placeholder='치과 진료에 요청하실 내용을 작성해주세요.' />
           </View>
         </View>
@@ -171,14 +183,14 @@ const HospitalDetail = ({
           </View>
         </View>
         <View style={style.itemDetailWrap}>
-            <CustomCheckbox selected={allAgree} onPress={() => agreeAll()}>
+            <CustomCheckbox selected={(documentAgree.doc1 && documentAgree.doc2)} onPress={() => agreeAll()}>
               <Text style={[style.checkboxLabel, ALL_CHECK_FONT]}>약관 전체 동의하기</Text>
             </CustomCheckbox>
           <View style={style.hr} />
-          <CustomCheckbox selected={agree1} style={style.checkbox} onPress={() => setAgree1(!agree1)}>
+          <CustomCheckbox selected={documentAgree.doc1} style={style.checkbox} onPress={() => setDocumentAgree({ ...documentAgree, doc1: !documentAgree.doc1})}>
             <Text style={style.checkboxLabel}>[필수]개인정보 수집 동의</Text>
           </CustomCheckbox>
-          <CustomCheckbox selected={agree2} style={style.checkbox} onPress={() => setAgree2(!agree2)}>
+          <CustomCheckbox selected={documentAgree.doc2} style={style.checkbox} onPress={() => setDocumentAgree({ ...documentAgree, doc2: !documentAgree.doc2})}>
             <Text style={style.checkboxLabel}>[필수]개인정보 제공 동의</Text>
           </CustomCheckbox>
           <Text style={[RESERVE_COMMENT_FONT, style.reserveComment]}>예약 서비스 이용시 필요한 개인정보 수집 및 제3자 제공규정을 확인하였으며 이에 동의합니다.</Text>
@@ -195,7 +207,7 @@ const HospitalDetail = ({
                 <View style={style.hr} />
                 <Row justify='space-between'>
                   <Text>진료 항목</Text>
-                  <Text>{itemData?.pc_name} {convertPrice(itemData?.pc_price)}</Text>
+                  <Text style={SECTION_HEADER_FONT}>{itemData?.pc_name} {convertPrice(itemData?.pc_price)}</Text>
                 </Row>
             </BoxDropShadow>
           </TouchableOpacity>
@@ -226,6 +238,7 @@ const HospitalDetail = ({
           ]}
           onPress={() => navigation.navigate(Routes.HOSPITAL_PAYMENT, {itemData: itemData})}
           textStyle={PAY_BUTTON_FONT}
+          disabled={payButtonDisabled}
           text='앱에서 결제하기' />
       </Row>
       <CustomModal
@@ -236,7 +249,7 @@ const HospitalDetail = ({
       >
         <View style={style.datePickerModal}>
           <Row justify='space-between' align='center' style={style.datePickerHeader}>
-            <Text>HEADER</Text>
+            <Text style={PRODUCT_FONT}>일정 선택</Text>
             <TouchableOpacity onPress={() => setVisible(false)}>
               <Icon name='close' />
             </TouchableOpacity>
@@ -277,7 +290,10 @@ const HospitalDetail = ({
                         key={key}
                         disabled={key === timeKey}
                         style={style.timeSelectItem}
-                        onPress={() => setTimeKey(key)}
+                        onPress={() => {
+                          setTimeKey(key);
+                          setTime(`${start} ~ ${end}`);
+                        }}
                       >
                         <Text style={key === timeKey ? TIME_SELECTED_FONT : TIME_FONT}>{start} ~ {end}</Text>
                       </TouchableOpacity>

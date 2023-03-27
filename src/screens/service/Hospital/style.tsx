@@ -72,7 +72,7 @@ export default StyleSheet.create({
   hr: {
     borderBottomWidth: 1,
     borderBottomColor: Colors.Medicle.Gray.Light,
-    marginVertical: 20,
+    marginVertical: 10,
   },
   reserveComment: {
     marginTop: 10,

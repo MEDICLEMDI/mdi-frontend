@@ -34,7 +34,13 @@ const getNewestProducts = async () => {
 }
 
 const getProductGroupItems = async (productGroup: number) => {
-  const { data } = await Api.get(`/products/items/${productGroup}`);
+  const page = 1;
+  const { data } = await Api.get(`/products/items/${productGroup}/${page}`);
+  return data;
+}
+
+const getMoreProductItems = async (productGroup: number, page: number) => {
+  const { data } = await Api.get(`/products/items/${productGroup}/${page}`);
   return data;
 }
 
@@ -43,4 +49,4 @@ const getItemInfo = async (itemId: number) => {
   return data;
 }
 
-export default { getProductGroups, getNewestProducts, getProductGroupItems, getItemInfo, getUserInfo, signIn }
+export default { getProductGroups, getNewestProducts, getProductGroupItems, getItemInfo, getUserInfo, signIn, getMoreProductItems }
