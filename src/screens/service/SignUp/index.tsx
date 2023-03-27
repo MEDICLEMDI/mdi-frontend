@@ -409,7 +409,7 @@ const SignUp = ({ navigation }) => {
     });
 
     let _success = false;
-    let _errorMessage = '처리중 오류가 발생하였습니다.';
+    let _errorMessage = 'unknown';
 
     try {
       const api = new API();
@@ -428,9 +428,9 @@ const SignUp = ({ navigation }) => {
           } else {
             setSmsStatus('before');
             if (res.message === 'phone auth limit over.') {
-              _errorMessage = '일일 요청 횟수를 초과하였습니다.';
+              _errorMessage = 'smsLimit';
             } else if (res.message === 'phone number already used') {
-              _errorMessage = '이미 가입한 전화번호 입니다.';
+              _errorMessage = 'alreadyUsedPhone';
             }
           }
         })
@@ -454,7 +454,7 @@ const SignUp = ({ navigation }) => {
     });
 
     let _success = false;
-    let _errorMessage = '처리중 오류가 발생하였습니다.';
+    let _errorMessage = 'unknown';
 
     try {
       const api = new API();
@@ -470,8 +470,8 @@ const SignUp = ({ navigation }) => {
             setEmailStatus('progress');
             _success = true;
           } else {
-            if(res.message === 'email already used') {
-              _errorMessage = '이미 가입한 이메일 입니다.';
+            if (res.message === 'email already used') {
+              _errorMessage = 'alreadyUsedEmail';
             }
             setEmailStatus('before');
           }
@@ -528,13 +528,14 @@ const SignUp = ({ navigation }) => {
     // }
 
     let _success = false;
-    let _errorMessage = '처리중 오류가 발생하였습니다.';
+    let _errorMessage = 'unknown';
 
     try {
       const api = new API();
       const data = {
         phone: signUpData.phone,
         auth_code: smsCode,
+        type: 'register',
       };
       await api
         .post('/phoneauth/checkcode', data)
@@ -546,12 +547,12 @@ const SignUp = ({ navigation }) => {
             _success = true;
           } else {
             if (res.message === 'expire time over.') {
-              _errorMessage = '인증시간이 만료되었습니다.';
+              _errorMessage = 'smsTimeout';
             } else if (
               res.message === 'phone auth fail' ||
               res.message === 'no phone auth data.'
             ) {
-              _errorMessage = '인증정보가 일치하지 않습니다.';
+              _errorMessage = 'smsCheck';
             }
           }
         })
@@ -579,7 +580,7 @@ const SignUp = ({ navigation }) => {
     // }
 
     let _success = false;
-    let _errorMessage = '처리중 오류가 발생하였습니다.';
+    let _errorMessage = 'unknown';
 
     try {
       const api = new API();
@@ -597,12 +598,12 @@ const SignUp = ({ navigation }) => {
             _success = true;
           } else {
             if (res.message === 'expire time over.') {
-              _errorMessage = '인증시간이 만료되었습니다.';
+              _errorMessage = 'smsTimeout';
             } else if (
               res.message === 'email auth fail' ||
               res.message === 'no mail auth data.'
             ) {
-              _errorMessage = '인증정보가 일치하지 않습니다.';
+              _errorMessage = 'smsCheck';
             }
           }
         })

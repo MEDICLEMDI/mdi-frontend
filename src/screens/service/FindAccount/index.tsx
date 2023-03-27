@@ -9,6 +9,7 @@ import { MedicleInput } from '@/components/inputs';
 import ResultPage from '@/components/Result';
 import { Colors } from '@/constants/theme';
 import Routes from '@/navigation/Routes';
+import API from '@/utils/api';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import { FormError, ISignUpData } from '../SignUp';
@@ -71,6 +72,8 @@ const FindAccount = ({ navigation }) => {
   const [passwordResultText, setPasswordResultText] = React.useState<string>(
     t('findAccount.resultTextPassword')
   );
+  const [userId, setUserId] = React.useState<string | undefined>(undefined);
+  const [passwordChanged, setPasswordChanged] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -204,17 +207,83 @@ const FindAccount = ({ navigation }) => {
       [_type]: undefined,
     });
   };
-  const handleSmsCheck = (text: string) => {
+
+  const requestUserId = async () => {
+    try {
+      const api = new API();
+      const data = {
+        name: userData.name,
+        phone: userData.phone,
+        auth_code: sms,
+        type: tabIndex === 0 ? 'findid' : 'findpw',
+      };
+
+      await api
+        .post('/findaccount/request/user_id', data)
+        .then(res => {
+          console.log(res);
+          if (res.result) {
+            setUserId(res.data);
+            setNextDisabled(true);
+            setResult(true);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
+
+  const handleSmsCheck = async () => {
     //tabIndex 에 따른 (아이디,비번 찾기) requestParam 다름,
-    if (text === '111111') {
-      clearInterval(intervalRef.current!);
-      setSmsStatus('completed');
-      setNextDisabled(true);
-    } else {
-      setError({
-        ...error,
-        ['sms']: t('errorMessage.smsCheckError'),
-      });
+    let _success = false;
+    let _errorMessage = 'unknown';
+
+    try {
+      const api = new API();
+      const data = {
+        phone: userData.phone,
+        auth_code: sms,
+        type: tabIndex === 0 ? 'findid' : 'findpw',
+      };
+
+      await api
+        .post('/phoneauth/checkcode', data)
+        .then(res => {
+          console.log(res);
+          if (res.result) {
+            clearInterval(intervalRef.current!);
+            setSmsStatus('completed');
+            if (tabIndex === 0) {
+              requestUserId();
+            } else {
+              setNextDisabled(true);
+              setNextDisabled(true);
+              setResult(true);
+            }
+            _success = true;
+          } else {
+            if (res.message === 'expire time over.') {
+              _errorMessage = 'smsTimeout';
+            } else if (
+              res.message === 'phone auth fail' ||
+              res.message === 'no phone auth data.'
+            ) {
+              _errorMessage = 'smsCheck';
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (e: any) {
+      console.log(e);
+    }
+
+    if (!_success) {
+      errorSet('sms', _errorMessage);
     }
   };
   const handleSmsValid = (text: string) => {
@@ -238,10 +307,51 @@ const FindAccount = ({ navigation }) => {
     setSmsCheckDisabled(false);
   };
 
-  const handleRequestSms = () => {
-    errorClear('sms');
-    setInitialTime(300);
-    setSmsStatus('progress');
+  const handleRequestSms = async () => {
+    setError({
+      ...error,
+      phone: undefined,
+      smsCode: undefined,
+    });
+
+    let _success = false;
+    let _errorMessage = 'unknown';
+
+    try {
+      const api = new API();
+      const data = {
+        name: userData.name,
+        phone: userData.phone,
+        type: tabIndex === 0 ? 'findid' : 'findpw',
+      };
+
+      if (tabIndex === 1) {
+        data.user_id = userData.email;
+      }
+      await api
+        .post('/findaccount', data)
+        .then(res => {
+          console.log(res);
+          if (res.result) {
+            setInitialTime(300);
+            setSmsStatus('progress');
+            _success = true;
+          } else {
+            setSmsStatus('before');
+            if (res.message === 'no user data') {
+              _errorMessage = 'noUser';
+            }
+          }
+        })
+        .catch(err => console.log(err));
+    } catch (e: any) {
+      console.log(e);
+    }
+
+    if (!_success) {
+      clearInterval(intervalRef.current!);
+      errorSet('phone', _errorMessage);
+    }
   };
 
   const clearDataAndError = () => {
@@ -273,8 +383,36 @@ const FindAccount = ({ navigation }) => {
     navigation.navigate(Routes.SIGNIN);
   };
 
-  const resultPasswordOnpress = () => {
+  const resultChangePassword = async () => {
     console.log('비번찾기 이벤트');
+
+    try {
+      const api = new API();
+      const data = {
+        user_id: userData.email, // email == id
+        name: userData.name,
+        phone: userData.phone,
+        auth_code: sms,
+        type: tabIndex === 0 ? 'findid' : 'findpw',
+        password: userData.password,
+      };
+
+      await api
+        .post('/findaccount/change/user_password', data)
+        .then(res => {
+          console.log(res);
+          if (res.result) {
+            setPasswordResultText(t('findAccount.resultTextPassword2'));
+            setPasswordChanged(true);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (e: any) {
+      console.log(e);
+    }
+
     // 비번바꾸기 백엔드 api 성공 후
     setPasswordResultText(t('findAccount.resultTextPassword2'));
   };
@@ -289,20 +427,20 @@ const FindAccount = ({ navigation }) => {
             : passwordResultText
         }
         buttonText={
-          passwordResultText === t('findAccount.resultTextPassword')
-            ? passwordResultButton
-            : t('button.goHome')
+          tabIndex === 0 || passwordChanged
+            ? t('button.goHome')
+            : passwordResultButton
         }
         buttonDisabled={tabIndex === 0 ? true : passwordDisabled}
         onPress={
-          passwordResultText === t('findAccount.resultTextPassword')
-            ? resultPasswordOnpress
-            : resultGoHome
+          tabIndex === 0 || passwordChanged
+            ? resultGoHome
+            : resultChangePassword
         }
         children={
           tabIndex === 0 ? (
             <MedicleInput
-              value={'asdads@asdasd.com'}
+              value={userId}
               editable={false}
               clearButton={false}
               textAlign={'center'}
