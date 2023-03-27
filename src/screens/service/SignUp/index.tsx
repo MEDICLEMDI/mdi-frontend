@@ -429,6 +429,8 @@ const SignUp = ({ navigation }) => {
             setSmsStatus('before');
             if (res.message === 'phone auth limit over.') {
               _errorMessage = '일일 요청 횟수를 초과하였습니다.';
+            } else if (res.message === 'phone number already used') {
+              _errorMessage = '이미 가입한 전화번호 입니다.';
             }
           }
         })
@@ -468,6 +470,9 @@ const SignUp = ({ navigation }) => {
             setEmailStatus('progress');
             _success = true;
           } else {
+            if(res.message === 'email already used') {
+              _errorMessage = '이미 가입한 이메일 입니다.';
+            }
             setEmailStatus('before');
           }
         })
