@@ -1,4 +1,5 @@
 // React native packages
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -23,10 +24,10 @@ import FAQ from '@/screens/service/FAQ';
 import FindAccount from '@/screens/service/FindAccount';
 import DashBoard from '@/screens/service/Home';
 import Hospital from '@/screens/service/Hospital';
-import HospitalContact from '@/screens/service/Hospital/contact';
-import HospitalDetail from '@/screens/service/Hospital/info';
-import ProductDetail from '@/screens/service/Hospital/detail';
 import HospitalCategory from '@/screens/service/Hospital/category';
+import HospitalContact from '@/screens/service/Hospital/contact';
+import ProductDetail from '@/screens/service/Hospital/detail';
+import HospitalDetail from '@/screens/service/Hospital/info';
 import HospitalPayment from '@/screens/service/Hospital/payment';
 import MarketingConfig from '@/screens/service/MarketingConfig';
 import MedicalState from '@/screens/service/MedicalState';
@@ -54,6 +55,7 @@ import WalletSend from '@/screens/service/Wallet/components/Send';
 import WalletSetting from '@/screens/service/Wallet/components/Setting';
 import WalletWelcome from '@/screens/service/Wallet/components/Welcome';
 import SignOut from '@/screens/SignOut';
+import eventEmitter from '@/utils/eventEmitter';
 
 import Routes from '../Routes';
 
@@ -61,55 +63,106 @@ const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
 
 const RootStackNavigator = () => {
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  React.useEffect(() => {
+    async function checkAuth() {
+      try {
+        const token = await AsyncStorage.getItem('@User');
+        const key = await AsyncStorage.getItem('@Key');
+        if (token && key) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (e) {
+        setIsAuthenticated(false);
+      }
+    }
+
+    checkAuth();
+    // 이벤트 구독
+    const handleLoggedIn = () => {
+      checkAuth();
+    };
+
+    const handleLoggedOut = () => {
+      checkAuth();
+    };
+
+    // const handleAppClosed = () => {
+    //   checkAuth();
+    // };
+
+    eventEmitter.addListener('loggedIn', handleLoggedIn);
+    eventEmitter.addListener('loggedOut', handleLoggedOut);
+    // eventEmitter.addListener('appClosed', handleAppClosed);
+
+    return () => {
+      eventEmitter.removeListener('loggedIn', handleLoggedIn);
+      eventEmitter.removeListener('loggedOut', handleLoggedOut);
+      // eventEmitter.removeListener('appClosed', handleAppClosed);
+    };
+  }, []);
   return (
     <Stack.Navigator
-      initialRouteName={Routes.SIGNIN}
+      initialRouteName={!isAuthenticated ? Routes.SIGNIN : Routes.DASHBOARD}
       screenOptions={{
         headerShown: false,
       }}>
       {/* 하단에 탭이 보이는 메뉴는 BottomTabNavigation에 적용되고 탭이 보이지 않는 메뉴는 Root의 Stack에 추가 */}
-      {/* <Stack.Screen name={Routes.SOCIAL} component={Social} /> */}
-      <Stack.Screen name={Routes.SIGNIN} component={SignIn} />
-      <Stack.Screen name={Routes.SIGNUP} component={SignUp} />
-      <Stack.Screen name={Routes.FINDACCOUNT} component={FindAccount} />
-      {/* <Stack.Screen name={Routes.IDCHECK} component={SignIn} />
-      <Stack.Screen name={Routes.PASSWORDCHECK} component={SignIn} /> */}
-      <Stack.Screen name={Routes.DASHBOARD} component={BottomTabNavigation} />
-      <Stack.Group>
-        <Stack.Screen
-          name={Routes.SERVICE_CONTACTS}
-          component={ServiceContacts}
-        />
-        <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
-        <Stack.Screen name={Routes.REVIEW} component={Review} />
-        <Stack.Screen
-          name={Routes.PRODUCT_DETAIL}
-          component={ProductDetail}
-        />
-        <Stack.Screen
-          name={Routes.HOSPITAL_PAYMENT}
-          component={HospitalPayment}
-        />
-        <Stack.Screen
-          name={Routes.HOSPITAL_CONTACT}
-          component={HospitalContact}
-        />
-      </Stack.Group>
 
-      {/* Wallet Group */}
-      <Stack.Group>
-        <Stack.Screen
-          name={Routes.WALLET_CREATE_PASSWORD}
-          component={WalletCreatePassword}
-        />
-        <Stack.Screen name={Routes.WALLET_IMPORT} component={WalletImport} />
-        <Stack.Screen
-          name={Routes.WALLET_MNEMONIC}
-          component={WalletNmemonic}
-        />
-        <Stack.Screen name={Routes.WALLET_SEND} component={WalletSend} />
-        <Stack.Screen name={Routes.POINT_CHARGE} component={PointCharge} />
-      </Stack.Group>
+      {!isAuthenticated ? (
+        <>
+          <Stack.Screen name={Routes.SIGNIN} component={SignIn} />
+          <Stack.Screen name={Routes.SIGNUP} component={SignUp} />
+          <Stack.Screen name={Routes.FINDACCOUNT} component={FindAccount} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name={Routes.DASHBOARD}
+            component={BottomTabNavigation}
+          />
+          <Stack.Group>
+            <Stack.Screen
+              name={Routes.SERVICE_CONTACTS}
+              component={ServiceContacts}
+            />
+            <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
+            <Stack.Screen name={Routes.REVIEW} component={Review} />
+            <Stack.Screen
+              name={Routes.PRODUCT_DETAIL}
+              component={ProductDetail}
+            />
+            <Stack.Screen
+              name={Routes.HOSPITAL_PAYMENT}
+              component={HospitalPayment}
+            />
+            <Stack.Screen
+              name={Routes.HOSPITAL_CONTACT}
+              component={HospitalContact}
+            />
+          </Stack.Group>
+
+          {/* Wallet Group */}
+          <Stack.Group>
+            <Stack.Screen
+              name={Routes.WALLET_CREATE_PASSWORD}
+              component={WalletCreatePassword}
+            />
+            <Stack.Screen
+              name={Routes.WALLET_IMPORT}
+              component={WalletImport}
+            />
+            <Stack.Screen
+              name={Routes.WALLET_MNEMONIC}
+              component={WalletNmemonic}
+            />
+            <Stack.Screen name={Routes.WALLET_SEND} component={WalletSend} />
+            <Stack.Screen name={Routes.POINT_CHARGE} component={PointCharge} />
+          </Stack.Group>
+        </>
+      )}
     </Stack.Navigator>
   );
 };
@@ -218,11 +271,14 @@ const HospitalStack = () => {
       }}
       initialRouteName={Routes.HOSPITAL}>
       <Stack.Screen name={Routes.HOSPITAL} component={Hospital} />
-      <Stack.Screen name={Routes.HOSPITAL_CATEGORY} component={HospitalCategory} />
+      <Stack.Screen
+        name={Routes.HOSPITAL_CATEGORY}
+        component={HospitalCategory}
+      />
       <Stack.Screen name={Routes.HOSPITAL_DETAIL} component={HospitalDetail} />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 const SettingStack = () => {
   return (
