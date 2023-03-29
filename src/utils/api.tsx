@@ -1,9 +1,11 @@
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Api from "@/components/Api";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
+import Api from '@/components/Api';
+import Config from 'react-native-config';
 
 class API {
-  readonly baseUrl: string = 'http://192.168.50.125:3000';
+  readonly baseUrl: string = Config.API_URL;
 
   async post(url: string, data?: any) {
     const token = await AsyncStorage.getItem('@Key');
@@ -12,30 +14,33 @@ class API {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token
+        Authorization: 'Bearer ' + token,
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
-    .then(response => response.json())
-    .then(response => {
-      if(
-        response.statusCode === 400 ||
-        response.statusCode === 401 ||
-        response.statusCode === 404
-      ) {
-        let message = `[${response.error}]`;
-        if(response.message.count > 0) {
-          response.message.forEach(err => message += `${err}`);
-        } else {
-          message += `${response.message}`
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        if (
+          response.statusCode === 400 ||
+          response.statusCode === 401 ||
+          response.statusCode === 404 ||
+          response.statusCode === 500
+        ) {
+          let message = '';
+          if (response.message.count > 0) {
+            response.message.forEach(err => (message += `${err}`));
+          } else {
+            message += `${response.message}`;
+          }
+          throw message;
         }
-        throw message;
-      }
-      return response;
-    })
-    .catch((err) => {
-      throw err;
-    });
+        return response;
+      })
+      .catch(err => {
+        console.error(err);
+        throw err;
+      });
   }
 
   async get(url: string) {
@@ -45,27 +50,27 @@ class API {
         'Content-Type': 'application/json',
       },
     })
-    .then(response => response.json())
-    .then(response => {
-      if(
-        response.statusCode === 400 ||
-        response.statusCode === 401 ||
-        response.statusCode === 404
-      ) {
-        let message = `[${response.error}]`;
-        if(response.message.count > 0) {
-          response.message.forEach(err => message += `${err}`);
-        } else {
-          message += `${response.message}`
+      .then(response => response.json())
+      .then(response => {
+        if (
+          response.statusCode === 400 ||
+          response.statusCode === 401 ||
+          response.statusCode === 404
+        ) {
+          let message = `[${response.error}]`;
+          if (response.message.count > 0) {
+            response.message.forEach(err => (message += `${err}`));
+          } else {
+            message += `${response.message}`;
+          }
+          throw message;
         }
-        throw message;
-      }
 
-      return response;
-    })
-    .catch((err) => {
-      throw err;
-    });
+        return response;
+      })
+      .catch(err => {
+        throw err;
+      });
   }
 }
 

@@ -1,17 +1,16 @@
-import { StyleSheet } from "react-native";
-import {Colors} from "@/constants/theme";
+import { StyleSheet } from 'react-native';
+import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
   },
   content: {
-    marginTop: '-10%',
+    paddingTop: 110,
     flex: 1,
     paddingHorizontal: 30,
-    justifyContent: 'center',
   },
-  signInButton:{
+  signInButton: {
     height: 45,
     borderRadius: 10,
   },
@@ -20,9 +19,10 @@ export default StyleSheet.create({
   },
   input: {
     height: 45,
-    marginBottom: 10,
   },
-
+  mt10: {
+    marginTop: 10,
+  },
   socialLoginButton: {
     borderRadius: 10,
     height: 50,
@@ -31,11 +31,15 @@ export default StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 30,
   },
-  socialLoginButtonIcon: {
-  },
+  socialLoginButtonIcon: {},
   socialLoginButtonLabel: {
     flex: 1,
     fontWeight: '500',
     textAlign: 'center',
-  }
+  },
+  errorText: {
+    color: Colors.Medicle.Font.Red,
+    fontSize: 12,
+    fontWeight: 'normal',
+  },
 });
