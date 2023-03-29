@@ -30,7 +30,6 @@ const getEventProducts = async () => {
   return data;
 }
 
-
 const getMoreProductItems = async (productGroup: number, page: number) => {
   const { data } = await Api.get(`/products/items/${productGroup}/${page}`);
   return data;
@@ -41,8 +40,15 @@ const getProductInfo = async (itemId: number) => {
   return data;
 }
 
-const getHospital = async () => {
-  const { data } = await Api.get(`/company`);
+const getHospital = async (name?: string) => {
+  let url = '/company';
+  if(name) url += '/'+name;
+  const { data } = await Api.get(url);
+  return data;
+}
+
+const getHospitalDetail = async (id: number) => {
+  const { data } = await Api.get(`/company/detail/${id}`);
   return data;
 }
 
@@ -57,4 +63,5 @@ export default {
   getProductInfo,
 
   getHospital,
+  getHospitalDetail,
 }

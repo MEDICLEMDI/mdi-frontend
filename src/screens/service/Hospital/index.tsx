@@ -32,6 +32,7 @@ const Hospital = ({
   const [loading, setLoading] = React.useState(false);
   const [productList, setProductList] = React.useState<any>([]);
   const [hospitalList, setHospitalList] = React.useState<any>([]);
+  const [search, setSearch] = React.useState<string | undefined>();
 
   React.useEffect(() => {
     if(index === 0) getEventItemLists();
@@ -52,7 +53,7 @@ const Hospital = ({
 
   const getHospitalList = async () => {
     try {
-      const data = await api.getHospital();
+      const data = await api.getHospital(search);
       setHospitalList(data);
     }
     catch (err) {
@@ -72,6 +73,13 @@ const Hospital = ({
           placeholder={t('input.searchInputPlaceHolder')}
           rightInputNode={<Icon name="search" />}
           direction='row'
+          onChangeText={(text) => setSearch(text)}
+          inputButtonNode={
+          <TouchableOpacity onPress={() => getHospitalList()}>
+            <Text>
+              Search
+            </Text>
+          </TouchableOpacity>}
         />
       </View>
       <View>
