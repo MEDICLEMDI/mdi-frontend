@@ -15,6 +15,8 @@ enum Routes {
   SERVICE = 'Service',
   DASHBOARD = 'Dashboard',
   HOSPITAL = 'Hospital',
+  HOSPITAL_CATEGORY = 'HospitalCategory',
+  PRODUCT_DETAIL = 'ProductDetail',
   HOSPITAL_DETAIL = 'HospitalDetail',
   HOSPITAL_PAYMENT = 'HospitalPayment',
   HOSPITAL_CONTACT = 'HospitalContact',

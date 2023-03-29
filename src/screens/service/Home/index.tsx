@@ -1,26 +1,28 @@
-import { useIsFocused } from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
-import {Image, Platform, SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {Image, SafeAreaView, ScrollView, View} from 'react-native';
 
 import ReviewImage from '@/assets/images/Review.png';
 import Header from '@/components/Header';
 import ImageSlide from '@/components/ImageSlide';
-import { dentist, dermatology, tabs } from '@/constants/category';
+import {dentist, tabs} from '@/constants/category';
 
 import style from './style';
-import { ScrollViewGrid } from "@/components/GridLayout";
+import {ScrollViewGrid} from "@/components/GridLayout";
 import Tab from "@/components/Tab";
-import { MedicleInput } from "@/components/inputs";
+import {MedicleInput} from "@/components/inputs";
 import Icon from "@/icons";
 import ListItem from "@/components/ListItem";
 import {Colors} from "@/constants/theme";
 import api from "@/components/Api";
 import {convertPrice} from "@/utils/utilities";
+import Routes from "@/navigation/Routes";
 
-const Home = ({ navigation }) => {
+const Home = () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
+  const navigation = useNavigation();
 
   const [tabIndex, setTabIndex] = React.useState(0)
   const [productGroups, setProductGroups] = React.useState<any>([]);
@@ -74,73 +76,72 @@ const Home = ({ navigation }) => {
     }
   };
 
-  return (
-    <SafeAreaView style={style.container}>
-      <Header goBack={false} />
-      <ScrollView horizontal={false}>
-        <View>
-          <ImageSlide />
+  return <SafeAreaView style={style.container}>
+    <Header goBack={false} />
+    <ScrollView horizontal={false}>
+      <View>
+        <ImageSlide />
 
-          <View style={style.searchInput}>
-            <MedicleInput
-              placeholder={t('input.searchInputPlaceHolder')}
-              rightInputNode={<Icon name="search" />}
-              direction='row'
-            />
-          </View>
-
-          <Tab
-            data={tabs(t)}
-            tabStyle={style.tabWrap}
-            buttonStyle={style.tabButton}
-            index={tabIndex}
-            response={setTabIndex}
+        <View style={style.searchInput}>
+          <MedicleInput
+            placeholder={t('input.searchInputPlaceHolder')}
+            rightInputNode={<Icon name="search" />}
+            direction='row'
           />
-          <ScrollViewGrid
-            columnWrapperStyle={style.categoryWrap}
-            itemStyle={style.itemStyle}
-            itemBackground='#F3F1EB'
-            iconStyle={style.iconStyle}
-            iconColor={{ fill: Colors.Medicle.Black }}
-            textStyle={style.textStyle}
-            numColumns={numColumns}
-            padding={categoryPadding}
-            gap={gap}
-            data={productGroups === undefined ? dentist(t) : productGroups}
-            renderItem='box'
-            onPress={(item) => console.log(item)}
+        </View>
+
+        <Tab
+          data={tabs(t)}
+          tabStyle={style.tabWrap}
+          buttonStyle={style.tabButton}
+          response={setTabIndex}
+        />
+        <ScrollViewGrid
+          columnWrapperStyle={style.categoryWrap}
+          itemStyle={style.itemStyle}
+          itemBackground='#F3F1EB'
+          iconStyle={style.iconStyle}
+          iconColor={{ fill: Colors.Medicle.Black }}
+          textStyle={style.textStyle}
+          numColumns={numColumns}
+          padding={categoryPadding}
+          gap={gap}
+          data={productGroups === undefined ? dentist(t) : productGroups}
+          renderItem='box'
+          onPress={(item) => {
+            const {HOSPITAL, HOSPITAL_CATEGORY} = Routes;
+            navigation.navigate(HOSPITAL, {params: {groupId: item.id}, screen: HOSPITAL_CATEGORY});
+          }}
+        />
+
+        <View style={style.reviewWrap}>
+          <Image
+            source={ReviewImage}
+            resizeMode="contain"
+            style={style.reviewImage}
           />
+        </View>
 
-          <View style={style.reviewWrap}>
-            <Image
-              source={ReviewImage}
-              resizeMode="contain"
-              style={style.reviewImage}
-            />
-          </View>
-
-          <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
-            {
-              newestProduct.map((item, key) => (
-                <ListItem
-                  key={key}
-                  image={item.pc_image_main}
-                  type="고객평가우수병원"
-                  location={item.company.ci_address.substring(0,2)}
-                  label={item.company.name}
-                  description={item.pc_name}
-                  discount={20}
-                  price={convertPrice(item?.pc_price)}
-                />
-              ))
-            }
-
-          </View>
+        <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
+          {
+            newestProduct.map((item, key) => <ListItem
+                key={key}
+                image={item.pc_image_main}
+                type="고객평가우수병원"
+                location={item.company.ci_address.substring(0,2)}
+                label={item.company.name}
+                description={item.pc_name}
+                discount={20}
+                price={convertPrice(item?.pc_price)}
+                onPress={() => navigation.navigate(Routes.PRODUCT_DETAIL, {id: item.id})}
+              />)
+          }
 
         </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+
+      </View>
+    </ScrollView>
+  </SafeAreaView>;
 };
 
 export default Home;

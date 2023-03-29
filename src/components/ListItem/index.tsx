@@ -5,6 +5,12 @@ import Icon from "@/icons";
 import style from './style';
 import {fontStyleCreator} from "@/utils/fonts";
 import {Colors} from "@/constants/theme";
+import {
+  PRODUCT_INFO_BROWN,
+  PRODUCT_INFO_GRAY,
+  PRODUCT_PRICE_DISCOUNT_LARGE,
+  PRODUCT_PRICE_LARGE
+} from "@/constants/fonts";
 
 const ListItem = ({
   image,
@@ -30,25 +36,6 @@ const ListItem = ({
   price?: string | undefined;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }) => {
-  const DISCOUNT_FONT = fontStyleCreator({
-    size: 14,
-    weight: 'bold',
-    color: Colors.Medicle.Orange,
-  })
-  const ITEM_PRICE_FONT = fontStyleCreator({
-    size: 18,
-    weight: 'bold',
-    color: Colors.Medicle.Font.Brown.Dark,
-  })
-  const DESCRIPTION_FONT = fontStyleCreator({
-    size: 10,
-    color: Colors.Medicle.Font.Gray.Standard,
-  });
-  const ITEM_TITLE_FONT = fontStyleCreator({
-    size: 10,
-    color: Colors.Medicle.Font.Brown.Dark,
-  })
-
   return (
     <BoxDropShadow style={{ marginBottom: 10, }}>
       <TouchableOpacity onPress={onPress} style={style.itemWrap}>
@@ -61,9 +48,9 @@ const ListItem = ({
             price
             ?
             <>
-              <Text style={DESCRIPTION_FONT}>{type}</Text>
-              <Text style={ITEM_TITLE_FONT}>{location} | {label}</Text>
-              <Text style={ITEM_TITLE_FONT}>{description}</Text>
+              <Text style={PRODUCT_INFO_GRAY}>{type}</Text>
+              <Text style={PRODUCT_INFO_BROWN}>{location} | {label}</Text>
+              <Text style={PRODUCT_INFO_BROWN}>{description}</Text>
             </>
             :
             <>
@@ -75,12 +62,12 @@ const ListItem = ({
             <View>
               {
                 Number(discount) !== 0 && (
-                  <Text style={DISCOUNT_FONT}>{discount}%</Text>
+                  <Text style={PRODUCT_PRICE_DISCOUNT_LARGE}>{discount}%</Text>
                 )
               }
               <View style={style.priceWrap}>
-                <Text style={ITEM_PRICE_FONT}>{price}</Text>
-                <Text style={DESCRIPTION_FONT}>&nbsp;VAT포함</Text>
+                <Text style={PRODUCT_PRICE_LARGE}>{price}</Text>
+                <Text style={PRODUCT_INFO_GRAY}>&nbsp;VAT포함</Text>
               </View>
             </View>
             <View>

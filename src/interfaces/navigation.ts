@@ -47,7 +47,10 @@ export type RootStackParamList = {
   [Routes.MYPAGE_SETTINGS]: undefined;
   [Routes.POINT]: undefined;
   [Routes.POINT_CHARGE]: undefined;
+  [Routes.HOSPITAL]: undefined;
   [Routes.HOSPITAL_DETAIL]: { id: number };
+  [Routes.PRODUCT_DETAIL]: { id: number };
+  [Routes.HOSPITAL_CATEGORY]: { groupId: number };
   [Routes.HOSPITAL_PAYMENT]: { itemData: any };
   [Routes.HOSPITAL_CONTACT]: { itemData: any };
   [Routes.RECEIPT]: undefined;

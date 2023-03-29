@@ -22,7 +22,7 @@ import api from "@/components/Api";
 import {convertPrice} from "@/utils/utilities";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ProductDetail = ({
+const HospitalDetail = ({
   navigation,
   route,
 }) => {
@@ -143,7 +143,7 @@ const ProductDetail = ({
 
   return (
     <SafeAreaView style={style.container}>
-      <Header goBack={true} title='예약하기' />
+      <Header goBack={true} title={itemData?.company.name} />
       <ScrollView style={style.container}>
         <View>
           <Image source={{ uri: itemData?.pc_image_main }} resizeMode='cover' style={style.image}/>
@@ -180,9 +180,9 @@ const ProductDetail = ({
           </View>
         </View>
         <View style={style.itemDetailWrap}>
-            <CustomCheckbox selected={(documentAgree.doc1 && documentAgree.doc2)} onPress={() => agreeAll()}>
-              <Text style={[style.checkboxLabel, ALL_CHECK_FONT]}>약관 전체 동의하기</Text>
-            </CustomCheckbox>
+          <CustomCheckbox selected={(documentAgree.doc1 && documentAgree.doc2)} onPress={() => agreeAll()}>
+            <Text style={[style.checkboxLabel, ALL_CHECK_FONT]}>약관 전체 동의하기</Text>
+          </CustomCheckbox>
           <View style={style.hr} />
           <CustomCheckbox selected={documentAgree.doc1} style={style.checkbox} onPress={() => setDocumentAgree({ ...documentAgree, doc1: !documentAgree.doc1})}>
             <Text style={style.checkboxLabel}>[필수]개인정보 수집 동의</Text>
@@ -195,17 +195,17 @@ const ProductDetail = ({
         <View style={style.itemDetailWrap}>
           <TouchableOpacity onPress={() => setVisible(true)}>
             <BoxDropShadow>
-                <Text style={DATE_FONT}>{date.from} {time}</Text>
-                <Text style={PRODUCT_FONT}>{itemData?.company.name}</Text>
-                <Text>
-                  {itemData?.company.ci_address.split(' ')[0]}
-                  &nbsp;|&nbsp;
-                  {itemData?.company.ci_address.split(' ')[1]}</Text>
-                <View style={style.hr} />
-                <Row justify='space-between'>
-                  <Text>진료 항목</Text>
-                  <Text style={SECTION_HEADER_FONT}>{itemData?.pc_name} {convertPrice(itemData?.pc_price)}</Text>
-                </Row>
+              <Text style={DATE_FONT}>{date.from} {time}</Text>
+              <Text style={PRODUCT_FONT}>{itemData?.company.name}</Text>
+              <Text>
+                {itemData?.company.ci_address.split(' ')[0]}
+                &nbsp;|&nbsp;
+                {itemData?.company.ci_address.split(' ')[1]}</Text>
+              <View style={style.hr} />
+              <Row justify='space-between'>
+                <Text>진료 항목</Text>
+                <Text style={SECTION_HEADER_FONT}>{itemData?.pc_name} {convertPrice(itemData?.pc_price)}</Text>
+              </Row>
             </BoxDropShadow>
           </TouchableOpacity>
         </View>
@@ -305,4 +305,4 @@ const ProductDetail = ({
   )
 }
 
-export default ProductDetail;
+export default HospitalDetail;

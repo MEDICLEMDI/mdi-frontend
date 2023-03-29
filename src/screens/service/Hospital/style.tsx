@@ -25,6 +25,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  searchInput: {
+    marginBottom: 20,
+    paddingHorizontal: 20,
+  },
 
   // detail page
   image: {

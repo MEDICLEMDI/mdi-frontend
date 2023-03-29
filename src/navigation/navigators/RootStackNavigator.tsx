@@ -24,7 +24,9 @@ import FindAccount from '@/screens/service/FindAccount';
 import DashBoard from '@/screens/service/Home';
 import Hospital from '@/screens/service/Hospital';
 import HospitalContact from '@/screens/service/Hospital/contact';
-import HospitalDetail from '@/screens/service/Hospital/detail';
+import HospitalDetail from '@/screens/service/Hospital/info';
+import ProductDetail from '@/screens/service/Hospital/detail';
+import HospitalCategory from '@/screens/service/Hospital/category';
 import HospitalPayment from '@/screens/service/Hospital/payment';
 import MarketingConfig from '@/screens/service/MarketingConfig';
 import MedicalState from '@/screens/service/MedicalState';
@@ -81,8 +83,8 @@ const RootStackNavigator = () => {
         <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
         <Stack.Screen name={Routes.REVIEW} component={Review} />
         <Stack.Screen
-          name={Routes.HOSPITAL_DETAIL}
-          component={HospitalDetail}
+          name={Routes.PRODUCT_DETAIL}
+          component={ProductDetail}
         />
         <Stack.Screen
           name={Routes.HOSPITAL_PAYMENT}
@@ -161,8 +163,9 @@ const BottomTabNavigation = () => {
       />
       <Tab.Screen
         name={Routes.HOSPITAL}
-        component={Hospital}
+        component={HospitalStack}
         options={{
+          unmountOnBlur: false,
           title: t('navigation.hospital'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
@@ -206,6 +209,20 @@ const BottomTabNavigation = () => {
     </Tab.Navigator>
   );
 };
+
+const HospitalStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={Routes.HOSPITAL}>
+      <Stack.Screen name={Routes.HOSPITAL} component={Hospital} />
+      <Stack.Screen name={Routes.HOSPITAL_CATEGORY} component={HospitalCategory} />
+      <Stack.Screen name={Routes.HOSPITAL_DETAIL} component={HospitalDetail} />
+    </Stack.Navigator>
+  )
+}
 
 const SettingStack = () => {
   return (

@@ -33,7 +33,7 @@ const Tab = ({
   response,
 }: {
   readonly data: any[];
-  readonly index: number;
+  readonly index?: number | undefined;
   readonly tabSelectedStyle?: [TextStyle, StyleProp<ViewStyle>];
   readonly tabStyle?: StyleProp<ViewStyle>;
   readonly buttonStyle?: StyleProp<ViewStyle>;
@@ -44,6 +44,10 @@ const Tab = ({
   const selected_style_tab = tabSelectedStyle[1];
 
   const [selected, setSelected] = React.useState(0);
+
+  React.useEffect(() => {
+    if(index !== undefined) setSelected(index - 1);
+  }, [index])
 
   return (
     <View style={tabStyle}>
