@@ -84,6 +84,7 @@
     "react-native-device-info": "^10.3.0",
     "react-native-document-picker": "^8.1.1",
     "react-native-dropdown-select-list": "^2.0.4",
+    "react-native-eventemitter": "^0.0.1",
     "react-native-fast-image": "^8.6.1",
     "react-native-fetch-api": "^2.0.0",
     "react-native-file-access": "^2.5.0",

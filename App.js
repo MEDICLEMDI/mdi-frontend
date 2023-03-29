@@ -30,6 +30,7 @@ import Routes from '@/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { initKeyring, login } from '@/redux/slices/keyring';
 import { persistor, store } from '@/redux/store';
+import eventEmitter from '@/utils/eventEmitter';
 import { navigationRef } from '@/utils/navigation';
 
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
@@ -83,6 +84,11 @@ const PersistedApp = () => {
     if (appState.current !== nextAppState) {
       appState.current = nextAppState;
     }
+
+    // 앱이 결제등으로 인해서 잠시 최소화 해야 된다면??..
+    // if (nextAppState === 'background' || nextAppState === 'inactive') {
+    // eventEmitter.emit('appClosed');
+    // }
   };
 
   const unlock = async () => {

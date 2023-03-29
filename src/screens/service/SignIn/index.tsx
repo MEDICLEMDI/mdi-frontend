@@ -17,6 +17,7 @@ import { MedicleInput } from '@/components/inputs';
 import { Colors } from '@/constants/theme';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
+import eventEmitter from '@/utils/eventEmitter';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -45,6 +46,15 @@ const SignIn = ({ navigation }) => {
       passwordInputRef.current?.clear();
     }
   }, [isFocus]);
+
+  React.useEffect(() => {
+    resetStorage();
+  }, []);
+
+  const resetStorage = async () => {
+    await AsyncStorage.removeItem('@Key');
+    await AsyncStorage.removeItem('@User');
+  };
 
   const [signInData, setSignInData] = React.useState<{
     user_id: string | undefined;
@@ -130,10 +140,9 @@ const SignIn = ({ navigation }) => {
       if (!data.access_token || !data.user) {
         throw 'response error';
       }
-      await AsyncStorage.setItem('@Key', data.access_token);
-      await AsyncStorage.setItem('@User', JSON.stringify(data.user));
-
-      navigation.navigate(Routes.DASHBOARD);
+      await setStorage(data).then(() => {
+        eventEmitter.emit('loggedIn');
+      });
     } catch (err) {
       setError({
         ...error,
@@ -143,6 +152,11 @@ const SignIn = ({ navigation }) => {
             : '처리중 오류가 발생하였습니다.',
       });
     }
+  };
+
+  const setStorage = async (data: any) => {
+    await AsyncStorage.setItem('@Key', data.access_token);
+    await AsyncStorage.setItem('@User', JSON.stringify(data.user));
   };
 
   return (
