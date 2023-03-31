@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
 
 import Icons from '@/icons';
 import {
@@ -29,6 +30,7 @@ import HospitalContact from '@/screens/service/Hospital/contact';
 import ProductDetail from '@/screens/service/Hospital/detail';
 import HospitalDetail from '@/screens/service/Hospital/info';
 import HospitalPayment from '@/screens/service/Hospital/payment';
+import LogOut from '@/screens/service/Logout';
 import MarketingConfig from '@/screens/service/MarketingConfig';
 import MedicalState from '@/screens/service/MedicalState';
 import MedicalStateDetail from '@/screens/service/MedicalState/detail';
@@ -63,7 +65,9 @@ const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<ServiceTabParamList>();
 
 const RootStackNavigator = () => {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState<
+    boolean | undefined
+  >(undefined);
   React.useEffect(() => {
     async function checkAuth() {
       try {
@@ -89,23 +93,35 @@ const RootStackNavigator = () => {
       checkAuth();
     };
 
-    // const handleAppClosed = () => {
-    //   checkAuth();
-    // };
+    const handleAutoLoggedIn = () => {
+      checkAuth();
+    };
+
+    const handleAutoLoggedOut = () => {
+      checkAuth();
+    };
 
     eventEmitter.addListener('loggedIn', handleLoggedIn);
     eventEmitter.addListener('loggedOut', handleLoggedOut);
+    eventEmitter.addListener('autoLoggedIn', handleAutoLoggedIn);
+    eventEmitter.addListener('autoLoggedOut', handleAutoLoggedOut);
     // eventEmitter.addListener('appClosed', handleAppClosed);
 
+    setTimeout(() => {
+      RNBootSplash.hide({ fade: true });
+    }, 500);
     return () => {
       eventEmitter.removeListener('loggedIn', handleLoggedIn);
       eventEmitter.removeListener('loggedOut', handleLoggedOut);
-      // eventEmitter.removeListener('appClosed', handleAppClosed);
+      eventEmitter.removeListener('autoLoggedIn', handleAutoLoggedIn);
+      eventEmitter.removeListener('autoLoggedOut', handleAutoLoggedOut);
     };
   }, []);
+
+  const initialRoute = isAuthenticated ? Routes.DASHBOARD : Routes.SIGNIN;
   return (
     <Stack.Navigator
-      initialRouteName={!isAuthenticated ? Routes.SIGNIN : Routes.DASHBOARD}
+      initialRouteName={initialRoute}
       screenOptions={{
         headerShown: false,
       }}>
@@ -129,6 +145,7 @@ const RootStackNavigator = () => {
               component={ServiceContacts}
             />
             <Stack.Screen name={Routes.SIGNOUT} component={SignOut} />
+            <Stack.Screen name={Routes.LOGOUT} component={LogOut} />
             <Stack.Screen name={Routes.REVIEW} component={Review} />
             <Stack.Screen
               name={Routes.PRODUCT_DETAIL}
@@ -143,7 +160,6 @@ const RootStackNavigator = () => {
               component={HospitalContact}
             />
           </Stack.Group>
-
           {/* Wallet Group */}
           <Stack.Group>
             <Stack.Screen

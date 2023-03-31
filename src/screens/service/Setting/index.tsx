@@ -64,6 +64,11 @@ const Setting = ({ navigation }) => {
       onPress: languageChangeHandler,
     },
     {
+      name: t('setting.logOut'),
+      route: 'logOut',
+      onPress: () => pageRoute(Routes.LOGOUT),
+    },
+    {
       name: t('setting.signOut'),
       route: 'SignOut',
       onPress: () => pageRoute(Routes.SIGNOUT),

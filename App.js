@@ -22,6 +22,7 @@ import { Provider } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import api from '@/components/Api';
 import { ErrorBoundary } from '@/components/common';
 import { toastProviderProps } from '@/components/common/Toast';
 import { isIos } from '@/constants/platform';
@@ -106,18 +107,42 @@ const PersistedApp = () => {
   };
 
   useEffect(() => {
+    async function fetchData() {
+      const _jwt = await AsyncStorage.getItem('@Key');
+      const _user = await AsyncStorage.getItem('@User');
+      if (_jwt && _user) {
+        try {
+          const data = await api.autoSignIn();
+          if (data.result && data.message === 'auto login success') {
+            eventEmitter.emit('autoLoggedIn');
+          } else {
+            await resetStorage();
+            eventEmitter.emit('autoLoggedOut');
+          }
+        } catch (err) {
+          await resetStorage();
+          eventEmitter.emit('autoLoggedOut');
+        }
+      }
+    }
+    fetchData();
     dispatch(
       initKeyring({
         callback: () => {
           if (keyring.isInitialized && !keyring.isUnlocked) {
             unlock();
           }
-          RNBootSplash.hide({ fade: true });
-          setShowRoutes(true);
         },
       })
     );
+    // RNBootSplash.hide({ fade: true });
+    setShowRoutes(true);
   }, []);
+
+  const resetStorage = async () => {
+    await AsyncStorage.removeItem('@Key');
+    await AsyncStorage.removeItem('@User');
+  };
 
   return (
     <PersistGate loading={null} persistor={persistor}>

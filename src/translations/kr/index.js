@@ -227,6 +227,7 @@ const translations = {
     marketing: '마케팅 정보 수신',
     signOut: '회원 탈퇴',
     language: '언어 설정',
+    logOut: '로그아웃',
   },
   option: {
     changeLang: '언어 변경',
