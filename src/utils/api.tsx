@@ -17,13 +17,8 @@ class API {
     })
       .then(response => response.json())
       .then(response => {
-        console.log(response);
-        if (
-          response.statusCode === 400 ||
-          response.statusCode === 401 ||
-          response.statusCode === 404 ||
-          response.statusCode === 500
-        ) {
+        let errors = [400, 401, 404, 500];
+        if (errors.includes(response.statusCode)) {
           let message = '';
           if (response.message.count > 0) {
             response.message.forEach(err => (message += `${err}`));
@@ -51,11 +46,8 @@ class API {
     })
       .then(response => response.json())
       .then(response => {
-        if (
-          response.statusCode === 400 ||
-          response.statusCode === 401 ||
-          response.statusCode === 404
-        ) {
+        let errors = [400, 401, 404, 500];
+        if (errors.includes(response.statusCode)) {
           let message = `[${response.error}]`;
           if (response.message.count > 0) {
             response.message.forEach(err => (message += `${err}`));
