@@ -75,8 +75,6 @@ const WalletHome = ({ navigation }: RootScreenProps<Routes.WALLET_HOME>) => {
   useEffect(() => {
     dispatch(getBalance()).then(() => {
       let mdiAsstes = assets.find(token => token.name === 'MDI');
-      console.log(mdiAsstes);
-      console.log('gdgd');
       setMdi(mdiAsstes!);
       setLoading(false);
     });

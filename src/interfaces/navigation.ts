@@ -80,6 +80,7 @@ export type RootStackParamList = {
   [Routes.PERSONAL_DOCUMENT]: undefined;
   [Routes.MARKETING]: undefined;
   [Routes.SIGNOUT]: undefined;
+  [Routes.LOGOUT]: undefined;
 };
 
 export type ServiceTabParamList = {

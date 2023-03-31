@@ -8,6 +8,11 @@ const signIn = async (body: {user_id: string | undefined; password: string | und
   return data;
 }
 
+const autoSignIn = async () => {
+  const data = await Api.get('/auth/check');
+  return data;
+}
+
 // product
 const getProductGroups = async () => {
   const { data } = await Api.get('/products'); // DB 상품 그룹
@@ -54,14 +59,13 @@ const getHospitalDetail = async (id: number) => {
 
 export default {
   signIn,
-
   getProductGroups,
   getNewestProducts,
   getProductGroupItems,
   getEventProducts,
   getMoreProductItems,
   getProductInfo,
-
+  autoSignIn,
   getHospital,
   getHospitalDetail,
 }

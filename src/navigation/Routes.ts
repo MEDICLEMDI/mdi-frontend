@@ -46,6 +46,7 @@ enum Routes {
   SIGNOUT = 'SignOut',
   // Auth Screens:
   LOGIN = 'Login',
+  LOGOUT = 'Logout',
   WELCOME = 'Welcome',
   CREATE_PASSWORD = 'CreatePassword',
   IMPORT_SEED_PHRASE = 'ImportSeedPhrase',

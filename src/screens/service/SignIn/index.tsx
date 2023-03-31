@@ -1,8 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Alert,
+  Image,
+  Modal,
   SafeAreaView,
   Text,
   TextInput,
@@ -10,6 +13,7 @@ import {
   View,
 } from 'react-native';
 
+import Close from '@/assets/images/close.png';
 import MedicleButton from '@/buttons/MedicleButton';
 import api from '@/components/Api';
 import Header from '@/components/Header';
@@ -47,15 +51,6 @@ const SignIn = ({ navigation }) => {
     }
   }, [isFocus]);
 
-  React.useEffect(() => {
-    resetStorage();
-  }, []);
-
-  const resetStorage = async () => {
-    await AsyncStorage.removeItem('@Key');
-    await AsyncStorage.removeItem('@User');
-  };
-
   const [signInData, setSignInData] = React.useState<{
     user_id: string | undefined;
     password: string | undefined;
@@ -76,6 +71,7 @@ const SignIn = ({ navigation }) => {
 
   const emailInputRef = React.useRef<TextInput>(null);
   const passwordInputRef = React.useRef<TextInput>(null);
+  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
 
   const onChange = ({
     v,
@@ -131,6 +127,20 @@ const SignIn = ({ navigation }) => {
       return;
     }
 
+    const user_id = await AsyncStorage.getItem('@User_id');
+    const wallet = await AsyncStorage.getItem('password');
+    if (user_id && wallet) {
+      if (user_id !== `"${signInData.user_id}"`) {
+        setModalVisible(true);
+      } else {
+        handleSignIn();
+      }
+    } else {
+      handleSignIn();
+    }
+  };
+
+  const handleSignIn = async () => {
     try {
       const data = await api.signIn({
         user_id: signInData.user_id,
@@ -140,9 +150,8 @@ const SignIn = ({ navigation }) => {
       if (!data.access_token || !data.user) {
         throw 'response error';
       }
-      await setStorage(data).then(() => {
-        eventEmitter.emit('loggedIn');
-      });
+      await setStorage(data);
+      eventEmitter.emit('loggedIn');
     } catch (err) {
       setError({
         ...error,
@@ -155,8 +164,13 @@ const SignIn = ({ navigation }) => {
   };
 
   const setStorage = async (data: any) => {
+    await AsyncStorage.setItem('@User_id', JSON.stringify(data.user.user_id));
     await AsyncStorage.setItem('@Key', data.access_token);
     await AsyncStorage.setItem('@User', JSON.stringify(data.user));
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -202,6 +216,48 @@ const SignIn = ({ navigation }) => {
           </TouchableOpacity>
         </Row>
       </View>
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={style.modal}>
+          <View style={style.modalContainer}>
+            <View style={{ paddingHorizontal: 20 }}>
+              <View style={style.modalHeader}>
+                <View style={style.modalHeaderCenter}>
+                  <Text style={style.modalTitle}>경고</Text>
+                </View>
+                <TouchableOpacity
+                  style={style.modalHeaderRight}
+                  onPress={handleCloseModal}>
+                  <Image style={style.modalCloseButton} source={Close} />
+                </TouchableOpacity>
+              </View>
+              <View style={style.modalContent}>
+                <Text>
+                  기존 로그인했던 계정과 다른 계정 입니다. 로그인을 계속
+                  진행할시 기존 계정의 지갑이 사라집니다. 기존 계정의 지갑
+                  니모닉넘버를 저장하지 않으셨다면, 기존 지갑을 다시 찾을수
+                  없으니 주의 하시길 바랍니다.
+                </Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', marginTop: 'auto' }}>
+              <MedicleButton
+                textStyle={style.modalCancelText}
+                buttonStyle={style.modalCancelButton}
+                text="취소"
+                onPress={handleCloseModal}
+              />
+              <MedicleButton
+                buttonStyle={style.modalCheckButton}
+                text="로그인"
+                onPress={() => {
+                  handleSignIn();
+                  handleCloseModal();
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };

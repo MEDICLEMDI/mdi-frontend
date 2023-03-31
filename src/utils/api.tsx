@@ -1,7 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-
-import Api from '@/components/Api';
 import Config from 'react-native-config';
 
 class API {
@@ -44,10 +41,12 @@ class API {
   }
 
   async get(url: string) {
+    const token = await AsyncStorage.getItem('@Key');
     return await fetch(`${this.baseUrl}${url}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
     })
       .then(response => response.json())
