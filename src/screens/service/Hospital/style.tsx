@@ -1,5 +1,6 @@
-import {Dimensions, StyleSheet} from 'react-native';
-import {Colors} from "@/constants/theme";
+import { Dimensions, StyleSheet } from 'react-native';
+
+import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
   container: {
@@ -23,7 +24,7 @@ export default StyleSheet.create({
   noData: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   searchInput: {
     marginBottom: 20,
@@ -44,7 +45,6 @@ export default StyleSheet.create({
     borderBottomColor: Colors.Medicle.Gray.Light,
   },
   sectionHeader: {
-    marginTop: 10,
     marginBottom: 20,
   },
   input: {
@@ -110,9 +110,6 @@ export default StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 20,
   },
-  sectionHeader: {
-    // marginBottom: 20,
-  },
   mdiBalance: {
     marginBottom: 10,
   },
@@ -177,5 +174,39 @@ export default StyleSheet.create({
   detailText: {
     fontWeight: 'bold',
     textDecorationLine: 'underline',
+  },
+
+  // info page
+  hospitalInfoWrap: {
+    padding: 30,
+    borderBottomWidth: 10,
+    borderBottomColor: Colors.Medicle.Gray.Light,
+  },
+  timeTableRow: {
+    marginBottom: 14,
+  },
+  mapWrap: {
+    marginTop: 20,
+  },
+  map: {
+    height: 125,
+    borderRadius: 10,
+  },
+  locationAddress: {
+    marginBottom: 20,
+  },
+  reviewWrap: {
+    padding: 30,
+  },
+  reviewItem: {
+    marginBottom: 10,
+    paddingLeft: 25,
+  },
+  reviewIcon: {
+    marginRight: 20,
+    padding: 15,
+    borderRadius: 50,
+    borderColor: '#EFEFEF',
+    borderWidth: 1,
   },
 });

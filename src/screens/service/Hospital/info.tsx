@@ -1,4 +1,5 @@
 import { useIsFocused } from '@react-navigation/native';
+import dayjs from 'dayjs';
 import * as React from 'react';
 import {
   Image,
@@ -12,6 +13,11 @@ import {
 import api from '@/components/Api';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
+import {
+  ITEM_INFO_GRAY,
+  SECTION_CONTENTS,
+  SECTION_HEADER,
+} from '@/constants/fonts';
 import Icon from '@/icons';
 import { Column, Row } from '@/layout';
 
@@ -40,31 +46,9 @@ const HospitalDetail = ({ navigation, route }) => {
       setHospitalData(data.company);
       setTimeTable(data.company.timeTable);
       setReviews(data.review);
-
-      sorting();
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const sorting = () => {
-    const sortingArr = [];
-    const prevData: {
-      ct_work_start: string | undefined;
-      ct_work_end: string | undefined;
-    } = { ct_work_start: undefined, ct_work_end: undefined };
-    timeTable.forEach(time => {
-      if (time.ct_work_start === prevData.ct_work_start) {
-        console.log(time.ct_day);
-      }
-      if (
-        prevData.ct_work_end === undefined &&
-        prevData.ct_work_start === undefined
-      ) {
-        prevData.ct_work_start = time.ct_work_start;
-        prevData.ct_work_end = time.ct_work_end;
-      }
-    });
   };
 
   const timeConvertor = (time: string) => {
@@ -100,62 +84,54 @@ const HospitalDetail = ({ navigation, route }) => {
           resizeMode="cover"
           style={style.image}
         />
-        <View
-          style={{
-            padding: 30,
-            borderBottomWidth: 10,
-            borderBottomColor: '#efefef',
-          }}>
-          <Text>진료시간</Text>
+        <View style={style.hospitalInfoWrap}>
+          <Text style={[SECTION_HEADER, style.sectionHeader]}>진료시간</Text>
           {timeTable.map(
             time =>
               time.ct_holiday === 0 && (
-                <Row key={time?.id}>
-                  <Text>{day[time.ct_day - 1]}요일 </Text>
-                  <Text>{timeConvertor(time?.ct_work_start)}</Text>
-                  <Text>~</Text>
-                  <Text>{timeConvertor(time?.ct_work_end)}</Text>
+                <Row key={time?.id} style={style.timeTableRow}>
+                  <Text style={[SECTION_CONTENTS, { flex: 1 }]}>
+                    {day[time.ct_day - 1]}요일
+                  </Text>
+                  <Text style={[SECTION_CONTENTS, { flex: 5 }]}>
+                    {timeConvertor(time?.ct_work_start)}
+                    &nbsp;~&nbsp;
+                    {timeConvertor(time?.ct_work_end)}
+                  </Text>
                 </Row>
               )
           )}
-          <Column>
+          <Column style={style.mapWrap}>
+            <Text style={[SECTION_HEADER, style.sectionHeader]}>주소</Text>
             <Row justify="space-between">
-              <Text>{hospitalData?.ci_address}</Text>
+              <Text style={style.locationAddress}>
+                {hospitalData?.ci_address}
+              </Text>
               <TouchableOpacity>
                 <Text>주소 복사</Text>
               </TouchableOpacity>
             </Row>
-            <View
-              style={{
-                height: 125,
-                borderRadius: 10,
-                backgroundColor: '#efefef',
-              }}
-            />
+            <View style={style.map} />
           </Column>
         </View>
-        <View style={{ padding: 30 }}>
+        <View style={style.reviewWrap}>
+          <Text style={[SECTION_HEADER, style.sectionHeader]}>병원 후기</Text>
           {reviews.map(item => (
-            <BoxDropShadow
-              key={item?.id}
-              style={{ marginBottom: 10, paddingLeft: 25 }}>
+            <BoxDropShadow key={item?.id} style={style.reviewItem}>
               <Row justify="space-between" align="flex-start">
-                <View
-                  style={{
-                    marginRight: 20,
-                    padding: 15,
-                    borderRadius: 50,
-                    borderColor: '#EFEFEF',
-                    borderWidth: 1,
-                  }}>
+                <View style={style.reviewIcon}>
                   <Icon name="user" stroke="#333333" />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text>{item.user.name}</Text>
+                  <Text style={[SECTION_CONTENTS]}>{item.user.name}</Text>
                   <View>
-                    <Text>{item.cr_contents}</Text>
+                    <Text style={[SECTION_CONTENTS, { marginVertical: 5 }]}>
+                      {item.cr_contents}
+                    </Text>
                   </View>
-                  <Text>{item.appointment.created_at}</Text>
+                  <Text style={ITEM_INFO_GRAY}>
+                    {dayjs(item.appointment.created_at).format('MM.DD')} 예약
+                  </Text>
                 </View>
               </Row>
             </BoxDropShadow>
