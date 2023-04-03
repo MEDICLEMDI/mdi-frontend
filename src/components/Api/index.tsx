@@ -7,13 +7,13 @@ const signIn = async (body: {
   user_id: string | undefined;
   password: string | undefined;
 }) => {
+  await Api.isJWTToken();
   const { data } = await Api.post('/auth', body); // DB 상품 그룹
   return data;
 };
 
 const autoSignIn = async () => {
-  const data = await Api.get('/auth/check');
-  return data;
+  return await Api.get('/auth/check');
 };
 
 // product
@@ -66,8 +66,7 @@ const userWithdraw = async (body: {
   user_id: string | undefined;
   password: string | undefined;
 }) => {
-  const data = await Api.post('/userWithdraw', body);
-  return data;
+  return await Api.post('/userWithdraw', body);
 };
 
 export default {

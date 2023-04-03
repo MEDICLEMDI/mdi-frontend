@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
-import {Colors} from "@/constants/theme";
+
+import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
   container: {
@@ -17,11 +18,11 @@ export default StyleSheet.create({
   justifyTextWrap: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   flexRow: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   itemDate: {
     marginBottom: 20,
@@ -52,7 +53,7 @@ export default StyleSheet.create({
     marginBottom: 30,
   },
   detailWrap: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   detailRow: {
     marginBottom: 10,
@@ -61,7 +62,7 @@ export default StyleSheet.create({
     textAlign: 'left',
   },
   detailTextLabel: {
-    flex: 1
+    flex: 1,
   },
   dentalTextContent: {
     flex: 2,
