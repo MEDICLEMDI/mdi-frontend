@@ -165,7 +165,8 @@ const SignIn = ({ navigation }) => {
 
   const setStorage = async (data: any) => {
     await AsyncStorage.setItem('@User_id', JSON.stringify(data.user.user_id));
-    await AsyncStorage.setItem('@Key', data.access_token);
+    await AsyncStorage.setItem('@AuthKey', data.access_token);
+    await AsyncStorage.setItem('@RefreshKey', data.refresh_token);
     await AsyncStorage.setItem('@User', JSON.stringify(data.user));
   };
 

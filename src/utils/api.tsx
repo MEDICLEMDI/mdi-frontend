@@ -5,29 +5,47 @@ import { errors } from '@/constants/error';
 
 class API {
   readonly baseUrl: string = Config.API_URL;
+  token: string | null = null;
 
   async getJWTToken() {
-    return await AsyncStorage.getItem('@Key');
+    const authKey = await AsyncStorage.getItem('@AuthKey');
+    const refreshKey = await AsyncStorage.getItem('@RefreshKey');
+
+    return {
+      authKey: authKey,
+      refreshKey: refreshKey,
+    };
+  }
+
+  async setAuthToken(): Promise<void> {
+    const { authKey } = await this.getJWTToken();
+    this.token = authKey;
+  }
+
+  async setRefreshToken(): Promise<void> {
+    const { refreshKey } = await this.getJWTToken();
+    this.token = refreshKey;
   }
 
   async isJWTToken() {
     const keys = await AsyncStorage.getAllKeys();
-    return keys.includes('@Key');
+    console.log(keys);
+    return keys.includes('@AuthKey') && keys.includes('@RefreshKey');
   }
 
   async post(url: string, data?: any) {
-    const token = await this.getJWTToken();
     return fetch(`${this.baseUrl}${url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
+        Authorization: 'Bearer ' + this.token,
       },
       body: JSON.stringify(data),
     })
       .then(response => response.json())
       .then(response => {
         errorChecker(response);
+        this.setAuthToken();
         return response;
       })
       .catch(err => {
@@ -37,17 +55,17 @@ class API {
   }
 
   async get(url: string) {
-    const token = await AsyncStorage.getItem('@Key');
-    return await fetch(`${this.baseUrl}${url}`, {
+    return fetch(`${this.baseUrl}${url}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
+        Authorization: 'Bearer ' + this.token,
       },
     })
       .then(response => response.json())
       .then(response => {
         errorChecker(response);
+        this.setAuthToken();
         return response;
       })
       .catch(err => {
@@ -57,7 +75,6 @@ class API {
 }
 
 const errorChecker = (response: any) => {
-  console.log(response);
   if (errors.includes(response.statusCode)) {
     let message = `[${response.error}]`;
     if (response.message.count > 0) {

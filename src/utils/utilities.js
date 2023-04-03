@@ -16,18 +16,24 @@ export function uniqueConcat(a, b) {
   return [...new Set([...a, ...b])];
 }
 
-export const convertPrice = (price) => {
-  if(price === undefined) return 0;
+export const convertPrice = price => {
+  if (price === undefined) {
+    return 0;
+  }
 
-  if(Number(price) < 10000) {
+  if (Number(price) < 10000) {
     return `${price.toLocaleString()}원`;
   }
   const priceLength = price.toString().length;
-  const convertPrice = price.toString().substring(0, (priceLength - 4));
+  const convertPrice = price.toString().substring(0, priceLength - 4);
   return `${Number(convertPrice).toLocaleString('en-US')}만원`;
-}
+};
 
-export const convertNumberLocale = (price) => {
-  if(typeof price === "number") return price.toLocaleString('en-US') + '원';
-  if(typeof price === "string") return Number(price).toLocaleString('en-US') + '원';
-}
+export const convertNumberLocale = price => {
+  if (typeof price === 'number') {
+    return price.toLocaleString('en-US') + '원';
+  }
+  if (typeof price === 'string') {
+    return Number(price).toLocaleString('en-US') + '원';
+  }
+};

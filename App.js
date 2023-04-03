@@ -63,6 +63,21 @@ const PersistedApp = () => {
 
   useEffect(() => {
     const event = AppState.addEventListener('change', handleAppStateChange);
+
+    authChecker();
+
+    dispatch(
+      initKeyring({
+        callback: () => {
+          if (keyring.isInitialized && !keyring.isUnlocked) {
+            unlock();
+          }
+        },
+      })
+    );
+    // RNBootSplash.hide({ fade: true });
+    setShowRoutes(true);
+
     return () => {
       event.remove();
     };
@@ -106,41 +121,34 @@ const PersistedApp = () => {
     );
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      const _jwt = await AsyncStorage.getItem('@Key');
-      const _user = await AsyncStorage.getItem('@User');
-      if (_jwt && _user) {
-        try {
-          const data = await api.autoSignIn();
-          if (data.result && data.message === 'auto login success') {
-            eventEmitter.emit('autoLoggedIn');
-          } else {
-            await resetStorage();
-            eventEmitter.emit('autoLoggedOut');
-          }
-        } catch (err) {
+  const authChecker = async () => {
+    const auth = await api.tokenChecker();
+    console.log(auth);
+    if (auth) {
+      try {
+        await api.setToken('refresh');
+        const response = await api.autoSignIn();
+        if (response.result) {
+          // set new token
+          const { data } = response;
+          await AsyncStorage.setItem('@User', JSON.stringify(data.user));
+          await AsyncStorage.setItem('@AuthKey', data.access_token);
+
+          eventEmitter.emit('autoLoggedIn');
+        } else {
           await resetStorage();
           eventEmitter.emit('autoLoggedOut');
         }
+      } catch (err) {
+        await resetStorage();
+        eventEmitter.emit('autoLoggedOut');
       }
     }
-    fetchData();
-    dispatch(
-      initKeyring({
-        callback: () => {
-          if (keyring.isInitialized && !keyring.isUnlocked) {
-            unlock();
-          }
-        },
-      })
-    );
-    // RNBootSplash.hide({ fade: true });
-    setShowRoutes(true);
-  }, []);
+  };
 
   const resetStorage = async () => {
-    await AsyncStorage.removeItem('@Key');
+    await AsyncStorage.removeItem('@AuthKey');
+    await AsyncStorage.removeItem('@RefreshKey');
     await AsyncStorage.removeItem('@User');
   };
 

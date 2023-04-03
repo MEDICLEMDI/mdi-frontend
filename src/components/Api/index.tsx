@@ -3,17 +3,38 @@ import API from '@/utils/api';
 const Api = new API();
 
 // auth
+const tokenChecker = async () => {
+  if (await Api.isJWTToken()) {
+    // const { authKey, refreshKey } = await Api.getJWTToken();
+    // console.log('authKey:', authKey);
+    // console.log('refreshKey:', refreshKey);
+
+    // 토큰 만료 확인 등
+
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const setToken = async (type?: 'refresh' | 'auth' | undefined) => {
+  if (type === 'refresh') {
+    await Api.setRefreshToken();
+  } else {
+    await Api.setAuthToken();
+  }
+};
+
 const signIn = async (body: {
   user_id: string | undefined;
   password: string | undefined;
 }) => {
-  await Api.isJWTToken();
   const { data } = await Api.post('/auth', body); // DB 상품 그룹
   return data;
 };
 
 const autoSignIn = async () => {
-  return await Api.get('/auth/check');
+  return await Api.post('/auth/refreshtoken');
 };
 
 // product
@@ -70,6 +91,8 @@ const userWithdraw = async (body: {
 };
 
 export default {
+  tokenChecker,
+  setToken,
   signIn,
   getProductGroups,
   getNewestProducts,

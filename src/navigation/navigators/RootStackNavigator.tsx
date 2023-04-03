@@ -1,9 +1,8 @@
-// React native packages
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
@@ -71,52 +70,45 @@ const RootStackNavigator = () => {
   React.useEffect(() => {
     async function checkAuth() {
       try {
-        const token = await AsyncStorage.getItem('@User');
-        const key = await AsyncStorage.getItem('@Key');
-        if (token && key) {
+        const user = await AsyncStorage.getItem('@User');
+        const authKey = await AsyncStorage.getItem('@AuthKey');
+        const refreshKey = await AsyncStorage.getItem('@RefreshKey');
+
+        console.log('user', user);
+        console.log('authKey', authKey);
+        console.log('refreshKey', refreshKey);
+
+        if (authKey && refreshKey && user) {
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
         }
-      } catch (e) {
+      } catch (err) {
+        console.log(err);
         setIsAuthenticated(false);
       }
     }
 
-    checkAuth();
-    // 이벤트 구독
-    const handleLoggedIn = () => {
-      checkAuth();
-    };
-
-    const handleLoggedOut = () => {
-      checkAuth();
-    };
-
-    const handleAutoLoggedIn = () => {
-      checkAuth();
-    };
-
-    const handleAutoLoggedOut = () => {
-      checkAuth();
-    };
-
-    eventEmitter.addListener('loggedIn', handleLoggedIn);
-    eventEmitter.addListener('loggedOut', handleLoggedOut);
-    eventEmitter.addListener('autoLoggedIn', handleAutoLoggedIn);
-    eventEmitter.addListener('autoLoggedOut', handleAutoLoggedOut);
+    eventEmitter.addListener('loggedIn', checkAuth);
+    eventEmitter.addListener('loggedOut', checkAuth);
+    eventEmitter.addListener('autoLoggedIn', checkAuth);
+    eventEmitter.addListener('autoLoggedOut', checkAuth);
     // eventEmitter.addListener('appClosed', handleAppClosed);
 
     setTimeout(() => {
       RNBootSplash.hide({ fade: true });
     }, 500);
     return () => {
-      eventEmitter.removeListener('loggedIn', handleLoggedIn);
-      eventEmitter.removeListener('loggedOut', handleLoggedOut);
-      eventEmitter.removeListener('autoLoggedIn', handleAutoLoggedIn);
-      eventEmitter.removeListener('autoLoggedOut', handleAutoLoggedOut);
+      eventEmitter.removeListener('loggedIn', checkAuth);
+      eventEmitter.removeListener('loggedOut', checkAuth);
+      eventEmitter.removeListener('autoLoggedIn', checkAuth);
+      eventEmitter.removeListener('autoLoggedOut', checkAuth);
     };
   }, []);
+
+  React.useEffect(() => {
+      console.log(isAuthenticated);
+  }, [isAuthenticated])
 
   const initialRoute = isAuthenticated ? Routes.DASHBOARD : Routes.SIGNIN;
   return (
