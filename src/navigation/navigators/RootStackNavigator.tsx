@@ -74,10 +74,6 @@ const RootStackNavigator = () => {
         const authKey = await AsyncStorage.getItem('@AuthKey');
         const refreshKey = await AsyncStorage.getItem('@RefreshKey');
 
-        console.log('user', user);
-        console.log('authKey', authKey);
-        console.log('refreshKey', refreshKey);
-
         if (authKey && refreshKey && user) {
           setIsAuthenticated(true);
         } else {
@@ -93,7 +89,6 @@ const RootStackNavigator = () => {
     eventEmitter.addListener('loggedOut', checkAuth);
     eventEmitter.addListener('autoLoggedIn', checkAuth);
     eventEmitter.addListener('autoLoggedOut', checkAuth);
-    // eventEmitter.addListener('appClosed', handleAppClosed);
 
     setTimeout(() => {
       RNBootSplash.hide({ fade: true });
@@ -106,9 +101,7 @@ const RootStackNavigator = () => {
     };
   }, []);
 
-  React.useEffect(() => {
-      console.log(isAuthenticated);
-  }, [isAuthenticated])
+  React.useEffect(() => {}, [isAuthenticated]);
 
   const initialRoute = isAuthenticated ? Routes.DASHBOARD : Routes.SIGNIN;
   return (

@@ -123,7 +123,7 @@ const PersistedApp = () => {
 
   const authChecker = async () => {
     const auth = await api.tokenChecker();
-    console.log(auth);
+
     if (auth) {
       try {
         await api.setToken('refresh');
@@ -133,7 +133,7 @@ const PersistedApp = () => {
           const { data } = response;
           await AsyncStorage.setItem('@User', JSON.stringify(data.user));
           await AsyncStorage.setItem('@AuthKey', data.access_token);
-
+          await AsyncStorage.setItem('@RefreshKey', data.refresh_token);
           eventEmitter.emit('autoLoggedIn');
         } else {
           await resetStorage();

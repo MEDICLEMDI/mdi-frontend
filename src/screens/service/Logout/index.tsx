@@ -26,7 +26,6 @@ export default () => {
     }
   }, [word]);
 
-
   const resetStorage = async () => {
     await AsyncStorage.removeItem('@User_id');
     await AsyncStorage.removeItem('@AuthKey');
@@ -36,10 +35,8 @@ export default () => {
 
   const handleLogOut = async () => {
     try {
-      const jwt_refresh_token = await AsyncStorage.getItem('@RefreshKey');
-      const data = await api.signOut({
-        jwt_refresh_token: jwt_refresh_token!,
-      });
+      const data = await api.signOut();
+      console.log(data);
     } catch (err) {
       console.log(err);
     } finally {
