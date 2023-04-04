@@ -52,7 +52,6 @@ class API {
         }
       })
       .catch(err => {
-        console.error(err);
         throw err;
       });
   }
@@ -62,8 +61,6 @@ class API {
     init?: RequestInit
   ): Promise<Response> {
     const response = await fetch(input, init);
-    console.log('리스폰스좀 보자');
-    console.log(response);
     if (response.status === 401) {
       await this.refreshToken();
       const updatedInit = {
@@ -74,18 +71,14 @@ class API {
         },
       };
       const refreshResponse = await fetch(input, updatedInit);
-      console.log('결과좀보자');
-      console.log(refreshResponse);
-      console.log('결과좀보자');
       return refreshResponse;
     }
 
+    // console.log('gdgd', response);
     return response;
   }
 
   async post(url: string, data?: any) {
-    console.log('토큰좀 확인해보자');
-    console.log(this.token);
     return this.fetchInterceptor(`${this.baseUrl}${url}`, {
       method: 'POST',
       headers: {
@@ -128,7 +121,7 @@ class API {
 
 const errorChecker = (response: any) => {
   if (errors.includes(response.statusCode)) {
-    let message = `[${response.error}]`;
+    let message = '';
     if (response.message.count > 0) {
       response.message.forEach(err => (message += `${err}`));
     } else {

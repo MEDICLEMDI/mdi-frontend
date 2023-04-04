@@ -27,7 +27,6 @@ export default () => {
   }, [word]);
 
   const resetStorage = async () => {
-    await AsyncStorage.removeItem('@User_id');
     await AsyncStorage.removeItem('@AuthKey');
     await AsyncStorage.removeItem('@RefreshKey');
     await AsyncStorage.removeItem('@User');
