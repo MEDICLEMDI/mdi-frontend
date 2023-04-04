@@ -1,16 +1,17 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, Text, View } from 'react-native';
 
+import api from '@/components/Api';
 import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
 import Hr from '@/components/Hr';
 import { MedicleInput } from '@/components/inputs';
+import eventEmitter from '@/utils/eventEmitter';
 
 import style from './style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import eventEmitter from '@/utils/eventEmitter';
 
 export default () => {
   const { t } = useTranslation();
@@ -25,14 +26,26 @@ export default () => {
     }
   }, [word]);
 
-  const handleLogout = async () => {
-    await resetStorage();
-    eventEmitter.emit('loggedOut');
-  };
 
   const resetStorage = async () => {
-    await AsyncStorage.removeItem('@Key');
+    await AsyncStorage.removeItem('@User_id');
+    await AsyncStorage.removeItem('@AuthKey');
+    await AsyncStorage.removeItem('@RefreshKey');
     await AsyncStorage.removeItem('@User');
+  };
+
+  const handleLogOut = async () => {
+    try {
+      const jwt_refresh_token = await AsyncStorage.getItem('@RefreshKey');
+      const data = await api.signOut({
+        jwt_refresh_token: jwt_refresh_token!,
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await resetStorage();
+      eventEmitter.emit('loggedOut');
+    }
   };
 
   return (
@@ -64,7 +77,7 @@ export default () => {
         <MedicleButton
           text="로그아웃"
           buttonStyle={{ height: 50 }}
-          onPress={handleLogout}
+          onPress={handleLogOut}
         />
       </View>
     </SafeAreaView>

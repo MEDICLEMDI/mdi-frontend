@@ -150,6 +150,9 @@ const SignIn = ({ navigation }) => {
       if (!data.access_token || !data.user) {
         throw 'response error';
       }
+      console.log('gdgd');
+      console.log(data.user);
+      console.log('gdgd');
       await setStorage(data);
       eventEmitter.emit('loggedIn');
     } catch (err) {

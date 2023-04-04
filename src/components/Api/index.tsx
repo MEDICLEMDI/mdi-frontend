@@ -37,6 +37,10 @@ const autoSignIn = async () => {
   return await Api.post('/auth/refreshtoken');
 };
 
+const signOut = async (body: { jwt_refresh_token: string | undefined }) => {
+  return await Api.post('/auth/signout', body);
+};
+
 // product
 const getProductGroups = async () => {
   const { data } = await Api.get('/products'); // DB 상품 그룹
@@ -104,4 +108,5 @@ export default {
   getHospital,
   getHospitalDetail,
   userWithdraw,
+  signOut,
 };
