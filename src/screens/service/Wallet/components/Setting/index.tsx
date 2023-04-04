@@ -36,7 +36,6 @@ import styles from './styles';
 
 const WalletSetting = ({
   navigation,
-  goBack,
 }: RootScreenProps<Routes.WALLET_SETTING>) => {
   const { t } = useTranslation();
   const [mdiAmount, setMdiAmount] = useState(0);

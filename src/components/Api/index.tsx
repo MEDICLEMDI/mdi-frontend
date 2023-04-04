@@ -1,4 +1,5 @@
 import API from '@/utils/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Api = new API();
 
@@ -35,6 +36,13 @@ const signIn = async (body: {
 
 const autoSignIn = async () => {
   return await Api.post('/auth/refreshtoken');
+};
+
+const signOut = async () => {
+  const body = {
+    jwt_refresh_token: await AsyncStorage.getItem('@RefreshKey'),
+  };
+  return await Api.post('/auth/signout', body);
 };
 
 // product
@@ -104,4 +112,5 @@ export default {
   getHospital,
   getHospitalDetail,
   userWithdraw,
+  signOut,
 };

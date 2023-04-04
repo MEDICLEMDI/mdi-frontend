@@ -32,6 +32,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { initKeyring, login } from '@/redux/slices/keyring';
 import { persistor, store } from '@/redux/store';
 import eventEmitter from '@/utils/eventEmitter';
+import { clearStorage } from '@/utils/localStorage';
 import { navigationRef } from '@/utils/navigation';
 
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
@@ -123,7 +124,6 @@ const PersistedApp = () => {
 
   const authChecker = async () => {
     const auth = await api.tokenChecker();
-    console.log(auth);
     if (auth) {
       try {
         await api.setToken('refresh');
@@ -131,8 +131,13 @@ const PersistedApp = () => {
         if (response.result) {
           // set new token
           const { data } = response;
+          await AsyncStorage.setItem(
+            '@LastLogin',
+            JSON.stringify(data.user.user_id)
+          );
           await AsyncStorage.setItem('@User', JSON.stringify(data.user));
           await AsyncStorage.setItem('@AuthKey', data.access_token);
+          await AsyncStorage.setItem('@RefreshKey', data.refresh_token);
 
           eventEmitter.emit('autoLoggedIn');
         } else {

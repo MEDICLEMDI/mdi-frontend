@@ -127,7 +127,7 @@ const SignIn = ({ navigation }) => {
       return;
     }
 
-    const user_id = await AsyncStorage.getItem('@User_id');
+    const user_id = await AsyncStorage.getItem('@LastLogin');
     const wallet = await AsyncStorage.getItem('password');
     if (user_id && wallet) {
       if (user_id !== `"${signInData.user_id}"`) {
@@ -147,12 +147,15 @@ const SignIn = ({ navigation }) => {
         password: signInData.password,
       });
 
+      console.log(data);
+
       if (!data.access_token || !data.user) {
         throw 'response error';
       }
       await setStorage(data);
       eventEmitter.emit('loggedIn');
     } catch (err) {
+      console.log(err);
       setError({
         ...error,
         login:
@@ -164,7 +167,7 @@ const SignIn = ({ navigation }) => {
   };
 
   const setStorage = async (data: any) => {
-    await AsyncStorage.setItem('@User_id', JSON.stringify(data.user.user_id));
+    await AsyncStorage.setItem('@LastLogin', JSON.stringify(data.user.user_id));
     await AsyncStorage.setItem('@AuthKey', data.access_token);
     await AsyncStorage.setItem('@RefreshKey', data.refresh_token);
     await AsyncStorage.setItem('@User', JSON.stringify(data.user));

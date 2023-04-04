@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from 'react-native-config';
 
 import { errors } from '@/constants/error';
+import eventEmitter from '@/utils/eventEmitter';
 
 class API {
   readonly baseUrl: string = Config.API_URL;
@@ -33,8 +34,52 @@ class API {
     return keys.includes('@AuthKey') && keys.includes('@RefreshKey');
   }
 
+  async refreshToken() {
+    await this.setRefreshToken();
+
+    return this.post('/auth/refreshtoken')
+      .then(async response => {
+        if (response.result) {
+          // set new token
+          const { data } = response;
+          await AsyncStorage.setItem('@User', JSON.stringify(data.user));
+          await AsyncStorage.setItem('@AuthKey', data.access_token);
+          await AsyncStorage.setItem('@RefreshKey', data.refresh_token);
+          await this.setAuthToken();
+        } else {
+          await resetStorage();
+          eventEmitter.emit('autoLoggedOut');
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  }
+
+  async fetchInterceptor(
+    input: RequestInfo,
+    init?: RequestInit
+  ): Promise<Response> {
+    const response = await fetch(input, init);
+    if (response.status === 401) {
+      await this.refreshToken();
+      const updatedInit = {
+        ...init,
+        headers: {
+          ...init?.headers,
+          Authorization: 'Bearer ' + this.token,
+        },
+      };
+      const refreshResponse = await fetch(input, updatedInit);
+      return refreshResponse;
+    }
+
+    // console.log('gdgd', response);
+    return response;
+  }
+
   async post(url: string, data?: any) {
-    return fetch(`${this.baseUrl}${url}`, {
+    return this.fetchInterceptor(`${this.baseUrl}${url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +100,7 @@ class API {
   }
 
   async get(url: string) {
-    return fetch(`${this.baseUrl}${url}`, {
+    return this.fetchInterceptor(`${this.baseUrl}${url}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +121,7 @@ class API {
 
 const errorChecker = (response: any) => {
   if (errors.includes(response.statusCode)) {
-    let message = `[${response.error}]`;
+    let message = '';
     if (response.message.count > 0) {
       response.message.forEach(err => (message += `${err}`));
     } else {
@@ -84,6 +129,12 @@ const errorChecker = (response: any) => {
     }
     throw message;
   }
+};
+
+const resetStorage = async () => {
+  await AsyncStorage.removeItem('@AuthKey');
+  await AsyncStorage.removeItem('@RefreshKey');
+  await AsyncStorage.removeItem('@User');
 };
 
 export default API;
