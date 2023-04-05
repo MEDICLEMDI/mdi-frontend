@@ -174,4 +174,15 @@ export default StyleSheet.create({
   passwordLayer: {
     // marginTop: 30,
   },
+  changeButton: {
+    height: 35,
+    marginTop: 20,
+    borderRadius: 10,
+  },
+  chageLayer: {
+    marginTop: 20,
+  },
+  mt10: {
+    marginTop: 10,
+  },
 });
