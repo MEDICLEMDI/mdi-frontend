@@ -92,22 +92,32 @@ const getHospitalDetail = async (id: number) => {
   return data;
 };
 
-const userWithdraw = async (password: string | undefined) => {
+const userWithdraw = async (password: string) => {
   const user_id = await getUserId();
-  const body = {
+  const data = {
     user_id: user_id,
     password: password,
   };
-  return await Api.post('/userWithdraw', body);
+  return await Api.post('/userWithdraw', data);
 };
 
-const getMyPage = async (password: string | undefined) => {
+const getMyPage = async (password: string) => {
   const user_id = await getUserId();
-  const body = {
+  const data = {
     user_id: user_id,
     password: password,
   };
-  return await Api.post('/profile', body);
+  return await Api.post('/profile', data);
+};
+
+const editPassword = async (origin_password: string, new_password: string) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    origin_password: origin_password,
+    new_password: new_password,
+  };
+  return await Api.post('/profile/edit/password', data);
 };
 
 const getUserId = async () => {
@@ -132,4 +142,5 @@ export default {
   userWithdraw,
   signOut,
   getMyPage,
+  editPassword,
 };

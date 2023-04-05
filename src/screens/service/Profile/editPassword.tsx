@@ -3,9 +3,9 @@ import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
-import { onChange } from 'react-native-reanimated';
 
 import MedicleButton from '@/buttons/MedicleButton';
+import api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import { Colors } from '@/constants/theme';
@@ -29,6 +29,7 @@ export interface PasswordErrors {
   origin?: string;
   new?: string;
   confirm?: string;
+  result?: string;
 }
 
 const EditPassword = () => {
@@ -44,6 +45,7 @@ const EditPassword = () => {
     origin: undefined,
     new: undefined,
     confirm: undefined,
+    result: undefined,
   });
   const [buttonDisabled, setButtonDisabled] = React.useState<boolean>(false);
 
@@ -135,6 +137,33 @@ const EditPassword = () => {
     });
   };
 
+  const handleEditPassword = async () => {
+    try {
+      const data = await api.editPassword(
+        passwordData.origin!,
+        passwordData.new!
+      );
+
+      if (data.result) {
+        //성공 로직
+      } else {
+        throw 'error';
+      }
+    } catch (err) {
+      if (err === '비밀번호 틀림') {
+        setErrors({
+          ...errors,
+          result: '기존 비밀번호가 일치하지 않습니다.',
+        });
+      } else {
+        setErrors({
+          ...errors,
+          result: '처리중 오류가 발생하였습니다.',
+        });
+      }
+    }
+  };
+
   const USER_NAME_FONT = fontStyleCreator({
     color: Colors.Medicle.Font.Brown.Dark,
     size: 16,
@@ -189,7 +218,11 @@ const EditPassword = () => {
               text="변경하기"
               buttonStyle={style.changeButton}
               disabled={!buttonDisabled}
+              onPress={handleEditPassword}
             />
+            {errors.result && (
+              <Text style={style.resultErrorMessage}>{errors.result}</Text>
+            )}
           </View>
         </View>
       </ScrollView>

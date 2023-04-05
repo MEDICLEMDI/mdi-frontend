@@ -1,5 +1,5 @@
-import { Platform, StyleSheet } from "react-native";
-import { Colors } from "@/constants/theme";
+import { Platform, StyleSheet } from 'react-native';
+import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
   container: {
@@ -184,5 +184,10 @@ export default StyleSheet.create({
   },
   mt10: {
     marginTop: 10,
+  },
+  resultErrorMessage: {
+    color: Colors.Medicle.Font.Red,
+    fontSize: 12,
+    fontWeight: 'normal',
   },
 });
