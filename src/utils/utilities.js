@@ -25,8 +25,8 @@ export const convertPrice = price => {
     return `${price.toLocaleString()}원`;
   }
   const priceLength = price.toString().length;
-  const convertPrice = price.toString().substring(0, priceLength - 4);
-  return `${Number(convertPrice).toLocaleString('en-US')}만원`;
+  const _convertPrice = price.toString().substring(0, priceLength - 4);
+  return `${Number(_convertPrice).toLocaleString('en-US')}만원`;
 };
 
 export const convertNumberLocale = price => {

@@ -67,9 +67,21 @@ const getEventProducts = async () => {
   return data;
 };
 
-const getMoreProductItems = async (productGroup: number, page: number) => {
-  const { data } = await Api.get(`/products/items/${productGroup}/${page}`);
+const getMoreProductItems = async (
+  productGroup: number,
+  page: number,
+  search?: string
+) => {
+  let url = `/products/items/${productGroup}/${page}`;
+  if (search) {
+    url += '/' + search;
+  }
+  const { data } = await Api.get(url);
   return data;
+};
+// 문의하기
+const insertProductQA = async (data: any) => {
+  return await Api.post('/products/qa', data);
 };
 
 const getProductInfo = async (itemId: number) => {
@@ -77,6 +89,7 @@ const getProductInfo = async (itemId: number) => {
   return data;
 };
 
+// 병원 정보
 const getHospital = async (name?: string) => {
   let url = '/company';
   if (name) {
@@ -88,6 +101,15 @@ const getHospital = async (name?: string) => {
 
 const getHospitalDetail = async (id: number) => {
   const { data } = await Api.get(`/company/detail/${id}`);
+  return data;
+};
+// 진료 내역
+const getUserAppointment = async (id: number, page: number) => {
+  const { data } = await Api.get(`/appointment/list/${id}/${page}`);
+  return data;
+};
+const getAppointmentDetail = async (id: number) => {
+  const { data } = await Api.get(`/appointment/detail/${id}`);
   return data;
 };
 
@@ -111,6 +133,9 @@ export default {
   autoSignIn,
   getHospital,
   getHospitalDetail,
+  getUserAppointment,
+  getAppointmentDetail,
+  insertProductQA,
   userWithdraw,
   signOut,
 };

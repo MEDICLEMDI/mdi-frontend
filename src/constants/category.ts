@@ -3,7 +3,7 @@ import i18n from "@/config/i18n";
 
 export const tabs = (t) => [
   { label: t('category.dental') },
-  { label: t('category.cosmetic') },
+  // { label: t('category.cosmetic') },
 ]
 
 export const dentist = (t) => [

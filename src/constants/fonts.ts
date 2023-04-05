@@ -33,45 +33,62 @@ export const ITEM_INFO_GRAY = fontStyleCreator({
   color: Colors.Medicle.Font.Gray.Standard,
 });
 
-export const PRODUCT_GROUP = fontStyleCreator({
-  size: 12,
-  color: Colors.Medicle.Font.Brown.Dark,
-});
-export const PRODUCT_COMPANY = fontStyleCreator({
-  size: 16,
-  weight: 'bold',
-  color: Colors.Medicle.Font.Brown.Dark,
-});
-export const PRODUCT_INFO_BROWN = fontStyleCreator({
+export const DARK_GRAY_10 = fontStyleCreator({
   size: 10,
-  color: Colors.Medicle.Font.Brown.Dark,
+  color: Colors.Medicle.Font.Gray.Dark,
 });
-export const PRODUCT_PRICE = fontStyleCreator({
-  size: 16,
-  weight: 'bold',
-  color: Colors.Medicle.Font.Brown.Dark,
+export const DARK_GRAY_12 = fontStyleCreator({
+  size: 12,
+  color: Colors.Medicle.Font.Gray.Dark,
 });
-export const PRODUCT_PRICE_LARGE = fontStyleCreator({
-  size: 18,
-  weight: 'bold',
-  color: Colors.Medicle.Font.Brown.Dark,
-});
-export const PRODUCT_PRICE_DISCOUNT = fontStyleCreator({
+
+export const DARK_GRAY_BOLD_12 = fontStyleCreator({
   size: 12,
   weight: 'bold',
-  color: Colors.Medicle.Orange,
+  color: Colors.Medicle.Font.Gray.Dark,
 });
-export const PRODUCT_PRICE_DISCOUNT_LARGE = fontStyleCreator({
+export const DARK_GRAY_BOLD_14 = fontStyleCreator({
   size: 14,
   weight: 'bold',
-  color: Colors.Medicle.Orange,
+  color: Colors.Medicle.Font.Gray.Dark,
 });
-export const PRODUCT_INFO_GRAY = fontStyleCreator({
+export const DARK_GRAY_BOLD_16 = fontStyleCreator({
+  size: 16,
+  weight: 'bold',
+  color: Colors.Medicle.Font.Gray.Dark,
+});
+export const DARK_GRAY_BOLD_18 = fontStyleCreator({
+  size: 18,
+  weight: 'bold',
+  color: Colors.Medicle.Font.Gray.Dark,
+});
+
+export const STANDARD_GRAY_10 = fontStyleCreator({
   size: 10,
   color: Colors.Medicle.Font.Gray.Standard,
 });
-export const PRODUCT_REVIEW_COUNT = fontStyleCreator({
+export const STANDARD_GRAY_12 = fontStyleCreator({
+  size: 12,
+  color: Colors.Medicle.Font.Gray.Standard,
+});
+export const STANDARD_GRAY_14 = fontStyleCreator({
+  size: 14,
+  color: Colors.Medicle.Font.Gray.Standard,
+});
+
+export const ORANGE_BOLD_10 = fontStyleCreator({
   size: 10,
   weight: 'bold',
   color: Colors.Medicle.Orange,
 });
+export const ORANGE_BOLD_12 = fontStyleCreator({
+  size: 12,
+  weight: 'bold',
+  color: Colors.Medicle.Orange,
+});
+
+export const WHITE_BOLD_12 = fontStyleCreator({
+  size: 12,
+  weight: 'bold',
+  color: Colors.Medicle.White,
+})

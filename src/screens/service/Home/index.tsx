@@ -21,7 +21,6 @@ import style from './style';
 
 const Home = () => {
   const { t } = useTranslation();
-  const isFocus = useIsFocused();
   const navigation = useNavigation();
 
   const [tabIndex, setTabIndex] = React.useState(0);
@@ -45,7 +44,9 @@ const Home = () => {
     }
   };
 
-  // constant에 선언되어있는 데이터에 DB에서 불러운 각 항목의 id 값을 추가
+  /*
+   * 데이터베이스에서 상품 종류를 가져와 각 종류에 맞는 라우터 경로를 설정하여 데이터를 재구성
+   * */
   const getProductGroups = async () => {
     try {
       const data = await api.getProductGroups();
@@ -57,7 +58,7 @@ const Home = () => {
         if (index !== -1) {
           productGroupList[index] = {
             ...productGroupList[index],
-            id: Number(data[index].id),
+            id: data[index].id,
           };
         }
       });
@@ -81,6 +82,7 @@ const Home = () => {
       <Header goBack={false} />
       <ScrollView horizontal={false}>
         <View>
+          {/* 이미지 슬라이더 기능 미구현 상태 */}
           <ImageSlide />
 
           <View style={style.searchInput}>
