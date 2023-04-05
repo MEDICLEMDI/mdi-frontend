@@ -4,6 +4,9 @@ enum Routes {
   TOKENS = 'Tokens',
   PROFILE = 'Profile',
   EDIT_PROFILE = 'EditProfile',
+  EDIT_PASSWORD = 'EditPassword',
+  EDIT_PHONE = 'EditPhone',
+  EDIT_ADDRESS = 'EditAddress',
   SWIPE_LAYOUT = 'SwipeLayout',
   // Service Page
   // SOCIAL = 'Social',

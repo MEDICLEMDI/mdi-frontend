@@ -1,5 +1,5 @@
-import { Platform, StyleSheet } from "react-native";
-import { Colors } from "@/constants/theme";
+import { Platform, StyleSheet } from 'react-native';
+import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
   container: {
@@ -173,5 +173,21 @@ export default StyleSheet.create({
   },
   passwordLayer: {
     // marginTop: 30,
+  },
+  changeButton: {
+    height: 35,
+    marginTop: 20,
+    borderRadius: 10,
+  },
+  chageLayer: {
+    marginTop: 20,
+  },
+  mt10: {
+    marginTop: 10,
+  },
+  resultErrorMessage: {
+    color: Colors.Medicle.Font.Red,
+    fontSize: 12,
+    fontWeight: 'normal',
   },
 });

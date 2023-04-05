@@ -45,15 +45,10 @@ export default () => {
 
   const handleUserWithdraw = async () => {
     try {
-      let _user_id = await AsyncStorage.getItem('@User');
-      const data = await api.userWithdraw({
-        user_id: _user_id?.replaceAll('"', ''),
-        password: password,
-      });
-
+      const data = await api.userWithdraw(password);
       console.log(data);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

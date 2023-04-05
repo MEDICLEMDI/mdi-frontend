@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RouteProp, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
@@ -9,7 +9,6 @@ import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
-import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -22,7 +21,7 @@ export interface User {
   address2?: string;
   phone?: string;
 }
-const EditProfile = ({ navigation }) => {
+const EditPhone = () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [user, setUser] = React.useState<User | undefined>(undefined);
@@ -82,9 +81,7 @@ const EditProfile = ({ navigation }) => {
             <View style={style.row}>
               <Text style={style.title}>비밀번호</Text>
               <MedicleButton
-                onPress={() => {
-                  navigation.navigate(Routes.EDIT_PASSWORD);
-                }}
+                onPress={() => console.log()}
                 text={'변경'}
                 buttonStyle={style.buttonStyle}
               />
@@ -95,9 +92,7 @@ const EditProfile = ({ navigation }) => {
             <View style={style.row}>
               <Text style={style.title}>주소</Text>
               <MedicleButton
-                onPress={() => {
-                  navigation.navigate(Routes.EDIT_ADDRESS);
-                }}
+                onPress={() => console.log()}
                 text={'변경'}
                 buttonStyle={style.buttonStyle}
               />
@@ -130,9 +125,7 @@ const EditProfile = ({ navigation }) => {
             <View style={style.row}>
               <Text style={style.title}>전화번호</Text>
               <MedicleButton
-                onPress={() => {
-                  navigation.navigate(Routes.EDIT_PHONE);
-                }}
+                onPress={() => console.log()}
                 text={'변경'}
                 buttonStyle={style.buttonStyle}
               />
@@ -152,4 +145,4 @@ const EditProfile = ({ navigation }) => {
   );
 };
 
-export default EditProfile;
+export default EditPhone;

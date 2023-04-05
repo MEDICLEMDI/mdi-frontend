@@ -36,6 +36,7 @@ class API {
 
   async refreshToken() {
     await this.setRefreshToken();
+    console.log('리프레쉬 작동햇다!');
 
     return this.post('/auth/refreshtoken')
       .then(async response => {
@@ -51,7 +52,9 @@ class API {
           eventEmitter.emit('autoLoggedOut');
         }
       })
-      .catch(err => {
+      .catch(async err => {
+        await resetStorage();
+        eventEmitter.emit('autoLoggedOut');
         throw err;
       });
   }
@@ -94,7 +97,6 @@ class API {
         return response;
       })
       .catch(err => {
-        console.error(err);
         throw err;
       });
   }

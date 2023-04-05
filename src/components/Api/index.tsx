@@ -1,5 +1,6 @@
-import API from '@/utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import API from '@/utils/api';
 
 const Api = new API();
 
@@ -113,11 +114,38 @@ const getAppointmentDetail = async (id: number) => {
   return data;
 };
 
-const userWithdraw = async (body: {
-  user_id: string | undefined;
-  password: string | undefined;
-}) => {
-  return await Api.post('/userWithdraw', body);
+const userWithdraw = async (password: string) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    password: password,
+  };
+  return await Api.post('/userWithdraw', data);
+};
+
+const getMyPage = async (password: string) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    password: password,
+  };
+  return await Api.post('/profile', data);
+};
+
+const editPassword = async (origin_password: string, new_password: string) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    origin_password: origin_password,
+    new_password: new_password,
+  };
+  return await Api.post('/profile/edit/password', data);
+};
+
+const getUserId = async () => {
+  const user = await AsyncStorage.getItem('@User');
+  const user_id = JSON.parse(user!).user_id;
+  return user_id;
 };
 
 export default {
@@ -138,4 +166,6 @@ export default {
   insertProductQA,
   userWithdraw,
   signOut,
+  getMyPage,
+  editPassword,
 };
