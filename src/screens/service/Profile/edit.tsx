@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,9 +12,47 @@ import Icon from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
+
+export interface User {
+  name?: string;
+  email?: string;
+  post_number?: string;
+  address1?: string;
+  address2?: string;
+  phone?: string;
+}
 const EditProfile = () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
+  const [user, setUser] = React.useState<User | undefined>(undefined);
+
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('@User');
+        if (userData) {
+          let _user = JSON.parse(userData);
+          setUser({
+            ...user,
+            post_number: _user.post_number,
+            address1: _user.address,
+            address2: _user.address2,
+            phone: _user.phone,
+            name: _user.name,
+            email: _user.email,
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  React.useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const USER_NAME_FONT = fontStyleCreator({
     color: Colors.Medicle.Font.Brown.Dark,
@@ -32,8 +71,8 @@ const EditProfile = () => {
         <View style={[style.contentWrap, style.profileHeader]}>
           <Icon name="userCircle" />
           <View style={{ marginLeft: 15 }}>
-            <Text style={USER_NAME_FONT}>UserName</Text>
-            <Text style={USER_EMAIL_FONT}>userEmail@email.com</Text>
+            <Text style={USER_NAME_FONT}>{user?.name}</Text>
+            <Text style={USER_EMAIL_FONT}>{user?.email}</Text>
           </View>
         </View>
         <View style={style.contentWrap}>
@@ -60,15 +99,24 @@ const EditProfile = () => {
             </View>
             <MedicleInput
               style={style.input}
+              value={user?.post_number}
               direction="column"
+              editable={false}
+              clearButton={false}
               placeholder={t('input.postCodePlaceholder')}
             />
             <MedicleInput
               style={style.input}
+              value={user?.address1}
+              editable={false}
+              clearButton={false}
               placeholder={t('input.addressPlaceholder')}
             />
             <MedicleInput
               style={style.input}
+              value={user?.address2}
+              editable={false}
+              clearButton={false}
               placeholder={t('input.addressDetailPlaceholder')}
             />
           </View>
@@ -84,54 +132,15 @@ const EditProfile = () => {
             </View>
             <MedicleInput
               direction="column"
+              editable={false}
+              value={user?.phone}
+              clearButton={false}
               // label={<Text>{t('input.phone')}</Text>}
               placeholder={t('input.phonePlaceholder')}
             />
           </View>
         </View>
       </ScrollView>
-      <Modal animationType="fade" transparent={true} visible={modalVisible}>
-        <View style={style.modal}>
-          <View style={style.modalContainer}>
-            <View style={{ paddingHorizontal: 20 }}>
-              <View style={style.modalHeader}>
-                <View style={style.modalHeaderCenter}>
-                  <Text style={style.modalTitle}>경고</Text>
-                </View>
-                <TouchableOpacity
-                  style={style.modalHeaderRight}
-                  onPress={handleCloseModal}>
-                  <Image style={style.modalCloseButton} source={Close} />
-                </TouchableOpacity>
-              </View>
-              <View style={style.modalContent}>
-                <Text>
-                  기존 로그인했던 계정과 다른 계정 입니다. 로그인을 계속
-                  진행할시 기존 계정의 지갑이 사라집니다. 기존 계정의 지갑
-                  니모닉넘버를 저장하지 않으셨다면, 기존 지갑을 다시 찾을수
-                  없으니 주의 하시길 바랍니다.
-                </Text>
-              </View>
-            </View>
-            <View style={{ flexDirection: 'row', marginTop: 'auto' }}>
-              <MedicleButton
-                textStyle={style.modalCancelText}
-                buttonStyle={style.modalCancelButton}
-                text="취소"
-                onPress={handleCloseModal}
-              />
-              <MedicleButton
-                buttonStyle={style.modalCheckButton}
-                text="로그인"
-                onPress={() => {
-                  handleSignIn();
-                  handleCloseModal();
-                }}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
     </SafeAreaView>
   );
 };
