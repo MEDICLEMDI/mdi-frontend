@@ -1,5 +1,6 @@
-import API from '@/utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import API from '@/utils/api';
 
 const Api = new API();
 
@@ -91,11 +92,28 @@ const getHospitalDetail = async (id: number) => {
   return data;
 };
 
-const userWithdraw = async (body: {
-  user_id: string | undefined;
-  password: string | undefined;
-}) => {
+const userWithdraw = async (password: string | undefined) => {
+  const user_id = await getUserId();
+  const body = {
+    user_id: user_id,
+    password: password,
+  };
   return await Api.post('/userWithdraw', body);
+};
+
+const getMyPage = async (password: string | undefined) => {
+  const user_id = await getUserId();
+  const body = {
+    user_id: user_id,
+    password: password,
+  };
+  return await Api.post('/profile', body);
+};
+
+const getUserId = async () => {
+  const user = await AsyncStorage.getItem('@User');
+  const user_id = JSON.parse(user!).user_id;
+  return user_id;
 };
 
 export default {
@@ -113,4 +131,5 @@ export default {
   getHospitalDetail,
   userWithdraw,
   signOut,
+  getMyPage,
 };
