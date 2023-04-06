@@ -232,4 +232,14 @@ export default StyleSheet.create({
     flex: 1,
     borderWidth: 1,
   },
+  smsAuthButton: {
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  timer: {
+    color: Colors.Medicle.Font.Brown.Standard,
+    fontWeight: '700',
+    fontSize: 12,
+  },
 });
