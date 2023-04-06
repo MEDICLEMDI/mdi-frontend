@@ -9,10 +9,8 @@ import api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import ResultModal from '@/components/ResultModal';
-import ResultPage from '@/components/ResultPage';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
-import navigation from '@/navigation/index';
 import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
 
@@ -235,7 +233,7 @@ const EditPassword = ({ navigation }) => {
           {/* Input Wrap */}
           <View style={style.inputGroup}>
             <Text style={style.title}>비밀번호 변경</Text>
-            <View style={style.chageLayer}>
+            <View style={style.changeLayer}>
               <MedicleInput
                 password={true}
                 value={passwordData.origin}

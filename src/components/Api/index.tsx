@@ -142,6 +142,21 @@ const editPassword = async (origin_password: string, new_password: string) => {
   return await Api.post('/profile/edit/password', data);
 };
 
+const editAddress = async (
+  post_number: string,
+  address1: string,
+  address2: string
+) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    post_number: post_number,
+    address1: address1,
+    address2: address2,
+  };
+  return await Api.post('/profile/edit/address', data);
+};
+
 const getUserId = async () => {
   const user = await AsyncStorage.getItem('@User');
   const user_id = JSON.parse(user!).user_id;
@@ -168,4 +183,5 @@ export default {
   signOut,
   getMyPage,
   editPassword,
+  editAddress,
 };

@@ -1,4 +1,5 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+
 import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
@@ -179,7 +180,7 @@ export default StyleSheet.create({
     marginTop: 20,
     borderRadius: 10,
   },
-  chageLayer: {
+  changeLayer: {
     marginTop: 20,
   },
   mt10: {
@@ -189,5 +190,46 @@ export default StyleSheet.create({
     color: Colors.Medicle.Font.Red,
     fontSize: 12,
     fontWeight: 'normal',
+  },
+  addressSearchButton: {
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  addressModalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.Medicle.ModalBackground,
+  },
+  addressModal: {
+    width: 360,
+    height: 500,
+    // flex: 1,
+    backgroundColor: Colors.Medicle.White,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  addressModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  addressModalClose: {
+    width: 15,
+    height: 15,
+  },
+  addressModalTitle: {
+    fontWeight: '700',
+    fontSize: 16,
+    color: Colors.Medicle.Font.Gray.Dark,
+  },
+  postCode: {
+    width: 320,
+    height: 320,
+    flex: 1,
+    borderWidth: 1,
   },
 });
