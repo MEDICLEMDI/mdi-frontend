@@ -3,7 +3,7 @@ import CryptoJS from 'crypto-js';
 import Config from 'react-native-config';
 
 export const passwordCheck = async (password: string) => {
-  const encryptKey = await AsyncStorage.getItem('password');
+  const encryptKey = await AsyncStorage.getItem('@WalletPassword');
   const orginPassword = CryptoJS.AES.decrypt(
     encryptKey,
     Config.AES_KEY

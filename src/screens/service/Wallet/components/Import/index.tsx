@@ -70,7 +70,7 @@ const WalletImport = ({ route }: RootScreenProps<Routes.WALLET_IMPORT>) => {
               dispatch(getBalance());
             });
             const encryptKey = AES.encrypt(password, Config.AES_KEY).toString();
-            await AsyncStorage.setItem('password', encryptKey);
+            await AsyncStorage.setItem('@WalletPassword', encryptKey);
           },
         })
       ).then(res => {

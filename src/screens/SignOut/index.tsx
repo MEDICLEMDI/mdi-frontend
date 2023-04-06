@@ -13,19 +13,23 @@ import {
 
 import Warning from '@/assets/icons/info-circle.png';
 import Close from '@/assets/images/close.png';
-import Accordion from '@/components/Accordion';
 import api from '@/components/Api';
 import MedicleButton from '@/components/buttons/MedicleButton';
 import { CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
 import Hr from '@/components/Hr';
 import MedicleInput from '@/components/inputs/MedicleInput';
-import LoadingModal from '@/components/LoadingModal';
+import { useAppDispatch } from '@/redux/hooks';
+import { reset as resetICPStore } from '@/redux/slices/icp';
+import { reset as resetKeyringStore } from '@/redux/slices/keyring';
+import { reset as resetUserStore } from '@/redux/slices/user';
+import { clearState as resetWalletConnectStore } from '@/redux/slices/walletconnect';
+import eventEmitter from '@/utils/eventEmitter';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
 
-export default () => {
+export default ({ navigation }) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [signOutAgree, setSignOutAgree] = React.useState(false);
@@ -38,6 +42,7 @@ export default () => {
     React.useState<string>('');
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
   const [passwordVaild, setPasswordVaild] = React.useState(false);
+  const dispatch = useAppDispatch();
 
   const BOLD = fontStyleCreator({
     weight: 'bold',
@@ -46,7 +51,12 @@ export default () => {
   const handleUserWithdraw = async () => {
     try {
       const data = await api.userWithdraw(password);
-      console.log(data);
+      if (data.result) {
+        setModalVisible(false);
+        await AsyncStorage.clear();
+        handleDeleteWallet();
+        eventEmitter.emit('loggedOut');
+      }
     } catch (err) {
       console.error(err);
     }
@@ -60,6 +70,13 @@ export default () => {
     setPasswordErrMessage('');
     setPasswordVaild(text.length > 7);
     setPassword(text);
+  };
+
+  const handleDeleteWallet = async () => {
+    dispatch(resetUserStore());
+    dispatch(resetICPStore());
+    dispatch(resetWalletConnectStore());
+    dispatch(resetKeyringStore());
   };
 
   if (page === 'about wallet') {

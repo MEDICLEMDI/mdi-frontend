@@ -109,7 +109,7 @@ const PersistedApp = () => {
   };
 
   const unlock = async () => {
-    const encryptKey = await AsyncStorage.getItem('password');
+    const encryptKey = await AsyncStorage.getItem('@WalletPassword');
     const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
       CryptoJS.enc.Utf8
     );

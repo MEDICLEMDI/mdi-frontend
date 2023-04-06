@@ -76,7 +76,7 @@ const WalletCreatePassword = ({
                 password,
                 Config.AES_KEY
               ).toString();
-              AsyncStorage.setItem('password', encryptKey);
+              await AsyncStorage.setItem('@WalletPassword', encryptKey);
             }
           });
       } catch (e) {
