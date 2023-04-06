@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
-import ResultPage from '@/components/Result';
+import ResultPage from '@/components/ResultPage';
 import { Colors } from '@/constants/theme';
 import Routes from '@/navigation/Routes';
 import API from '@/utils/api';
