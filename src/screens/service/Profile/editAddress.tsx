@@ -1,14 +1,27 @@
+import Postcode from '@actbase/react-daum-postcode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import {
+  Image,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
+import Close from '@/assets/images/close.png';
 import MedicleButton from '@/buttons/MedicleButton';
+import api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
+import ResultModal from '@/components/ResultModal';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -19,12 +32,24 @@ export interface User {
   post_number?: string;
   address1?: string;
   address2?: string;
-  phone?: string;
 }
-const EditAddress = () => {
+
+export interface Address {
+  post_number?: string;
+  address1?: string;
+  address2?: string;
+}
+const EditAddress = ({ navigation }) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [user, setUser] = React.useState<User | undefined>(undefined);
+  const [addressModal, setAddressModal] = React.useState<boolean>(false);
+  const [buttonDisabled, setButtonDisabled] = React.useState(false);
+  const [originAddress, setOriginAddress] = React.useState<
+    Address | undefined
+  >();
+  const [result, setResult] = React.useState(false);
+  const [error, setError] = React.useState<string | undefined>(undefined);
 
   React.useEffect(() => {
     const fetchUser = async () => {
@@ -37,9 +62,14 @@ const EditAddress = () => {
             post_number: _user.post_number,
             address1: _user.address,
             address2: _user.address2,
-            phone: _user.phone,
             name: _user.name,
             email: _user.email,
+          });
+          setOriginAddress({
+            ...originAddress,
+            post_number: _user.post_number,
+            address1: _user.address,
+            address2: _user.address2,
           });
         }
       } catch (e) {
@@ -51,7 +81,14 @@ const EditAddress = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(user);
+    const addressValid =
+      user &&
+      originAddress &&
+      (user?.post_number !== originAddress?.post_number ||
+        user?.address1 !== originAddress?.address1 ||
+        user?.address2 !== originAddress?.address2);
+
+    setButtonDisabled(addressValid! && user.address2 !== '');
   }, [user]);
 
   const USER_NAME_FONT = fontStyleCreator({
@@ -63,6 +100,26 @@ const EditAddress = () => {
     color: Colors.Medicle.Font.Gray.Dark,
     size: 10,
   });
+
+  const handleEditAddress = async () => {
+    try {
+      const data = await api.editAddress(
+        user?.post_number!,
+        user?.address1!,
+        user?.address2!
+      );
+      console.log(data);
+      if (data.result) {
+        await AsyncStorage.setItem('@User', JSON.stringify(data.data.user));
+        setResult(true);
+      } else {
+        throw 'err';
+      }
+    } catch (err) {
+      console.error(err);
+      setError('처리중 오류가 발생하였습니다.');
+    }
+  };
 
   return (
     <SafeAreaView style={style.container}>
@@ -78,68 +135,100 @@ const EditAddress = () => {
         <View style={style.contentWrap}>
           {/* Input Wrap */}
           <View style={style.inputGroup}>
-            <View style={style.row}>
-              <Text style={style.title}>비밀번호</Text>
-              <MedicleButton
-                onPress={() => console.log()}
-                text={'변경'}
-                buttonStyle={style.buttonStyle}
+            <Text style={style.title}>주소 변경</Text>
+            <View style={style.changeLayer}>
+              <MedicleInput
+                value={user?.post_number}
+                direction="row"
+                placeholder={t('signUp.address1')}
+                editable={false}
+                clearButton={false}
+                inputButtonNode={
+                  <MedicleButton
+                    buttonStyle={style.addressSearchButton}
+                    text={t('signUp.addressSearch')}
+                    onPress={() => {
+                      setAddressModal(true);
+                    }}
+                  />
+                }
+              />
+              <MedicleInput
+                value={user?.address1}
+                placeholder={t('signUp.address2')}
+                style={style.mt10}
+                editable={false}
+                clearButton={false}
+              />
+              <MedicleInput
+                value={user?.address2}
+                onChangeText={text =>
+                  setUser({
+                    ...user,
+                    address2: text,
+                  })
+                }
+                placeholder={t('signUp.address3')}
+                style={style.mt10}
               />
             </View>
-          </View>
-
-          <View style={style.inputGroup}>
-            <View style={style.row}>
-              <Text style={style.title}>주소</Text>
-              <MedicleButton
-                onPress={() => console.log()}
-                text={'변경'}
-                buttonStyle={style.buttonStyle}
-              />
-            </View>
-            <MedicleInput
-              style={style.input}
-              value={user?.post_number}
-              direction="column"
-              editable={false}
-              clearButton={false}
-              placeholder={t('input.postCodePlaceholder')}
+            <MedicleButton
+              text="변경하기"
+              buttonStyle={style.changeButton}
+              disabled={!buttonDisabled}
+              onPress={handleEditAddress}
             />
-            <MedicleInput
-              style={style.input}
-              value={user?.address1}
-              editable={false}
-              clearButton={false}
-              placeholder={t('input.addressPlaceholder')}
-            />
-            <MedicleInput
-              style={style.input}
-              value={user?.address2}
-              editable={false}
-              clearButton={false}
-              placeholder={t('input.addressDetailPlaceholder')}
-            />
-          </View>
-
-          <View style={style.inputGroup}>
-            <View style={style.row}>
-              <Text style={style.title}>전화번호</Text>
-              <MedicleButton
-                onPress={() => console.log()}
-                text={'변경'}
-                buttonStyle={style.buttonStyle}
-              />
-            </View>
-            <MedicleInput
-              direction="column"
-              editable={false}
-              value={user?.phone}
-              clearButton={false}
-              // label={<Text>{t('input.phone')}</Text>}
-              placeholder={t('input.phonePlaceholder')}
-            />
+            {error && <Text style={style.resultErrorMessage}>{error}</Text>}
           </View>
         </View>
+
+        {addressModal && (
+          <Modal animationType="fade" transparent={true} visible={addressModal}>
+            <View style={style.addressModalContainer}>
+              <View style={style.addressModal}>
+                <View style={style.addressModalHeader}>
+                  <Text style={style.addressModalTitle}>
+                    {t('signUp.addressModal')}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setAddressModal(false);
+                    }}>
+                    <Image source={Close} style={style.addressModalClose} />
+                  </TouchableOpacity>
+                </View>
+                <Postcode
+                  style={style.postCode}
+                  jsOptions={{ animation: true }}
+                  onSelected={data => {
+                    console.log(data);
+                    setUser({
+                      ...user,
+                      address1: `${data.sido} ${data.roadAddress.slice(
+                        data.sido.length + 1
+                      )}`,
+                      post_number: data.zonecode.toString(),
+                      address2: '',
+                    });
+                    setAddressModal(false);
+                  }}
+                  onError={() => {
+                    console.log('에러');
+                  }}
+                />
+              </View>
+            </View>
+          </Modal>
+        )}
+        <ResultModal
+          visible={result}
+          buttonText="확인"
+          resultText="변경이 완료되었습니다."
+          onPress={() => {
+            setResult(false);
+            navigation.navigate(Routes.EDIT_PROFILE);
+          }}
+        />
       </ScrollView>
     </SafeAreaView>
   );

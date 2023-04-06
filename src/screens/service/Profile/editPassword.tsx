@@ -2,14 +2,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
 
 import MedicleButton from '@/buttons/MedicleButton';
 import api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
+import ResultModal from '@/components/ResultModal';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -32,7 +34,7 @@ export interface PasswordErrors {
   result?: string;
 }
 
-const EditPassword = () => {
+const EditPassword = ({ navigation }) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [user, setUser] = React.useState<User | undefined>(undefined);
@@ -48,6 +50,8 @@ const EditPassword = () => {
     result: undefined,
   });
   const [buttonDisabled, setButtonDisabled] = React.useState<boolean>(false);
+  const originRef = React.useRef<TextInput>(null);
+  const [result, setResult] = React.useState(false);
 
   React.useEffect(() => {
     const fetchUser = async () => {
@@ -101,7 +105,20 @@ const EditPassword = () => {
           [type]: '비밀번호는 8~20 글자 입니다.',
         });
       } else {
-        errorClear(type);
+        if (password === passwordData.new) {
+          console.log('같잖아');
+          setErrors({
+            ...errors,
+            new: '기존 비밀번호와 동일한 비밀번호 입니다.',
+            [type]: undefined,
+          });
+        } else {
+          setErrors({
+            ...errors,
+            new: undefined,
+            [type]: undefined,
+          });
+        }
       }
     }
 
@@ -114,7 +131,27 @@ const EditPassword = () => {
           [type]: '비밀번호는 영문/숫자/특수문자 혼합 8~20자 입니다.',
         });
       } else {
-        errorClear(type);
+        if (password === passwordData.origin) {
+          setErrors({
+            ...errors,
+            [type]: '기존 비밀번호와 동일한 비밀번호 입니다.',
+          });
+        } else if (
+          password !== passwordData.confirm &&
+          passwordData.confirm !== ''
+        ) {
+          setErrors({
+            ...errors,
+            confirm: '비밀번호가 일치하지 않습니다.',
+            [type]: undefined,
+          });
+        } else {
+          setErrors({
+            ...errors,
+            confirm: undefined,
+            [type]: undefined,
+          });
+        }
       }
     }
 
@@ -145,16 +182,23 @@ const EditPassword = () => {
       );
 
       if (data.result) {
-        //성공 로직
+        console.log(data);
+        setResult(true);
       } else {
         throw 'error';
       }
     } catch (err) {
+      console.error(err);
       if (err === '비밀번호 틀림') {
         setErrors({
           ...errors,
           result: '기존 비밀번호가 일치하지 않습니다.',
         });
+        setPasswordData({
+          ...passwordData,
+          origin: '',
+        });
+        originRef.current?.focus();
       } else {
         setErrors({
           ...errors,
@@ -189,13 +233,14 @@ const EditPassword = () => {
           {/* Input Wrap */}
           <View style={style.inputGroup}>
             <Text style={style.title}>비밀번호 변경</Text>
-            <View style={style.chageLayer}>
+            <View style={style.changeLayer}>
               <MedicleInput
                 password={true}
                 value={passwordData.origin}
                 placeholder="기존 비밀번호를 입력해 주세요."
                 onChangeText={text => onchange('origin', text)}
                 errText={errors.origin && errors.origin}
+                ref={originRef}
               />
               <MedicleInput
                 password={true}
@@ -226,6 +271,15 @@ const EditPassword = () => {
           </View>
         </View>
       </ScrollView>
+      <ResultModal
+        visible={result}
+        buttonText="확인"
+        resultText="변경이 완료되었습니다."
+        onPress={() => {
+          setResult(false);
+          navigation.navigate(Routes.EDIT_PROFILE);
+        }}
+      />
     </SafeAreaView>
   );
 };

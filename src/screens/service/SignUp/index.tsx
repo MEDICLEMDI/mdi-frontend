@@ -18,7 +18,7 @@ import Header from '@/components/Header';
 import Hr from '@/components/Hr';
 import { MedicleInput } from '@/components/inputs';
 import LoadingModal from '@/components/LoadingModal';
-import ResultPage from '@/components/Result';
+import ResultPage from '@/components/ResultPage';
 import Spacing from '@/components/Spacing';
 import { Colors } from '@/constants/theme';
 import { Row } from '@/layout';

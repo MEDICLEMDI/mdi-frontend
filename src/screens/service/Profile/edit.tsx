@@ -49,7 +49,7 @@ const EditProfile = ({ navigation }) => {
     };
 
     fetchUser();
-  }, []);
+  }, [isFocus]);
 
   React.useEffect(() => {
     console.log(user);
