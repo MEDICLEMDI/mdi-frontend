@@ -41,6 +41,10 @@ export const DARK_GRAY_12 = fontStyleCreator({
   size: 12,
   color: Colors.Medicle.Font.Gray.Dark,
 });
+export const DARK_GRAY_14 = fontStyleCreator({
+  size: 14,
+  color: Colors.Medicle.Font.Gray.Dark,
+});
 
 export const DARK_GRAY_BOLD_12 = fontStyleCreator({
   size: 12,
@@ -76,6 +80,23 @@ export const STANDARD_GRAY_14 = fontStyleCreator({
   color: Colors.Medicle.Font.Gray.Standard,
 });
 
+export const LIGHT_GRAY_10 = fontStyleCreator({
+  size: 10,
+  color: Colors.Medicle.Font.Gray.Light,
+});
+export const LIGHT_GRAY_12 = fontStyleCreator({
+  size: 12,
+  color: Colors.Medicle.Font.Gray.Light,
+});
+export const LIGHT_GRAY_14 = fontStyleCreator({
+  size: 14,
+  color: Colors.Medicle.Font.Gray.Light,
+});
+export const LIGHT_GRAY_16 = fontStyleCreator({
+  size: 16,
+  color: Colors.Medicle.Font.Gray.Light,
+});
+
 export const ORANGE_BOLD_10 = fontStyleCreator({
   size: 10,
   weight: 'bold',
@@ -86,9 +107,14 @@ export const ORANGE_BOLD_12 = fontStyleCreator({
   weight: 'bold',
   color: Colors.Medicle.Orange,
 });
+export const ORANGE_BOLD_14 = fontStyleCreator({
+  size: 14,
+  weight: 'bold',
+  color: Colors.Medicle.Orange,
+});
 
 export const WHITE_BOLD_12 = fontStyleCreator({
   size: 12,
   weight: 'bold',
   color: Colors.Medicle.White,
-})
+});

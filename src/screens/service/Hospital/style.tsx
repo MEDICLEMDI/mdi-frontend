@@ -120,11 +120,11 @@ export default StyleSheet.create({
   },
   itemStyle: {
     borderRadius: 10,
-    paddingVertical: 10,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  textStyle: {
-    textAlign: 'center',
-  },
+
   selectBox: {
     marginBottom: 20,
     borderWidth: 0,
@@ -137,7 +137,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.Medicle.Gray.Light,
   },
   selectInput: {
-    color: Colors.Medicle.Font.Gray.Standard,
+    color: Colors.Medicle.Font.Gray.Dark,
   },
   totalWrap: {
     flexDirection: 'row',

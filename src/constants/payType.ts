@@ -14,8 +14,8 @@ export const payCondition = [
   {name: '가상계좌'},
   {name: '계좌이체(에스크로)'},
   {name: '휴대폰 결제'},
-  {name: '토스'},
-  {name: '카카오페이'},
+  {icon: 'toss'},
+  {icon: 'kakaoPay'},
 ]
 
 export const cardList = [
