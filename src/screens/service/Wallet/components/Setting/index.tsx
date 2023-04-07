@@ -74,7 +74,7 @@ const WalletSetting = ({
 
   const handleDeleteWallet = async () => {
     if (await passwordCheck(password!)) {
-      AsyncStorage.removeItem('password');
+      await AsyncStorage.removeItem('@WalletPassword');
       dispatch(resetUserStore());
       dispatch(resetICPStore());
       dispatch(resetWalletConnectStore());

@@ -40,6 +40,9 @@ import Point from '@/screens/service/Point';
 import PointCharge from '@/screens/service/Point/charge';
 import Profile from '@/screens/service/Profile';
 import EditProfile from '@/screens/service/Profile/edit';
+import EditAddress from '@/screens/service/Profile/editAddress';
+import EditPassword from '@/screens/service/Profile/editPassword';
+import EditPhone from '@/screens/service/Profile/editPhone';
 import Receipt from '@/screens/service/Receipt';
 import Review from '@/screens/service/Review';
 import ServiceContacts from '@/screens/service/ServiceContacts';
@@ -289,6 +292,9 @@ const SettingStack = () => {
       initialRouteName={Routes.MYPAGE}>
       <Stack.Screen name={Routes.MYPAGE} component={Profile} />
       <Stack.Screen name={Routes.EDIT_PROFILE} component={EditProfile} />
+      <Stack.Screen name={Routes.EDIT_PASSWORD} component={EditPassword} />
+      <Stack.Screen name={Routes.EDIT_PHONE} component={EditPhone} />
+      <Stack.Screen name={Routes.EDIT_ADDRESS} component={EditAddress} />
       <Stack.Screen name={Routes.POINT} component={Point} />
       <Stack.Screen name={Routes.RECEIPT} component={Receipt} />
       <Stack.Screen name={Routes.SUBSCRIBE} component={Subscribe} />

@@ -124,6 +124,65 @@ const userWithdraw = async (body: {
   password: string | undefined;
 }) => {
   return await Api.post('/userWithdraw', body);
+
+const userWithdraw = async (password: string) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    password: password,
+  };
+  return await Api.post('/userWithdraw', data);
+};
+
+const getMyPage = async (password: string) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    password: password,
+  };
+  return await Api.post('/profile', data);
+};
+
+const editPassword = async (origin_password: string, new_password: string) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    origin_password: origin_password,
+    new_password: new_password,
+  };
+  return await Api.post('/profile/edit/password', data);
+};
+
+const editAddress = async (
+  post_number: string,
+  address1: string,
+  address2: string
+) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    post_number: post_number,
+    address1: address1,
+    address2: address2,
+  };
+  return await Api.post('/profile/edit/address', data);
+};
+
+const editPhone = async (phone: string, auth_code: string) => {
+  const user_id = await getUserId();
+  const data = {
+    user_id: user_id,
+    phone: phone,
+    auth_code: auth_code,
+    type: 'update',
+  };
+  return await Api.post('/profile/edit/phone', data);
+};
+
+const getUserId = async () => {
+  const user = await AsyncStorage.getItem('@User');
+  const user_id = JSON.parse(user!).user_id;
+  return user_id;
 };
 
 export default {
@@ -146,4 +205,8 @@ export default {
   insertReview,
   userWithdraw,
   signOut,
+  getMyPage,
+  editPassword,
+  editAddress,
+  editPhone,
 };

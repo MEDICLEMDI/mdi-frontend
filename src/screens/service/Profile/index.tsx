@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import Close from '@/assets/images/close.png';
+import api from '@/components/Api';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import MedicleButton from '@/components/buttons/MedicleButton';
 import { ScrollViewGrid } from '@/components/GridLayout';
@@ -58,6 +59,25 @@ const Profile = ({ navigation }) => {
     setPasswordErrMessage(undefined);
     setPasswordVaild(text.length > 7);
     setPassword(text);
+  };
+
+  const handleProfileEdit = async () => {
+    try {
+      const data = await api.getMyPage(password);
+      if (data.result) {
+        handleCloseModal();
+        navigation.navigate(Routes.EDIT_PROFILE);
+      } else {
+        throw 'error';
+      }
+    } catch (err) {
+      console.error(err);
+      if (err === '비밀번호 틀림') {
+        setPasswordErrMessage('비밀번호가 올바르지 않습니다.');
+      } else {
+        setPasswordErrMessage('처리중 오류가 발생하였습니다.');
+      }
+    }
   };
 
   return (
@@ -156,10 +176,7 @@ const Profile = ({ navigation }) => {
               text={'내 정보 확인'}
               buttonStyle={style.deleteButton}
               disabled={!passwordVaild}
-              onPress={() => {
-                handleCloseModal();
-                // handleDeleteWallet();
-              }}
+              onPress={handleProfileEdit}
             />
           </View>
         </View>

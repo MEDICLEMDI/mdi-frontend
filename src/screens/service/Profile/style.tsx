@@ -1,5 +1,6 @@
-import { Platform, StyleSheet } from "react-native";
-import { Colors } from "@/constants/theme";
+import { StyleSheet } from 'react-native';
+
+import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
   container: {
@@ -173,5 +174,72 @@ export default StyleSheet.create({
   },
   passwordLayer: {
     // marginTop: 30,
+  },
+  changeButton: {
+    height: 35,
+    marginTop: 20,
+    borderRadius: 10,
+  },
+  changeLayer: {
+    marginTop: 20,
+  },
+  mt10: {
+    marginTop: 10,
+  },
+  resultErrorMessage: {
+    color: Colors.Medicle.Font.Red,
+    fontSize: 12,
+    fontWeight: 'normal',
+  },
+  addressSearchButton: {
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  addressModalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.Medicle.ModalBackground,
+  },
+  addressModal: {
+    width: 360,
+    height: 500,
+    // flex: 1,
+    backgroundColor: Colors.Medicle.White,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  addressModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  addressModalClose: {
+    width: 15,
+    height: 15,
+  },
+  addressModalTitle: {
+    fontWeight: '700',
+    fontSize: 16,
+    color: Colors.Medicle.Font.Gray.Dark,
+  },
+  postCode: {
+    width: 320,
+    height: 320,
+    flex: 1,
+    borderWidth: 1,
+  },
+  smsAuthButton: {
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  timer: {
+    color: Colors.Medicle.Font.Brown.Standard,
+    fontWeight: '700',
+    fontSize: 12,
   },
 });

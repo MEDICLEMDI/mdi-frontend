@@ -128,7 +128,7 @@ const SignIn = ({ navigation }) => {
     }
 
     const user_id = await AsyncStorage.getItem('@LastLogin');
-    const wallet = await AsyncStorage.getItem('password');
+    const wallet = await AsyncStorage.getItem('@WalletPassword');
     if (user_id && wallet) {
       if (user_id !== `"${signInData.user_id}"`) {
         setModalVisible(true);
