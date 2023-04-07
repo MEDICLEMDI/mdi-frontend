@@ -57,9 +57,10 @@ export type RootStackParamList = {
   [Routes.SUBSCRIBE]: undefined;
   [Routes.CHART]: undefined;
   [Routes.CHART_DETAIL]: { id: string }; // add item id
+  [Routes.QA_DETAIL]: { id: string }; // add item id
   [Routes.MEDICAL_STATE]: undefined;
   [Routes.MEDICAL_STATE_DETAIL]: undefined; // add item id
-  [Routes.REVIEW]: { data: any }; // add item id
+  [Routes.REVIEW]: { company_id: number, appointment_id: number, product_id: number, user_id: number }; // add item id
   [Routes.FAQ]: undefined;
   [Routes.EXCHANGE]: undefined;
   [Routes.COMMUNITY]: undefined;

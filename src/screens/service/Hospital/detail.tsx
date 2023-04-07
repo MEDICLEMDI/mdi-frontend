@@ -19,7 +19,9 @@ import { MedicleInput } from '@/components/inputs';
 import { CustomModal } from '@/components/Modals';
 import Spacing from '@/components/Spacing';
 import {
-  DARK_GRAY_10, DARK_GRAY_12, DARK_GRAY_BOLD_12,
+  DARK_GRAY_10,
+  DARK_GRAY_12,
+  DARK_GRAY_BOLD_12,
   DARK_GRAY_BOLD_14,
   DARK_GRAY_BOLD_16,
   ORANGE_BOLD_12,
@@ -117,18 +119,22 @@ const ProductDetail = ({ navigation, route }) => {
           />
         </View>
         <View style={[style.itemDetailWrap, style.borderBottom]}>
-          <Text />
+          <Text style={[DARK_GRAY_BOLD_14, { marginBottom: 10 }]}>
+            {itemData?.hospital_name}-{itemData?.product_name}
+          </Text>
           <Text style={DARK_GRAY_BOLD_14}>
             {convertPrice(itemData?.price)}
             &nbsp;
-            <Text style={STANDARD_GRAY_10}>&nbsp; VAT | 마취/사후관리비 포함</Text>
+            <Text style={STANDARD_GRAY_10}>
+              &nbsp; VAT | 마취/사후관리비 포함
+            </Text>
           </Text>
         </View>
         <View style={[style.itemDetailWrap, style.borderBottom]}>
           <Text style={[DARK_GRAY_BOLD_14, style.sectionHeader]}>
             예약자 정보
           </Text>
-          <View style={{ marginTop: 20 }}>
+          <View>
             <MedicleInput
               style={style.input}
               label={<Text>예약자 성함</Text>}
@@ -169,7 +175,7 @@ const ProductDetail = ({ navigation, route }) => {
           <Text style={[DARK_GRAY_BOLD_14, style.sectionHeader]}>
             판매자 정보
           </Text>
-          <View style={{ marginTop: 20 }}>
+          <View>
             <MedicleInput
               style={style.input}
               label={<Text>상호명</Text>}

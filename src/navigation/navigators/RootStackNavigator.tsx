@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 
-import Icons from '@/icons';
+import Icon from '@/icons';
 import {
   RootStackParamList,
   ServiceTabParamList,
@@ -15,6 +15,7 @@ import {
 import KeyRing from '@/modules/keyring';
 import Chart from '@/screens/service/Chart';
 import ChartDetail from '@/screens/service/Chart/detail';
+import QaDetail from '@/screens/service/Chart/qaDetail';
 import Community from '@/screens/service/Community';
 import PersonalDoc from '@/screens/service/Documents/personalDoc';
 import ServiceDoc from '@/screens/service/Documents/serviceDoc';
@@ -211,7 +212,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.home'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons name="home" fill={tabActiveController(focused)} />
+            <Icon name="home" fill={tabActiveController(focused)} />
           ),
         }}
       />
@@ -223,7 +224,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.hospital'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons name="hospital_b" stroke={tabActiveController(focused)} />
+            <Icon name="hospital_b" stroke={tabActiveController(focused)} />
           ),
         }}
       />
@@ -234,7 +235,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.event'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons name="gift" stroke={tabActiveController(focused)} />
+            <Icon name="gift" stroke={tabActiveController(focused)} />
           ),
         }}
       />
@@ -245,7 +246,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.wallet'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons name="wallet" stroke={tabActiveController(focused)} />
+            <Icon name="wallet" stroke={tabActiveController(focused)} />
           ),
         }}
       />
@@ -256,7 +257,7 @@ const BottomTabNavigation = () => {
           title: t('navigation.profile'),
           tabBarLabelStyle: labelStyle,
           tabBarIcon: ({ focused }) => (
-            <Icons name="user" stroke={tabActiveController(focused)} />
+            <Icon name="user" stroke={tabActiveController(focused)} />
           ),
         }}
       />
@@ -293,6 +294,7 @@ const SettingStack = () => {
       <Stack.Screen name={Routes.SUBSCRIBE} component={Subscribe} />
       <Stack.Screen name={Routes.CHART} component={Chart} />
       <Stack.Screen name={Routes.CHART_DETAIL} component={ChartDetail} />
+      <Stack.Screen name={Routes.QA_DETAIL} component={QaDetail} />
       <Stack.Screen name={Routes.MEDICAL_STATE} component={MedicalState} />
       <Stack.Screen
         name={Routes.MEDICAL_STATE_DETAIL}

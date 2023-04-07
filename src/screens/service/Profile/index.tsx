@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -32,10 +33,20 @@ const Profile = ({ navigation }) => {
   >(undefined);
   const [passwordVaild, setPasswordVaild] = React.useState(false);
   const [password, setPassword] = React.useState<string | undefined>(undefined);
+  const [user, setUser] = React.useState();
 
   const numColumns = 3;
   const menuPadding = 50;
   const gap = 30;
+
+  React.useEffect(() => {
+    initialize();
+  }, []);
+
+  const initialize = async () => {
+    const user_ = await AsyncStorage.getItem('@User');
+    setUser(JSON.parse(user_));
+  };
 
   const handleCloseModal = () => {
     setModalVisible(false);
@@ -43,7 +54,7 @@ const Profile = ({ navigation }) => {
     setPasswordVaild(false);
   };
 
-  const handlePasswordonChageText = (text: string) => {
+  const handlePasswordOnChageText = (text: string) => {
     setPasswordErrMessage(undefined);
     setPasswordVaild(text.length > 7);
     setPassword(text);
@@ -67,7 +78,7 @@ const Profile = ({ navigation }) => {
             style={style.profileWrap}>
             <View style={style.profileNameWrap}>
               <Icon name="userCircle" />
-              <Text style={style.name}>Preview</Text>
+              <Text style={style.name}>{user?.name}</Text>
             </View>
 
             <TouchableOpacity
@@ -134,7 +145,7 @@ const Profile = ({ navigation }) => {
                 <MedicleInput
                   placeholder={t('wallet.setting.password')}
                   onChangeText={(text: string) => {
-                    handlePasswordonChageText(text);
+                    handlePasswordOnChageText(text);
                   }}
                   errText={passwordErrMessage && passwordErrMessage}
                   password={true}

@@ -47,20 +47,22 @@ const HospitalCategory = ({ navigation, route }) => {
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    initialize();
-
+    getProductGroups();
     // 화면 이동시 기본 병원 화면으로 초기화
-    return () =>
+    return () => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
           routes: [{ name: Routes.HOSPITAL }],
         })
       );
+      setIndex(groupId);
+      setPage(1);
+      setProductList([]);
+    };
   }, []);
 
-  const initialize = React.useCallback(async () => {
-    await getProductGroups();
+  React.useEffect(() => {
     setIndex(groupId);
   }, [isFocus]);
 
@@ -87,12 +89,12 @@ const HospitalCategory = ({ navigation, route }) => {
 
   const getProductGroupItems = React.useCallback(async () => {
     try {
-      const data = await api.getProductGroupItems(index);
+      const data = await api.getProductGroupItems(index, 1, search);
       setProductList(data);
     } catch (err) {
       console.error(err);
     }
-  }, [index]);
+  }, [index, groupId]);
 
   const getMoreProductItems = async () => {
     if (cooldownRef.current) {
@@ -104,7 +106,7 @@ const HospitalCategory = ({ navigation, route }) => {
     setLoading(true);
     const nextPage = page + 1;
     try {
-      const data = await api.getMoreProductItems(index, nextPage, search);
+      const data = await api.getProductGroupItems(index, nextPage, search);
       if (data.length !== 0) {
         setProductList(productList.concat(data));
       }
@@ -145,7 +147,7 @@ const HospitalCategory = ({ navigation, route }) => {
             data={productGroups}
             tabStyle={style.tabWrap}
             buttonStyle={style.tabButton}
-            index={index}
+            index={groupId}
             response={setIndex}
           />
         </ScrollView>
@@ -165,42 +167,46 @@ const HospitalCategory = ({ navigation, route }) => {
                 navigation.navigate(Routes.PRODUCT_DETAIL, { id: item.id })
               }>
               <Image
-                source={{ uri: item.pc_image_main }}
+                source={{ uri: item.main_image }}
                 style={{ minHeight: 85, minWidth: 295, borderRadius: 10 }}
               />
               <Row justify="space-between" align="center">
-                <Text style={DARK_GRAY_12}>{item.pc_name}</Text>
-                <Icon name="heart" stroke={Colors.Medicle.Gray.Standard} />
+                <Text style={DARK_GRAY_12}>{item.product_name}</Text>
+                {item?.like ? (
+                  <Icon name="heart" fill={Colors.Medicle.Brown.Standard} />
+                ) : (
+                  <Icon name="heart" stroke={Colors.Medicle.Gray.Standard} />
+                )}
               </Row>
-              <Text style={DARK_GRAY_BOLD_16}>{item.company?.name}</Text>
+              <Text style={DARK_GRAY_BOLD_16}>{item.hospital_name}</Text>
               <Row
                 align="center"
                 justify="space-between"
                 style={{ marginTop: 8 }}>
                 <Column>
                   <Text style={DARK_GRAY_10}>
-                    {item?.company.ci_address.split(' ')[0]}
+                    {item?.hospital_address.split(' ')[0]}
                     &nbsp;|&nbsp;
-                    {item?.company.ci_address.split(' ')[1]}
+                    {item?.hospital_address.split(' ')[1]}
                   </Text>
                 </Column>
               </Row>
               <Row align="flex-end" justify="space-between">
                 <Text style={STANDARD_GRAY_10}>
-                  후기 <Text style={ORANGE_BOLD_10}>999</Text>개
+                  후기 <Text style={ORANGE_BOLD_10}>{item?.review}</Text>개
                 </Text>
                 <View>
-                  {item.pc_discount_percent > 0 && (
+                  {item.discount > 0 && (
                     <Text
                       style={[
                         ORANGE_BOLD_12,
                         { marginBottom: 5, marginTop: -19 },
                       ]}>
-                      {item.pc_discount_percent}%
+                      {item.discount}%
                     </Text>
                   )}
                   <Text style={DARK_GRAY_BOLD_16}>
-                    {convertPrice(item.pc_price)}
+                    {convertPrice(item.price)}
                     <Text style={STANDARD_GRAY_10}> VAT 포함</Text>
                   </Text>
                 </View>

@@ -30,6 +30,7 @@ enum Routes {
   SUBSCRIBE = 'Subscribe',
   CHART = 'Chart',
   CHART_DETAIL = 'ChartDetail',
+  QA_DETAIL = 'QaDetail',
   MEDICAL_STATE = 'MedicalState',
   MEDICAL_STATE_DETAIL = 'MedicalStateDetail',
   REVIEW = 'review',

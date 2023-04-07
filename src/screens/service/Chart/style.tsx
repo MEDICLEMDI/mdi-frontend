@@ -15,6 +15,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  status: {
+    marginTop: 10,
+    marginBottom: 20,
+  },
   justifyTextWrap: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -45,8 +49,21 @@ export default StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
+  tabWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  tabButton: {
+    paddingBottom: 10,
+    marginBottom: 20,
+    marginRight: 15,
+  },
 
   // detail page
+  itemBox: {
+    marginBottom: 20,
+  },
   detailHeader: {
     fontWeight: 'bold',
     marginTop: 10,
