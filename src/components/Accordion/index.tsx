@@ -8,7 +8,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import Icons from "@/icons";
+import Icon from "@/icons";
 import {useEffect} from "react";
 
 const Accordion = ({
@@ -44,9 +44,9 @@ const Accordion = ({
           {
             expanded
             ?
-            <Icons name="arrowUp" />
+            <Icon name="arrowUp" />
             :
-            <Icons name="arrowDown" />
+            <Icon name="arrowDown" />
           }
         </View>
       </View>

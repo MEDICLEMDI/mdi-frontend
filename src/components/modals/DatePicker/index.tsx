@@ -14,7 +14,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 
 import BoxDropShadow from '@/components/BoxDropShadow';
 import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -119,7 +119,7 @@ const DatePicker = ({
                   <Text>1년</Text>
                 </View>
                 <TouchableOpacity onPress={onRequestClose}>
-                  <Icons name="close" />
+                  <Icon name="close" />
                 </TouchableOpacity>
               </View>
               <View
@@ -150,7 +150,7 @@ const DatePicker = ({
                   ]}
                   onPress={() => dataPickerHandler('from')}>
                   <Text style={{ flex: 1 }}>{date.from}</Text>
-                  <Icons name="calendar" />
+                  <Icon name="calendar" />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
@@ -159,7 +159,7 @@ const DatePicker = ({
                   ]}
                   onPress={() => dataPickerHandler('to')}>
                   <Text style={{ flex: 1 }}>{date.to}</Text>
-                  <Icons name="clock" />
+                  <Icon name="clock" />
                 </TouchableOpacity>
               </View>
               {datePickerVisible && (
@@ -190,7 +190,7 @@ const DatePicker = ({
                   backgroundColor: Colors.Medicle.Gray.Dark,
                   padding: 20,
                 }}>
-                <Icons name="refresh_s" />
+                <Icon name="refresh_s" />
                 <Text style={[FONT_WHITE, { marginLeft: 10 }]}>초기화</Text>
               </TouchableOpacity>
               <TouchableOpacity

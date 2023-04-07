@@ -25,10 +25,10 @@ export default () => {
 
   const socialMedias = [
     { icon: <Icon name="twitter" />, name: '트위터' },
-    { icon: <Icons name="facebook" />, name: '페이스북' },
-    { icon: <Icons name="instagram" />, name: '인스타그램' },
-    { icon: <Icons name="telegram" />, name: '텔레그램' },
-    { icon: <Icons name="github" />, name: '깃허브' },
+    { icon: <Icon name="facebook" />, name: '페이스북' },
+    { icon: <Icon name="instagram" />, name: '인스타그램' },
+    { icon: <Icon name="telegram" />, name: '텔레그램' },
+    { icon: <Icon name="github" />, name: '깃허브' },
   ];
 
   return (
@@ -56,7 +56,7 @@ export default () => {
                   {icon}
                   <Text style={{ marginLeft: 20 }}>{name} 바로가기</Text>
                 </View>
-                <Icons name="arrowRight" />
+                <Icon name="arrowRight" />
               </BoxDropShadow>
             ))}
           </View>

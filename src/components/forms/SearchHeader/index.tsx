@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import { Colors } from '@/constants/theme';
-import Icons from '@/icons';
+import Icon from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -38,7 +38,7 @@ const SearchBar = ({
         <Text style={[DATE_FONT, { marginLeft: 10 }]}>{period}</Text>
       </View>
       <TouchableOpacity onPress={onPress}>
-        <Icons name="menu" />
+        <Icon name="menu" />
       </TouchableOpacity>
     </View>
   );

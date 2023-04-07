@@ -1,4 +1,4 @@
-import Icons from "@/icons";
+import Icon from "@/icons";
 import {Colors} from "@/constants/theme";
 import CalendarPicker from "react-native-calendar-picker";
 import * as React from "react";
@@ -30,8 +30,8 @@ const Calendar = ({
   return (
     <CalendarPicker
       onDateChange={moment => dataPickerListener(moment)}
-      previousComponent={<Icons name="arrowLeft" />}
-      nextComponent={<Icons name="arrowRight" />}
+      previousComponent={<Icon name="arrowLeft" />}
+      nextComponent={<Icon name="arrowRight" />}
       selectedDayTextColor={Colors.Medicle.White}
       selectedDayColor="#FFB61B"
       textStyle={{ color: Colors.Medicle.Font.Gray.Dark }}
