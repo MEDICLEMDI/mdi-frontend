@@ -1,5 +1,6 @@
-import API from '@/utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import API from '@/utils/api';
 
 const Api = new API();
 
@@ -56,9 +57,16 @@ const getNewestProducts = async () => {
   return data;
 };
 
-const getProductGroupItems = async (productGroup: number) => {
-  const page = 1;
-  const { data } = await Api.get(`/products/items/${productGroup}/${page}`);
+const getProductGroupItems = async (
+  productGroup: number,
+  page: number,
+  search?: string
+) => {
+  let url = `/products/items/${productGroup}/${page}`;
+  if (search !== undefined) {
+    url += '/' + search;
+  }
+  const { data } = await Api.get(url);
   return data;
 };
 
@@ -66,22 +74,18 @@ const getEventProducts = async () => {
   const { data } = await Api.get('/products/event');
   return data;
 };
-
-const getMoreProductItems = async (
-  productGroup: number,
-  page: number,
-  search?: string
-) => {
-  let url = `/products/items/${productGroup}/${page}`;
-  if (search) {
-    url += '/' + search;
-  }
-  const { data } = await Api.get(url);
+// 문의하기
+const getQAList = async (id: number) => {
+  const { data } = await Api.get(`/qa/list/${id}`);
   return data;
 };
-// 문의하기
-const insertProductQA = async (data: any) => {
-  return await Api.post('/products/qa', data);
+const getQaDetail = async (body: any) => {
+  const { data } = await Api.post('/qa/detail', body);
+  return data;
+};
+
+const insertProductQA = async (body: any) => {
+  return await Api.post('/qa/save', body);
 };
 
 const getProductInfo = async (itemId: number) => {
@@ -112,7 +116,9 @@ const getAppointmentDetail = async (id: number) => {
   const { data } = await Api.get(`/appointment/detail/${id}`);
   return data;
 };
-
+const insertReview = async (body: any) => {
+  return await Api.post('/review/save', body);
+};
 const userWithdraw = async (body: {
   user_id: string | undefined;
   password: string | undefined;
@@ -128,7 +134,6 @@ export default {
   getNewestProducts,
   getProductGroupItems,
   getEventProducts,
-  getMoreProductItems,
   getProductInfo,
   autoSignIn,
   getHospital,
@@ -136,6 +141,9 @@ export default {
   getUserAppointment,
   getAppointmentDetail,
   insertProductQA,
+  getQAList,
+  getQaDetail,
+  insertReview,
   userWithdraw,
   signOut,
 };
