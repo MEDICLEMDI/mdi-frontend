@@ -119,12 +119,6 @@ const getAppointmentDetail = async (id: number) => {
 const insertReview = async (body: any) => {
   return await Api.post('/review/save', body);
 };
-const userWithdraw = async (body: {
-  user_id: string | undefined;
-  password: string | undefined;
-}) => {
-  return await Api.post('/userWithdraw', body);
-
 const userWithdraw = async (password: string) => {
   const user_id = await getUserId();
   const data = {
