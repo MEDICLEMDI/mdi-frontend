@@ -97,6 +97,7 @@ const SignUp = ({ navigation }) => {
   };
   const { t } = useTranslation();
   const [termsOfService, setTermsOfService] = React.useState<boolean>(false);
+  const [fourteen, setFourteen] = React.useState(false);
   const [privacyPolicy, setPrivacyPolicy] = React.useState<boolean>(false);
   const [marketing, setMarketing] = React.useState<boolean>(false);
   const [agreeAll, setAgreeAll] = React.useState<boolean>(false);
@@ -146,7 +147,7 @@ const SignUp = ({ navigation }) => {
   const mailIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
 
   React.useEffect(() => {
-    setAgreeAll(privacyPolicy && termsOfService && marketing);
+    setAgreeAll(privacyPolicy && termsOfService && marketing && fourteen);
     if (marketing) {
       setSignUpData({
         ...signUpData,
@@ -158,7 +159,7 @@ const SignUp = ({ navigation }) => {
         is_marketing_agree: '0',
       });
     }
-  }, [privacyPolicy, termsOfService, marketing]);
+  }, [privacyPolicy, termsOfService, marketing, fourteen]);
 
   React.useEffect(() => {
     setRegisterDisabed(false);
@@ -187,6 +188,7 @@ const SignUp = ({ navigation }) => {
         _regexValid &&
         privacyPolicy &&
         termsOfService &&
+        fourteen &&
         smsStatus === 'completed' &&
         emailStatus === 'completed' &&
         signUpData.password === confirmPassword
@@ -199,6 +201,7 @@ const SignUp = ({ navigation }) => {
     smsStatus,
     confirmPassword,
     emailStatus,
+    fourteen,
   ]);
 
   React.useEffect(() => {
@@ -358,6 +361,7 @@ const SignUp = ({ navigation }) => {
     setTermsOfService(!_status);
     setPrivacyPolicy(!_status);
     setMarketing(!_status);
+    setFourteen(!_status);
   };
 
   const register = async () => {
@@ -887,6 +891,16 @@ const SignUp = ({ navigation }) => {
           </View>
           <Hr color={Colors.Medicle.Gray.Light} thickness={1} />
           <View>
+            <View style={style.termsContents}>
+              <CustomCheckbox
+                selected={fourteen}
+                onPress={() => {
+                  setFourteen(!fourteen);
+                }}
+                style={style.checkBox}
+              />
+              <Text style={style.essentialText}>[필수]만 14세 이상 동의</Text>
+            </View>
             <View style={style.termsContents}>
               <CustomCheckbox
                 selected={termsOfService}
