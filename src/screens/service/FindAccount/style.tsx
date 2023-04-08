@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { Colors } from '@/constants/theme';
 
 export default StyleSheet.create({
@@ -79,5 +80,10 @@ export default StyleSheet.create({
   },
   resultPassword: {
     marginTop: 40,
+  },
+  errorText: {
+    color: '#FF2D2D',
+    fontSize: 12,
+    fontWeight: 'normal',
   },
 });

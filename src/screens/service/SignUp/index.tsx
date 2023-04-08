@@ -38,7 +38,7 @@ export interface ISignUpData {
   address1?: string;
   address2?: string;
   address3?: string;
-  post_code?: string;
+  post_number?: string;
   referral_code?: string;
   is_marketing_agree?: string;
   [key: string]: string | undefined;
@@ -68,7 +68,7 @@ const SignUp = ({ navigation }) => {
     address1: undefined,
     address2: undefined,
     address3: undefined,
-    post_code: undefined,
+    post_number: undefined,
     referral_code: undefined,
     is_marketing_agree: '0',
   });
@@ -373,15 +373,13 @@ const SignUp = ({ navigation }) => {
         .post('/register', data)
         .then(res => {
           console.log(res);
+          setSuccess(true);
         })
         .catch(err => {
-          console.log(err);
-        })
-        .finally(() => {
-          setSuccess(true);
+          throw err;
         });
     } catch (e: any) {
-      console.log(e);
+      console.error(e);
     }
     setLoading(false);
   };
@@ -398,7 +396,7 @@ const SignUp = ({ navigation }) => {
       address1: signUpData.address1,
       address2: signUpData.address2,
       address3: signUpData.address3,
-      post_code: signUpData.post_code,
+      post_number: signUpData.post_number,
       referral_code: signUpData.referral_code,
       is_marketing_agree: signUpData.is_marketing_agree,
       sms_auth_code: smsCode,
@@ -701,7 +699,7 @@ const SignUp = ({ navigation }) => {
           <View>
             <Text style={style.labelText}>{t('signUp.addressLabel')}</Text>
             <MedicleInput
-              value={signUpData?.post_code}
+              value={signUpData?.post_number}
               direction="row"
               placeholder={t('signUp.address1')}
               editable={false}
@@ -962,7 +960,7 @@ const SignUp = ({ navigation }) => {
                       ...signUpData,
                       address1: data.sido,
                       address2: data.roadAddress.slice(data.sido.length + 1),
-                      post_code: data.zonecode.toString(),
+                      post_number: data.zonecode.toString(),
                     });
                     setAddressModal(false);
                   }}
