@@ -80,6 +80,7 @@ export type RootStackParamList = {
   [Routes.WALLET_MNEMONIC]: undefined;
   [Routes.WALLET_SEND]: undefined;
   [Routes.WALLET_INFO]: undefined;
+  [Routes.HANDLE_TEST]: undefined;
   [Routes.SERVICE_DOCUMENT]: undefined;
   [Routes.PERSONAL_DOCUMENT]: undefined;
   [Routes.MARKETING]: undefined;

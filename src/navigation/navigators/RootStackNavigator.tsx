@@ -52,6 +52,7 @@ import SignIn from '@/screens/service/SignIn';
 import SignUp from '@/screens/service/SignUp';
 import Subscribe from '@/screens/service/Subscribe';
 import WalletCreatePassword from '@/screens/service/Wallet/components/CreatePassword';
+import HandleTest from '@/screens/service/Wallet/components/HandleTest';
 import WalletHome from '@/screens/service/Wallet/components/Home';
 import WalletImport from '@/screens/service/Wallet/components/Import';
 import WalletInfo from '@/screens/service/Wallet/components/Info';
@@ -108,6 +109,7 @@ const RootStackNavigator = () => {
   React.useEffect(() => {}, [isAuthenticated]);
 
   const initialRoute = isAuthenticated ? Routes.DASHBOARD : Routes.SIGNIN;
+  // const initialRoute = Routes.HANDLE_TEST;
   return (
     <Stack.Navigator
       initialRouteName={initialRoute}
@@ -121,6 +123,7 @@ const RootStackNavigator = () => {
           <Stack.Screen name={Routes.SIGNIN} component={SignIn} />
           <Stack.Screen name={Routes.SIGNUP} component={SignUp} />
           <Stack.Screen name={Routes.FINDACCOUNT} component={FindAccount} />
+          <Stack.Screen name={Routes.HANDLE_TEST} component={HandleTest} />
         </>
       ) : (
         <>

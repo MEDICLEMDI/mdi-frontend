@@ -80,6 +80,7 @@ enum Routes {
   WALLET_MNEMONIC = 'WalletNmemonic',
   WALLET_SEND = 'WalletSend',
   WALLET_INFO = 'WalletInfo',
+  HANDLE_TEST = 'HandleTest',
 }
 
 export const NATIVE_ROUTES = Object.values(Routes);
