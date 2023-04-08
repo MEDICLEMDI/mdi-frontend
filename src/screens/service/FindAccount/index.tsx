@@ -1,12 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 
 import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
+import { Row } from '@/components/layout';
 import ResultPage from '@/components/ResultPage';
+import Spacing from '@/components/Spacing';
 import { Colors } from '@/constants/theme';
 import Routes from '@/navigation/Routes';
 import API from '@/utils/api';
@@ -22,12 +24,12 @@ const FindAccount = ({ navigation }) => {
   const [userData, setUserData] = React.useState<ISignUpData>({
     password: undefined,
     name: undefined,
-    phone: undefined,
     email: undefined,
+    registrationNumber1: undefined,
+    registrationNumber2: undefined,
   });
   const [error, setError] = React.useState<FormError>({
     name: undefined,
-    phone: undefined,
     password: undefined,
     confirmPassword: undefined,
     email: undefined,
@@ -35,11 +37,13 @@ const FindAccount = ({ navigation }) => {
   });
   const regex: { [key: string]: RegExp } = {
     name: /^[가-힣]{2,10}$/,
-    phone: /^010[0-9]*$/,
     email: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
     password:
       /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()+\-=\[\]\{\}\|\:\;\"\'\<\>\,\.\?\/]).{8,20}$/,
     sms: /^[0-9]*$/,
+    registrationNumber1:
+      /^(0[1-9]|[1-9][0-9])((0[1-9])|(1[0-2]))(([012][0-9])|(3[0-1]))$/,
+    registrationNumber2: /^[1-4]\d{6}$/,
   };
   const [smsStatus, setSmsStatus] = React.useState<
     'before' | 'progress' | 'timeout' | 'completed'
@@ -74,6 +78,8 @@ const FindAccount = ({ navigation }) => {
   );
   const [userId, setUserId] = React.useState<string | undefined>(undefined);
   const [passwordChanged, setPasswordChanged] = React.useState<boolean>(false);
+  const nameRef = React.useRef<TextInput>(null);
+  const [responseError, setResponseError] = React.useState('');
 
   React.useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -87,6 +93,21 @@ const FindAccount = ({ navigation }) => {
 
     return () => clearInterval(intervalRef.current!);
   }, [initialTime]);
+
+  React.useEffect(() => {
+    if (tabIndex === 0) {
+      if (
+        userData.name &&
+        userData.registrationNumber1 &&
+        userData.registrationNumber2 &&
+        error.name === undefined &&
+        error.registrationNumber1 === undefined &&
+        error.registrationNumber2 === undefined
+      ) {
+        setNextDisabled(true);
+      }
+    }
+  }, [userData]);
 
   React.useEffect(() => {
     setPasswordDisabled(false);
@@ -114,11 +135,12 @@ const FindAccount = ({ navigation }) => {
   };
 
   const onChange = (value: string, name: string) => {
+    setNextDisabled(false);
+    setResponseError('');
     setUserData({
       ...userData,
       [name]: value,
     });
-
     if (name === 'phone') {
       setSmsAuthDisabled(regex.phone.test(value) && value.length === 11);
       handlePhoneVaild(value);
@@ -208,95 +230,42 @@ const FindAccount = ({ navigation }) => {
     });
   };
 
-  const requestUserId = async () => {
+  const handleRequestUserId = async () => {
     try {
       const api = new API();
       const data = {
         name: userData.name,
-        phone: userData.phone,
-        auth_code: sms,
-        type: tabIndex === 0 ? 'findid' : 'findpw',
+        registration_number: `${userData.registrationNumber1}${userData.registrationNumber2}`,
       };
 
       await api
-        .post('/findaccount/request/user_id', data)
+        .post('/findaccount/user_id', data)
         .then(res => {
           console.log(res);
           if (res.result) {
             setUserId(res.data);
-            setNextDisabled(true);
             setResult(true);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    } catch (e: any) {
-      console.log(e);
-    }
-  };
-
-  const handleSmsCheck = async () => {
-    //tabIndex 에 따른 (아이디,비번 찾기) requestParam 다름,
-    let _success = false;
-    let _errorMessage = 'unknown';
-
-    try {
-      const api = new API();
-      const data = {
-        phone: userData.phone,
-        auth_code: sms,
-        type: tabIndex === 0 ? 'findid' : 'findpw',
-      };
-
-      await api
-        .post('/phoneauth/checkcode', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            clearInterval(intervalRef.current!);
-            setSmsStatus('completed');
-            if (tabIndex === 0) {
-              requestUserId();
-            } else {
-              setNextDisabled(true);
-              setNextDisabled(true);
-              setResult(true);
-            }
-            _success = true;
           } else {
-            if (res.message === 'expire time over.') {
-              _errorMessage = 'smsTimeout';
-            } else if (
-              res.message === 'phone auth fail' ||
-              res.message === 'no phone auth data.'
-            ) {
-              _errorMessage = 'smsCheck';
-            }
+            throw res;
           }
         })
         .catch(err => {
-          console.log(err);
+          throw err;
         });
     } catch (e: any) {
-      console.log(e);
-    }
-
-    if (!_success) {
-      errorSet('sms', _errorMessage);
-    }
-  };
-  const handleSmsValid = (text: string) => {
-    errorClear('sms');
-    setSms(text);
-    let _regex = regex.sms;
-    setSmsCheckDisabled(_regex.test(text) && text.length === 6);
-
-    if (!_regex.test(text)) {
-      setError({
-        ...error,
-        ['sms']: t('errorMessage.smsRegexError'),
-      });
+      console.error(e);
+      if (e === '유저 없음') {
+        nameRef.current?.focus();
+        setUserData({
+          ...userData,
+          name: undefined,
+          registrationNumber1: undefined,
+          registrationNumber2: undefined,
+        });
+        setResponseError('*유저 정보를 찾을수 없습니다.');
+      } else {
+        setResponseError('*처리중 오류가 발생하였습니다.');
+      }
     }
   };
 
@@ -541,63 +510,47 @@ const FindAccount = ({ navigation }) => {
           <MedicleInput
             placeholder={t('signUp.name')}
             value={userData?.name}
+            ref={nameRef}
             onChangeText={text => onChange(text, 'name')}
             editable={smsStatus !== 'completed'}
             clearButton={smsStatus !== 'completed'}
             // onBlur={() => handleBlur('name')}
             errText={error.name !== undefined ? error.name : undefined}
           />
-          <Text style={style.labelText}>{t('signUp.phoneLabel')}</Text>
-          <MedicleInput
-            value={userData?.phone}
-            onChangeText={text => onChange(text, 'phone')}
-            placeholder={t('signUp.phone')}
-            direction="row"
-            maxLength={11}
-            errText={error.phone !== undefined ? error.phone : undefined}
-            editable={smsStatus !== 'completed'}
-            clearButton={smsStatus !== 'completed'}
-            inputButtonNode={
-              <MedicleButton
-                buttonStyle={style.button}
-                text={smsAuthText}
-                disabled={smsStatus === 'completed' ? true : !smsAuthDisabled}
-                onPress={handleRequestSms}
-              />
-            }
-          />
-          {(smsStatus === 'progress' || smsStatus === 'timeout') && (
-            <>
-              <MedicleInput
-                style={style.mt10}
-                value={sms}
-                onChangeText={text => handleSmsValid(text)}
-                placeholder={t('signUp.phoneAuthNumInput')}
-                direction="row"
-                maxLength={6}
-                editable={smsStatus === 'timeout' ? false : true}
-                errText={error.sms !== undefined ? error.sms : undefined}
-                rightInputNode={
-                  <View>
-                    <Text
-                      style={[
-                        style.timer,
-                        initialTime === 0 && { color: Colors.Medicle.Font.Red },
-                      ]}>{`${minutes}:${seconds}`}</Text>
-                  </View>
-                }
-                inputButtonNode={
-                  <MedicleButton
-                    buttonStyle={style.button}
-                    text={t('signUp.phoneAuthNumCheck')}
-                    disabled={!smsCheckDisabled}
-                    onPress={() => {
-                      handleSmsCheck(sms!);
-                    }}
-                  />
-                }
-              />
-            </>
+          <Text style={style.labelText}>
+            {t('signUp.registrationNumberLabel')}
+          </Text>
+          <Row justify="space-between">
+            <MedicleInput
+              style={{ flex: 1 }}
+              value={userData?.registrationNumber1}
+              onChangeText={text => onChange(text, 'registrationNumber1')}
+              // onBlur={() => handleBlur('registrationNumber1')}
+              errText={
+                error.registrationNumber1 !== undefined
+                  ? error.registrationNumber1
+                  : undefined
+              }
+              maxLength={6}
+              placeholder={t('signUp.registrationNumber')}
+            />
+            <Spacing size={10} />
+            <MedicleInput
+              style={{ flex: 1 }}
+              value={userData?.registrationNumber2}
+              maxLength={7}
+              password={true}
+              onChangeText={text => onChange(text, 'registrationNumber2')}
+              // onBlur={() => handleBlur('registrationNumber2')}
+              errText={
+                error.registrationNumber2 !== undefined
+                  ? error.registrationNumber2
+                  : undefined
+              }
+            />
+          </Row>
+          {responseError !== '' && (
+            <Text style={style.errorText}>{responseError}</Text>
           )}
         </View>
       </ScrollView>
@@ -606,7 +559,9 @@ const FindAccount = ({ navigation }) => {
         text={t('findAccount.next')}
         buttonStyle={style.signUpButton}
         onPress={() => {
-          setResult(true);
+          if (tabIndex === 0) {
+            handleRequestUserId();
+          }
         }}
       />
     </SafeAreaView>
