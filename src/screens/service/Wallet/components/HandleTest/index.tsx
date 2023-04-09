@@ -14,7 +14,7 @@ import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
 import { RootScreenProps } from '@/interfaces/navigation';
 import Routes from '@/navigation/Routes';
-import { createICPWalletWithMnemonic } from '@/utils/wallet/feature';
+import { createICPWalletWithMnemonic, createICPWalletWithMnemonic2 } from '@/utils/wallet/feature';
 
 import CommonStyle from '../../common_style';
 import styles from './styles';
@@ -23,7 +23,8 @@ const HandleTest = ({ navigation }: RootScreenProps<Routes.HANDLE_TEST>) => {
   const { t } = useTranslation();
 
   const handleCreateWallet = async () => {
-    createICPWalletWithMnemonic('12341234');
+    const wallet = createICPWalletWithMnemonic2();
+    console.log(wallet);
   };
   return (
     <SafeAreaView style={CommonStyle.container}>

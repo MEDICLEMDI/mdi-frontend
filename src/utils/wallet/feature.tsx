@@ -1,55 +1,85 @@
-import { Ed25519KeyIdentity } from '@dfinity/identity';
+import { blobFromUint8Array } from '@dfinity/candid';
 import { Principal } from '@dfinity/principal';
 import * as bip39 from 'bip39';
-import * as CryptoJS from 'crypto-js';
+import crypto from 'crypto';
 import HDKey from 'hdkey';
-import * as Keychain from 'react-native-keychain';
+import Secp256k1 from 'secp256k1';
+
+import Secp256k1PublicKey from './Secp256k1PublicKey';
 
 const ICP_DERIVATION_PATH = "m/44'/223'/0'/0/0";
 
-export const createICPWalletWithMnemonic = async (password: string) => {
-  try {
-    // 니모닉 생성 (12개 단어)
-    const mnemonic = bip39.generateMnemonic(128);
-    console.log('니모닉');
-    // 니모닉을 시드로 변환
-    const seed = await bip39.mnemonicToSeed(mnemonic);
-    console.log('seed');
+// export const createICPWalletWithMnemonic = async (password: string) => {
+//   try {
+//     // 니모닉 생성 (12개 단어)
+//     const mnemonic = bip39.generateMnemonic(128);
+//     // 니모닉을 시드로 변환
+//     const seed = bip39.mnemonicToSeedSync(mnemonic);
 
-    // BIP32 master 키 생성
-    const masterKey = HDKey.fromMasterSeed(seed);
-    console.log('마스터키');
-    // ICP 지갑 키 생성
-    const icpKeyPair = masterKey.derive(ICP_DERIVATION_PATH);
-    console.log('키페어');
-    //에러부분
-    const identity = Ed25519KeyIdentity.fromSecretKey(icpKeyPair.privateKey);
-    console.log('아이덴티티');
-    const publicKey = identity.getPublicKey();
-    console.log('퍼블릭키');
+//     // BIP32 master 키 생성
+//     const masterKey = HDKey.fromMasterSeed(seed);
+//     console.log('gd');
+//     const { privateKey } = masterKey.derive(ICP_DERIVATION_PATH);
+//     console.log('gd');
+//     const publicKey = Secp256k1.publicKeyCreate(privateKey, false);
+//     const publicKey2 = Secp256k1PublicKey.fromRaw(
+//       blobFromUint8Array(publicKey)
+//     );
 
-    // PublicKey 형식을 Uint8Array 형식으로 변환
-    const publicKeyArray = new Uint8Array(publicKey.toDer());
-    console.log('퍼블릭어레이');
-    const principal = Principal.selfAuthenticating(publicKeyArray);
-    console.log('프린시펄');
-    // Keyring 저장
-    const encryptedMnemonic = CryptoJS.AES.encrypt(
-      mnemonic,
-      password
-    ).toString();
-    await Keychain.setGenericPassword(principal.toText(), encryptedMnemonic);
+//     console.log('gd');
+//     const icpIdentity = Ed25519KeyIdentity.fromSecretKey(privateKey);
+//     console.log('gd');
+//     const principal = Principal.fromUint8Array(
+//       icpIdentity.getPublicKey().toDer()
+//     );
+//     const address = principal.toText();
 
-    console.log('ICP 지갑이 생성되었습니다.');
-    console.log('Principal:', principal.toText());
-    console.log('Mnemonic:', mnemonic);
+//     const encryptedWalletInfo = CryptoJS.AES.encrypt(
+//       JSON.stringify({ mnemonic, privateKey, publicKey2 }),
+//       password
+//     ).toString();
 
-    return { mnemonic, principal };
-  } catch (error) {
-    console.error('ICP 지갑 생성 중 오류가 발생했습니다.', error);
-    throw error;
-  }
-};
+//     await Keychain.setGenericPassword(address, encryptedWalletInfo, {
+//       service: 'ICPWallet',
+//     });
+
+//     return 'gd';
+//   } catch (error) {
+//     console.error('ICP 지갑 생성 중 오류가 발생했습니다.', error);
+//     throw error;
+//   }
+// };
+
+// export const createICPWalletWithMnemonic2 = () => {
+//   try {
+//     // 니모닉 생성 (12개 단어)
+//     const mnemonic = bip39.generateMnemonic(128);
+//     // 니모닉을 시드로 변환
+//     const seed = bip39.mnemonicToSeedSync(mnemonic);
+
+//     // BIP32 master 키 생성
+//     const masterKey = HDKey.fromMasterSeed(seed);
+
+//     // ICP 지갑 생성
+//     const { privateKey } = masterKey.derive(ICP_DERIVATION_PATH);
+//     const publicKey = Secp256k1.publicKeyCreate(privateKey, false);
+//     const secp256k1PublicKey = Secp256k1PublicKey.fromRaw(
+//       blobFromUint8Array(publicKey)
+//     );
+//     const principal = principalFromPublicKey(secp256k1PublicKey.toRaw());
+//     const address = principal.toText();
+
+//     return {
+//       mnemonic,
+//       address,
+//       privateKey,
+//       publicKey: secp256k1PublicKey.toDer(),
+//     };
+//   } catch (error) {
+//     console.error('ICP 지갑 생성 중 오류가 발생했습니다.', error);
+//     throw error;
+//   }
+// };
 
 export const unlockKeyring = async (principal: Principal, password: string) => {
   try {
@@ -83,4 +113,13 @@ export const unlockKeyring = async (principal: Principal, password: string) => {
     console.error('ICP 지갑 해제 중 오류가 발생했습니다.', error);
     throw error;
   }
+};
+
+const principalFromPublicKey = publicKey => {
+  const crypto = require('crypto');
+  const sha256 = data => crypto.createHash('sha256').update(data).digest();
+  const sha224 = data => crypto.createHash('sha224').update(data).digest();
+
+  const array = new Uint8Array([...sha256(publicKey).slice(0, 28), 2]);
+  return Principal.fromUint8Array(sha224(array));
 };
