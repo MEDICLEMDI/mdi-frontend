@@ -39,35 +39,47 @@ const Hospital = ({ navigation, route }) => {
   const [productList, setProductList] = React.useState<any>([]);
   const [hospitalList, setHospitalList] = React.useState<any>([]);
   const [search, setSearch] = React.useState<string | undefined>();
+  const [page, setPage] = React.useState(1);
 
   React.useEffect(() => {
     searchList();
+    setProductList([]);
+    setPage(1);
   }, [index]);
-
-  const getEventItemLists = async () => {
-    try {
-      const data = await api.getEventProducts();
-      setProductList(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const searchList = async () => {
     if (index === 0) {
       await getEventItemLists();
     }
     if (index === 1) {
-      await setProductList([]);
+      await getReviewRankLists();
     }
     if (index === 2) {
       await getHospitalList();
     }
   };
 
+  const getEventItemLists = async () => {
+    try {
+      const data = await api.getEventProducts(page, search);
+      setProductList(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getReviewRankLists = async () => {
+    try {
+      const data = await api.getReviewRankLists(page, search);
+      setProductList(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const getHospitalList = async () => {
     try {
-      const data = await api.getHospital(search);
+      const data = await api.getHospital(page, search);
       setHospitalList(data);
     } catch (err) {
       console.error(err);
@@ -158,20 +170,20 @@ const Hospital = ({ navigation, route }) => {
         <FlatList
           style={{ paddingHorizontal: 20, flex: 1 }}
           keyExtractor={(item, key) => item.id.toString()}
-          onEndReached={getMoreProductItems}
+          // onEndReached={getMoreProductItems}
           onEndReachedThreshold={0.4}
           ListFooterComponent={loading && <ActivityIndicator />}
           data={productList}
           renderItem={({ item }) => (
             <ListItem
               key={item.id}
-              image={item.pc_image_main}
+              image={item.main_image}
               type="고객평가우수병원"
-              location={item.company?.ci_address.substring(0, 2)}
-              label={item.company?.name}
-              description={item.pc_name}
-              discount={item.pc_discount_percent}
-              price={convertPrice(item.pc_price)}
+              location={item.hospital_address.substring(0, 2)}
+              label={item.hospital_name}
+              description={item.product_name}
+              discount={item.discount}
+              price={convertPrice(item.price)}
               onPress={() =>
                 navigation.navigate(Routes.PRODUCT_DETAIL, { id: item.id })
               }

@@ -1,7 +1,7 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, SafeAreaView, ScrollView, View } from 'react-native';
+import {Image, SafeAreaView, ScrollView, TouchableOpacity, View} from 'react-native';
 
 import ReviewImage from '@/assets/images/Review.png';
 import api from '@/components/Api';
@@ -26,6 +26,8 @@ const Home = () => {
   const [tabIndex, setTabIndex] = React.useState(0);
   const [productGroups, setProductGroups] = React.useState<any>([]);
   const [newestProduct, setNewestProduct] = React.useState<any>([]);
+  const [page, setPage] = React.useState(1);
+  const [search, setSearch] = React.useState('');
 
   const numColumns = 3;
   const categoryPadding = 30;
@@ -70,7 +72,7 @@ const Home = () => {
 
   const getNewestProducts = async () => {
     try {
-      const data = await api.getNewestProducts();
+      const data = await api.getNewestProducts(page, search);
       setNewestProduct(data);
     } catch (err) {
       console.error(err);
@@ -88,8 +90,13 @@ const Home = () => {
           <View style={style.searchInput}>
             <MedicleInput
               placeholder={t('input.searchInputPlaceHolder')}
-              rightInputNode={<Icon name="search" />}
+              rightInputNode={
+                <TouchableOpacity onPress={() => getNewestProducts()}>
+                  <Icon name="search" />
+                </TouchableOpacity>
+              }
               direction="row"
+              onChangeText={text => setSearch(text)}
             />
           </View>
 
@@ -131,14 +138,14 @@ const Home = () => {
           <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
             {newestProduct.map((item, key) => (
               <ListItem
-                key={key}
-                image={item.pc_image_main}
+                key={item.id}
+                image={item.main_image}
                 type="고객평가우수병원"
-                location={item.company.ci_address.substring(0, 2)}
-                label={item.company.name}
-                description={item.pc_name}
-                discount={20}
-                price={convertPrice(item?.pc_price)}
+                location={item.hospital_address.substring(0, 2)}
+                label={item.hospital_name}
+                description={item.product_name}
+                discount={item.discount}
+                price={convertPrice(item.price)}
                 onPress={() =>
                   navigation.navigate(Routes.PRODUCT_DETAIL, { id: item.id })
                 }

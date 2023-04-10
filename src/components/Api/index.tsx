@@ -52,8 +52,12 @@ const getProductGroups = async () => {
   return data;
 };
 
-const getNewestProducts = async () => {
-  const { data } = await Api.get('/products/newest');
+const getNewestProducts = async (page: number, search?: string) => {
+  let url = `/products/newest/${page}`;
+  if (search) {
+    url += '/' + search;
+  }
+  const { data } = await Api.get(url);
   return data;
 };
 
@@ -69,8 +73,21 @@ const getProductGroupItems = async (
   const { data } = await Api.get(url);
   return data;
 };
-const getEventProducts = async () => {
-  const { data } = await Api.get('/products/event');
+const getEventProducts = async (page: number, search?: string) => {
+  let url = `/products/event/${page}`;
+  if (search !== undefined) {
+    url += '/' + search;
+  }
+  const { data } = await Api.get(url);
+  return data;
+};
+
+const getReviewRankLists = async (page: number, search?: string) => {
+  let url = `/products/reviews/${page}`;
+  if (search !== undefined) {
+    url += '/' + search;
+  }
+  const { data } = await Api.get(url);
   return data;
 };
 
@@ -94,10 +111,10 @@ const getProductInfo = async (itemId: number) => {
 
 // 병원 정보
 
-const getHospital = async (name?: string) => {
-  let url = '/company';
-  if (name) {
-    url += '/' + name;
+const getHospital = async (page: number, search?: string) => {
+  let url = `/company/${page}`;
+  if (search) {
+    url += '/' + search;
   }
   const { data } = await Api.get(url);
   return data;
@@ -196,6 +213,7 @@ export default {
   getHospitalDetail,
   getUserAppointment,
   getAppointmentDetail,
+  getReviewRankLists,
   insertProductQA,
   getQAList,
   getQaDetail,
