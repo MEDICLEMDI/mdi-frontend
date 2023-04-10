@@ -151,6 +151,7 @@ const EditPhone = ({ navigation }) => {
     let _errorMessage = '';
 
     setSmsError('');
+    setPhoneError('');
 
     try {
       const api = new API();

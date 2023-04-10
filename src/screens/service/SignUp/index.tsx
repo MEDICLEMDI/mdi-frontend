@@ -2,6 +2,7 @@ import Postcode from '@actbase/react-daum-postcode';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Alert,
   Image,
   Modal,
   SafeAreaView,
@@ -26,6 +27,7 @@ import Routes from '@/navigation/Routes';
 import API from '@/utils/api';
 
 import style from './style';
+import { TextInput } from 'react-native-gesture-handler';
 
 export interface ISignUpData {
   reg_type?: string;
@@ -145,6 +147,8 @@ const SignUp = ({ navigation }) => {
   const mailSeconds = (mailInitialTime! % 60).toString().padStart(2, '0');
   const smsIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
   const mailIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
+  const registrationNumberRef1 = React.useRef<TextInput>(null);
+  const registrationNumberRef2 = React.useRef<TextInput>(null);
 
   React.useEffect(() => {
     setAgreeAll(privacyPolicy && termsOfService && marketing && fourteen);
@@ -368,12 +372,29 @@ const SignUp = ({ navigation }) => {
     setLoading(true);
     try {
       const data: ISignUpData = setupSignUpData();
+      console.log(data);
       const api = new API();
       await api
         .post('/register', data)
         .then(res => {
-          console.log(res);
-          setSuccess(true);
+          if (res.result) {
+            setSuccess(true);
+          } else {
+            if (res.message === 'Already used registration number') {
+              registrationNumberRef1.current?.focus();
+              setSignUpData({
+                ...signUpData,
+                registrationNumber1: undefined,
+                registrationNumber2: undefined,
+              });
+              setError({
+                ...error,
+                registrationNumber1: '가입된 주민등록번호 입니다.',
+              });
+            } else {
+              Alert.alert('처리중 오류가 발생하였습니다.');
+            }
+          }
         })
         .catch(err => {
           throw err;
@@ -431,8 +452,6 @@ const SignUp = ({ navigation }) => {
             setSmsStatus('before');
             if (res.message === 'phone auth limit over.') {
               _errorMessage = 'smsLimit';
-            } else if (res.message === 'phone number already used') {
-              _errorMessage = 'alreadyUsedPhone';
             }
           }
         })
@@ -519,16 +538,6 @@ const SignUp = ({ navigation }) => {
   };
 
   const handleSmsCheck = async () => {
-    // if (text === '111111') {
-    //   clearInterval(smsIntervalRef.current!);
-    //   setSmsStatus('completed');
-    // } else {
-    //   setError({
-    //     ...error,
-    //     ['smsCode']: t('errorMessage.smsCheckError'),
-    //   });
-    // }
-
     let _success = false;
     let _errorMessage = 'unknown';
 
@@ -571,16 +580,6 @@ const SignUp = ({ navigation }) => {
   };
 
   const handleMailCheck = async () => {
-    // if (text === '111111') {
-    //   clearInterval(mailIntervalRef.current!);
-    //   setEmailStatus('completed');
-    // } else {
-    //   setError({
-    //     ...error,
-    //     ['mailCode']: t('errorMessage.smsCheckError'),
-    //   });
-    // }
-
     let _success = false;
     let _errorMessage = 'unknown';
 
@@ -672,6 +671,7 @@ const SignUp = ({ navigation }) => {
                 value={signUpData?.registrationNumber1}
                 onChangeText={text => onChange(text, 'registrationNumber1')}
                 // onBlur={() => handleBlur('registrationNumber1')}
+                ref={registrationNumberRef1}
                 errText={
                   error.registrationNumber1 !== undefined
                     ? error.registrationNumber1
@@ -686,6 +686,7 @@ const SignUp = ({ navigation }) => {
                 value={signUpData?.registrationNumber2}
                 maxLength={7}
                 password={true}
+                ref={registrationNumberRef2}
                 onChangeText={text => onChange(text, 'registrationNumber2')}
                 // onBlur={() => handleBlur('registrationNumber2')}
                 errText={
