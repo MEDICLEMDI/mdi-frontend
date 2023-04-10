@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Alert,
   Image,
   Modal,
   Platform,
@@ -74,6 +75,8 @@ const Profile = ({ navigation }) => {
       console.error(err);
       if (err === '비밀번호 틀림') {
         setPasswordErrMessage('비밀번호가 올바르지 않습니다.');
+      } else if (err === 'logout') {
+        Alert.alert('세션이 만료되어 로그아웃 됩니다.');
       } else {
         setPasswordErrMessage('처리중 오류가 발생하였습니다.');
       }

@@ -36,7 +36,6 @@ class API {
 
   async refreshToken() {
     await this.setRefreshToken();
-    console.log('리프레쉬 작동햇다!');
 
     return this.post('/auth/refreshtoken')
       .then(async response => {
@@ -45,16 +44,13 @@ class API {
           const { data } = response;
           await AsyncStorage.setItem('@User', JSON.stringify(data.user));
           await AsyncStorage.setItem('@AuthKey', data.access_token);
-          await AsyncStorage.setItem('@RefreshKey', data.refresh_token);
+          // await AsyncStorage.setItem('@RefreshKey', data.refresh_token);
           await this.setAuthToken();
         } else {
-          await resetStorage();
-          eventEmitter.emit('autoLoggedOut');
+          throw 'logout';
         }
       })
       .catch(async err => {
-        await resetStorage();
-        eventEmitter.emit('autoLoggedOut');
         throw err;
       });
   }
@@ -64,21 +60,26 @@ class API {
     init?: RequestInit
   ): Promise<Response> {
     const response = await fetch(input, init);
+    const resp = response;
     if (response.status === 401) {
-      await this.refreshToken();
-      const updatedInit = {
-        ...init,
-        headers: {
-          ...init?.headers,
-          Authorization: 'Bearer ' + this.token,
-        },
-      };
-      const refreshResponse = await fetch(input, updatedInit);
-      return refreshResponse;
+      let _response = await response.json();
+      let _message = _response.message;
+      if (_message === '토큰이 만료되었습니다.') {
+        await this.refreshToken();
+        const updatedInit = {
+          ...init,
+          headers: {
+            ...init?.headers,
+            Authorization: 'Bearer ' + this.token,
+          },
+        };
+        const refreshResponse = await fetch(input, updatedInit);
+        return refreshResponse;
+      } else {
+        throw 'logout';
+      }
     }
-
-    // console.log('gdgd', response);
-    return response;
+    return resp;
   }
 
   async post(url: string, data?: any) {
@@ -96,7 +97,11 @@ class API {
         this.setAuthToken();
         return response;
       })
-      .catch(err => {
+      .catch(async err => {
+        if (err === 'logout') {
+          await resetStorage();
+          eventEmitter.emit('loggedOut');
+        }
         throw err;
       });
   }
