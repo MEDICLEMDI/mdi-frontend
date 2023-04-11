@@ -7,6 +7,7 @@ import eventEmitter from '@/utils/eventEmitter';
 class API {
   readonly baseUrl: string = Config.API_URL;
   token: string | null = null;
+  user_index: string = '';
 
   async getJWTToken() {
     const authKey = await AsyncStorage.getItem('@AuthKey');
@@ -16,6 +17,12 @@ class API {
       authKey: authKey,
       refreshKey: refreshKey,
     };
+  }
+
+  async getUserId() {
+    const user = await AsyncStorage.getItem('@User');
+    const user_index_ = JSON.parse(user!).id;
+    this.user_index = user_index_;
   }
 
   async setAuthToken(): Promise<void> {
@@ -83,21 +90,28 @@ class API {
   }
 
   async post(url: string, data?: any) {
+    // this.getUserId();
     return this.fetchInterceptor(`${this.baseUrl}${url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.token,
+        user_index: this.user_index,
       },
       body: JSON.stringify(data),
     })
       .then(response => response.json())
       .then(response => {
+        if (response.is_error) {
+          throw response;
+        }
+        console.log(response);
         errorChecker(response);
         this.setAuthToken();
         return response;
       })
       .catch(async err => {
+        console.error(err);
         if (err === 'logout') {
           await resetStorage();
           eventEmitter.emit('loggedOut');
@@ -107,11 +121,13 @@ class API {
   }
 
   async get(url: string) {
+    this.getUserId();
     return this.fetchInterceptor(`${this.baseUrl}${url}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.token,
+        user_index: this.user_index,
       },
     })
       .then(response => response.json())
