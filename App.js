@@ -126,9 +126,8 @@ const PersistedApp = () => {
     const auth = await api.tokenChecker();
     if (auth) {
       try {
-        await api.setToken('refresh');
         const response = await api.autoSignIn();
-        if (response.result) {
+        if (response.ok) {
           // set new token
           const { data } = response;
           await AsyncStorage.setItem(

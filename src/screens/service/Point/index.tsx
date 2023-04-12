@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,16 +12,18 @@ import {
   View,
 } from 'react-native';
 
+import api from '@/components/Api';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
 import { DatePicker } from '@/components/Modals';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
+import { getStorageData } from '@/utils/localStorage';
 
 import style from './style';
-import Routes from "@/navigation/Routes";
 
 export default ({ navigation }) => {
   const { t } = useTranslation();
@@ -29,13 +32,18 @@ export default ({ navigation }) => {
   const [date, setDate] = React.useState();
 
   React.useEffect(() => {
-    // console.log(date);
+    getUserPoint();
   }, [date]);
 
   const FONT_BASIC_BLACK = fontStyleCreator({
     color: Colors.Medicle.Font.Gray.Dark,
     size: 10,
   });
+
+  const getUserPoint = async () => {
+    const id = (await getStorageData('@User')).id;
+    const res = await api.getUserPoint(id);
+  };
 
   return (
     <SafeAreaView style={style.container}>
@@ -54,7 +62,9 @@ export default ({ navigation }) => {
         <Text style={style.pointText}>적립 예정 포인트</Text>
         <View style={[style.flexRow, { justifyContent: 'space-between' }]}>
           <Text>{0}원</Text>
-          <TouchableOpacity style={style.chargeButton} onPress={() => navigation.navigate(Routes.POINT_CHARGE)}>
+          <TouchableOpacity
+            style={style.chargeButton}
+            onPress={() => navigation.navigate(Routes.POINT_CHARGE)}>
             <Text style={FONT_BASIC_BLACK}>충전하기</Text>
           </TouchableOpacity>
         </View>

@@ -3,7 +3,6 @@ import { useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Alert,
   Image,
   Modal,
   SafeAreaView,
@@ -15,7 +14,6 @@ import {
 
 import Close from '@/assets/images/close.png';
 import MedicleButton from '@/buttons/MedicleButton';
-import api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import { Colors } from '@/constants/theme';
@@ -23,7 +21,7 @@ import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import eventEmitter from '@/utils/eventEmitter';
 import { fontStyleCreator } from '@/utils/fonts';
-
+import api from '@/components/Api';
 import style from './style';
 
 const SignIn = ({ navigation }) => {
