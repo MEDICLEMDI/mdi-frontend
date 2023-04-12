@@ -12,7 +12,3 @@ export const getHospitalDetail = async (id: number) => {
   const { data } = await get(`/company/detail/${id}`);
   return data;
 };
-
-export const insertAppointment = async (body: any) => {
-  return await post({ url: '/appointment', body: body });
-};

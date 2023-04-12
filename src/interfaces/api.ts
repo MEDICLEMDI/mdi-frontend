@@ -14,8 +14,9 @@ type Company = {
 };
 
 export interface ErrorResponse {
+  status?: number;
   message?: string;
-  type?: string;
+  data?: any;
 }
 
 export interface IProductItem {

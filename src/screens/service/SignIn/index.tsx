@@ -141,13 +141,10 @@ const SignIn = ({ navigation }) => {
 
   const handleSignIn = async () => {
     try {
-      const data = await api.signIn({
+      const { data } = await api.signIn({
         user_id: signInData.user_id,
         password: signInData.password,
       });
-
-      console.log('data', data);
-      console.log(data.result);
 
       // if (!data.access_token || !data.user) {
       //   throw 'response error';
