@@ -7,7 +7,6 @@ import {
   editPassword,
   editPhone,
   getMyPage,
-  getUserId,
   userWithdraw,
 } from './mypage';
 import {
@@ -41,7 +40,6 @@ export default {
   getAppointmentDetail,
   getUserAppointment,
   userWithdraw,
-  getUserId,
   editAddress,
   editPassword,
   editPhone,
