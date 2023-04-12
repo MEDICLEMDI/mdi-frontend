@@ -11,9 +11,11 @@ import {
   View,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 
 import Close from '@/assets/images/close.png';
 import MedicleButton from '@/buttons/MedicleButton';
+import api from '@/components/Api';
 import { CustomCheckbox } from '@/components/common';
 import Header from '@/components/Header';
 import Hr from '@/components/Hr';
@@ -21,13 +23,13 @@ import { MedicleInput } from '@/components/inputs';
 import LoadingModal from '@/components/LoadingModal';
 import ResultPage from '@/components/ResultPage';
 import Spacing from '@/components/Spacing';
+import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
+import { responseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
-import API from '@/utils/api';
 
 import style from './style';
-import { TextInput } from 'react-native-gesture-handler';
 
 export interface ISignUpData {
   reg_type?: string;
@@ -148,7 +150,6 @@ const SignUp = ({ navigation }) => {
   const smsIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
   const mailIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
   const registrationNumberRef1 = React.useRef<TextInput>(null);
-  const registrationNumberRef2 = React.useRef<TextInput>(null);
 
   React.useEffect(() => {
     setAgreeAll(privacyPolicy && termsOfService && marketing && fourteen);
@@ -371,36 +372,32 @@ const SignUp = ({ navigation }) => {
   const register = async () => {
     setLoading(true);
     try {
-      const data: ISignUpData = setupSignUpData();
-      console.log(data);
-      const api = new API();
-      await api
-        .post('/register', data)
-        .then(res => {
-          if (res.result) {
-            setSuccess(true);
-          } else {
-            if (res.message === 'Already used registration number') {
-              registrationNumberRef1.current?.focus();
-              setSignUpData({
-                ...signUpData,
-                registrationNumber1: undefined,
-                registrationNumber2: undefined,
-              });
-              setError({
-                ...error,
-                registrationNumber1: '가입된 주민등록번호 입니다.',
-              });
-            } else {
-              Alert.alert('처리중 오류가 발생하였습니다.');
-            }
-          }
-        })
-        .catch(err => {
-          throw err;
-        });
+      const request: ISignUpData = setupSignUpData();
+      const response: responseDTO = await api.signUp(request);
+      console.log(response);
+
+      if (response.result) {
+        setSuccess(true);
+      } else {
+        if (response.error_code === 108) {
+          setSignUpData({
+            ...signUpData,
+            registrationNumber1: undefined,
+            registrationNumber2: undefined,
+          });
+          setError({
+            ...error,
+            registrationNumber1: ErrorCode[response.error_code],
+          });
+          registrationNumberRef1.current?.focus();
+        } else {
+          throw 'error';
+        }
+      }
     } catch (e: any) {
       console.error(e);
+      Alert.alert('처리중 오류가 발생하였습니다.');
+      navigation.navigate(Routes.SIGNIN);
     }
     setLoading(false);
   };
@@ -435,34 +432,33 @@ const SignUp = ({ navigation }) => {
     let _errorMessage = 'unknown';
 
     try {
-      const api = new API();
-      const data = {
+      const response: responseDTO = await api.getPhoneAuthCode({
         phone: signUpData.phone,
         type: 'register',
-      };
-      await api
-        .post('/phoneauth/reqcode', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            setSmsInitialTime(300);
-            setSmsStatus('progress');
-            _success = true;
-          } else {
-            setSmsStatus('before');
-            if (res.message === 'phone auth limit over.') {
-              _errorMessage = 'smsLimit';
-            }
-          }
-        })
-        .catch(err => console.log(err));
+      });
+
+      if (response.result) {
+        setSmsInitialTime(300);
+        setSmsStatus('progress');
+        _success = true;
+      } else {
+        if (response.error_code) {
+          setSmsStatus('before');
+          _errorMessage = ErrorCode[response.error_code];
+        } else {
+          throw 'error';
+        }
+      }
     } catch (e: any) {
-      console.log(e);
+      _errorMessage = ErrorCode[101];
     }
 
     if (!_success) {
       clearInterval(smsIntervalRef.current!);
-      errorSet('phone', _errorMessage);
+      setError({
+        ...error,
+        phone: _errorMessage,
+      });
     }
   };
 
@@ -478,33 +474,35 @@ const SignUp = ({ navigation }) => {
     let _errorMessage = 'unknown';
 
     try {
-      const api = new API();
-      const data = {
+      const request = {
         email: signUpData.email,
       };
-      await api
-        .post('/mailauth/reqcode', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            setMailInitialTime(300);
-            setEmailStatus('progress');
-            _success = true;
-          } else {
-            if (res.message === 'email already used') {
-              _errorMessage = 'alreadyUsedEmail';
-            }
-            setEmailStatus('before');
-          }
-        })
-        .catch(err => console.log(err));
+
+      const response: responseDTO = await api.getEmailAuthCode(request);
+      console.log(response);
+
+      if (response.result) {
+        setMailInitialTime(300);
+        setEmailStatus('progress');
+        _success = true;
+      } else {
+        if (response.error_code) {
+          setEmailStatus('before');
+          _errorMessage = ErrorCode[response.error_code];
+        } else {
+          throw 'error';
+        }
+      }
     } catch (e: any) {
-      console.log(e);
+      _errorMessage = ErrorCode[101];
     }
 
     if (!_success) {
       clearInterval(mailIntervalRef.current!);
-      errorSet('email', _errorMessage);
+      setError({
+        ...error,
+        email: _errorMessage,
+      });
     }
     setLoading(false);
   };
@@ -538,85 +536,71 @@ const SignUp = ({ navigation }) => {
   };
 
   const handleSmsCheck = async () => {
-    let _success = false;
-    let _errorMessage = 'unknown';
-
     try {
-      const api = new API();
-      const data = {
+      const request = {
         phone: signUpData.phone,
         auth_code: smsCode,
         type: 'register',
       };
-      await api
-        .post('/phoneauth/checkcode', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            clearInterval(smsIntervalRef.current!);
-            setSmsStatus('completed');
-            _success = true;
-          } else {
-            if (res.message === 'expire time over.') {
-              _errorMessage = 'smsTimeout';
-            } else if (
-              res.message === 'phone auth fail' ||
-              res.message === 'no phone auth data.'
-            ) {
-              _errorMessage = 'smsCheck';
-            }
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    } catch (e: any) {
-      console.log(e);
-    }
+      const response: responseDTO = await api.checkPhoneAuthCode(request);
+      console.log(response);
 
-    if (!_success) {
-      errorSet('smsCode', _errorMessage);
+      if (response.result) {
+        clearInterval(smsIntervalRef.current!);
+        setSmsStatus('completed');
+      } else {
+        if (response.error_code) {
+          setError({
+            ...error,
+            smsCode: ErrorCode[response.error_code],
+          });
+        } else {
+          throw 'error';
+        }
+      }
+    } catch (e: any) {
+      setError({
+        ...error,
+        smsCode: ErrorCode[101],
+      });
     }
   };
 
   const handleMailCheck = async () => {
     let _success = false;
-    let _errorMessage = 'unknown';
+    let _errorMessage = ErrorCode[101];
 
     try {
-      const api = new API();
-      const data = {
+      const request = {
         email: signUpData.email,
         auth_code: mailCode,
       };
-      await api
-        .post('/mailauth/checkcode', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            clearInterval(mailIntervalRef.current!);
-            setEmailStatus('completed');
-            _success = true;
-          } else {
-            if (res.message === 'expire time over.') {
-              _errorMessage = 'smsTimeout';
-            } else if (
-              res.message === 'email auth fail' ||
-              res.message === 'no mail auth data.'
-            ) {
-              _errorMessage = 'smsCheck';
-            }
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      const response: responseDTO = await api.checkEmailAuthCode(request);
+      console.log(response);
+
+      if (response.result) {
+        clearInterval(mailIntervalRef.current!);
+        setEmailStatus('completed');
+        _success = true;
+      } else {
+        if (response.error_code) {
+          _errorMessage = ErrorCode[response.error_code];
+        } else {
+          throw 'error';
+        }
+      }
     } catch (e: any) {
-      console.log(e);
+      setError({
+        ...error,
+        mailCode: ErrorCode[101],
+      });
     }
 
     if (!_success) {
-      errorSet('mailCode', _errorMessage);
+      setError({
+        ...error,
+        mailCode: _errorMessage,
+      });
     }
   };
 
@@ -686,7 +670,6 @@ const SignUp = ({ navigation }) => {
                 value={signUpData?.registrationNumber2}
                 maxLength={7}
                 password={true}
-                ref={registrationNumberRef2}
                 onChangeText={text => onChange(text, 'registrationNumber2')}
                 // onBlur={() => handleBlur('registrationNumber2')}
                 errText={

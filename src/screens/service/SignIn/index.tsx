@@ -14,16 +14,18 @@ import {
 
 import Close from '@/assets/images/close.png';
 import MedicleButton from '@/buttons/MedicleButton';
+import api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
+import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
+import { responseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import eventEmitter from '@/utils/eventEmitter';
 import { fontStyleCreator } from '@/utils/fonts';
-import api from '@/components/Api';
+
 import style from './style';
-import { error_code } from 'src/error/errors';
 
 const SignIn = ({ navigation }) => {
   const { t } = useTranslation();
@@ -141,21 +143,30 @@ const SignIn = ({ navigation }) => {
 
   const handleSignIn = async () => {
     try {
-      const { data } = await api.signIn({
+      const response: responseDTO = await api.signIn({
         user_id: signInData.user_id,
         password: signInData.password,
       });
 
-      // if (!data.access_token || !data.user) {
-      //   throw 'response error';
-      // }
-      await setStorage(data);
-      eventEmitter.emit('loggedIn');
+      if (response.result) {
+        if (!response.data.access_token || !response.data.user) {
+          throw 'response data error';
+        }
+        await setStorage(response.data);
+        eventEmitter.emit('loggedIn');
+      } else {
+        if (!response.error_code) {
+          throw 'response data error';
+        }
+        setError({
+          ...error,
+          login: ErrorCode[response.error_code],
+        });
+      }
     } catch (err) {
-      console.error('signinerr', err);
       setError({
         ...error,
-        login: error_code[101],
+        login: ErrorCode[101],
       });
     }
   };
