@@ -5,6 +5,11 @@ export const getUserLoginId = async (body: any) => {
   return data;
 };
 
+export const getUserPassword = async (body: any) => {
+  const data = await post({ url: '/findaccount/password', body: body });
+  return data;
+};
+
 export const getPhoneAuthCode = async (body: any) => {
   const data = await post({ url: '/phoneauth/reqcode', body: body });
   return data;

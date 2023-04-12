@@ -177,29 +177,26 @@ const FindAccount = ({ navigation }) => {
   };
 
   const handleRequestUserPassword = async () => {
-    console.log('gdgd');
     try {
-      const api = new API();
-      const data = {
+      const request = {
         name: userData.name,
         registration_number: `${userData.registrationNumber1}${userData.registrationNumber2}`,
         email: userData.email,
       };
-      console.log(data);
 
-      await api
-        .post('/findaccount/password', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            setResult(true);
-          } else {
-            throw res;
-          }
-        })
-        .catch(err => {
-          throw err;
-        });
+      // const response: responseDTO = await api.getus
+      //   .post('/findaccount/password', data)
+      //   .then(res => {
+      //     console.log(res);
+      //     if (res.result) {
+      //       setResult(true);
+      //     } else {
+      //       throw res;
+      //     }
+      //   })
+      //   .catch(err => {
+      //     throw err;
+      //   });
     } catch (e: any) {
       console.error(e);
       if (e === '유저 없음') {
