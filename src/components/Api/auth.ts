@@ -13,7 +13,7 @@ export const signIn = async (body: {
   user_id: string | undefined;
   password: string | undefined;
 }) => {
-  const { data } = await post({ url: '/auth', body: body }); // DB 상품 그룹
+  const data = await post({ url: '/auth', body: body }); // DB 상품 그룹
   return data;
 };
 
@@ -26,5 +26,5 @@ export const signOut = async () => {
   const body = {
     jwt_refresh_token: await AsyncStorage.getItem('@RefreshKey'),
   };
-  return await post('/auth/signout', body);
+  return await post({ url: '/auth/signout', body: body });
 };

@@ -121,10 +121,14 @@ const _get = async <T>({
       method: 'GET',
       headers: headers,
     });
-    const { data } = await response.json();
-    return { ok: true, data: data as T };
+    const responseData = await response.json();
+    if (response.ok) {
+      return responseData;
+    } else {
+      return { ok: false, error: responseData?.error };
+    }
   } catch (e: any) {
-    return { ok: false, error: e.message };
+    throw { ok: false, error: e.message };
   }
 };
 
@@ -143,13 +147,15 @@ const _post = async <T>({
       headers: headers,
       body: JSON.stringify(body),
     });
-    const { data } = await response.json();
+    const responseData = await response.json();
+    console.log(responseData);
     if (response.ok) {
-      return { ok: true, data: data };
+      return responseData;
+    } else {
+      return { ok: false, error: responseData?.error };
     }
-    return { ok: false, error: data?.error };
   } catch (e: any) {
     console.error('API Error:', e.message);
-    return { ok: false, error: e.message };
+    throw { ok: false, error: e.message };
   }
 };

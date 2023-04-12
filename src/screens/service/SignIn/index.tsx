@@ -23,6 +23,7 @@ import eventEmitter from '@/utils/eventEmitter';
 import { fontStyleCreator } from '@/utils/fonts';
 import api from '@/components/Api';
 import style from './style';
+import { error_code } from 'src/error/errors';
 
 const SignIn = ({ navigation }) => {
   const { t } = useTranslation();
@@ -145,21 +146,18 @@ const SignIn = ({ navigation }) => {
         password: signInData.password,
       });
 
-      console.log(data);
+      console.log('data', data);
 
-      if (!data.access_token || !data.user) {
-        throw 'response error';
-      }
+      // if (!data.access_token || !data.user) {
+      //   throw 'response error';
+      // }
       await setStorage(data);
       eventEmitter.emit('loggedIn');
     } catch (err) {
-      console.log(err);
+      console.error('signinerr', err);
       setError({
         ...error,
-        login:
-          err === '유저 아이디와 비밀번호를 확인해 주세요'
-            ? err
-            : '처리중 오류가 발생하였습니다.',
+        login: error_code[101],
       });
     }
   };
