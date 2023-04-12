@@ -24,8 +24,9 @@ export type responseDTO = {
 };
 
 export interface ErrorResponse {
+  status?: number;
   message?: string;
-  type?: string;
+  data?: any;
 }
 
 export interface IProductItem {

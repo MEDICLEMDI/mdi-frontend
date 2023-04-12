@@ -23,6 +23,7 @@ import {
   getProductGroupItems,
   getProductGroups,
   getReviewRankLists,
+  productPayment,
 } from './product';
 import { getProductInfo, getQaDetail, getQAList, insertProductQA } from './qa';
 import { insertReview } from './reviews';
@@ -43,7 +44,6 @@ export default {
   getQAList,
   getHospital,
   getHospitalDetail,
-  insertAppointment,
   insertReview,
   getAppointmentDetail,
   getUserAppointment,
@@ -53,10 +53,5 @@ export default {
   editPassword,
   editPhone,
   getMyPage,
-  getUserLoginId,
-  getPhoneAuthCode,
-  getEmailAuthCode,
-  checkPhoneAuthCode,
-  checkEmailAuthCode,
-  signUp,
+  productPayment,
 };

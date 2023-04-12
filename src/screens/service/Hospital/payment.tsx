@@ -36,13 +36,14 @@ import { clear } from '@/redux/slices/keyring';
 import { convertNumberLocale, convertPrice } from '@/utils/utilities';
 
 import style from './style';
+import {getStorageData} from "@/utils/localStorage";
 
 export default ({ navigation, route }) => {
   const { t } = useTranslation();
   const { itemData } = route.params;
 
-  const [radioIndex, setRadioIndex] = React.useState(1);
-  const [payIndex, setPayIndex] = React.useState(0);
+  const [radioIndex, setRadioIndex] = React.useState(0);
+  const [payIndex, setPayIndex] = React.useState<Number>(0);
   const [selectedCard, setSelectedCard] = React.useState();
   const [installment, setInstallment] = React.useState();
   const [payButtonDisabled, setPayButtonDisabled] = React.useState(true);
@@ -103,16 +104,33 @@ export default ({ navigation, route }) => {
   const submit = async () => {
     // 데이터베이스에 데이터만 저장하는 형태로 구성
     // 이후 결제 처리 방식에 따라서 변경
-    const user_ = await AsyncStorage.getItem('@User');
-    const user = JSON.parse(user_);
+    const user = await getStorageData('@User');
+
+    const payType = {
+      0: 'card',
+      1: '',
+      2: '',
+      3: 'mobile',
+      4: 'toss',
+      5: 'kakao',
+    };
+
+    let payment_method = 'point';
+    if (radioIndex === 1) {
+      payment_method = payType[payIndex];
+    }
 
     const request = {
+      payment_method: payment_method,
       product_id: itemData.product_id,
       user_id: user.id,
     };
 
+    console.log(itemData);
+
     try {
-      const res = await api.insertAppointment(request);
+      const res = await api.productPayment(request);
+      console.log(res);
     } catch (err) {
       console.error(err);
     }

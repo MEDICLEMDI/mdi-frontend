@@ -1,4 +1,4 @@
-import { get } from '@/utils/api';
+import {get, post} from '@/utils/api';
 export const getProductGroups = async () => {
   const { data } = await get('/products'); // DB 상품 그룹
   return data;
@@ -40,5 +40,10 @@ export const getReviewRankLists = async (page: number, search?: string) => {
     url += '/' + search;
   }
   const { data } = await get(url);
+  return data;
+};
+
+export const productPayment = async (body: any) => {
+  const { data } = await post({ url: '/payment', body: body });
   return data;
 };

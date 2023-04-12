@@ -85,7 +85,6 @@ const ProductDetail = ({ navigation, route }) => {
   const getItemDetail = async () => {
     try {
       const data = await api.getProductInfo(id);
-      console.log(data);
       setItemData(data);
     } catch (err) {
       console.log(err);

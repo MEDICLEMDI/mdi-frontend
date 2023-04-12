@@ -23,11 +23,22 @@ export const createHeaders = () => {
   return header;
 };
 
+const authHeader = async () => {
+  const headers = new Headers();
+  const user = await getStorageData('@User');
+  headers.append('Content-Type', 'application/json');
+  headers.append('user_index', user.id);
+  return headers;
+};
+
 export const get = async (url: string, auth?: boolean) => {
-  const headers = await createHeaders();
+  const accessToken = await getStorageData('@AuthKey');
+  let headers;
   if (auth) {
-    const accessToken = await getStorageData('@AuthKey');
+    headers = await authHeader();
     headers.append('Authorization', `Bearer ${accessToken}`);
+  } else {
+    headers = createHeaders();
   }
   return await _get({ url: url, headers: headers });
 };
@@ -43,7 +54,7 @@ export const post = async ({
   auth?: boolean;
   body?: Record<string, unknown>;
 }) => {
-  const headers = await createHeaders();
+  const headers = await authHeader();
   if (auth) {
     let key_ = await getStorageData('@AuthKey');
     if (key !== undefined) {
@@ -62,18 +73,26 @@ const jwtTokenExpireInterceptor = async (
     // 기존 요청대로 백엔드에 데이터를 요청
     let response = await fetch(input, init);
     if (!response.ok) {
+      console.log('통신 실패!');
       if (response.status !== 401) {
+        console.log('오류발생');
+        console.log(response);
+        console.log(await response.json());
         throw new Error('Network Error!');
       }
+      console.log('401오류처리');
       const e: ErrorResponse = await response.json();
+      console.log(e);
       switch (e.type) {
         case 'token':
+          console.log('토큰 갱신');
           await refreshAccessToken();
 
-          const headers = await createHeaders();
+          const headers = await authHeader();
           const accessToken = await getStorageData('@AuthKey');
           headers.append('Authorization', `Bearer ${accessToken}`);
           const newInit = { ...init, headers };
+          console.log('데이터 재전송!', newInit);
           response = await fetch(input, newInit);
           break;
         default:
@@ -89,14 +108,18 @@ const jwtTokenExpireInterceptor = async (
 const refreshAccessToken = async () => {
   try {
     const refreshToken = await getStorageData('@RefreshKey');
-    const headers = createHeaders();
+    const headers = await authHeader();
     headers.append('Authorization', `Bearer ${refreshToken}`);
     const response = await fetch(`${baseUrl}/auth/refreshtoken`, {
       method: 'POST',
       headers: headers,
     });
 
+    console.log('리프레시 토큰 갱신');
+    console.log(response);
+    console.log(headers);
     if (!response.ok && response.status === 401) {
+      console.log('갱신실패 로그아웃!');
       await clearStorage();
       eventEmitter.emit('autoLoggedOut');
     }
