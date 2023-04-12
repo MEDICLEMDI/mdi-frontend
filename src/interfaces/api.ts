@@ -1,3 +1,5 @@
+import { ErrorCode } from '@/constants/error';
+
 type User = {
   id: number;
   name: string;
@@ -11,6 +13,14 @@ type Company = {
   owner: string;
   address: string;
   trader_number: string;
+};
+
+export type responseDTO = {
+  result: boolean;
+  status?: number;
+  message: string;
+  data: any;
+  error_code: number;
 };
 
 export interface ErrorResponse {
@@ -30,13 +40,9 @@ export interface IProductItem {
   company: Company;
 }
 
-export interface IProductDetail {
+export interface IProductDetail {}
 
-}
-
-export interface IAppointmentItem {
-
-}
+export interface IAppointmentItem {}
 
 export interface IAppointmentDetail {
   user: User;
@@ -45,10 +51,6 @@ export interface IAppointmentDetail {
   request: string;
 }
 
-export interface ICompanyItem {
+export interface ICompanyItem {}
 
-}
-
-export interface ICompanyDetail {
-
-}
+export interface ICompanyDetail {}
