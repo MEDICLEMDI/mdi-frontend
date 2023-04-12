@@ -6,16 +6,16 @@ import eventEmitter from '@/utils/eventEmitter';
 import { clearStorage, getStorageData } from '@/utils/localStorage';
 
 const baseUrl = Config.API_URL;
-interface ErrorObject {
-  code: number;
-  message: string;
-}
+// interface ErrorObject {
+//   code: number;
+//   message: string;
+// }
 
-interface APIResponse<T, E = ErrorObject> {
-  ok: boolean;
-  data?: T;
-  error?: E;
-}
+// interface APIResponse<T, E = ErrorObject> {
+//   ok: boolean;
+//   data?: T;
+//   error?: E;
+// }
 
 export const createHeaders = () => {
   const header = new Headers();
@@ -109,13 +109,13 @@ const refreshAccessToken = async () => {
   }
 };
 
-const _get = async <T>({
+const _get = async ({
   url,
   headers,
 }: {
   url: string;
   headers?: Headers;
-}): Promise<APIResponse<T>> => {
+}): Promise<any> => {
   try {
     const response = await jwtTokenExpireInterceptor(`${baseUrl}${url}`, {
       method: 'GET',
@@ -132,7 +132,7 @@ const _get = async <T>({
   }
 };
 
-const _post = async <T>({
+const _post = async ({
   url,
   body,
   headers,
@@ -140,7 +140,7 @@ const _post = async <T>({
   url: string;
   body?: Record<string, unknown>;
   headers?: Headers;
-}): Promise<APIResponse<T>> => {
+}): Promise<any> => {
   try {
     const response = await jwtTokenExpireInterceptor(`${baseUrl}${url}`, {
       method: 'POST',

@@ -147,6 +147,7 @@ const SignIn = ({ navigation }) => {
       });
 
       console.log('data', data);
+      console.log(data.result);
 
       // if (!data.access_token || !data.user) {
       //   throw 'response error';
