@@ -3,15 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 
+import api from '@/components/Api';
 import MedicleButton from '@/components/buttons/MedicleButton';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import { Row } from '@/components/layout';
 import ResultPage from '@/components/ResultPage';
 import Spacing from '@/components/Spacing';
+import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
+import { responseDTO } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
-import API from '@/utils/api';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -143,40 +145,34 @@ const FindAccount = ({ navigation }) => {
 
   const handleRequestUserId = async () => {
     try {
-      const api = new API();
-      const data = {
+      const request = {
         name: userData.name,
         registration_number: `${userData.registrationNumber1}${userData.registrationNumber2}`,
       };
 
-      await api
-        .post('/findaccount/user_id', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            setUserId(res.data);
-            setResult(true);
-          } else {
-            throw res;
-          }
-        })
-        .catch(err => {
-          throw err;
-        });
+      const response: responseDTO = await api.getUserLoginId(request);
+      console.log(response);
+
+      if (response.result) {
+        setUserId(response.data);
+        setResult(true);
+      } else {
+        if (response.error_code || response.error_code === 103) {
+          nameRef.current?.focus();
+          setUserData({
+            ...userData,
+            name: undefined,
+            registrationNumber1: undefined,
+            registrationNumber2: undefined,
+          });
+          setResponseError(ErrorCode[response.error_code]);
+        } else {
+          throw 'error';
+        }
+      }
     } catch (e: any) {
       console.error(e);
-      if (e === '유저 없음') {
-        nameRef.current?.focus();
-        setUserData({
-          ...userData,
-          name: undefined,
-          registrationNumber1: undefined,
-          registrationNumber2: undefined,
-        });
-        setResponseError('*유저 정보를 찾을수 없습니다.');
-      } else {
-        setResponseError('*처리중 오류가 발생하였습니다.');
-      }
+      setResponseError(ErrorCode[101]);
     }
   };
 
@@ -249,7 +245,7 @@ const FindAccount = ({ navigation }) => {
         resultText={
           tabIndex === 0
             ? `${userData.name}${t('findAccount.resultTextId')}`
-            : `이메일로 임시 비밀번호를 전송하였습니다.`
+            : '이메일로 임시 비밀번호를 전송하였습니다.'
         }
         buttonText={t('button.goHome')}
         buttonDisabled={true}

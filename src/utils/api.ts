@@ -148,7 +148,6 @@ const _post = async ({
       body: JSON.stringify(body),
     });
     const responseData = await response.json();
-    console.log(responseData);
     if (response.ok) {
       return responseData;
     } else {
