@@ -11,9 +11,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { error_code } from 'src/error/errors';
 
 import Close from '@/assets/images/close.png';
 import MedicleButton from '@/buttons/MedicleButton';
+import api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import { Colors } from '@/constants/theme';
@@ -21,9 +23,9 @@ import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import eventEmitter from '@/utils/eventEmitter';
 import { fontStyleCreator } from '@/utils/fonts';
-import api from '@/components/Api';
+
 import style from './style';
-import { error_code } from 'src/error/errors';
+import { number } from 'bitcoinjs-lib/src/script';
 
 const SignIn = ({ navigation }) => {
   const { t } = useTranslation();
@@ -146,14 +148,19 @@ const SignIn = ({ navigation }) => {
         password: signInData.password,
       });
 
-      console.log('data', data);
-      console.log(data.result);
-
-      // if (!data.access_token || !data.user) {
-      //   throw 'response error';
-      // }
-      await setStorage(data);
-      eventEmitter.emit('loggedIn');
+      console.log(data);
+      if (data.result) {
+        if (!data.access_token || !data.user) {
+          throw 'response error';
+        }
+        await setStorage(data);
+        eventEmitter.emit('loggedIn');
+      } else {
+        setError({
+          ...error,
+          login: error_code[data.error_code],
+        });
+      }
     } catch (err) {
       console.error('signinerr', err);
       setError({
