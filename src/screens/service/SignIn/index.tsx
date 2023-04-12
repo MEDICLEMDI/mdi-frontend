@@ -17,6 +17,7 @@ import MedicleButton from '@/buttons/MedicleButton';
 import api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
+import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
 import { responseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
@@ -25,7 +26,6 @@ import eventEmitter from '@/utils/eventEmitter';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
-import { ErrorCode } from '@/constants/error';
 
 const SignIn = ({ navigation }) => {
   const { t } = useTranslation();
@@ -155,13 +155,15 @@ const SignIn = ({ navigation }) => {
         await setStorage(response.data);
         eventEmitter.emit('loggedIn');
       } else {
+        if (!response.error_code) {
+          throw 'response data error';
+        }
         setError({
           ...error,
           login: ErrorCode[response.error_code],
         });
       }
     } catch (err) {
-      console.error('signinerr', err);
       setError({
         ...error,
         login: ErrorCode[101],
