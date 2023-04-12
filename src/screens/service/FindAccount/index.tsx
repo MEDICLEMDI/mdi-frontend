@@ -157,7 +157,7 @@ const FindAccount = ({ navigation }) => {
         setUserId(response.data);
         setResult(true);
       } else {
-        if (response.error_code || response.error_code === 103) {
+        if (response.error_code && response.error_code === 103) {
           nameRef.current?.focus();
           setUserData({
             ...userData,
@@ -184,19 +184,27 @@ const FindAccount = ({ navigation }) => {
         email: userData.email,
       };
 
-      // const response: responseDTO = await api.getus
-      //   .post('/findaccount/password', data)
-      //   .then(res => {
-      //     console.log(res);
-      //     if (res.result) {
-      //       setResult(true);
-      //     } else {
-      //       throw res;
-      //     }
-      //   })
-      //   .catch(err => {
-      //     throw err;
-      //   });
+      const response: responseDTO = await api.getUserPassword(request);
+
+      console.log(response);
+
+      if (response.result) {
+        setResult(true);
+      } else {
+        if (response.error_code && response.error_code === 103) {
+          emailRef.current?.focus();
+          setUserData({
+            ...userData,
+            name: undefined,
+            registrationNumber1: undefined,
+            registrationNumber2: undefined,
+            email: undefined,
+          });
+          setResponseError(ErrorCode[response.error_code]);
+        } else {
+          throw 'error';
+        }
+      }
     } catch (e: any) {
       console.error(e);
       if (e === '유저 없음') {
