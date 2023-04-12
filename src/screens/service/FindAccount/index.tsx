@@ -157,7 +157,7 @@ const FindAccount = ({ navigation }) => {
         setUserId(response.data);
         setResult(true);
       } else {
-        if (response.error_code || response.error_code === 103) {
+        if (response.error_code && response.error_code === 103) {
           nameRef.current?.focus();
           setUserData({
             ...userData,
@@ -177,44 +177,37 @@ const FindAccount = ({ navigation }) => {
   };
 
   const handleRequestUserPassword = async () => {
-    console.log('gdgd');
     try {
-      const api = new API();
-      const data = {
+      const request = {
         name: userData.name,
         registration_number: `${userData.registrationNumber1}${userData.registrationNumber2}`,
         email: userData.email,
       };
-      console.log(data);
 
-      await api
-        .post('/findaccount/password', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            setResult(true);
-          } else {
-            throw res;
-          }
-        })
-        .catch(err => {
-          throw err;
-        });
+      const response: responseDTO = await api.getUserPassword(request);
+
+      console.log(response);
+
+      if (response.result) {
+        setResult(true);
+      } else {
+        if (response.error_code && response.error_code === 103) {
+          emailRef.current?.focus();
+          setUserData({
+            ...userData,
+            name: undefined,
+            registrationNumber1: undefined,
+            registrationNumber2: undefined,
+            email: undefined,
+          });
+          setResponseError(ErrorCode[response.error_code]);
+        } else {
+          throw 'error';
+        }
+      }
     } catch (e: any) {
       console.error(e);
-      if (e === '유저 없음') {
-        emailRef.current?.focus();
-        setUserData({
-          ...userData,
-          name: undefined,
-          registrationNumber1: undefined,
-          registrationNumber2: undefined,
-          email: undefined,
-        });
-        setResponseError('*유저 정보를 찾을수 없습니다.');
-      } else {
-        setResponseError('*처리중 오류가 발생하였습니다.');
-      }
+      setResponseError(ErrorCode[101]);
     }
   };
 

@@ -73,26 +73,18 @@ const jwtTokenExpireInterceptor = async (
     // 기존 요청대로 백엔드에 데이터를 요청
     let response = await fetch(input, init);
     if (!response.ok) {
-      console.log('통신 실패!');
       if (response.status !== 401) {
-        console.log('오류발생');
-        console.log(response);
-        console.log(await response.json());
         throw new Error('Network Error!');
       }
-      console.log('401오류처리');
       const e: ErrorResponse = await response.json();
-      console.log(e);
       switch (e.type) {
         case 'token':
-          console.log('토큰 갱신');
           await refreshAccessToken();
 
           const headers = await authHeader();
           const accessToken = await getStorageData('@AuthKey');
           headers.append('Authorization', `Bearer ${accessToken}`);
           const newInit = { ...init, headers };
-          console.log('데이터 재전송!', newInit);
           response = await fetch(input, newInit);
           break;
         default:
@@ -115,11 +107,7 @@ const refreshAccessToken = async () => {
       headers: headers,
     });
 
-    console.log('리프레시 토큰 갱신');
-    console.log(response);
-    console.log(headers);
     if (!response.ok && response.status === 401) {
-      console.log('갱신실패 로그아웃!');
       await clearStorage();
       eventEmitter.emit('autoLoggedOut');
     }
@@ -177,7 +165,6 @@ const _post = async ({
       return { ok: false, error: responseData?.error };
     }
   } catch (e: any) {
-    console.error('API Error:', e.message);
     throw { ok: false, error: e.message };
   }
 };

@@ -26,6 +26,7 @@ import Icon from '@/icons';
 import Routes from '@/navigation/Routes';
 
 import style from './style';
+import { getStorageData } from '@/utils/localStorage';
 
 const Profile = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -46,7 +47,7 @@ const Profile = ({ navigation }) => {
   }, []);
 
   const initialize = async () => {
-    const user_ = await AsyncStorage.getItem('@User');
+    const user_ = await getStorageData('@User');
     setUser(JSON.parse(user_));
   };
 
