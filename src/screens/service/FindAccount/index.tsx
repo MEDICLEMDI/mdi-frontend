@@ -207,19 +207,7 @@ const FindAccount = ({ navigation }) => {
       }
     } catch (e: any) {
       console.error(e);
-      if (e === '유저 없음') {
-        emailRef.current?.focus();
-        setUserData({
-          ...userData,
-          name: undefined,
-          registrationNumber1: undefined,
-          registrationNumber2: undefined,
-          email: undefined,
-        });
-        setResponseError('*유저 정보를 찾을수 없습니다.');
-      } else {
-        setResponseError('*처리중 오류가 발생하였습니다.');
-      }
+      setResponseError(ErrorCode[101]);
     }
   };
 
