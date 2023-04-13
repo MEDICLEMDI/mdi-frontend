@@ -20,13 +20,15 @@ import MedicleButton from '@/components/buttons/MedicleButton';
 import { ScrollViewGrid } from '@/components/GridLayout';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
+import { ErrorCode } from '@/constants/error';
 import { myPageMenus } from '@/constants/menus';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import { responseDTO } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
+import { getStorageData } from '@/utils/localStorage';
 
 import style from './style';
-import { getStorageData } from '@/utils/localStorage';
 
 const Profile = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -65,22 +67,25 @@ const Profile = ({ navigation }) => {
 
   const handleProfileEdit = async () => {
     try {
-      const data = await api.getMyPage(password);
-      if (data.result) {
+      const request = {
+        password: password,
+      };
+      const response: responseDTO = await api.getMyPage(request);
+
+      console.log(response);
+      if (response.result) {
         handleCloseModal();
         navigation.navigate(Routes.EDIT_PROFILE);
       } else {
-        throw 'error';
+        if (response.error_code && response.error_code === 109) {
+          setPasswordErrMessage(ErrorCode[response.error_code]);
+        } else {
+          throw 'error';
+        }
       }
     } catch (err) {
       console.error(err);
-      if (err === '비밀번호 틀림') {
-        setPasswordErrMessage('비밀번호가 올바르지 않습니다.');
-      } else if (err === 'logout') {
-        Alert.alert('세션이 만료되어 로그아웃 됩니다.');
-      } else {
-        setPasswordErrMessage('처리중 오류가 발생하였습니다.');
-      }
+      setPasswordErrMessage(ErrorCode[101]);
     }
   };
 

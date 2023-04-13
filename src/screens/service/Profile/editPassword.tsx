@@ -9,8 +9,10 @@ import api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import ResultModal from '@/components/ResultModal';
+import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import { responseDTO } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
 
@@ -106,7 +108,6 @@ const EditPassword = ({ navigation }) => {
         });
       } else {
         if (password === passwordData.new) {
-          console.log('같잖아');
           setErrors({
             ...errors,
             new: '기존 비밀번호와 동일한 비밀번호 입니다.',
@@ -176,35 +177,38 @@ const EditPassword = ({ navigation }) => {
 
   const handleEditPassword = async () => {
     try {
-      const data = await api.editPassword(
-        passwordData.origin!,
-        passwordData.new!
-      );
+      const request = {
+        origin_password: passwordData.origin,
+        new_password: passwordData.new,
+      };
 
-      if (data.result) {
-        console.log(data);
+      const response: responseDTO = await api.editPassword(request);
+
+      console.log(response);
+
+      if (response.result) {
         setResult(true);
       } else {
-        throw 'error';
+        if (response.error_code && response.error_code === 110) {
+          setErrors({
+            ...errors,
+            result: ErrorCode[response.error_code],
+          });
+          setPasswordData({
+            ...passwordData,
+            origin: '',
+          });
+          originRef.current?.focus();
+        } else {
+          throw 'error';
+        }
       }
     } catch (err) {
       console.error(err);
-      if (err === '비밀번호 틀림') {
-        setErrors({
-          ...errors,
-          result: '기존 비밀번호가 일치하지 않습니다.',
-        });
-        setPasswordData({
-          ...passwordData,
-          origin: '',
-        });
-        originRef.current?.focus();
-      } else {
-        setErrors({
-          ...errors,
-          result: '처리중 오류가 발생하였습니다.',
-        });
-      }
+      setErrors({
+        ...errors,
+        result: ErrorCode[101],
+      });
     }
   };
 
