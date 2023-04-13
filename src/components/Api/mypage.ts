@@ -1,5 +1,4 @@
 import { post } from '@/utils/api';
-import { getStorageData } from '@/utils/localStorage';
 
 export const userWithdraw = async (data: any) => {
   return await post({ url: '/userWithdraw', body: data });

@@ -34,11 +34,21 @@ export default ({ navigation }) => {
   const [date, setDate] = React.useState();
   const [page, setPage] = React.useState(1);
 
-  const chartType = ['진료 예약', '진료 완료', '예약 취소', '문의 내역'];
+  const chartType = [
+    '진료 예약',
+    '진료 완료',
+    '취소 신청중',
+    '취소 완료',
+    '문의 내역',
+  ];
 
   React.useEffect(() => {
     initialize();
   }, [tabIndex]);
+
+  React.useEffect(() => {
+    if (isFocus) initialize();
+  }, [isFocus]);
 
   const initialize = async () => {
     setPage(1);
@@ -76,7 +86,7 @@ export default ({ navigation }) => {
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.chart')} />
       <View style={style.content}>
-        <SearchBar onPress={() => setVisible(true)} />
+        {/* <SearchBar onPress={() => setVisible(true)} /> */}
         <DatePicker
           name="dataPicker"
           modalDirection="flex-end"
@@ -102,7 +112,7 @@ export default ({ navigation }) => {
               <Text style={DARK_GRAY_BOLD_18}>
                 {dayjs(item.date).format('YYYY.MM.DD')}
                 <Text style={STANDARD_GRAY_14}>
-                  &nbsp;&nbsp;{chartType[item.status - 1]}
+                  &nbsp;&nbsp;{chartType[item.status]}
                 </Text>
               </Text>
               <Icon name="arrowRight" />

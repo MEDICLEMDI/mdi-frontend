@@ -26,6 +26,7 @@ export const createHeaders = () => {
 const authHeader = async () => {
   const headers = new Headers();
   const user = await getStorageData('@User');
+  console.log('user', user);
   headers.append('Content-Type', 'application/json');
   headers.append('user_index', user.id);
   return headers;
