@@ -25,6 +25,7 @@ import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
+import { ErrorCode } from '@/constants/error';
 
 export interface User {
   name?: string;
@@ -103,21 +104,23 @@ const EditAddress = ({ navigation }) => {
 
   const handleEditAddress = async () => {
     try {
-      const data = await api.editAddress(
-        user?.post_number!,
-        user?.address1!,
-        user?.address2!
-      );
-      console.log(data);
-      if (data.result) {
-        await AsyncStorage.setItem('@User', JSON.stringify(data.data.user));
+      const request = {
+        post_number: user?.post_number!,
+        address1: user?.address1!,
+        address2: user?.address2!,
+      };
+      const response = await api.editAddress(request);
+
+      console.log(response);
+      if (response.result) {
+        await AsyncStorage.setItem('@User', JSON.stringify(response.data.user));
         setResult(true);
       } else {
         throw 'err';
       }
     } catch (err) {
       console.error(err);
-      setError('처리중 오류가 발생하였습니다.');
+      setError(ErrorCode[101]);
     }
   };
 

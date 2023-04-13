@@ -1,7 +1,15 @@
 import { getAppointmentDetail, getUserAppointment } from './appointment';
 import { autoSignIn, signIn, signOut, tokenChecker } from './auth';
 import { getHospital, getHospitalDetail } from './company';
-import { getUserLoginId, getUserPassword } from './guest';
+import {
+  checkEmailAuthCode,
+  checkPhoneAuthCode,
+  getEmailAuthCode,
+  getPhoneAuthCode,
+  getUserLoginId,
+  getUserPassword,
+  signUp,
+} from './guest';
 import {
   editAddress,
   editPassword,
@@ -46,5 +54,10 @@ export default {
   getMyPage,
   productPayment,
   getUserPassword,
-  getUserLoginId
+  getUserLoginId,
+  checkEmailAuthCode,
+  checkPhoneAuthCode,
+  getPhoneAuthCode,
+  getEmailAuthCode,
+  signUp,
 };

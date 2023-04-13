@@ -15,16 +15,16 @@ import style from './style';
 
 export default () => {
   const { t } = useTranslation();
-  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
-  const [word, setWord] = useState<string>('');
+  // const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
+  // const [word, setWord] = useState<string>('');
 
-  React.useEffect(() => {
-    if (word === '확인하였습니다' || word === '확인하였습니다.') {
-      setButtonDisabled(true);
-    } else {
-      setButtonDisabled(false);
-    }
-  }, [word]);
+  // React.useEffect(() => {
+  //   if (word === '확인하였습니다' || word === '확인하였습니다.') {
+  //     setButtonDisabled(true);
+  //   } else {
+  //     setButtonDisabled(false);
+  //   }
+  // }, [word]);
 
   const resetStorage = async () => {
     await AsyncStorage.removeItem('@AuthKey');

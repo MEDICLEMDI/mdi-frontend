@@ -6,13 +6,15 @@ import { SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
 
 import MedicleButton from '@/buttons/MedicleButton';
 import apis from '@/components/Api';
+import Api from '@/components/Api';
 import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import ResultModal from '@/components/ResultModal';
+import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import { responseDTO } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
-import API from '@/utils/api';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
@@ -148,47 +150,39 @@ const EditPhone = ({ navigation }) => {
   const handleRequestSms = async () => {
     clearInterval(smsIntervalRef.current!);
     let _success = false;
-    let _errorMessage = '';
+    let _errorMessage = ErrorCode[101];
 
     setSmsError('');
     setPhoneError('');
 
     try {
-      const api = new API();
-      const data = {
+      const request = {
         phone: user!.phone,
         type: 'update',
       };
-      await api
-        .post('/phoneauth/reqcode', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            setSmsInitialTime(300);
-            setSmsStatus('progress');
-            _success = true;
-            smsRef.current?.focus();
-          } else {
-            setSmsStatus('before');
-            if (res.message === 'phone auth limit over.') {
-              _errorMessage = '*일일 요청 횟수를 초과하였습니다.';
-            } else if (res.message === 'phone number already used') {
-              _errorMessage = '*이미 사용중인 전화번호 입니다.';
-            }
-          }
-        })
-        .catch(err => console.log(err));
+      const response: responseDTO = await Api.getPhoneAuthCode(request);
+      console.log(response);
+
+      if (response.result) {
+        setSmsInitialTime(300);
+        setSmsStatus('progress');
+        _success = true;
+        smsRef.current?.focus();
+      } else {
+        setSmsStatus('before');
+        if (response.error_code && response.error_code === 104) {
+          _errorMessage = ErrorCode[response.error_code];
+        } else {
+          throw 'error';
+        }
+      }
     } catch (e: any) {
       console.log(e);
     }
 
     if (!_success) {
       clearInterval(smsIntervalRef.current!);
-      if (_errorMessage === '') {
-        setPhoneError('*처리중 오류가 발생하였습니다.');
-      } else {
-        setPhoneError(_errorMessage);
-      }
+      setPhoneError(_errorMessage);
     }
   };
 
@@ -205,47 +199,34 @@ const EditPhone = ({ navigation }) => {
 
   const handleSmsCheck = async () => {
     let _success = false;
-    let _errorMessage = '';
+    let _errorMessage = ErrorCode[101];
 
     try {
-      const api = new API();
-      const data = {
+      const request = {
         phone: user!.phone,
         auth_code: smsCode,
         type: 'update',
       };
-      await api
-        .post('/phoneauth/checkcode', data)
-        .then(res => {
-          console.log(res);
-          if (res.result) {
-            clearInterval(smsIntervalRef.current!);
-            setSmsStatus('completed');
-            _success = true;
-          } else {
-            if (res.message === 'expire time over.') {
-              _errorMessage = '*인증시간이 만료되었습니다, 다시 요청해주세요.';
-            } else if (
-              res.message === 'phone auth fail' ||
-              res.message === 'no phone auth data.'
-            ) {
-              _errorMessage = '*인증정보가 일치하지 않습니다.';
-            }
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      const response: responseDTO = await Api.checkPhoneAuthCode(request);
+      console.log(response);
+
+      if (response.result) {
+        clearInterval(smsIntervalRef.current!);
+        setSmsStatus('completed');
+        _success = true;
+      } else {
+        if (response.error_code) {
+          _errorMessage = ErrorCode[response.error_code];
+        } else {
+          throw 'error';
+        }
+      }
     } catch (e: any) {
       console.log(e);
     }
 
     if (!_success) {
-      if (_errorMessage === '') {
-        setSmsError('*처리중 오류가 발생하였습니다.');
-      } else {
-        setSmsError(_errorMessage);
-      }
+      setSmsError(_errorMessage);
     }
   };
 
