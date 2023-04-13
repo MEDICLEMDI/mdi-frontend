@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -32,11 +31,11 @@ import { cardList, installmentList, payCondition } from '@/constants/payType';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
 import { Row } from '@/layout';
-import { clear } from '@/redux/slices/keyring';
+import Routes from '@/navigation/Routes';
+import { getStorageData } from '@/utils/localStorage';
 import { convertNumberLocale, convertPrice } from '@/utils/utilities';
 
 import style from './style';
-import {getStorageData} from "@/utils/localStorage";
 
 export default ({ navigation, route }) => {
   const { t } = useTranslation();
@@ -126,11 +125,12 @@ export default ({ navigation, route }) => {
       user_id: user.id,
     };
 
-    console.log(itemData);
-
     try {
       const res = await api.productPayment(request);
-      console.log(res);
+      if (res.result) {
+        console.log(res.message);
+        navigation.navigate(Routes.HOSPITAL_CATEGORY);
+      }
     } catch (err) {
       console.error(err);
     }

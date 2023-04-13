@@ -23,6 +23,7 @@ export const getProductGroupItems = async (
     url += '/' + search;
   }
   const { data } = await get(url);
+  console.log(data);
   return data;
 };
 export const getEventProducts = async (page: number, search?: string) => {
@@ -44,6 +45,7 @@ export const getReviewRankLists = async (page: number, search?: string) => {
 };
 
 export const productPayment = async (body: any) => {
-  const { data } = await post({ url: '/payment', body: body });
+  const data = await post({ url: '/payment', body: body });
+  console.log(data);
   return data;
 };
