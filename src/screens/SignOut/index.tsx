@@ -28,6 +28,8 @@ import eventEmitter from '@/utils/eventEmitter';
 import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
+import { responseDTO } from '@/interfaces/api';
+import { ErrorCode } from '@/constants/error';
 
 export default ({ navigation }) => {
   const { t } = useTranslation();
@@ -50,15 +52,28 @@ export default ({ navigation }) => {
 
   const handleUserWithdraw = async () => {
     try {
-      const data = await api.userWithdraw(password);
-      if (data.result) {
+      const request = {
+        password: password,
+      };
+      const response: responseDTO  = await api.userWithdraw(request);
+
+      console.log(response);
+
+      if (response.result) {
         setModalVisible(false);
         await AsyncStorage.clear();
         handleDeleteWallet();
         eventEmitter.emit('loggedOut');
+      } else {
+        if (response.error_code && response.error_code === 109) {
+          setPasswordErrMessage(ErrorCode[response.error_code]);
+        } else {
+          throw 'error';
+        }
       }
     } catch (err) {
       console.error(err);
+      setPasswordErrMessage(ErrorCode[101]);
     }
   };
 

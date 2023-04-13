@@ -1,7 +1,15 @@
 import { getAppointmentDetail, getUserAppointment } from './appointment';
 import { autoSignIn, signIn, signOut, tokenChecker } from './auth';
 import { getHospital, getHospitalDetail } from './company';
-import { checkEmailAuthCode, checkPhoneAuthCode, getEmailAuthCode, getPhoneAuthCode, getUserLoginId, getUserPassword, signUp } from './guest';
+import {
+  checkEmailAuthCode,
+  checkPhoneAuthCode,
+  getEmailAuthCode,
+  getPhoneAuthCode,
+  getUserLoginId,
+  getUserPassword,
+  signUp,
+} from './guest';
 import {
   editAddress,
   editPassword,
