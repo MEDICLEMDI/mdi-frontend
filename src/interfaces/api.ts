@@ -46,10 +46,21 @@ export interface IProductDetail {}
 export interface IAppointmentItem {}
 
 export interface IAppointmentDetail {
-  user: User;
-  company: Company;
-  appointment_date: string;
-  request: string;
+  id: string;
+  status: number;
+  is_review: boolean;
+  appointment_id: string;
+  user_id: string;
+  product_id: string;
+  company_id: string;
+  hospital_name: string;
+  doctor_name: string;
+  patient: string;
+  symptom: string;
+  appointment_data: string;
+  end_date: string;
+  price: string;
+  create_date: string;
 }
 
 export interface ICompanyItem {}

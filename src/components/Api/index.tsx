@@ -1,4 +1,8 @@
-import { getAppointmentDetail, getUserAppointment } from './appointment';
+import {
+  cancelAppointment,
+  getAppointmentDetail,
+  getUserAppointment,
+} from './appointment';
 import { autoSignIn, signIn, signOut, tokenChecker } from './auth';
 import { getHospital, getHospitalDetail } from './company';
 import {
@@ -10,6 +14,7 @@ import {
   getUserPassword,
   signUp,
 } from './guest';
+import { getLikeProducts, setLikeCompanys, setLikeProducts } from './likes';
 import {
   editAddress,
   editPassword,
@@ -60,4 +65,8 @@ export default {
   getPhoneAuthCode,
   getEmailAuthCode,
   signUp,
+  getLikeProducts,
+  setLikeProducts,
+  setLikeCompanys,
+  cancelAppointment,
 };

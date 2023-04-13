@@ -1,14 +1,15 @@
 import * as React from 'react';
 import {
+  StyleProp,
   Text,
   TextStyle,
   TouchableOpacity,
   View,
   ViewStyle,
-  StyleProp,
 } from 'react-native';
-import { fontStyleCreator } from '@/utils/fonts';
+
 import { Colors } from '@/constants/theme';
+import { fontStyleCreator } from '@/utils/fonts';
 
 const SELECTED_TAB_FONT = fontStyleCreator({
   size: 16,
@@ -46,8 +47,10 @@ const Tab = ({
   const [selected, setSelected] = React.useState(0);
 
   React.useEffect(() => {
-    if(index !== undefined) setSelected(index - 1);
-  }, [index])
+    if (index !== undefined) {
+      setSelected(index - 1);
+    }
+  }, [index]);
 
   return (
     <View style={tabStyle}>

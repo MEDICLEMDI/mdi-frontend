@@ -28,7 +28,7 @@ export const subscribe = (t) => [
   { name: t('category.whitening'), route: Routes.HOSPITAL },
   { name: t('category.braces'), route: Routes.HOSPITAL },
   { name: t('category.laminate'), route: Routes.HOSPITAL },
-  { name: t('category.hospital'), route: Routes.HOSPITAL },
+  { name: '병원', route: Routes.HOSPITAL },
 ];
 
 export const dermatology = (t) => [
