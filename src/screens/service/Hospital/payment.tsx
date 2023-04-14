@@ -1,3 +1,4 @@
+import { CommonActions } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -129,7 +130,10 @@ export default ({ navigation, route }) => {
       const res = await api.productPayment(request);
       if (res.result) {
         console.log(res.message);
-        navigation.navigate(Routes.HOSPITAL_CATEGORY);
+        navigation.dispatch([
+          navigation.navigate({ name: Routes.MYPAGE }),
+          navigation.navigate({ name: Routes.RECEIPT }),
+        ]);
       }
     } catch (err) {
       console.error(err);

@@ -1,17 +1,20 @@
-import Icon from "@/icons";
-import {Colors} from "@/constants/theme";
-import CalendarPicker from "react-native-calendar-picker";
-import * as React from "react";
-import {dateZeroFill} from "@/utils/dates";
+import * as React from 'react';
+import CalendarPicker from 'react-native-calendar-picker';
+
+import { Colors } from '@/constants/theme';
+import Icon from '@/icons';
+import { dateZeroFill } from '@/utils/dates';
 
 const Calendar = ({
   date,
   dateResponse,
   dateType,
-}:{
-  date: {from: string, to?: string};
+  initialDate,
+}: {
+  date: { from: string; to?: string };
   dateResponse: React.ComponentState;
   dateType: string;
+  initialDate: string;
 }) => {
   const dataPickerListener = (moment: any) => {
     let year = dateZeroFill(moment.year());
@@ -25,7 +28,20 @@ const Calendar = ({
   };
 
   const week = ['일', '월', '화', '수', '목', '금', '토'];
-  const month = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+  const month = [
+    '1월',
+    '2월',
+    '3월',
+    '4월',
+    '5월',
+    '6월',
+    '7월',
+    '8월',
+    '9월',
+    '10월',
+    '11월',
+    '12월',
+  ];
 
   return (
     <CalendarPicker
@@ -39,8 +55,9 @@ const Calendar = ({
       months={month}
       width={310}
       height={310}
+      initialDate={new Date(initialDate)}
     />
-  )
-}
+  );
+};
 
 export default Calendar;

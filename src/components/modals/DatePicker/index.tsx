@@ -1,30 +1,31 @@
 import { Portal } from '@gorhom/portal';
 import * as React from 'react';
 import {
+  GestureResponderEvent,
   Modal,
   ModalBaseProps,
   Platform,
-  Pressable,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import CalendarPicker from 'react-native-calendar-picker';
 
 import BoxDropShadow from '@/components/BoxDropShadow';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import { dateZeroFill } from '@/utils/dates';
 import { fontStyleCreator } from '@/utils/fonts';
 
+import Calendar from '../../../Calendar';
 import style from './style';
-import Calendar from "../../../Calendar";
-import {dateZeroFill} from "@/utils/dates";
 
 interface ModalProps extends ModalBaseProps {
   name: string;
   modalDirection: 'flex-start' | 'center' | 'flex-end';
   dateResponse: React.ComponentState;
+  submitEvent: ((event: GestureResponderEvent) => void) | undefined;
+  resetEvent: ((event: GestureResponderEvent) => void) | undefined;
+  date: any;
 }
 
 const DatePicker = ({
@@ -35,10 +36,13 @@ const DatePicker = ({
   onShow,
   modalDirection,
   dateResponse,
+  submitEvent,
+  resetEvent,
+  date,
 }: ModalProps) => {
   const [datePickerVisible, setDatePickerVisible] = React.useState(false);
   const [dateType, setDateType] = React.useState('');
-  const [date, setDate] = React.useState({ from: '', to: '' });
+  const [datePicker, setDatePicker] = React.useState({ from: '', to: '' });
   const monthCondition = [
     { label: '1년', value: 0 },
     { label: '6개월', value: 1 },
@@ -54,20 +58,14 @@ const DatePicker = ({
   });
 
   React.useEffect(() => {
-    const toDay = new Date();
-    const year = dateZeroFill(toDay.getFullYear());
-    const month = dateZeroFill(toDay.getMonth() + 1);
-    const day = dateZeroFill(toDay.getDate());
-    const setToday = `${year}-${month}-${day}`;
-
-    setDate({ from: setToday, to: setToday });
     setDatePickerVisible(false);
     setDateType('');
+    setDatePicker(date);
   }, [visible]);
 
   React.useEffect(() => {
-    dateResponse(date);
-  }, [date])
+    dateResponse(datePicker);
+  }, [datePicker]);
 
   const dataPickerHandler = (type: string) => {
     setDatePickerVisible(true);
@@ -149,7 +147,7 @@ const DatePicker = ({
                     },
                   ]}
                   onPress={() => dataPickerHandler('from')}>
-                  <Text style={{ flex: 1 }}>{date.from}</Text>
+                  <Text style={{ flex: 1 }}>{datePicker.from}</Text>
                   <Icon name="calendar" />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -158,7 +156,7 @@ const DatePicker = ({
                     { marginLeft: 10, borderWidth: dateType === 'to' ? 1 : 0 },
                   ]}
                   onPress={() => dataPickerHandler('to')}>
-                  <Text style={{ flex: 1 }}>{date.to}</Text>
+                  <Text style={{ flex: 1 }}>{datePicker.to}</Text>
                   <Icon name="clock" />
                 </TouchableOpacity>
               </View>
@@ -174,7 +172,12 @@ const DatePicker = ({
                   opacity={0.95}
                   radius={10}
                   style={style.datePickerWrap}>
-                  <Calendar date={date} dateResponse={setDate} dateType={dateType} />
+                  <Calendar
+                    date={datePicker}
+                    dateResponse={setDatePicker}
+                    dateType={dateType}
+                    initialDate={dateType === 'to' ? datePicker.to : datePicker.from}
+                  />
                 </BoxDropShadow>
               )}
             </View>
@@ -182,6 +185,7 @@ const DatePicker = ({
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <TouchableOpacity
+                onPress={resetEvent}
                 style={{
                   flex: 1,
                   flexDirection: 'row',
@@ -194,6 +198,7 @@ const DatePicker = ({
                 <Text style={[FONT_WHITE, { marginLeft: 10 }]}>초기화</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                onPress={submitEvent}
                 style={{
                   flex: 1,
                   justifyContent: 'center',

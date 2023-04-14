@@ -142,6 +142,7 @@ const SignIn = ({ navigation }) => {
   };
 
   const handleSignIn = async () => {
+    console.log(signInData.user_id, signInData.password);
     try {
       const response: responseDTO = await api.signIn({
         user_id: signInData.user_id,

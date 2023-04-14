@@ -1,61 +1,119 @@
 import { useIsFocused } from '@react-navigation/native';
+import dayjs from 'dayjs';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  ActivityIndicator,
+  FlatList,
   Image,
   SafeAreaView,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
+import api from '@/components/Api';
+import BoxDropShadow from '@/components/BoxDropShadow';
 import SearchBar from '@/components/forms/SearchHeader';
 import Header from '@/components/Header';
 import { DatePicker } from '@/components/Modals';
+import {
+  DARK_GRAY_BOLD_14,
+  DARK_GRAY_BOLD_16,
+  DARK_GRAY_BOLD_18,
+  STANDARD_GRAY_14,
+} from '@/constants/fonts';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
-import { fontStyleCreator } from '@/utils/fonts';
+import { dateZeroFill } from '@/utils/dates';
+import { getStorageData } from '@/utils/localStorage';
+import { convertNumberLocale } from '@/utils/utilities';
 
 import style from './style';
-import BoxDropShadow from "@/components/BoxDropShadow";
-import MedicleButton from "@/buttons/MedicleButton";
-import Spacing from "@/components/Spacing";
 
 export default () => {
   const { t } = useTranslation();
-  const isFocus = useIsFocused();
   const [visible, setVisible] = React.useState(false);
-  const [date, setDate] = React.useState();
-
-  const SUMMARY_FONT = fontStyleCreator({
-    color: Colors.Medicle.Font.Brown.Dark,
-    size: 18,
-    weight: 'bold',
+  const [loading, setLoading] = React.useState(false);
+  const [date, setDate] = React.useState({ from: '', to: '' });
+  const [histories, setHistories] = React.useState([]);
+  const [statusCount, setStatusCount] = React.useState({
+    confirm: 0,
+    refund: 0,
+    cancel: 0,
   });
-  const DATE_FONT = fontStyleCreator({
-    size: 18,
-    weight: 'bold',
-    color: Colors.Medicle.Font.Gray.Dark,
-  })
-  const RECEIPT_CONDITION_FONT = fontStyleCreator({
-    size: 14,
-    color: Colors.Medicle.Font.Gray.Standard,
-  })
-  const ITEM_NAME_FONT = fontStyleCreator({
-    size: 16,
-    weight: 'bold',
-  })
 
-  const data = [
-    { name: 'A', price: 2000 },
-  ]
+  React.useEffect(() => {
+    initialize();
+  }, []);
+
+  const statusType = ['결제중', '결제 완료', '결제 취소', '환불 완료'];
+
+  const initialize = async () => {
+    try {
+      await getHistory(defaultDate()); // 히스토리 불러오기
+      await getInfoCount(); // 히스토리 상태별 갯수 불러오기
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const defaultDate = () => {
+    const toDay = new Date();
+    const year = dateZeroFill(toDay.getFullYear());
+    const month = dateZeroFill(toDay.getMonth() + 1);
+    const day = dateZeroFill(toDay.getDate());
+    const startDate = `${year - 1}-${month}-${day}`;
+    const endDate = `${year}-${month}-${day}`;
+    return { from: startDate, to: endDate };
+  };
+
+  const getUserId = async () => {
+    const user = await getStorageData('@User');
+    return user.id;
+  };
+
+  const getHistory = async (date: any) => {
+    try {
+      const { data } = await api.getHistory(await getUserId(), date);
+      setHistories(data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setVisible(false);
+    }
+  };
+
+  const getInfoCount = async () => {
+    try {
+      const { data } = await api.getInfoCount(await getUserId());
+      const newStatusCount = { ...statusCount };
+      for (const v of data) {
+        if (v.up_status === 1) {
+          newStatusCount.confirm = Number(v.status_count);
+        }
+        if (v.up_status === 2) {
+          newStatusCount.cancel = Number(v.status_count);
+        }
+        if (v.up_status === 3) {
+          newStatusCount.refund = Number(v.status_count);
+        }
+      }
+      setStatusCount(newStatusCount);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.receipt')} />
       <View style={style.contentWrap}>
-        <SearchBar onPress={() => setVisible(true)} />
+        <SearchBar
+          onPress={() => setVisible(true)}
+          title="전체"
+          period="test"
+        />
         <DatePicker
           name="dataPicker"
           modalDirection="flex-end"
@@ -63,9 +121,11 @@ export default () => {
           onRequestClose={() => setVisible(false)}
           animationType="slide"
           dateResponse={setDate}
+          submitEvent={() => getHistory(date)}
+          resetEvent={() => getHistory(defaultDate())}
+          date={date.from === '' ? defaultDate() : date}
         />
 
-        {/* 받아온 데이터를 이용하여 map으로 재구성해야함 */}
         <View style={style.summaryWrap}>
           <View style={style.summaryItemWrap}>
             <View
@@ -73,68 +133,80 @@ export default () => {
                 style.summaryItem,
                 { backgroundColor: Colors.Medicle.Brown.SemiLight },
               ]}>
-              <Text style={SUMMARY_FONT}>0</Text>
+              <Text style={DARK_GRAY_BOLD_18}>
+                {statusCount.confirm + statusCount.refund + statusCount.cancel}
+              </Text>
             </View>
             <Text>전체</Text>
           </View>
 
           <View style={style.summaryItemWrap}>
             <View style={style.summaryItem}>
-              <Text style={SUMMARY_FONT}>0</Text>
+              <Text style={DARK_GRAY_BOLD_18}>{statusCount.confirm}</Text>
             </View>
             <Text>결제완료</Text>
           </View>
 
           <View style={style.summaryItemWrap}>
             <View style={style.summaryItem}>
-              <Text style={SUMMARY_FONT}>0</Text>
+              <Text style={DARK_GRAY_BOLD_18}>{statusCount.cancel}</Text>
             </View>
             <Text>취소완료</Text>
           </View>
 
           <View style={style.summaryItemWrap}>
             <View style={style.summaryItem}>
-              <Text style={SUMMARY_FONT}>0</Text>
+              <Text style={DARK_GRAY_BOLD_18}>{statusCount.refund}</Text>
             </View>
             <Text>환불완료</Text>
           </View>
         </View>
-        {/*<View style={style.noData}>*/}
-        {/*  <Text>결제 목록이 없습니다.</Text>*/}
-        {/*</View>*/}
       </View>
-      <ScrollView style={style.contentWrap}>
-        {
-          data.map(({name, price}, key) => (
-            <BoxDropShadow style={style.receiptItem} key={key}>
+      {histories.length > 0 ? (
+        <FlatList
+          style={{ paddingHorizontal: 25, flex: 1 }}
+          // keyExtractor={(item, key) => item.id.toString()}
+          // onEndReached={getMoreProductItems}
+          // onEndReachedThreshold={0.4}
+          ListFooterComponent={<>{loading && <ActivityIndicator />}</>}
+          data={histories}
+          renderItem={({ item }) => (
+            <BoxDropShadow style={style.receiptItem} key={item.id}>
               <View style={[style.flexRow, style.justifyBetween]}>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                  <Text style={[DATE_FONT]}>2022.11.09</Text>
-                  <Text style={[RECEIPT_CONDITION_FONT, {marginLeft: 10}]}>결제 완료</Text>
+                  <Text style={[DARK_GRAY_BOLD_18]}>
+                    {dayjs(item.date).format('YYYY.MM.DD')}
+                  </Text>
+                  <Text style={[STANDARD_GRAY_14, { marginLeft: 10 }]}>
+                    {statusType[item.status]}
+                  </Text>
                 </View>
                 <Icon name="arrowRight" />
               </View>
               <View style={[style.flexRow, style.infoWrap]}>
-                <View style={style.emptyImage}>
-                </View>
+                <Image
+                  style={style.imageWrap}
+                  source={{ uri: item.main_image }}
+                />
                 <View>
-                  <Text style={ITEM_NAME_FONT}>{name}</Text>
-                  <Text>진료 내용</Text>
+                  <Text style={DARK_GRAY_BOLD_16}>{item.hospital_name}</Text>
+                  <Text>{item.product_name}</Text>
                 </View>
               </View>
               <View style={[style.flexRow, style.justifyBetween]}>
                 <Text>총 결제금액</Text>
-                <Text>{price.toLocaleString()}원</Text>
-              </View>
-              <View style={[style.flexRow, style.receiptButtonWrap]}>
-                <MedicleButton buttonStyle={style.receiptButton} text='진료 예약하기' />
-                <Spacing size={10} />
-                <MedicleButton buttonStyle={style.receiptButton} text='리뷰 남기기' />
+                <Text style={DARK_GRAY_BOLD_14}>
+                  {convertNumberLocale(item.price)}
+                </Text>
               </View>
             </BoxDropShadow>
-          ))
-        }
-      </ScrollView>
+          )}
+        />
+      ) : (
+        <View style={{ paddingHorizontal: 25, flex: 1 }}>
+          <Text>조회된 결제 목록이 없습니다.</Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };

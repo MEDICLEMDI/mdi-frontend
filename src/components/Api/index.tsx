@@ -17,13 +17,13 @@ import {
   getMyPage,
   userWithdraw,
 } from './mypage';
+import { getHistory, getInfoCount, productPayment } from './payment';
 import {
   getEventProducts,
   getNewestProducts,
   getProductGroupItems,
   getProductGroups,
   getReviewRankLists,
-  productPayment,
 } from './product';
 import { getProductInfo, getQaDetail, getQAList, insertProductQA } from './qa';
 import { insertReview } from './reviews';
@@ -60,4 +60,6 @@ export default {
   getPhoneAuthCode,
   getEmailAuthCode,
   signUp,
+  getHistory,
+  getInfoCount,
 };

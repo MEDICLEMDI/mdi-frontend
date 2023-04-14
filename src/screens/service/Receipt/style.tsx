@@ -49,12 +49,11 @@ export default StyleSheet.create({
     borderBottomColor: Colors.Medicle.Gray.Light,
     borderBottomWidth: 1,
   },
-  emptyImage: {
+  imageWrap: {
     width: 50,
     height: 50,
     marginRight: 10,
     borderRadius: 10,
-    backgroundColor: Colors.Medicle.Gray.Light,
   },
   receiptButtonWrap: {
     marginTop: 20,
