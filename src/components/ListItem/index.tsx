@@ -33,6 +33,7 @@ const ListItem = ({
   price,
   like = false,
   onPress,
+  likeOnpress,
 }: {
   image?: ImageProps;
   like?: boolean;
@@ -45,6 +46,7 @@ const ListItem = ({
   discount?: number;
   price?: string | undefined;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
+  likeOnpress?: ((event: GestureResponderEvent) => void) | undefined;
 }) => {
   return (
     <BoxDropShadow style={{ marginBottom: 10 }}>
@@ -86,8 +88,8 @@ const ListItem = ({
               </View>
             </View>
             <View>
-              <TouchableOpacity>
-                {like ? (
+              <TouchableOpacity onPress={likeOnpress}>
+                {like === true ? (
                   <Icon name="heart" fill="#EDDFCC" />
                 ) : (
                   <Icon name="heart" stroke="#CECECE" />

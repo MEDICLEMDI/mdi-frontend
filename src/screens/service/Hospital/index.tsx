@@ -20,11 +20,13 @@ import ListItem from '@/components/ListItem';
 import Tab from '@/components/Tab';
 import {
   DARK_GRAY_10,
-  DARK_GRAY_BOLD_16, ORANGE_BOLD_10, STANDARD_GRAY_10
-
+  DARK_GRAY_BOLD_16,
+  ORANGE_BOLD_10,
+  STANDARD_GRAY_10,
 } from '@/constants/fonts';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import { ICompanyItem, IProductItem, responseDTO } from '@/interfaces/api';
 import { Column, Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import style from '@/screens/service/Hospital/style';
@@ -36,10 +38,11 @@ const Hospital = ({ navigation, route }) => {
 
   const [index, setIndex] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
-  const [productList, setProductList] = React.useState<any>([]);
-  const [hospitalList, setHospitalList] = React.useState<any>([]);
+  const [productList, setProductList] = React.useState<IProductItem[]>([]);
+  const [hospitalList, setHospitalList] = React.useState<ICompanyItem[]>([]);
   const [search, setSearch] = React.useState<string | undefined>();
   const [page, setPage] = React.useState(1);
+  const toastRef = React.useRef(null);
 
   React.useEffect(() => {
     searchList();
@@ -62,6 +65,7 @@ const Hospital = ({ navigation, route }) => {
   const getEventItemLists = async () => {
     try {
       const data = await api.getEventProducts(page, search);
+      console.log(data);
       setProductList(data);
     } catch (err) {
       console.error(err);
@@ -75,11 +79,12 @@ const Hospital = ({ navigation, route }) => {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   const getHospitalList = async () => {
     try {
       const data = await api.getHospital(page, search);
+      console.log(data);
       setHospitalList(data);
     } catch (err) {
       console.error(err);
@@ -87,6 +92,78 @@ const Hospital = ({ navigation, route }) => {
   };
 
   const getMoreProductItems = () => {};
+
+  const handleSetProductLike = async (product_id: string) => {
+    try {
+      const request = {
+        product_id: product_id,
+      };
+      const response: responseDTO = await api.setLikeProducts(request);
+      console.log(response);
+      if (response.result) {
+        handleUpdateProductLike(product_id);
+      } else {
+        throw 'error';
+      }
+    } catch (error) {
+      console.error(error);
+      toastRef.current.show('처리중 오류가 발생하였습니다.');
+    }
+  };
+
+  const handleSetHospitalLike = async (company_id: string) => {
+    try {
+      const request = {
+        company_id: company_id,
+      };
+      const response: responseDTO = await api.setLikeCompanys(request);
+      console.log(response);
+      if (response.result) {
+        handleUpdateHospitalLike(company_id);
+      } else {
+        throw 'error';
+      }
+    } catch (error) {
+      console.error(error);
+      toastRef.current.show('처리중 오류가 발생하였습니다.');
+    }
+  };
+
+  const handleUpdateProductLike = (product_id: string) => {
+    const targetProductIndex = productList.findIndex(
+      product => product.product_id === product_id
+    );
+
+    const updatedProductList = productList.map((product, _index) => {
+      if (_index === targetProductIndex) {
+        return {
+          ...product,
+          like: !product.like,
+        };
+      }
+      return product;
+    });
+
+    setProductList(updatedProductList);
+  };
+
+  const handleUpdateHospitalLike = (company_id: string) => {
+    const targetHospitalIndex = hospitalList.findIndex(
+      hospital => hospital.id === company_id
+    );
+
+    const updatedHospitalList = hospitalList.map((hospital, _index) => {
+      if (_index === targetHospitalIndex) {
+        return {
+          ...hospital,
+          like: !hospital.like,
+        };
+      }
+      return hospital;
+    });
+
+    setHospitalList(updatedHospitalList);
+  };
 
   return (
     <SafeAreaView style={style.container}>
@@ -153,12 +230,24 @@ const Hospital = ({ navigation, route }) => {
                     </Text>
                     <Row justify="space-between" align="flex-start">
                       <Text style={STANDARD_GRAY_10}>
-                        후기 <Text style={ORANGE_BOLD_10}>9999</Text>개
+                        후기{' '}
+                        <Text style={ORANGE_BOLD_10}>{item.review_count}</Text>
+                        개
                       </Text>
-                      <Icon
-                        name="heart"
-                        stroke={Colors.Medicle.Gray.Standard}
-                      />
+                      <TouchableOpacity
+                        onPress={() => handleSetHospitalLike(item.id)}>
+                        {item?.like ? (
+                          <Icon
+                            name="heart"
+                            fill={Colors.Medicle.Brown.Standard}
+                          />
+                        ) : (
+                          <Icon
+                            name="heart"
+                            stroke={Colors.Medicle.Gray.Standard}
+                          />
+                        )}
+                      </TouchableOpacity>
                     </Row>
                   </Column>
                 </Row>
@@ -179,14 +268,16 @@ const Hospital = ({ navigation, route }) => {
               key={item.id}
               image={item.main_image}
               type="고객평가우수병원"
-              location={item.hospital_address.substring(0, 2)}
+              location={item.hospital_address?.substring(0, 2)}
               label={item.hospital_name}
               description={item.product_name}
               discount={item.discount}
               price={convertPrice(item.price)}
+              like={item.like}
               onPress={() =>
                 navigation.navigate(Routes.PRODUCT_DETAIL, { id: item.id })
               }
+              likeOnpress={() => handleSetProductLike(item.id)}
             />
           )}
         />

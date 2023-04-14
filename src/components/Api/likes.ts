@@ -5,23 +5,12 @@ export const getLikeProducts = async (type: number, page: number) => {
   return data;
 };
 
-export const getUserPassword = async (body: any) => {
-  const data = await post({ url: '/findaccount/password', body: body });
+export const setLikeProducts = async (body: any) => {
+  const data = await post({ url: '/likes/product', body: body });
   return data;
 };
 
-export const setLikeProducts = async (product_id: number) => {
-  const body = {
-    product_id: product_id,
-  };
-  const data = await post({ url: 'likes/product', body: body });
-  return data;
-};
-
-export const setLikeCompanys = async (company_id: number) => {
-  const body = {
-    company_id: company_id,
-  };
-  const data = await post({ url: 'likes/company', body: body });
+export const setLikeCompanys = async (body: any) => {
+  const data = await post({ url: '/likes/company', body: body });
   return data;
 };
