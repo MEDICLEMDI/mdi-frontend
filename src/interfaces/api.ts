@@ -63,6 +63,21 @@ export interface IAppointmentDetail {
   create_date: string;
 }
 
+export interface IQaDetail {
+  address: string;
+  content: string;
+  date: string;
+  email: string;
+  hospital_doctor: string;
+  hospital_name: string;
+  hospital_phone: string;
+  id: string;
+  name: string;
+  phone: string;
+  trader_number: string;
+  user_id: string;
+}
+
 export interface ICompanyItem {}
 
 export interface ICompanyDetail {}

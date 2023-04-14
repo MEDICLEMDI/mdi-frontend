@@ -30,7 +30,7 @@ import {
   getReviewRankLists,
   productPayment,
 } from './product';
-import { getProductInfo, getQaDetail, getQAList, insertProductQA } from './qa';
+import { cancelQa, getProductInfo, getQaDetail, getQAList, insertProductQA } from './qa';
 import { insertReview } from './reviews';
 
 export default {
@@ -69,4 +69,5 @@ export default {
   setLikeProducts,
   setLikeCompanys,
   cancelAppointment,
+  cancelQa,
 };

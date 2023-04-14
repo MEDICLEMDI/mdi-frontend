@@ -66,11 +66,15 @@ export default ({ navigation, route }) => {
     const request = {
       id: id,
     };
-    const response: responseDTO = await api.cancelAppointment(request);
-    if (response.result) {
-      navigation.navigate(Routes.CHART);
-      Alert.alert('예약취소신청이 완료되었습니다.');
-    } else {
+    try {
+      const response: responseDTO = await api.cancelAppointment(request);
+      if (response.result) {
+        navigation.navigate(Routes.CHART);
+        Alert.alert('예약취소신청이 완료되었습니다.');
+      } else {
+        throw 'error';
+      }
+    } catch (err) {
       Alert.alert('처리중 오류가 발생하였습니다.');
     }
 

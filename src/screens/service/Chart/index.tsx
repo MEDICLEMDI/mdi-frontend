@@ -30,7 +30,7 @@ export default ({ navigation }) => {
 
   const [visible, setVisible] = React.useState(false);
   const [tabIndex, setTabIndex] = React.useState(0);
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState<any>([]);
   const [date, setDate] = React.useState();
   const [page, setPage] = React.useState(1);
 
@@ -47,7 +47,9 @@ export default ({ navigation }) => {
   }, [tabIndex]);
 
   React.useEffect(() => {
-    if (isFocus) initialize();
+    if (isFocus) {
+      initialize();
+    }
   }, [isFocus]);
 
   const initialize = async () => {
@@ -63,7 +65,7 @@ export default ({ navigation }) => {
   const getQAList = async () => {
     try {
       const user = await AsyncStorage.getItem('@User');
-      const userId = JSON.parse(user).id;
+      const userId = JSON.parse(user!).id;
       const res = await api.getQAList(userId);
       setData(res);
     } catch (err) {
@@ -74,7 +76,7 @@ export default ({ navigation }) => {
   const getUserAppointment = async () => {
     try {
       const user = await AsyncStorage.getItem('@User');
-      const userId = JSON.parse(user).id;
+      const userId = JSON.parse(user!).id;
       const res = await api.getUserAppointment(userId, page);
       setData(res);
     } catch (err) {
@@ -136,7 +138,7 @@ export default ({ navigation }) => {
             </View>
             <MedicleButton
               buttonStyle={style.button}
-              text="진료내역보기"
+              text={item.status !== 4 ? '진료내역보기' : '문의내역보기'}
               onPress={() =>
                 navigation.navigate(
                   tabIndex === 0 ? Routes.CHART_DETAIL : Routes.QA_DETAIL,
