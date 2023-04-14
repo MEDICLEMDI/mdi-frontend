@@ -30,7 +30,13 @@ import {
   getReviewRankLists,
   productPayment,
 } from './product';
-import { cancelQa, getProductInfo, getQaDetail, getQAList, insertProductQA } from './qa';
+import {
+  cancelQa,
+  getProductInfo,
+  getQaDetail,
+  getQAList,
+  insertProductQA,
+} from './qa';
 import { insertReview } from './reviews';
 
 export default {

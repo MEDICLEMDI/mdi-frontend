@@ -209,4 +209,12 @@ export default StyleSheet.create({
     borderColor: '#EFEFEF',
     borderWidth: 1,
   },
+  empty: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    fontSize: 16,
+  },
 });

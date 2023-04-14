@@ -1,7 +1,7 @@
 import { get, post } from '@/utils/api';
 
-export const getQAList = async (id: number) => {
-  const { data } = await get(`/qa/list/${id}`);
+export const getQAList = async () => {
+  const { data } = await get('/qa/list');
   return data;
 };
 export const getQaDetail = async (body: any) => {
