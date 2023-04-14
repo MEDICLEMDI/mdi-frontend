@@ -65,7 +65,6 @@ export default ({ navigation }) => {
   const getQAList = async () => {
     try {
       const res = await api.getQAList();
-      console.log('qa', res);
       setData(res);
     } catch (err) {
       console.error(err);

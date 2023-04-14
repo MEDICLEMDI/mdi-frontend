@@ -39,6 +39,8 @@ export interface IProductItem {
   review_count: number;
   like: boolean;
   company: Company;
+  hospital_name?: string;
+  hospital_address?: string;
 }
 
 export interface IProductDetail {}
@@ -78,6 +80,13 @@ export interface IQaDetail {
   user_id: string;
 }
 
-export interface ICompanyItem {}
+export interface ICompanyItem {
+  id: string;
+  name: string;
+  ci_address: string;
+  like: boolean;
+  review_count: string;
+  ci_image_main: string;
+}
 
 export interface ICompanyDetail {}

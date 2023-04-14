@@ -10,10 +10,7 @@ export const setLikeProducts = async (body: any) => {
   return data;
 };
 
-export const setLikeCompanys = async (company_id: number) => {
-  const body = {
-    company_id: company_id,
-  };
+export const setLikeCompanys = async (body: any) => {
   const data = await post({ url: '/likes/company', body: body });
   return data;
 };

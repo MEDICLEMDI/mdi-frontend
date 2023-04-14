@@ -1,7 +1,13 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import {Image, SafeAreaView, ScrollView, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import ReviewImage from '@/assets/images/Review.png';
 import api from '@/components/Api';
@@ -14,6 +20,7 @@ import Tab from '@/components/Tab';
 import { dentist, tabs } from '@/constants/category';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import { IProductItem, responseDTO } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
 import { convertPrice } from '@/utils/utilities';
 
@@ -28,6 +35,7 @@ const Home = () => {
   const [newestProduct, setNewestProduct] = React.useState<any>([]);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = React.useState('');
+  const toastRef = React.useRef(null);
 
   const numColumns = 3;
   const categoryPadding = 30;
@@ -77,6 +85,42 @@ const Home = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleSetProductLike = async (product_id: string) => {
+    try {
+      const request = {
+        product_id: product_id,
+      };
+      const response: responseDTO = await api.setLikeProducts(request);
+      console.log(response);
+      if (response.result) {
+        handleUpdateProductLike(product_id);
+      } else {
+        throw 'error';
+      }
+    } catch (error) {
+      console.error(error);
+      toastRef.current.show('처리중 오류가 발생하였습니다.');
+    }
+  };
+
+  const handleUpdateProductLike = (product_id: string) => {
+    const targetProductIndex = newestProduct.findIndex(
+      product => product.product_id === product_id
+    );
+
+    const updatedProductList = newestProduct.map((product, _index) => {
+      if (_index === targetProductIndex) {
+        return {
+          ...product,
+          like: !product.like,
+        };
+      }
+      return product;
+    });
+
+    setNewestProduct(updatedProductList);
   };
 
   return (
@@ -146,9 +190,11 @@ const Home = () => {
                 description={item.product_name}
                 discount={item.discount}
                 price={convertPrice(item.price)}
+                like={item.like}
                 onPress={() =>
                   navigation.navigate(Routes.PRODUCT_DETAIL, { id: item.id })
                 }
+                likeOnpress={() => handleSetProductLike(item.id)}
               />
             ))}
           </View>
