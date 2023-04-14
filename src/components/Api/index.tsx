@@ -1,4 +1,8 @@
-import { getAppointmentDetail, getUserAppointment } from './appointment';
+import {
+  cancelAppointment,
+  getAppointmentDetail,
+  getUserAppointment,
+} from './appointment';
 import { autoSignIn, signIn, signOut, tokenChecker } from './auth';
 import { getHospital, getHospitalDetail } from './company';
 import {
@@ -10,6 +14,7 @@ import {
   getUserPassword,
   signUp,
 } from './guest';
+import { getLikeProducts, setLikeCompanys, setLikeProducts } from './likes';
 import {
   editAddress,
   editPassword,
@@ -25,7 +30,13 @@ import {
   getProductGroups,
   getReviewRankLists,
 } from './product';
-import { getProductInfo, getQaDetail, getQAList, insertProductQA } from './qa';
+import {
+  cancelQa,
+  getProductInfo,
+  getQaDetail,
+  getQAList,
+  insertProductQA,
+} from './qa';
 import { insertReview } from './reviews';
 
 export default {
@@ -60,6 +71,11 @@ export default {
   getPhoneAuthCode,
   getEmailAuthCode,
   signUp,
+  getLikeProducts,
+  setLikeProducts,
+  setLikeCompanys,
+  cancelAppointment,
+  cancelQa,
   getHistory,
   getInfoCount,
 };

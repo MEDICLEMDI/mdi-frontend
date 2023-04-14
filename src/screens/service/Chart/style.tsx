@@ -84,4 +84,68 @@ export default StyleSheet.create({
   dentalTextContent: {
     flex: 2,
   },
+
+  // modal 
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.Medicle.ModalBackground,
+    flex: 1,
+  },
+  modalContainer: {
+    backgroundColor: Colors.Medicle.White,
+    width: 320,
+    height: 150,
+    borderRadius: 15,
+    paddingTop: 20,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  modalHeaderCenter: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  modalHeaderRight: {
+    position: 'absolute',
+    right: 0,
+  },
+  modalCloseButton: {
+    width: 15,
+    height: 15,
+  },
+  modalContent: {
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalTitle: {
+    color: Colors.Medicle.Font.Red,
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  modalCancelButton: {
+    flex: 1,
+    borderBottomStartRadius: 15,
+    height: 50,
+    backgroundColor: Colors.Medicle.Font.Gray.Standard,
+  },
+  modalCheckButton: {
+    flex: 1,
+    borderBottomEndRadius: 15,
+    height: 50,
+  },
+  modalCancelText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: Colors.Medicle.Font.White,
+  },
+
+  modalText: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: Colors.Medicle.Font.Brown.Dark,
+  },
 });

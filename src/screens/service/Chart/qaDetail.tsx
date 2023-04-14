@@ -2,8 +2,18 @@ import { useIsFocused } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
+import Close from '@/assets/images/close.png';
 import MedicleButton from '@/buttons/MedicleButton';
 import Accordion from '@/components/Accordion';
 import api from '@/components/Api';
@@ -14,15 +24,17 @@ import {
   DARK_GRAY_BOLD_18,
   STANDARD_GRAY_14,
 } from '@/constants/fonts';
+import { IQaDetail, responseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
-import { convertNumberLocale } from '@/utils/utilities';
+import Routes from '@/navigation/Routes';
 
 import style from './style';
 
 export default ({ navigation, route }) => {
   const { t } = useTranslation();
   const { id } = route.params;
-  const [item, setItem] = React.useState();
+  const [item, setItem] = React.useState<IQaDetail | undefined>(undefined);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   React.useEffect(() => {
     initialize();
@@ -35,10 +47,32 @@ export default ({ navigation, route }) => {
   const getQaDetail = async () => {
     try {
       const res = await api.getQaDetail({ id: id });
+      console.log(res);
       setItem(res);
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleCancelQa = async () => {
+    const request = {
+      id: id,
+    };
+
+    try {
+      const response: responseDTO = await api.cancelQa(request);
+      console.log(response);
+      if (response.result) {
+        navigation.navigate(Routes.CHART);
+        Alert.alert('취소가 완료되었습니다.');
+      } else {
+        throw 'error';
+      }
+    } catch (err) {
+      Alert.alert('처리중 오류가 발생하였습니다.');
+    }
+
+    setModalVisible(false);
   };
 
   return (
@@ -52,13 +86,11 @@ export default ({ navigation, route }) => {
             <Accordion.Header>
               <Text style={DARK_GRAY_BOLD_18}>
                 {dayjs(item?.date).format('YYYY.MM.DD')}
-                <Text style={STANDARD_GRAY_14}>
-                  &nbsp;&nbsp;예약자 정보
-                </Text>
+                <Text style={STANDARD_GRAY_14}>&nbsp;&nbsp;문의 내역</Text>
               </Text>
             </Accordion.Header>
             <Accordion.Body>
-              <View style={{ paddingVertical: 10, }}>
+              <View style={{ paddingVertical: 10 }}>
                 <Row style={{ marginVertical: 5 }}>
                   <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>성명</Text>
                   <Text style={[DARK_GRAY_BOLD_14, { flex: 2 }]}>
@@ -78,13 +110,13 @@ export default ({ navigation, route }) => {
                   </Text>
                 </Row>
                 <Row style={{ marginVertical: 5 }}>
-                  <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>접수 일시</Text>
+                  <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>접수일시</Text>
                   <Text style={[DARK_GRAY_BOLD_14, { flex: 2 }]}>
                     {dayjs(item?.date).format('YYYY.MM.DD')}
                   </Text>
                 </Row>
                 <Row style={{ marginVertical: 5 }}>
-                  <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>요청사항</Text>
+                  <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>문의내용</Text>
                   <Text style={[DARK_GRAY_BOLD_14, { flex: 2 }]}>
                     {item?.content}
                   </Text>
@@ -92,20 +124,22 @@ export default ({ navigation, route }) => {
               </View>
             </Accordion.Body>
           </Accordion>
-          <MedicleButton buttonStyle={style.button} text={'문의 취소'} />
+          <MedicleButton
+            buttonStyle={style.button}
+            text={'문의 취소'}
+            onPress={() => setModalVisible(true)}
+          />
         </BoxDropShadow>
         <BoxDropShadow style={style.itemBox}>
           <Accordion isOpen={false}>
             <Accordion.Header>
               <Text style={DARK_GRAY_BOLD_18}>
                 {dayjs(item?.date).format('YYYY.MM.DD')}
-                <Text style={STANDARD_GRAY_14}>
-                  &nbsp;&nbsp;판매자 정보
-                </Text>
+                <Text style={STANDARD_GRAY_14}>&nbsp;&nbsp;판매자 정보</Text>
               </Text>
             </Accordion.Header>
             <Accordion.Body>
-              <View style={{ paddingVertical: 10, }}>
+              <View style={{ paddingVertical: 10 }}>
                 <Row style={{ marginVertical: 5 }}>
                   <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>병원</Text>
                   <Text style={[DARK_GRAY_BOLD_14, { flex: 2 }]}>
@@ -119,7 +153,9 @@ export default ({ navigation, route }) => {
                   </Text>
                 </Row>
                 <Row style={{ marginVertical: 5 }}>
-                  <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>사업자번호</Text>
+                  <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>
+                    사업자번호
+                  </Text>
                   <Text style={[DARK_GRAY_BOLD_14, { flex: 2 }]}>
                     {item?.trader_number}
                   </Text>
@@ -147,6 +183,42 @@ export default ({ navigation, route }) => {
           </Accordion>
         </BoxDropShadow>
       </ScrollView>
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={style.modal}>
+          <View style={style.modalContainer}>
+            <View style={{ paddingHorizontal: 20 }}>
+              <View style={style.modalHeader}>
+                <View style={style.modalHeaderCenter}>
+                  <Text style={style.modalTitle}>주의</Text>
+                </View>
+                <TouchableOpacity
+                  style={style.modalHeaderRight}
+                  onPress={() => setModalVisible(false)}>
+                  <Image style={style.modalCloseButton} source={Close} />
+                </TouchableOpacity>
+              </View>
+              <View style={style.modalContent}>
+                <Text style={style.modalText}>
+                  정말 문의를 취소하시겠습니까?
+                </Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', marginTop: 'auto' }}>
+              <MedicleButton
+                textStyle={style.modalCancelText}
+                buttonStyle={style.modalCancelButton}
+                text="취소"
+                onPress={() => setModalVisible(false)}
+              />
+              <MedicleButton
+                buttonStyle={style.modalCheckButton}
+                text="계속"
+                onPress={handleCancelQa}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };

@@ -30,15 +30,27 @@ export default ({ navigation }) => {
 
   const [visible, setVisible] = React.useState(false);
   const [tabIndex, setTabIndex] = React.useState(0);
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState<any>([]);
   const [date, setDate] = React.useState();
   const [page, setPage] = React.useState(1);
 
-  const chartType = ['진료 예약', '진료 완료', '예약 취소', '문의 내역'];
+  const chartType = [
+    '진료 예약',
+    '진료 완료',
+    '취소 신청중',
+    '취소 완료',
+    '문의 내역',
+  ];
 
   React.useEffect(() => {
     initialize();
   }, [tabIndex]);
+
+  React.useEffect(() => {
+    if (isFocus) {
+      initialize();
+    }
+  }, [isFocus]);
 
   const initialize = async () => {
     setPage(1);
@@ -52,9 +64,7 @@ export default ({ navigation }) => {
 
   const getQAList = async () => {
     try {
-      const user = await AsyncStorage.getItem('@User');
-      const userId = JSON.parse(user).id;
-      const res = await api.getQAList(userId);
+      const res = await api.getQAList();
       setData(res);
     } catch (err) {
       console.error(err);
@@ -64,7 +74,7 @@ export default ({ navigation }) => {
   const getUserAppointment = async () => {
     try {
       const user = await AsyncStorage.getItem('@User');
-      const userId = JSON.parse(user).id;
+      const userId = JSON.parse(user!).id;
       const res = await api.getUserAppointment(userId, page);
       setData(res);
     } catch (err) {
@@ -76,7 +86,7 @@ export default ({ navigation }) => {
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.chart')} />
       <View style={style.content}>
-        <SearchBar onPress={() => setVisible(true)} />
+        {/* <SearchBar onPress={() => setVisible(true)} /> */}
         <DatePicker
           name="dataPicker"
           modalDirection="flex-end"
@@ -92,53 +102,60 @@ export default ({ navigation }) => {
         tabStyle={style.tabWrap}
         buttonStyle={style.tabButton}
       />
-      <FlatList
-        style={style.content}
-        keyExtractor={item => item.id}
-        data={data}
-        renderItem={({ item }) => (
-          <BoxDropShadow key={item.id} style={{ marginBottom: 15 }}>
-            <View style={[style.justifyTextWrap, style.itemDate]}>
-              <Text style={DARK_GRAY_BOLD_18}>
-                {dayjs(item.date).format('YYYY.MM.DD')}
-                <Text style={STANDARD_GRAY_14}>
-                  &nbsp;&nbsp;{chartType[item.status - 1]}
-                </Text>
-              </Text>
-              <Icon name="arrowRight" />
-            </View>
-            <View style={style.infoWrap}>
-              <Text style={DARK_GRAY_BOLD_16}>{item.hospital_name}</Text>
-              <View style={[style.justifyTextWrap]}>
-                <Text>{item.product_name}</Text>
-                <View style={[style.flexRow]}>
-                  <Text style={DARK_GRAY_BOLD_12}>
-                    {item.hospital_address.split(' ')[0]}
-                    &nbsp;|&nbsp;
-                    {item.hospital_address.split(' ')[1]}
+      {data.length > 0 ? (
+        <FlatList
+          style={style.content}
+          keyExtractor={item => item.id}
+          data={data}
+          renderItem={({ item }) => (
+            <BoxDropShadow key={item.id} style={{ marginBottom: 15 }}>
+              <View style={[style.justifyTextWrap, style.itemDate]}>
+                <Text style={DARK_GRAY_BOLD_18}>
+                  {dayjs(item.date).format('YYYY.MM.DD')}
+                  <Text style={STANDARD_GRAY_14}>
+                    &nbsp;&nbsp;{chartType[item.status]}
                   </Text>
+                </Text>
+                <Icon name="arrowRight" />
+              </View>
+              <View style={style.infoWrap}>
+                <Text style={DARK_GRAY_BOLD_16}>{item.hospital_name}</Text>
+                <View style={[style.justifyTextWrap]}>
+                  <Text>{item.product_name}</Text>
+                  <View style={[style.flexRow]}>
+                    <Text style={DARK_GRAY_BOLD_12}>
+                      {item.hospital_address.split(' ')[0]}
+                      &nbsp;|&nbsp;
+                      {item.hospital_address.split(' ')[1]}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View style={[style.justifyTextWrap, style.priceWrap]}>
-              <Text>총 결제금액</Text>
-              <Text>{convertNumberLocale(item.price)}</Text>
-            </View>
-            <MedicleButton
-              buttonStyle={style.button}
-              text="진료내역보기"
-              onPress={() =>
-                navigation.navigate(
-                  tabIndex === 0 ? Routes.CHART_DETAIL : Routes.QA_DETAIL,
-                  {
-                    id: item.id,
-                  }
-                )
-              }
-            />
-          </BoxDropShadow>
-        )}
-      />
+              <View style={[style.justifyTextWrap, style.priceWrap]}>
+                <Text>총 결제금액</Text>
+                <Text>{convertNumberLocale(item.price)}</Text>
+              </View>
+              <MedicleButton
+                buttonStyle={style.button}
+                text={item.status !== 4 ? '진료내역보기' : '문의내역보기'}
+                onPress={() =>
+                  navigation.navigate(
+                    tabIndex === 0 ? Routes.CHART_DETAIL : Routes.QA_DETAIL,
+                    {
+                      id: item.id,
+                    }
+                  )
+                }
+              />
+            </BoxDropShadow>
+          )}
+        />
+      ) : (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ fontSize: 16 }}>내역이 없습니다.</Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };

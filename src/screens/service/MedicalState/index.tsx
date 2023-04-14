@@ -46,7 +46,7 @@ export default ({ navigation }) => {
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.medicalState')} />
       <View style={[style.content, { marginTop: 20 }]}>
-        <SearchBar onPress={() => setVisible(true)} />
+        {/* <SearchBar onPress={() => setVisible(true)} /> */}
         <DatePicker
           name="dataPicker"
           modalDirection="flex-end"

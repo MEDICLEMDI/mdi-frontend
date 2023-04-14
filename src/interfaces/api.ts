@@ -39,6 +39,8 @@ export interface IProductItem {
   review_count: number;
   like: boolean;
   company: Company;
+  hospital_name?: string;
+  hospital_address?: string;
 }
 
 export interface IProductDetail {}
@@ -46,12 +48,45 @@ export interface IProductDetail {}
 export interface IAppointmentItem {}
 
 export interface IAppointmentDetail {
-  user: User;
-  company: Company;
-  appointment_date: string;
-  request: string;
+  id: string;
+  status: number;
+  is_review: boolean;
+  appointment_id: string;
+  user_id: string;
+  product_id: string;
+  company_id: string;
+  hospital_name: string;
+  doctor_name: string;
+  patient: string;
+  symptom: string;
+  appointment_data: string;
+  end_date: string;
+  price: string;
+  create_date: string;
 }
 
-export interface ICompanyItem {}
+export interface IQaDetail {
+  address: string;
+  content: string;
+  date: string;
+  email: string;
+  hospital_doctor: string;
+  hospital_name: string;
+  hospital_phone: string;
+  id: string;
+  name: string;
+  phone: string;
+  trader_number: string;
+  user_id: string;
+}
+
+export interface ICompanyItem {
+  id: string;
+  name: string;
+  ci_address: string;
+  like: boolean;
+  review_count: string;
+  ci_image_main: string;
+}
 
 export interface ICompanyDetail {}
