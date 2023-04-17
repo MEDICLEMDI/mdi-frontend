@@ -29,7 +29,9 @@ import {
   STANDARD_GRAY_12,
   WHITE_BOLD_12,
 } from '@/constants/fonts';
+import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
+import { IProductDetail, responseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import { convertPrice } from '@/utils/utilities';
@@ -41,7 +43,7 @@ import { defaultDate } from '@/utils/dates';
 const ProductDetail = ({ navigation, route }) => {
   const { id } = route.params;
 
-  const [itemData, setItemData] = React.useState<any>();
+  const [itemData, setItemData] = React.useState<IProductDetail>();
   const [userInfo, setUserInfo] = React.useState<any>();
   const [date, setDate] = React.useState({ from: '' });
   const [time, setTime] = React.useState('');
@@ -69,6 +71,8 @@ const ProductDetail = ({ navigation, route }) => {
       )
     );
   }, [documentAgree, date, time]);
+
+  React.useEffect(() => {}, [itemData]);
 
   const initialize = async () => {
     await getUserInfo();
@@ -106,6 +110,26 @@ const ProductDetail = ({ navigation, route }) => {
     { start: '15:00', end: '16:00' },
     { start: '17:00', end: '18:00' },
   ];
+
+  const handleSetLike = async () => {
+    try {
+      const request = {
+        product_id: itemData?.product_id,
+      };
+      const response: responseDTO = await api.setLikeProducts(request);
+      if (response.result) {
+        setItemData({
+          ...itemData!,
+          like: !itemData?.like,
+        });
+      } else {
+        throw 'error';
+      }
+    } catch (error) {
+      console.error(error);
+      toastRef.current.show('처리중 오류가 발생하였습니다.');
+    }
+  };
 
   return (
     <SafeAreaView style={style.container}>
@@ -271,8 +295,11 @@ const ProductDetail = ({ navigation, route }) => {
           textStyle={STANDARD_GRAY_10}
           buttonStyle={[style.button, style.wishButton]}
           iconName="heart"
-          iconProps={{ stroke: '#CECECE' }}
+          iconProps={
+            itemData?.like ? { fill: '#EDDFCC' } : { stroke: '#CECECE' }
+          }
           text="위시리스트"
+          onPress={handleSetLike}
         />
         <MedicleButton
           buttonStyle={[style.button, style.FAQButton]}

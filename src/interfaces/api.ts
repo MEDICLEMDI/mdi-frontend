@@ -34,16 +34,32 @@ export interface IProductItem {
   main_image: string;
   product_id: string;
   product_name: string;
+  product_group?: string;
   price: string;
   discount: string;
   review_count: number;
   like: boolean;
   company: Company;
-  hospital_name?: string;
-  hospital_address?: string;
+  hospital_name: string;
+  hospital_address: string;
 }
 
-export interface IProductDetail {}
+export interface IProductDetail {
+  main_image: string;
+  product_id: string;
+  company_id: string;
+  price: string;
+  discount_price: string;
+  discount: string;
+  product_name: string;
+  product_group: string;
+  hospital_name: string;
+  doctor_name: string;
+  trader_number: string;
+  hospital_address: string;
+  hospital_phone: string;
+  like: boolean;
+}
 
 export interface IAppointmentItem {}
 

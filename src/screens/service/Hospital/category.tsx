@@ -53,12 +53,6 @@ const HospitalCategory = ({ navigation, route }) => {
     getProductGroups();
     // 화면 이동시 기본 병원 화면으로 초기화
     return () => {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Routes.HOSPITAL }],
-        })
-      );
       setIndex(groupId);
       setPage(1);
       setProductList([]);
@@ -67,6 +61,17 @@ const HospitalCategory = ({ navigation, route }) => {
 
   React.useEffect(() => {
     setIndex(groupId);
+
+    return () => {
+      if (isFocus) {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: Routes.HOSPITAL }],
+          })
+        );
+      }
+    };
   }, [isFocus]);
 
   React.useEffect(() => {

@@ -14,7 +14,12 @@ import {
   getUserPassword,
   signUp,
 } from './guest';
-import { getLikeProducts, setLikeCompanys, setLikeProducts } from './likes';
+import {
+  getLikeCompanys,
+  getLikeProducts,
+  setLikeCompanys,
+  setLikeProducts,
+} from './likes';
 import {
   editAddress,
   editPassword,
@@ -28,15 +33,10 @@ import {
   getNewestProducts,
   getProductGroupItems,
   getProductGroups,
+  getProductInfo,
   getReviewRankLists,
 } from './product';
-import {
-  cancelQa,
-  getProductInfo,
-  getQaDetail,
-  getQAList,
-  insertProductQA,
-} from './qa';
+import { cancelQa, getQaDetail, getQAList, insertProductQA } from './qa';
 import { insertReview } from './reviews';
 
 export default {
@@ -78,4 +78,5 @@ export default {
   cancelQa,
   getHistory,
   getInfoCount,
+  getLikeCompanys,
 };

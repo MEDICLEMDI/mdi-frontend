@@ -23,7 +23,6 @@ export const getProductGroupItems = async (
     url += '/' + search;
   }
   const { data } = await get(url);
-  console.log(data);
   return data;
 };
 export const getEventProducts = async (page: number, search?: string) => {
@@ -41,5 +40,10 @@ export const getReviewRankLists = async (page: number, search?: string) => {
     url += '/' + search;
   }
   const { data } = await get(url);
+  return data;
+};
+
+export const getProductInfo = async (itemId: number) => {
+  const { data } = await get(`/products/detail/${itemId}`);
   return data;
 };
