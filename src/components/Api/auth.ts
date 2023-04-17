@@ -13,7 +13,7 @@ export const signIn = async (body: {
   user_id: string | undefined;
   password: string | undefined;
 }) => {
-  const data = await post({ url: '/auth', body: body }); // DB 상품 그룹
+  const data = await post({ url: '/auth', body: body, auth: false }); // DB 상품 그룹
   return data;
 };
 

@@ -36,6 +36,7 @@ import { convertPrice } from '@/utils/utilities';
 
 import Calendar from '../../../Calendar';
 import style from './style';
+import { defaultDate } from '@/utils/dates';
 
 const ProductDetail = ({ navigation, route }) => {
   const { id } = route.params;
@@ -72,7 +73,7 @@ const ProductDetail = ({ navigation, route }) => {
   const initialize = async () => {
     await getUserInfo();
     await getItemDetail();
-    // setDate({ from: '2023-00-00' })
+    setDate(defaultDate())
   };
 
   const getUserInfo = async () => {
@@ -334,6 +335,7 @@ const ProductDetail = ({ navigation, route }) => {
                   date={date}
                   dateResponse={setDate}
                   dateType={dateType}
+                  initialDate={date.from}
                 />
               </View>
             ) : (

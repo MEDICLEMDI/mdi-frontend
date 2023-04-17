@@ -5,10 +5,20 @@ import { Colors } from '@/constants/theme';
 export default StyleSheet.create({
   monthItem: {
     textAlign: 'center',
-    backgroundColor: Colors.Medicle.Primary,
+    backgroundColor: Colors.Medicle.Gray.Light,
     paddingVertical: 6,
     paddingHorizontal: 15,
     borderRadius: 5,
+  },
+  monthItemSelected: {
+    backgroundColor: Colors.Medicle.Primary,
+  },
+  monthText: {
+    color: Colors.Medicle.Font.Gray.Standard
+  },
+  monthTextSelected: {
+    color: Colors.Medicle.Font.Gray.Dark,
+    fontWeight: 'bold'
   },
   datePickerWrap: {
     padding: 20,

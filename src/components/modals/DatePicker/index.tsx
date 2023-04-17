@@ -18,6 +18,7 @@ import { fontStyleCreator } from '@/utils/fonts';
 
 import Calendar from '../../../Calendar';
 import style from './style';
+import dayjs, { ManipulateType } from 'dayjs';
 
 interface ModalProps extends ModalBaseProps {
   name: string;
@@ -43,12 +44,13 @@ const DatePicker = ({
   const [datePickerVisible, setDatePickerVisible] = React.useState(false);
   const [dateType, setDateType] = React.useState('');
   const [datePicker, setDatePicker] = React.useState({ from: '', to: '' });
-  const monthCondition = [
-    { label: '1년', value: 0 },
-    { label: '6개월', value: 1 },
-    { label: '3개월', value: 2 },
-    { label: '1개월', value: 3 },
-    { label: '1주일', value: 4 },
+  const [selectedDateCondition, setSelectedDateCondition] = React.useState(0);
+  const monthCondition: { label: string, value: number, unit: ManipulateType }[] = [
+    { label: '1년', value: 12, unit: 'month' },
+    { label: '6개월', value: 6, unit: 'month' },
+    { label: '3개월', value: 3, unit: 'month' },
+    { label: '1개월', value: 1, unit: 'month' },
+    { label: '1주일', value: 1, unit: 'week' },
   ];
 
   const FONT_WHITE = fontStyleCreator({
@@ -71,6 +73,16 @@ const DatePicker = ({
     setDatePickerVisible(true);
     setDateType(type);
   };
+
+  const setDateFromCondition = (value: number, unit: ManipulateType | undefined) => {
+    const to = dayjs(datePicker.to);
+    const from = to.subtract(value, unit);
+    from.format('YYYY-MM-DD')
+    setDatePicker({
+      ...datePicker,
+      from: from.format('YYYY-MM-DD')
+    })
+  }
 
   if (!visible) {
     return null;
@@ -126,9 +138,12 @@ const DatePicker = ({
                   justifyContent: 'space-between',
                   marginVertical: 10,
                 }}>
-                {monthCondition.map(({ label, value }, key) => (
-                  <TouchableOpacity style={style.monthItem} key={key}>
-                    <Text>{label}</Text>
+                {monthCondition.map(({ label, value, unit }, key) => (
+                  <TouchableOpacity style={[style.monthItem, selectedDateCondition === key ? style.monthItemSelected : null]} key={key} onPress={() => {
+                    setSelectedDateCondition(key)
+                    setDateFromCondition(value, unit)
+                  }}>
+                    <Text style={[style.monthText, selectedDateCondition === key ? style.monthTextSelected : null]}>{label}</Text>
                   </TouchableOpacity>
                 ))}
               </View>

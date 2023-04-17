@@ -25,7 +25,7 @@ import {
 } from '@/constants/fonts';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
-import { dateZeroFill } from '@/utils/dates';
+import { dateZeroFill, defaultDate } from '@/utils/dates';
 import { getStorageData } from '@/utils/localStorage';
 import { convertNumberLocale } from '@/utils/utilities';
 
@@ -56,16 +56,6 @@ export default () => {
     } catch (e) {
       console.error(e);
     }
-  };
-
-  const defaultDate = () => {
-    const toDay = new Date();
-    const year = dateZeroFill(toDay.getFullYear());
-    const month = dateZeroFill(toDay.getMonth() + 1);
-    const day = dateZeroFill(toDay.getDate());
-    const startDate = `${year - 1}-${month}-${day}`;
-    const endDate = `${year}-${month}-${day}`;
-    return { from: startDate, to: endDate };
   };
 
   const getUserId = async () => {
