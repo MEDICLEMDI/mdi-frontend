@@ -24,15 +24,21 @@ import { fontStyleCreator } from '@/utils/fonts';
 import { getStorageData } from '@/utils/localStorage';
 
 import style from './style';
+import { defaultDate } from '@/utils/dates';
+import { convertNumberLocale } from '@/utils/utilities';
+import dayjs from 'dayjs';
+import { Row } from '@/components/layout';
 
 export default ({ navigation }) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [visible, setVisible] = React.useState(false);
-  const [date, setDate] = React.useState();
+  const [loading, setLoading] = React.useState(false);
+  const [date, setDate] = React.useState({ from: '', to: '' });
+  const [histories, setHistories] = React.useState([]);
 
   React.useEffect(() => {
-    getUserPoint();
+    initialize();
   }, [date]);
 
   const FONT_BASIC_BLACK = fontStyleCreator({
@@ -40,10 +46,29 @@ export default ({ navigation }) => {
     size: 10,
   });
 
-  const getUserPoint = async () => {
-    const id = (await getStorageData('@User')).id;
-    const res = await api.getUserPoint(id);
+  const initialize = async () => {
+    await getPointHistory(defaultDate());
+  }
+
+  const getUserId = async () => {
+    const user = await getStorageData('@User');
+    return user.id;
   };
+
+  const getPointHistory = async (date: any) => {
+    try {
+      const { data } = await api.getPointHistory(await getUserId(), date);
+      setHistories(data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setVisible(false);
+    }
+  };
+
+  const type = {
+    payment: "상품 결제",
+  }
 
   return (
     <SafeAreaView style={style.container}>
@@ -70,7 +95,9 @@ export default ({ navigation }) => {
         </View>
       </BoxDropShadow>
       <View style={style.historyWrap}>
-        <SearchBar onPress={() => setVisible(true)} />
+        <View style={{ paddingHorizontal: 20 }}>
+          <SearchBar onPress={() => setVisible(true)} />
+        </View>
         <DatePicker
           name="dataPicker"
           modalDirection="flex-end"
@@ -78,13 +105,27 @@ export default ({ navigation }) => {
           onRequestClose={() => setVisible(false)}
           animationType="slide"
           dateResponse={setDate}
+          submitEvent={() => getPointHistory(date)}
+          resetEvent={() => getPointHistory(defaultDate())}
+          date={date.from === '' ? defaultDate() : date}
         />
-        {/*<FlatList data={} renderItem={}>*/}
-
-        {/*</FlatList>*/}
-        <View style={style.histories}>
-          <Text>사용 포인트 내역이 없습니다.</Text>
-        </View>
+        {
+          histories.length > 0
+          ?
+          <FlatList style={style.histories} data={histories} renderItem={({ item }) => (
+            <BoxDropShadow style={style.historyItem}>
+              <Text>{dayjs(item.date).format('YYYY.MM.DD')}</Text>
+              <Row justify="space-between" align="center">
+                <Text>{type[item.type]}</Text>
+                <Text>{convertNumberLocale(item.point)}</Text>
+              </Row>
+            </BoxDropShadow>
+          )} />
+          :
+          <View style={style.histories}>
+            <Text>사용 포인트 내역이 없습니다.</Text>
+          </View>
+        }
       </View>
     </SafeAreaView>
   );

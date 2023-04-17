@@ -51,7 +51,7 @@ export default () => {
 
   const initialize = async () => {
     try {
-      await getHistory(defaultDate()); // 히스토리 불러오기
+      await getPaymentHistory(defaultDate()); // 히스토리 불러오기
       await getInfoCount(); // 히스토리 상태별 갯수 불러오기
     } catch (e) {
       console.error(e);
@@ -63,9 +63,9 @@ export default () => {
     return user.id;
   };
 
-  const getHistory = async (date: any) => {
+  const getPaymentHistory = async (date: any) => {
     try {
-      const { data } = await api.getHistory(await getUserId(), date);
+      const { data } = await api.getPaymentHistory(await getUserId(), date);
       setHistories(data);
     } catch (e) {
       console.error(e);
@@ -111,8 +111,8 @@ export default () => {
           onRequestClose={() => setVisible(false)}
           animationType="slide"
           dateResponse={setDate}
-          submitEvent={() => getHistory(date)}
-          resetEvent={() => getHistory(defaultDate())}
+          submitEvent={() => getPaymentHistory(date)}
+          resetEvent={() => getPaymentHistory(defaultDate())}
           date={date.from === '' ? defaultDate() : date}
         />
 

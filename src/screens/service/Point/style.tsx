@@ -42,7 +42,7 @@ export default StyleSheet.create({
   },
   historyWrap: {
     flex: 1,
-    padding: 30,
+    paddingVertical: 30,
     borderTopWidth: 12,
     borderTopColor: Colors.Medicle.Gray.Light,
   },
@@ -53,9 +53,10 @@ export default StyleSheet.create({
     marginBottom: 20,
   },
   histories: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 20
+  },
+  historyItem: {
+    marginBottom: 20,
   },
   // Charge Page
   borderBottom: {

@@ -27,7 +27,8 @@ import {
   getMyPage,
   userWithdraw,
 } from './mypage';
-import { getHistory, getInfoCount, productPayment } from './payment';
+import { getPaymentHistory, getInfoCount, productPayment } from './payment';
+import { getPointHistory } from './point';
 import {
   getEventProducts,
   getNewestProducts,
@@ -76,7 +77,8 @@ export default {
   setLikeCompanys,
   cancelAppointment,
   cancelQa,
-  getHistory,
+  getPaymentHistory,
   getInfoCount,
   getLikeCompanys,
+  getPointHistory,
 };
