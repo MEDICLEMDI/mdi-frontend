@@ -199,63 +199,71 @@ const Hospital = ({ navigation, route }) => {
         </ScrollView>
       </View>
       {index === 2 ? (
-        <FlatList
-          style={{ paddingHorizontal: 20, flex: 1 }}
-          keyExtractor={(item, key) => item.id.toString()}
-          onEndReached={getMoreProductItems}
-          onEndReachedThreshold={0.4}
-          ListFooterComponent={loading && <ActivityIndicator />}
-          data={hospitalList}
-          renderItem={({ item }) => (
-            <BoxDropShadow style={{ marginBottom: 10 }}>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate(Routes.HOSPITAL_DETAIL, { id: item.id })
-                }>
-                <Row justify="space-between" align="center">
-                  <Image
-                    source={{ uri: item.ci_image_main }}
-                    style={{ minWidth: 90, minHeight: 90, borderRadius: 10 }}
-                  />
-                  <Column style={{ flex: 1, marginLeft: 20 }}>
-                    <Text style={[DARK_GRAY_BOLD_16, { marginTop: 10 }]}>
-                      {item.name}
-                    </Text>
-                    <Text style={{ marginTop: 5, marginBottom: 15 }}>
-                      <Text style={DARK_GRAY_10}>
-                        {item?.ci_address.split(' ')[0]}
-                        &nbsp;|&nbsp;
-                        {item?.ci_address.split(' ')[1]}
+        hospitalList.length > 0 ? (
+          <FlatList
+            style={{ paddingHorizontal: 20, flex: 1 }}
+            keyExtractor={(item, key) => item.id.toString()}
+            onEndReached={getMoreProductItems}
+            onEndReachedThreshold={0.4}
+            ListFooterComponent={loading && <ActivityIndicator />}
+            data={hospitalList}
+            renderItem={({ item }) => (
+              <BoxDropShadow style={{ marginBottom: 10 }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate(Routes.HOSPITAL_DETAIL, { id: item.id })
+                  }>
+                  <Row justify="space-between" align="center">
+                    <Image
+                      source={{ uri: item.ci_image_main }}
+                      style={{ minWidth: 90, minHeight: 90, borderRadius: 10 }}
+                    />
+                    <Column style={{ flex: 1, marginLeft: 20 }}>
+                      <Text style={[DARK_GRAY_BOLD_16, { marginTop: 10 }]}>
+                        {item.name}
                       </Text>
-                    </Text>
-                    <Row justify="space-between" align="flex-start">
-                      <Text style={STANDARD_GRAY_10}>
-                        후기{' '}
-                        <Text style={ORANGE_BOLD_10}>{item.review_count}</Text>
-                        개
+                      <Text style={{ marginTop: 5, marginBottom: 15 }}>
+                        <Text style={DARK_GRAY_10}>
+                          {item?.ci_address.split(' ')[0]}
+                          &nbsp;|&nbsp;
+                          {item?.ci_address.split(' ')[1]}
+                        </Text>
                       </Text>
-                      <TouchableOpacity
-                        onPress={() => handleSetHospitalLike(item.id)}>
-                        {item?.like ? (
-                          <Icon
-                            name="heart"
-                            fill={Colors.Medicle.Brown.Standard}
-                          />
-                        ) : (
-                          <Icon
-                            name="heart"
-                            stroke={Colors.Medicle.Gray.Standard}
-                          />
-                        )}
-                      </TouchableOpacity>
-                    </Row>
-                  </Column>
-                </Row>
-              </TouchableOpacity>
-            </BoxDropShadow>
-          )}
-        />
-      ) : (
+                      <Row justify="space-between" align="flex-start">
+                        <Text style={STANDARD_GRAY_10}>
+                          후기{' '}
+                          <Text style={ORANGE_BOLD_10}>
+                            {item.review_count}
+                          </Text>
+                          개
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => handleSetHospitalLike(item.id)}>
+                          {item?.like ? (
+                            <Icon
+                              name="heart"
+                              fill={Colors.Medicle.Brown.Standard}
+                            />
+                          ) : (
+                            <Icon
+                              name="heart"
+                              stroke={Colors.Medicle.Gray.Standard}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </Row>
+                    </Column>
+                  </Row>
+                </TouchableOpacity>
+              </BoxDropShadow>
+            )}
+          />
+        ) : (
+          <View style={style.noData}>
+            <Text>등록된 병원이 없습니다.</Text>
+          </View>
+        )
+      ) : productList.length > 0 ? (
         <FlatList
           style={{ paddingHorizontal: 20, flex: 1 }}
           keyExtractor={(item, key) => item.id.toString()}
@@ -281,6 +289,10 @@ const Hospital = ({ navigation, route }) => {
             />
           )}
         />
+      ) : (
+        <View style={style.noData}>
+          <Text>등록된 상품이 없습니다.</Text>
+        </View>
       )}
     </SafeAreaView>
   );
