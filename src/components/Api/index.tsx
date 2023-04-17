@@ -14,7 +14,12 @@ import {
   getUserPassword,
   signUp,
 } from './guest';
-import { getLikeProducts, setLikeCompanys, setLikeProducts } from './likes';
+import {
+  getLikeCompanys,
+  getLikeProducts,
+  setLikeCompanys,
+  setLikeProducts,
+} from './likes';
 import {
   editAddress,
   editPassword,
@@ -78,4 +83,5 @@ export default {
   cancelQa,
   getHistory,
   getInfoCount,
+  getLikeCompanys,
 };

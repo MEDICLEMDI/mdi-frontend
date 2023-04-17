@@ -1,7 +1,12 @@
 import { get, post } from '@/utils/api';
 
-export const getLikeProducts = async (type: number, page: number) => {
-  const data = await get(`/likes/produce/list?type=${type}&page=${page}`);
+export const getLikeProducts = async () => {
+  const data = await get('/likes/product/list');
+  return data;
+};
+
+export const getLikeCompanys = async () => {
+  const data = await get('/likes/company/list');
   return data;
 };
 
@@ -14,3 +19,4 @@ export const setLikeCompanys = async (body: any) => {
   const data = await post({ url: '/likes/company', body: body });
   return data;
 };
+

@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: 30,
+    marginHorizontal: 20,
   },
   summary: {
     marginBottom: 20,

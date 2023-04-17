@@ -237,10 +237,10 @@ const HospitalCategory = ({ navigation, route }) => {
                 </Row>
                 <Row align="flex-end" justify="space-between">
                   <Text style={STANDARD_GRAY_10}>
-                    후기 <Text style={ORANGE_BOLD_10}>{item?.review}</Text>개
+                    후기 <Text style={ORANGE_BOLD_10}>{item?.review_count}</Text>개
                   </Text>
                   <View>
-                    {item.discount > 0 && (
+                    {Number(item.discount) > 0 && (
                       <Text
                         style={[
                           ORANGE_BOLD_12,
