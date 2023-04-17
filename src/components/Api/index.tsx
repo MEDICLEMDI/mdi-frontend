@@ -33,15 +33,10 @@ import {
   getNewestProducts,
   getProductGroupItems,
   getProductGroups,
+  getProductInfo,
   getReviewRankLists,
 } from './product';
-import {
-  cancelQa,
-  getProductInfo,
-  getQaDetail,
-  getQAList,
-  insertProductQA,
-} from './qa';
+import { cancelQa, getQaDetail, getQAList, insertProductQA } from './qa';
 import { insertReview } from './reviews';
 
 export default {
