@@ -58,11 +58,11 @@ const Setting = ({ navigation }) => {
       route: 'Marketing',
       onPress: () => pageRoute(Routes.MARKETING),
     },
-    {
-      name: t('setting.language'),
-      route: 'Language',
-      onPress: languageChangeHandler,
-    },
+    // {
+    //   name: t('setting.language'),
+    //   route: 'Language',
+    //   onPress: languageChangeHandler,
+    // },
     {
       name: t('setting.logOut'),
       route: 'logOut',
