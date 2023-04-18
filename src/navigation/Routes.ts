@@ -9,7 +9,7 @@ enum Routes {
   EDIT_ADDRESS = 'EditAddress',
   SWIPE_LAYOUT = 'SwipeLayout',
   // Service Page
-  // SOCIAL = 'Social',
+  SOCIAL = 'Social',
   SIGNIN = 'SignIn',
   SIGNUP = 'SignUp',
   IDCHECK = 'IdCheck',
