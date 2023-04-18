@@ -5,7 +5,6 @@ import { getKeys, getStorageData } from '@/utils/localStorage';
 
 export const tokenChecker = async () => {
   const keys = await getKeys();
-  console.log(keys.includes('@AuthKey') && keys.includes('@RefreshKey'));
   return keys.includes('@AuthKey') && keys.includes('@RefreshKey');
 };
 

@@ -28,6 +28,7 @@ import { defaultDate } from '@/utils/dates';
 import { convertNumberLocale } from '@/utils/utilities';
 import dayjs from 'dayjs';
 import { Row } from '@/components/layout';
+import { DARK_GRAY_BOLD_14, STANDARD_GRAY_12 } from '@/constants/fonts';
 
 export default ({ navigation }) => {
   const { t } = useTranslation();
@@ -114,10 +115,10 @@ export default ({ navigation }) => {
           ?
           <FlatList style={style.histories} data={histories} renderItem={({ item }) => (
             <BoxDropShadow style={style.historyItem}>
-              <Text>{dayjs(item.date).format('YYYY.MM.DD')}</Text>
+              <Text style={STANDARD_GRAY_12}>{dayjs(item.date).format('YYYY.MM.DD')}</Text>
               <Row justify="space-between" align="center">
-                <Text>{type[item.type]}</Text>
-                <Text>{convertNumberLocale(item.point)}</Text>
+                <Text style={DARK_GRAY_BOLD_14}>{type[item.type]}</Text>
+                <Text style={DARK_GRAY_BOLD_14}>{convertNumberLocale(item.point)}</Text>
               </Row>
             </BoxDropShadow>
           )} />
