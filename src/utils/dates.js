@@ -21,7 +21,7 @@ export const defaultDate = () => {
   const year = dateZeroFill(toDay.getFullYear());
   const month = dateZeroFill(toDay.getMonth() + 1);
   const day = dateZeroFill(toDay.getDate());
-  const startDate = `${year - 1}-${month}-${day}`;
+  const startDate = `${year}-${month}-${day}`;
   const endDate = `${year}-${month}-${day}`;
   return { from: startDate, to: endDate };
 };

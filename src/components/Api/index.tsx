@@ -4,7 +4,7 @@ import {
   getUserAppointment,
 } from './appointment';
 import { autoSignIn, signIn, signOut, tokenChecker } from './auth';
-import { getHospital, getHospitalDetail } from './company';
+import { getHospital, getHospitalDetail, getTimetable } from './company';
 import {
   checkEmailAuthCode,
   checkPhoneAuthCode,
@@ -81,4 +81,5 @@ export default {
   getInfoCount,
   getLikeCompanys,
   getPointHistory,
+  getTimetable,
 };

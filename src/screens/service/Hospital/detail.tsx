@@ -45,11 +45,12 @@ const ProductDetail = ({ navigation, route }) => {
 
   const [itemData, setItemData] = React.useState<IProductDetail>();
   const [userInfo, setUserInfo] = React.useState<any>();
-  const [date, setDate] = React.useState({ from: '' });
+  const [date, setDate] = React.useState({ from: '', to: '' });
   const [time, setTime] = React.useState('');
   const [timeKey, setTimeKey] = React.useState(0);
   const [dateType, setDateType] = React.useState('from');
   const [visible, setVisible] = React.useState(false);
+  const [timeTable, setTimeTable] = React.useState<any>([]);
 
   const [documentAgree, setDocumentAgree] = React.useState({
     doc1: false,
@@ -71,8 +72,6 @@ const ProductDetail = ({ navigation, route }) => {
       )
     );
   }, [documentAgree, date, time]);
-
-  React.useEffect(() => {}, [itemData]);
 
   const initialize = async () => {
     await getUserInfo();
@@ -103,13 +102,38 @@ const ProductDetail = ({ navigation, route }) => {
     });
   };
 
-  const timeList = [
-    { start: '09:00', end: '10:00' },
-    { start: '11:00', end: '12:00' },
-    { start: '13:00', end: '14:00' },
-    { start: '15:00', end: '16:00' },
-    { start: '17:00', end: '18:00' },
-  ];
+  const timetableHandler = async () => {
+    try {
+      const selectedDate = new Date(date.to);
+      let dayOfWeek = selectedDate.getDay();
+
+      const data = await api.getTimetable(Number(itemData?.company_id), dayOfWeek);
+      if(data !== null) {
+        const { ct_work_start, ct_work_end, ct_break_start, ct_break_end } = data;
+        createTimeTable(ct_work_start, ct_work_end, ct_break_start, ct_break_end);
+      } else {
+        setTimeTable(null);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const createTimeTable = (startTime: string, endTime: string, startBreakTime?: string, endBreakTime?: string) => {
+    const newTimeTable = []
+    const start = Number(startTime.split(':')[0]);
+    const end = Number(endTime.split(':')[0]);
+    const breakStart = Number(startBreakTime?.split(':')[0]);
+    const breakEnd = Number(endBreakTime?.split(':')[0]);
+
+    for(let i = start; i <= end; i++) {
+      if(i !== breakStart) {
+        newTimeTable.push({start: `${Number(i)}:00`, end: `${Number(i+1)}:00`})
+      }
+    }
+    setTime(`${start}:00 ~ ${start+1}:00`);
+    setTimeTable(newTimeTable);
+  }
 
   const handleSetLike = async () => {
     try {
@@ -312,7 +336,7 @@ const ProductDetail = ({ navigation, route }) => {
         <MedicleButton
           buttonStyle={[style.button, style.PayButton]}
           onPress={() =>
-            navigation.navigate(Routes.HOSPITAL_PAYMENT, { itemData: itemData })
+            navigation.navigate(Routes.HOSPITAL_PAYMENT, { itemData: itemData, time: `${date.to} ${time.split('~')[0].trim()}`})
           }
           textStyle={DARK_GRAY_BOLD_12}
           disabled={payButtonDisabled}
@@ -342,8 +366,8 @@ const ProductDetail = ({ navigation, route }) => {
                 rightInputNode={<Icon name="calendar" />}
                 editable={false}
                 clearButton={false}
-                onPressIn={() => setDateType('from')}
-                value={date.from}
+                onPressIn={() => setDateType('to')}
+                value={date.to}
               />
               <Spacing size={10} />
               <MedicleInput
@@ -352,22 +376,30 @@ const ProductDetail = ({ navigation, route }) => {
                 rightInputNode={<Icon name="clock" />}
                 editable={false}
                 clearButton={false}
-                onPressIn={() => setDateType('time')}
+                onPressIn={() => {
+                  setDateType('time')
+                  timetableHandler()
+                }}
                 value={time}
               />
             </Row>
-            {dateType === 'from' ? (
+            {dateType === 'to' ? (
               <View style={style.calendarWrap}>
                 <Calendar
                   date={date}
                   dateResponse={setDate}
                   dateType={dateType}
-                  initialDate={date.from}
+                  initialDate={date.to}
                 />
               </View>
             ) : (
               <View style={style.timeWrap}>
-                {timeList.map(({ start, end }, key) => (
+                {
+                timeTable === null
+                ?
+                <Text>병원 휴무일 입니다.</Text>
+                :
+                timeTable.map(({ start, end }, key) => (
                   <TouchableOpacity
                     key={key}
                     disabled={key === timeKey}

@@ -40,7 +40,7 @@ import style from './style';
 
 export default ({ navigation, route }) => {
   const { t } = useTranslation();
-  const { itemData } = route.params;
+  const { itemData, time } = route.params;
 
   const [radioIndex, setRadioIndex] = React.useState(0);
   const [payIndex, setPayIndex] = React.useState<Number>(0);
@@ -119,10 +119,11 @@ export default ({ navigation, route }) => {
     if (radioIndex === 1) {
       payment_method = payType[payIndex];
     }
-
+    
     const request = {
       payment_method: payment_method,
       product_id: itemData.product_id,
+      ua_date: time,
       user_id: user.id,
     };
 
