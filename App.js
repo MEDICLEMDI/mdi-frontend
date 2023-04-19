@@ -128,6 +128,7 @@ const PersistedApp = () => {
       try {
         const response = await api.autoSignIn();
         if (response.result) {
+        if (response.result || response.ok) {
           // set new token
           const { data } = response;
           await AsyncStorage.setItem(

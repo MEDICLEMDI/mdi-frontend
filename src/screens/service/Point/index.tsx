@@ -35,6 +35,7 @@ export default ({ navigation }) => {
   const isFocus = useIsFocused();
   const [visible, setVisible] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [point, setPoint] = React.useState(0);
   const [date, setDate] = React.useState({ from: '', to: '' });
   const [histories, setHistories] = React.useState([]);
 
@@ -49,6 +50,14 @@ export default ({ navigation }) => {
 
   const initialize = async () => {
     await getPointHistory(defaultDate());
+    await setUserInformation();
+    
+  }
+
+  const setUserInformation = async () => {
+    const user = await getStorageData('@User');
+    console.log(user);
+    setPoint(user.mdi.mw_mdi_point)
   }
 
   const getUserId = async () => {
@@ -83,7 +92,7 @@ export default ({ navigation }) => {
         </View>
         <View style={[style.flexRow, { marginVertical: 15 }]}>
           <Icon name="mdiIcon" />
-          <Text style={[style.point]}>{0}원</Text>
+          <Text style={[style.point]}>{convertNumberLocale(point)}</Text>
         </View>
         <Text style={style.pointText}>적립 예정 포인트</Text>
         <View style={[style.flexRow, { justifyContent: 'space-between' }]}>

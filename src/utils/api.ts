@@ -31,7 +31,7 @@ const authHeader = async () => {
   return headers;
 };
 
-export const get = async (url: string, auth?: boolean) => {
+export const get = async (url: string, auth = true) => {
   const accessToken = await getStorageData('@AuthKey');
   let headers;
   if (auth) {
