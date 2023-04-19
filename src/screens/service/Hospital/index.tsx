@@ -65,7 +65,6 @@ const Hospital = ({ navigation, route }) => {
   const getEventItemLists = async () => {
     try {
       const data = await api.getEventProducts(page, search);
-      console.log(data);
       setProductList(data);
     } catch (err) {
       console.error(err);
@@ -84,7 +83,6 @@ const Hospital = ({ navigation, route }) => {
   const getHospitalList = async () => {
     try {
       const data = await api.getHospital(page, search);
-      console.log(data);
       setHospitalList(data);
     } catch (err) {
       console.error(err);
@@ -99,14 +97,12 @@ const Hospital = ({ navigation, route }) => {
         product_id: product_id,
       };
       const response: responseDTO = await api.setLikeProducts(request);
-      console.log(response);
       if (response.result) {
         handleUpdateProductLike(product_id);
       } else {
         throw 'error';
       }
     } catch (error) {
-      console.error(error);
       toastRef.current.show('처리중 오류가 발생하였습니다.');
     }
   };
@@ -117,14 +113,12 @@ const Hospital = ({ navigation, route }) => {
         company_id: company_id,
       };
       const response: responseDTO = await api.setLikeCompanys(request);
-      console.log(response);
       if (response.result) {
         handleUpdateHospitalLike(company_id);
       } else {
         throw 'error';
       }
     } catch (error) {
-      console.error(error);
       toastRef.current.show('처리중 오류가 발생하였습니다.');
     }
   };

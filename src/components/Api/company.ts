@@ -1,7 +1,7 @@
-import { get, post } from '@/utils/api';
+import { get } from '@/utils/api';
 
 export const getHospital = async (page: number, search?: string) => {
-  let url = `/company/${page}`;
+  let url = `/company/list/${page}`;
   if (search) {
     url += '/' + search;
   }

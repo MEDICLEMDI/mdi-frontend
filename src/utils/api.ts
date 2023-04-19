@@ -74,6 +74,7 @@ const jwtTokenExpireInterceptor = async (
     let response = await fetch(input, init);
     if (!response.ok) {
       if (response.status !== 401) {
+        console.error(await response.json());
         throw new Error('Network Error!');
       }
       const e: ErrorResponse = await response.json();
@@ -93,6 +94,7 @@ const jwtTokenExpireInterceptor = async (
     }
     return response;
   } catch (e) {
+    console.error(e);
     throw e;
   }
 };
