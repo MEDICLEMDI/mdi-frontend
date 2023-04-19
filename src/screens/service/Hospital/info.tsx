@@ -2,6 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import * as React from 'react';
 import {
+  ActivityIndicator,
   Image,
   SafeAreaView,
   ScrollView,
@@ -42,10 +43,11 @@ const HospitalDetail = ({ navigation, route }) => {
 
   const getHospitalDetail = async () => {
     try {
-      const data = await api.getHospitalDetail(id);
-      setHospitalData(data.company);
-      setTimeTable(data.company.timeTable);
-      setReviews(data.review);
+      const { review, company } = await api.getHospitalDetail(id);
+
+      setHospitalData(company);
+      setTimeTable(company.timetable);
+      setReviews(review);
     } catch (err) {
       console.log(err);
     }
@@ -86,21 +88,23 @@ const HospitalDetail = ({ navigation, route }) => {
         />
         <View style={style.hospitalInfoWrap}>
           <Text style={[SECTION_HEADER, style.sectionHeader]}>진료시간</Text>
-          {timeTable.map(
-            time =>
-              time.ct_holiday === 0 && (
-                <Row key={time?.id} style={style.timeTableRow}>
-                  <Text style={[SECTION_CONTENTS, { flex: 1 }]}>
-                    {day[time.ct_day - 1]}요일
-                  </Text>
-                  <Text style={[SECTION_CONTENTS, { flex: 5 }]}>
-                    {timeConvertor(time?.ct_work_start)}
-                    &nbsp;~&nbsp;
-                    {timeConvertor(time?.ct_work_end)}
-                  </Text>
-                </Row>
-              )
-          )}
+          {timeTable.length > 0
+          ? timeTable.map(time => time.ct_holiday === 0 && (
+              <Row key={time?.id} style={style.timeTableRow}>
+                <Text style={[SECTION_CONTENTS, { flex: 1 }]}>
+                  {day[time.ct_day - 1]}요일
+                </Text>
+                <Text style={[SECTION_CONTENTS, { flex: 5 }]}>
+                  {timeConvertor(time?.ct_work_start)}
+                  &nbsp;~&nbsp;
+                  {timeConvertor(time?.ct_work_end)}
+                </Text>
+              </Row>
+            )
+          )
+          :
+          <ActivityIndicator />
+          }
           <Column style={style.mapWrap}>
             <Text style={[SECTION_HEADER, style.sectionHeader]}>주소</Text>
             <Row justify="space-between">
@@ -116,7 +120,9 @@ const HospitalDetail = ({ navigation, route }) => {
         </View>
         <View style={style.reviewWrap}>
           <Text style={[SECTION_HEADER, style.sectionHeader]}>병원 후기</Text>
-          {reviews.map(item => (
+          {
+          reviews.length > 0 
+          ? reviews.map(item => (
             <BoxDropShadow key={item?.id} style={style.reviewItem}>
               <Row justify="space-between" align="flex-start">
                 <View style={style.reviewIcon}>
@@ -126,7 +132,7 @@ const HospitalDetail = ({ navigation, route }) => {
                   <Text style={[SECTION_CONTENTS]}>{item.user.name}</Text>
                   <View>
                     <Text style={[SECTION_CONTENTS, { marginVertical: 5 }]}>
-                      {item.cr_contents}
+                      {item.cr_content}
                     </Text>
                   </View>
                   <Text style={ITEM_INFO_GRAY}>
@@ -135,7 +141,9 @@ const HospitalDetail = ({ navigation, route }) => {
                 </View>
               </Row>
             </BoxDropShadow>
-          ))}
+          ))
+          : <Text>등록된 후기가 없습니다</Text>
+        }
         </View>
       </ScrollView>
     </SafeAreaView>
