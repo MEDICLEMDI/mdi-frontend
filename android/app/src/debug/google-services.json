@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "674986444915",
+    "project_id": "medicle-1f0d0",
+    "storage_bucket": "medicle-1f0d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674986444915:android:8c5e01d2c2b8bcad908206",
+        "android_client_info": {
+          "package_name": "com.medicle.alpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674986444915-659tcfv2nrfamg0k1gihbk17vspq3dvl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medicle.alpha",
+            "certificate_hash": "498a6b5092b376dbea5efc86feee473f15fa6859"
+          }
+        },
+        {
+          "client_id": "674986444915-92btirb8an984rdjqf0krhn23tf4rnks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medicle.alpha",
+            "certificate_hash": "1eceeffa26450b57d2e681a1c3b53b6d32fd65d7"
+          }
+        },
+        {
+          "client_id": "674986444915-ebkrd85mo2bl0804daghbgcmqnq17n4p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medicle.alpha",
+            "certificate_hash": "950148b684d01743a58d64828cfbaffca246807a"
+          }
+        },
+        {
+          "client_id": "674986444915-j312dd1emq89s2t39b556j5s6n2mq4qo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medicle.alpha",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "674986444915-7ok9ko2g5q5gmkatbcq73q2oth45ehqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTng0gXl7eF8fI6l2sQ2ppAl8CCbKKUpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674986444915-7ok9ko2g5q5gmkatbcq73q2oth45ehqr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "674986444915-f60nknsrtmnnvo3f0gl3lfr3vt5bs619.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.alpha.medicle"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674986444915:android:c9ee0e7b02d032fa908206",
+        "android_client_info": {
+          "package_name": "com.medicle.alpha.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674986444915-p72l2910e8cctp2130kmcsm3q34v8s6d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medicle.alpha.dev",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "674986444915-7ok9ko2g5q5gmkatbcq73q2oth45ehqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTng0gXl7eF8fI6l2sQ2ppAl8CCbKKUpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674986444915-7ok9ko2g5q5gmkatbcq73q2oth45ehqr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "674986444915-f60nknsrtmnnvo3f0gl3lfr3vt5bs619.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.alpha.medicle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

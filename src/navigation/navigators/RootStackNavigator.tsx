@@ -48,7 +48,7 @@ import Review from '@/screens/service/Review';
 import ServiceContacts from '@/screens/service/ServiceContacts';
 import Setting from '@/screens/service/Setting';
 import SignIn from '@/screens/service/SignIn';
-// import Social from '@/screens/service/SignIn/social';
+import Social from '@/screens/service/SignIn/social';
 import SignUp from '@/screens/service/SignUp';
 import Subscribe from '@/screens/service/Subscribe';
 import WalletCreatePassword from '@/screens/service/Wallet/components/CreatePassword';
@@ -108,8 +108,8 @@ const RootStackNavigator = () => {
 
   React.useEffect(() => {}, [isAuthenticated]);
 
-  const initialRoute = isAuthenticated ? Routes.DASHBOARD : Routes.SIGNIN;
-  // const initialRoute = Routes.HANDLE_TEST;
+  // const initialRoute = isAuthenticated ? Routes.DASHBOARD : Routes.SIGNIN;
+  const initialRoute = Routes.SOCIAL;
   return (
     <Stack.Navigator
       initialRouteName={initialRoute}
@@ -121,6 +121,7 @@ const RootStackNavigator = () => {
       {!isAuthenticated ? (
         <>
           <Stack.Screen name={Routes.SIGNIN} component={SignIn} />
+          <Stack.Screen name={Routes.SOCIAL} component={Social} />
           <Stack.Screen name={Routes.SIGNUP} component={SignUp} />
           <Stack.Screen name={Routes.FINDACCOUNT} component={FindAccount} />
           <Stack.Screen name={Routes.HANDLE_TEST} component={HandleTest} />
