@@ -40,6 +40,14 @@
 				<string>com.googleusercontent.apps.674986444915-f60nknsrtmnnvo3f0gl3lfr3vt5bs619</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakaod596ab5c203bb14754add071e5647f0b</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -47,6 +55,14 @@
 	<string>${CODE_PUSH_IOS_DEPLOY_KEY}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>KAKAO_APP_KEY</key>
+	<string>d596ab5c203bb14754add071e5647f0b</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+		<string>kakaolink</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

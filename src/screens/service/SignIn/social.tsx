@@ -3,6 +3,12 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import {
+  getProfile as getKakaoProfile,
+  login,
+  logout,
+  unlink,
+} from '@react-native-seoul/kakao-login';
 import * as React from 'react';
 import {
   GestureResponderEvent,
@@ -11,6 +17,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 
 import Header from '@/components/Header';
 import { Colors } from '@/constants/theme';
@@ -19,7 +26,6 @@ import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 
 import style from './style';
-import Config from 'react-native-config';
 
 const SocialLoginButton = ({
   label,
@@ -52,7 +58,7 @@ const SocialLoginButton = ({
 
 const Social = ({ navigation }) => {
   GoogleSignin.configure({
-    webClientId: Config.GOOGLE_CLIENT_KEY,
+    webClientId: Config.GOOGLE_KEY,
   });
 
   const handleGoogleSignIn = async () => {
@@ -65,6 +71,15 @@ const Social = ({ navigation }) => {
     }
   };
 
+  const handleKakaoSignIn = async () => {
+    const token = await login()
+      .then(res => console.log(res))
+      .catch(err => console.error(err));
+    const profile = await getKakaoProfile();
+    console.log(token);
+    console.log(profile);
+  };
+
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={false} />
@@ -73,6 +88,7 @@ const Social = ({ navigation }) => {
           label="카카오톡 계정으로 회원가입"
           color="#FEE500"
           icon="kakao"
+          onPress={handleKakaoSignIn}
         />
         <SocialLoginButton
           label="네이버 계정으로 회원가입"

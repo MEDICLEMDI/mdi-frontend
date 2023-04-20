@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MEDICLE</string>
+    <string name="kakao_app_key">@string/KAKAO_KEY</string>
     <string moduleConfig="true" name="CodePushDeploymentKey">@string/CODE_PUSH_ANDROID_DEPLOY_KEY</string>
 </resources>

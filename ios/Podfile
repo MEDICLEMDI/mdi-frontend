@@ -11,6 +11,9 @@ target 'Plug' do
   flags = get_default_flags()
   
   pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '7.25.1'
+  pod 'KakaoSDKCommon'  
+  pod 'KakaoSDKAuth'  
+  pod 'KakaoSDKUser'  
 
   use_react_native!(
     :path => config[:reactNativePath],
