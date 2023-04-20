@@ -9,9 +9,14 @@ import {
   logout,
   unlink,
 } from '@react-native-seoul/kakao-login';
+import NaverLogin, {
+  GetProfileResponse,
+  NaverLoginResponse,
+} from '@react-native-seoul/naver-login';
 import * as React from 'react';
 import {
   GestureResponderEvent,
+  Platform,
   SafeAreaView,
   Text,
   TouchableOpacity,
@@ -57,6 +62,7 @@ const SocialLoginButton = ({
 };
 
 const Social = ({ navigation }) => {
+  const [naver, setNaver] = React.useState();
   GoogleSignin.configure({
     webClientId: Config.GOOGLE_KEY,
   });
@@ -80,6 +86,34 @@ const Social = ({ navigation }) => {
     console.log(profile);
   };
 
+  const handleNaverSignIn = async () => {
+    const appName = '메디클';
+    const consumerKey = Config.NAVER_CLIENT_ID;
+    const consumerSecret = Config.NAVER_CLIENT_SECRET;
+    const serviceUrlScheme =
+      Platform.OS === 'ios' ? 'com.alpha.medicle' : 'com.medicle.alpha';
+
+    const naver = await NaverLogin.login({
+      appName,
+      consumerKey,
+      consumerSecret,
+      serviceUrlScheme,
+    })
+      .then(async res => {
+        if (res.isSuccess) {
+          let hi = await NaverLogin.getProfile(
+            res.successResponse?.accessToken!
+          );
+          console.log(hi);
+        } else {
+          throw 'error';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={false} />
@@ -95,6 +129,7 @@ const Social = ({ navigation }) => {
           color="#03CF5D"
           textColor="#FFFFFF"
           icon="naver"
+          onPress={handleNaverSignIn}
         />
         <SocialLoginButton
           label="Google 계정으로 회원가입"

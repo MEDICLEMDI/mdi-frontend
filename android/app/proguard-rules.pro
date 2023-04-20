@@ -28,3 +28,7 @@
 
 # react-native-svg
 -keep public class com.horcrux.svg.** {*;}
+
+-keep public class com.nhn.android.naverlogin.** {
+       public protected *;
+}
