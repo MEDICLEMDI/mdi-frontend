@@ -45,7 +45,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakaod596ab5c203bb14754add071e5647f0b</string>
+				<string>kakao${KAKAO_KEY}</string>
 			</array>
 		</dict>
 	</array>
@@ -56,7 +56,7 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>KAKAO_APP_KEY</key>
-	<string>d596ab5c203bb14754add071e5647f0b</string>
+	<string>${KAKAO_KEY}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kakaokompassauth</string>
