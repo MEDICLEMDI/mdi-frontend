@@ -79,10 +79,9 @@ const Social = ({ navigation }) => {
 
   const handleKakaoSignIn = async () => {
     const token = await login()
-      .then(res => console.log(res))
+      .then(res => console.log('token', res))
       .catch(err => console.error(err));
     const profile = await getKakaoProfile();
-    console.log(token);
     console.log(profile);
   };
 
