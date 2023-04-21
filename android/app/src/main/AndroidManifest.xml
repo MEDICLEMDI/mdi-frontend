@@ -33,6 +33,19 @@
           <category android:name="android.intent.category.BROWSABLE" />
         </intent-filter>
       </activity>
+      <activity
+   android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+   android:exported="true">
+  <intent-filter>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.DEFAULT" />
+      <category android:name="android.intent.category.BROWSABLE" />
+
+      <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
+      <data android:host="oauth"
+          android:scheme="kakaod596ab5c203bb14754add071e5647f0b" />
+  </intent-filter>
+</activity>
     </application>
     <queries>
       <intent>

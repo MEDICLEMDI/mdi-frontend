@@ -3,14 +3,26 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import {
+  getProfile as getKakaoProfile,
+  login,
+  logout,
+  unlink,
+} from '@react-native-seoul/kakao-login';
+import NaverLogin, {
+  GetProfileResponse,
+  NaverLoginResponse,
+} from '@react-native-seoul/naver-login';
 import * as React from 'react';
 import {
   GestureResponderEvent,
+  Platform,
   SafeAreaView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 
 import Header from '@/components/Header';
 import { Colors } from '@/constants/theme';
@@ -19,7 +31,6 @@ import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 
 import style from './style';
-import Config from 'react-native-config';
 
 const SocialLoginButton = ({
   label,
@@ -51,8 +62,9 @@ const SocialLoginButton = ({
 };
 
 const Social = ({ navigation }) => {
+  const [naver, setNaver] = React.useState();
   GoogleSignin.configure({
-    webClientId: Config.GOOGLE_CLIENT_KEY,
+    webClientId: Config.GOOGLE_KEY,
   });
 
   const handleGoogleSignIn = async () => {
@@ -65,6 +77,42 @@ const Social = ({ navigation }) => {
     }
   };
 
+  const handleKakaoSignIn = async () => {
+    const token = await login()
+      .then(res => console.log('token', res))
+      .catch(err => console.error(err));
+    const profile = await getKakaoProfile();
+    console.log(profile);
+  };
+
+  const handleNaverSignIn = async () => {
+    const appName = '메디클';
+    const consumerKey = Config.NAVER_CLIENT_ID;
+    const consumerSecret = Config.NAVER_CLIENT_SECRET;
+    const serviceUrlScheme =
+      Platform.OS === 'ios' ? 'com.alpha.medicle' : 'com.medicle.alpha';
+
+    const naver = await NaverLogin.login({
+      appName,
+      consumerKey,
+      consumerSecret,
+      serviceUrlScheme,
+    })
+      .then(async res => {
+        if (res.isSuccess) {
+          let hi = await NaverLogin.getProfile(
+            res.successResponse?.accessToken!
+          );
+          console.log(hi);
+        } else {
+          throw 'error';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={false} />
@@ -73,12 +121,14 @@ const Social = ({ navigation }) => {
           label="카카오톡 계정으로 회원가입"
           color="#FEE500"
           icon="kakao"
+          onPress={handleKakaoSignIn}
         />
         <SocialLoginButton
           label="네이버 계정으로 회원가입"
           color="#03CF5D"
           textColor="#FFFFFF"
           icon="naver"
+          onPress={handleNaverSignIn}
         />
         <SocialLoginButton
           label="Google 계정으로 회원가입"

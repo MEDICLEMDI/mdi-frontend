@@ -8,6 +8,8 @@
 #import "RNBootSplash.h"
 
 #import <React/RCTAppSetupUtils.h>
+#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
+#import <RNKakaoLogins.h>
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
@@ -37,6 +39,17 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
    openURL:(NSURL *)url
    options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
+
+  // naver
+  if ([url.scheme isEqualToString:@"{{ CUSTOM URL SCHEME }}"]) {
+    return [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
+  }
+  
+  // kakao
+  if([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
+    return [RNKakaoLogins handleOpenUrl: url];
+  }
+  
   return [RCTLinkingManager application:application openURL:url options:options];
 }
 
