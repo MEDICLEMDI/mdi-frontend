@@ -38,7 +38,7 @@ import {
   getReviewRankLists,
 } from './product';
 import { cancelQa, getQaDetail, getQAList, insertProductQA } from './qa';
-import { insertReview } from './reviews';
+import { insertReview, getReviews } from './reviews';
 
 export default {
   autoSignIn,
@@ -82,4 +82,5 @@ export default {
   getLikeCompanys,
   getPointHistory,
   getTimetable,
+  getReviews,
 };

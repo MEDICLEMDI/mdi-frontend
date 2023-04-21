@@ -45,7 +45,7 @@ export default StyleSheet.create({
     borderBottomColor: Colors.Medicle.Gray.Light,
   },
   sectionHeader: {
-    marginBottom: 20,
+    margin: 20,
   },
   input: {
     marginBottom: 15,
@@ -178,6 +178,7 @@ export default StyleSheet.create({
 
   // info page
   hospitalInfoWrap: {
+    flex: 1,
     padding: 30,
     borderBottomWidth: 10,
     borderBottomColor: Colors.Medicle.Gray.Light,
@@ -194,9 +195,6 @@ export default StyleSheet.create({
   },
   locationAddress: {
     marginBottom: 20,
-  },
-  reviewWrap: {
-    padding: 30,
   },
   reviewItem: {
     marginBottom: 10,
