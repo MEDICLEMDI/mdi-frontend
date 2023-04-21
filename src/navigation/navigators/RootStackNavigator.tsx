@@ -154,7 +154,7 @@ const RootStackNavigator = () => {
             />
           </Stack.Group>
           {/* Wallet Group */}
-          <Stack.Group>
+          {/* <Stack.Group>
             <Stack.Screen
               name={Routes.WALLET_CREATE_PASSWORD}
               component={WalletCreatePassword}
@@ -169,7 +169,7 @@ const RootStackNavigator = () => {
             />
             <Stack.Screen name={Routes.WALLET_SEND} component={WalletSend} />
             <Stack.Screen name={Routes.POINT_CHARGE} component={PointCharge} />
-          </Stack.Group>
+          </Stack.Group> */}
         </>
       )}
     </Stack.Navigator>
@@ -246,7 +246,7 @@ const BottomTabNavigation = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name={Routes.WALLET}
         component={WalletStack}
         options={{
@@ -256,7 +256,7 @@ const BottomTabNavigation = () => {
             <Icon name="wallet" stroke={tabActiveController(focused)} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name={Routes.MYPAGE}
         component={SettingStack}
@@ -338,31 +338,31 @@ const ServiceSettings = () => {
   );
 };
 
-function WalletStack() {
-  const keyring = KeyRing.getInstance();
-  // 최초 진입되는 라우팅 페이지 설정
-  const initialRoute = keyring.isInitialized
-    ? Routes.WALLET_HOME
-    : Routes.WALLET_WELCOME;
+// function WalletStack() {
+//   const keyring = KeyRing.getInstance();
+//   // 최초 진입되는 라우팅 페이지 설정
+//   const initialRoute = keyring.isInitialized
+//     ? Routes.WALLET_HOME
+//     : Routes.WALLET_WELCOME;
 
-  return (
-    <Stack.Navigator
-      initialRouteName={initialRoute}
-      screenOptions={{ headerShown: false }}>
-      <Stack.Group>
-        <Stack.Screen name={Routes.WALLET_HOME} component={WalletHome} />
-        <Stack.Screen name={Routes.WALLET_WELCOME} component={WalletWelcome} />
-        <Stack.Screen name={Routes.WALLET_SETTING} component={WalletSetting} />
-        <Stack.Screen name={Routes.WALLET_INFO} component={WalletInfo} />
-      </Stack.Group>
-      {/* <Stack.Group screenOptions={modalGroupOptions}>
-          <Stack.Screen
-            name={Routes.MODAL_STACK}
-            component={ModalStackNavigator}
-          />
-        </Stack.Group> */}
-    </Stack.Navigator>
-  );
-}
+//   return (
+//     <Stack.Navigator
+//       initialRouteName={initialRoute}
+//       screenOptions={{ headerShown: false }}>
+//       <Stack.Group>
+//         <Stack.Screen name={Routes.WALLET_HOME} component={WalletHome} />
+//         <Stack.Screen name={Routes.WALLET_WELCOME} component={WalletWelcome} />
+//         <Stack.Screen name={Routes.WALLET_SETTING} component={WalletSetting} />
+//         <Stack.Screen name={Routes.WALLET_INFO} component={WalletInfo} />
+//       </Stack.Group>
+//       {/* <Stack.Group screenOptions={modalGroupOptions}>
+//           <Stack.Screen
+//             name={Routes.MODAL_STACK}
+//             component={ModalStackNavigator}
+//           />
+//         </Stack.Group> */}
+//     </Stack.Navigator>
+//   );
+// }
 
 export default RootStackNavigator;

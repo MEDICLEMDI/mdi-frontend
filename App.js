@@ -59,23 +59,23 @@ Sentry.init({
 const PersistedApp = () => {
   const appState = useRef(AppState.currentState);
   const [showRoutes, setShowRoutes] = useState(false);
-  const dispatch = useAppDispatch();
-  const { icpPrice } = useAppSelector(state => state.icp);
+  // const dispatch = useAppDispatch();
+  // const { icpPrice } = useAppSelector(state => state.icp);
 
   useEffect(() => {
     const event = AppState.addEventListener('change', handleAppStateChange);
 
     authChecker();
 
-    dispatch(
-      initKeyring({
-        callback: () => {
-          if (keyring.isInitialized && !keyring.isUnlocked) {
-            unlock();
-          }
-        },
-      })
-    );
+    // dispatch(
+    //   initKeyring({
+    //     callback: () => {
+    //       if (keyring.isInitialized && !keyring.isUnlocked) {
+    //         unlock();
+    //       }
+    //     },
+    //   })
+    // );
     // RNBootSplash.hide({ fade: true });
     setShowRoutes(true);
 
@@ -108,19 +108,19 @@ const PersistedApp = () => {
     // }
   };
 
-  const unlock = async () => {
-    const encryptKey = await AsyncStorage.getItem('@WalletPassword');
-    const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
-      CryptoJS.enc.Utf8
-    );
+  // const unlock = async () => {
+  //   const encryptKey = await AsyncStorage.getItem('@WalletPassword');
+  //   const password = CryptoJS.AES.decrypt(encryptKey, Config.AES_KEY).toString(
+  //     CryptoJS.enc.Utf8
+  //   );
 
-    dispatch(
-      login({
-        password: password,
-        icpPrice,
-      })
-    );
-  };
+  //   dispatch(
+  //     login({
+  //       password: password,
+  //       icpPrice,
+  //     })
+  //   );
+  // };
 
   const authChecker = async () => {
     const auth = await api.tokenChecker();
