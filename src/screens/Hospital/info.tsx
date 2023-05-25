@@ -147,7 +147,6 @@ const ReviewList = ({ company_id, visible, closeHandler }: any) => {
                     <View style={{ flex: 1 }}>
                       <Text style={[SECTION_CONTENTS]}>
                         {item.user_name}
-                        {item.id}
                       </Text>
                       <View>
                         <Text style={[SECTION_CONTENTS, { marginVertical: 5 }]}>
