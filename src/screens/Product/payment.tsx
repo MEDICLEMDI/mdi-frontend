@@ -174,7 +174,8 @@ export default ({ navigation, route }: any) => {
       // 현재 상품의 아이디를 기준으로 상품 가격을 PG 서버에 상품 금액을 사전등록
       // 사전등록된 상품의 금액과 결제 요청시 전송되는 상품의 금액이 다르면 결제 유효성 문제로 결제 실패
       const response = await api.setPaymentPrepare(itemData?.product_id);
-      const merchant_uid = response.data;
+      const { data } = response;
+      const merchant_uid = data?.merchant_uid;
       if (response.result) {
         /* [필수입력] 결제에 필요한 데이터를 입력합니다. */
         const data_ = {
