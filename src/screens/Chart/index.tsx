@@ -107,7 +107,7 @@ export default ({ navigation, route }: any) => {
    * 선택된 탭에 따라 데이터 가져오기
    */
   const handleGetData = async () => {
-    if (tabIndex === 0) {
+    if (tabIndex == 1) {
       await getUserAppointment();
     } else {
       await getQAList();
@@ -231,7 +231,7 @@ export default ({ navigation, route }: any) => {
                   onPress={() => {
                     setRefresh(false);
                     navigation.navigate(
-                      tabIndex === 0 ? Routes.CHART_DETAIL : Routes.QA_DETAIL,
+                      tabIndex === 1 ? Routes.CHART_DETAIL : Routes.QA_DETAIL,
                       {
                         id: item.id,
                       }
