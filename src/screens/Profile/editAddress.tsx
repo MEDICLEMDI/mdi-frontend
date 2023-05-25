@@ -115,7 +115,7 @@ const EditAddress = ({ navigation }) => {
       const response = await api.editAddress(request);
 
       if (response.result) {
-        await AsyncStorage.setItem('@User', JSON.stringify(response.data));
+        await AsyncStorage.setItem('@User', JSON.stringify(response.data!.user));
         setResult(true);
       } else {
         throw 'err';

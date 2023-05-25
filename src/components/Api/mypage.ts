@@ -43,7 +43,7 @@ export const editPassword = async (data: any): Promise<ResponseDTO<undefined>> =
  * @param data 
  * @returns Promise<ResponseDTO<User>>
  */
-export const editAddress = async (data: any): Promise<ResponseDTO<User>> => {
+export const editAddress = async (data: any): Promise<ResponseDTO<any>> => {
   return await post({ url: '/profile/edit/address', body: data });
 };
 
