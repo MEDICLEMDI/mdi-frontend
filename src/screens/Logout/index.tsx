@@ -17,11 +17,13 @@ import { resetStorage } from '@/utils/localStorage';
 export default () => {
   const { t } = useTranslation();
 
+  // 로그아웃 처리
   const handleLogOut = async () => {
     try {
       const response = await api.signOut();
     } catch (err) {
       console.error(err);
+      // 백엔드에서 통신이 제대로 되지 않았어도 프론트에선 전부 로그아웃처리
     } finally {
       await resetStorage();
       eventEmitter.emit('loggedOut');

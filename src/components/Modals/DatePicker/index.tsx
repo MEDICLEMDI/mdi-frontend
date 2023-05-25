@@ -31,6 +31,15 @@ interface ModalProps extends ModalBaseProps {
   resetEvent: ((event: GestureResponderEvent) => void) | undefined;
 }
 
+/**
+ * DatePicker
+ * @param {string} name
+ * @param {'flex-start' | 'center' | 'flex-end'} modalDirection - 'flex-start' | 'center' | 'flex-end'
+ * @param {React.ComponentState} dateResponse - 날짜 데이터를 반환 받을 React state
+ * @param {((event: GestureResponderEvent) => void) | undefined} submitEvent - 확인 버튼 이벤트
+ * @param {((event: GestureResponderEvent) => void) | undefined} resetEvent - 초기화 버튼 이벤트
+ * @comment 날짜 범위를 선택하여 검색하는 리스트에 적용하는 공용 모달입니다. 내부 달력은 Calancer컴포넌트를 사용하여 구성되어있습니다. 날짜 형식 및 계산은 day.js 라이브러리를 사용하여 작성되었습니다.
+ */
 const DatePicker = ({
   name,
   animationType,
@@ -47,6 +56,7 @@ const DatePicker = ({
   const [datePicker, setDatePicker] = React.useState({ from: '', to: '' });
   const [selectedDateCondition, setSelectedDateCondition] = React.useState(4);
   const insets = useSafeAreaInsets();
+  // 날짜 범위 선택 옵션
   const monthCondition: { label: string, value: number, unit: ManipulateType }[] = [
     { label: '1년', value: 1, unit: 'year' },
     { label: '6개월', value: 6, unit: 'month' },
@@ -61,13 +71,14 @@ const DatePicker = ({
     size: 12,
   });
 
+  // 모달을 호출 할 때마다 데이터를 초기화
   React.useEffect(() => {
     setDatePickerVisible(false);
     setDateType('');
     setSelectedDateCondition(4);
 
     if (datePicker.to === '') {
-      setDatePicker(dateSetup(1, 'week'));
+      setDatePicker(dateSetup(1, 'week')); // 기본 초기화 날짜 범위를 1주일로 하여 날짜 설정
     } else {
       const compare = compareDate(datePicker);
       setDatePicker(compare);

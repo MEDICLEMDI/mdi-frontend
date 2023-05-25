@@ -1,5 +1,10 @@
 import { Colors } from "@/constants/theme";
 
+/**
+ * 커스텀 폰트 생성
+ * @param options 
+ * @returns 
+ */
 export const fontStyleCreator = (options: {
   color?: string | undefined;
   size?: number | undefined;

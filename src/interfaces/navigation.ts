@@ -1,9 +1,4 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import {
-  CompositeScreenProps,
-  NavigatorScreenParams,
-  TabNavigationState,
-} from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import Routes from '@/navigation/Routes';
@@ -79,7 +74,7 @@ export type RootStackParamList = {
   // [Routes.WALLET_INFO]: undefined;
   // [Routes.HANDLE_TEST]: undefined;
   [Routes.SERVICE_DOCUMENT]: undefined;
-  [Routes.PERSONAL_DOCUMENT]: undefined;
+  // [Routes.PERSONAL_DOCUMENT]: undefined;
   [Routes.MARKETING]: undefined;
   [Routes.SIGNOUT]: undefined;
   [Routes.LOGOUT]: undefined;

@@ -8,6 +8,10 @@ interface ModalProps extends ModalBaseProps {
   readonly children?: React.ReactNode;
 }
 
+/**
+ * CustomModal
+ * @comment 별도의 복잡한 구성없이 검은색 투명 백그라운드를 가진 모달
+ */
 const CustomModal = (props: ModalProps) => {
   const {
     name,

@@ -23,6 +23,10 @@ interface ModalProps extends ModalBaseProps {
   visible: boolean;
 }
 
+/**
+ * ResultModal
+ * @comment 완료처리에 대한 모달
+ */
 const ResultModal = (props: ModalProps) => {
   const { name, onPress, buttonText, resultText, visible } = props;
 

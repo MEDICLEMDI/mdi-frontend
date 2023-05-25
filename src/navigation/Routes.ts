@@ -48,7 +48,7 @@ enum Routes {
   NOTICE_DETAIL = 'NoticeDetail',
   SERVICE_CONTACTS = 'ServiceContacts',
   SERVICE_DOCUMENT = 'ServiceDoc',
-  PERSONAL_DOCUMENT = 'PersonalDoc',
+  // PERSONAL_DOCUMENT = 'PersonalDoc',
   MARKETING = 'Marketing',
   SIGNOUT = 'SignOut',
   // Auth Screens:

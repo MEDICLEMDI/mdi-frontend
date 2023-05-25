@@ -24,7 +24,7 @@ import ResultPage from '@/components/ResultPage';
 import Spacing from '@/components/Spacing';
 import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
-import { responseDTO } from '@/interfaces/api';
+import { ResponseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 
@@ -274,7 +274,7 @@ const SocialSignUp = ({ navigation, route }) => {
     setLoading(true);
     try {
       const request: ISignUpData = setupSignUpData();
-      const response: responseDTO = await api.socialSignUp(request);
+      const response = await api.socialSignUp(request);
       if (response.result) {
         setSuccess(true);
       } else {
@@ -331,7 +331,7 @@ const SocialSignUp = ({ navigation, route }) => {
     let _errorMessage = 'unknown';
 
     try {
-      const response: responseDTO = await api.getPhoneAuthCode({
+      const response = await api.getPhoneAuthCode({
         phone: signUpData.phone,
         type: 'register',
       });
@@ -385,7 +385,7 @@ const SocialSignUp = ({ navigation, route }) => {
         auth_code: smsCode,
         type: 'register',
       };
-      const response: responseDTO = await api.checkPhoneAuthCode(request);
+      const response = await api.checkPhoneAuthCode(request);
 
       if (response.result) {
         clearInterval(smsIntervalRef.current!);

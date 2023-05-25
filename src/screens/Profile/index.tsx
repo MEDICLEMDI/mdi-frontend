@@ -24,7 +24,7 @@ import { ErrorCode } from '@/constants/error';
 import { myPageMenus } from '@/constants/menus';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
-import { responseDTO } from '@/interfaces/api';
+import { ResponseDTO, User } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
 import { getStorageData } from '@/utils/localStorage';
 
@@ -32,15 +32,15 @@ import style from './style';
 import { convertPrice } from '@/utils/utilities';
 import { userRefresh } from '@/utils/userRefresh';
 
-const Profile = ({ navigation }) => {
+const Profile = ({ navigation }: any) => {
   const { t, i18n } = useTranslation();
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false); // 내정보로 가기전 비밀번호 검사 모달
   const [passwordErrMessage, setPasswordErrMessage] = React.useState<
     string | undefined
   >(undefined);
   const [passwordVaild, setPasswordVaild] = React.useState(false);
   const [password, setPassword] = React.useState<string | undefined>(undefined);
-  const [user, setUser] = React.useState();
+  const [user, setUser] = React.useState<User | undefined>();
   const [isInit, setInit] = React.useState(false);
   const numColumns = 3;
   const menuPadding = 50;
@@ -50,30 +50,43 @@ const Profile = ({ navigation }) => {
     initialize();
   }, []);
 
+  /**
+   * 페이지 초기화
+   */
   const initialize = async () => {
     const user = await userRefresh();
     setUser(user);
     setInit(true);
   };
 
+  /**
+   * 비밀번호 체크 모달 닫기
+   */
   const handleCloseModal = () => {
     setModalVisible(false);
     setPassword(undefined);
     setPasswordVaild(false);
   };
 
+  /**
+   * 모달창 패스워드 인풋 이벤트 리스너
+   * @param text 
+   */
   const handlePasswordOnChageText = (text: string) => {
     setPasswordErrMessage(undefined);
     setPasswordVaild(text.length > 7);
     setPassword(text);
   };
 
+  /**
+   * 비밀번호 검증과 함께 프로필 수정페이지로 진입요청
+   */
   const handleProfileEdit = async () => {
     try {
       const request = {
         password: password,
       };
-      const response: responseDTO = await api.getMyPage(request);
+      const response = await api.getMyPage(request);
 
       if (response.result) {
         handleCloseModal();
@@ -148,7 +161,7 @@ const Profile = ({ navigation }) => {
           iconColor={{ stroke: Colors.Medicle.Brown.SemiDark }}
           gap={gap}
           data={myPageMenus(t)}
-          onPress={({ route }) => navigation.navigate(route)}
+          onPress={({ route }: any) => navigation.navigate(route)}
           renderItem="circle"
         />
       </ScrollView>

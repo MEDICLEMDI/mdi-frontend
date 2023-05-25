@@ -19,6 +19,10 @@ type props = {
   input: TextInputProps;
 };
 
+/**
+ * InputIcon
+ * @comment 아이콘이 포함되어있는 입력폼
+ */
 const InputIcon = ({ onPress, placeholder, icon }) => {
   return (
     <View style={style.inputWrap}>

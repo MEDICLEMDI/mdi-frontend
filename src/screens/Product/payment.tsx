@@ -40,7 +40,7 @@ import { termsList } from '@/interfaces/sign';
 import { handleGetTerms } from '@/utils/terms';
 import { userRefresh } from '@/utils/userRefresh';
 
-export default ({ navigation, route }) => {
+export default ({ navigation, route }: any) => {
   const { t } = useTranslation();
   const { itemData, time } = route.params;
   const [radioIndex, setRadioIndex] = React.useState(0);
@@ -61,10 +61,6 @@ export default ({ navigation, route }) => {
     doc2: false,
     doc3: false,
   });
-
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
-    undefined
-  );
 
   const [terms, setTerms] = React.useState<termsList>({
     privacy: '',
@@ -95,6 +91,9 @@ export default ({ navigation, route }) => {
 
   React.useEffect(() => {}, [terms]);
 
+  /**
+   * 약관 리스트 가져오기
+   */
   const initTerms = async () => {
     const tempTerms = await handleGetTerms();
     if (tempTerms) {
@@ -104,6 +103,10 @@ export default ({ navigation, route }) => {
   };
 
 
+  /**
+   * 약관들 동의 체크박스 체크,해제에 따른 이벤트 리스터
+   * @returns 
+   */
   const buttonDisabledListener = () => {
     const agree = !(
       documentAgree.doc1 &&
@@ -115,6 +118,9 @@ export default ({ navigation, route }) => {
     return agree;
   };
 
+  /**
+   * 결제 진행
+   */
   const submit = async () => {
     let payment_method = radioIndex === 0 ? 'point' : 'pg';
 
@@ -122,6 +128,11 @@ export default ({ navigation, route }) => {
     else paymentPg();
   };
 
+  /**
+   * 포인트로 결제
+   * 포인트로 결제하는 경우 별도의 결제 프로세스 없이 포인트 차감 후 결제 완료 처리를 진행
+   * @returns 
+   */
   const paymentPoint = async () => {
     setloading(true);
     if (Number(user?.mdi.mw_mdi_point) < Number(itemData?.discount_price)) {
@@ -153,18 +164,24 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * pg결제
+   */
   const paymentPg = async () => {
     // set pg pymentprepare
     setloading(true);
     try {
+      // 현재 상품의 아이디를 기준으로 상품 가격을 PG 서버에 상품 금액을 사전등록
+      // 사전등록된 상품의 금액과 결제 요청시 전송되는 상품의 금액이 다르면 결제 유효성 문제로 결제 실패
       const response = await api.setPaymentPrepare(itemData?.product_id);
+      const merchant_uid = response.data;
       if (response.result) {
         /* [필수입력] 결제에 필요한 데이터를 입력합니다. */
         const data_ = {
           pg: 'tosspayments',
           pay_method: 'card',
           name: '메디클 테스트 결제',
-          merchant_uid: response.data.merchant_uid,
+          merchant_uid: merchant_uid,
           // amount: '1000',
           amount: itemData.discount_price,
           buyer_name: user?.name,
@@ -187,7 +204,6 @@ export default ({ navigation, route }) => {
 
   const callback = async (response: any) => {
     try {
-      console.log(new Date().getTime());
       // 사용자가 뒤로가기 또는 결제 취소를 한 경우 결제 프로세스를 중단하고 결제 팝업을 닫음
       if (response.error_msg !== undefined) {
         setVisible(false);
@@ -195,6 +211,7 @@ export default ({ navigation, route }) => {
       }
 
       // 결제가 완료되면 넘어오는 callback을 포함하여 결제 데이터 저장
+      // 결제 데이터는 결제중으로 처리되면 백엔드로 전송되는 webhook으로 결제 완료처리
       const { imp_uid, merchant_uid } = response;
       const request = {
         payment_method: 'pg',
@@ -206,6 +223,8 @@ export default ({ navigation, route }) => {
         merchant_uid: merchant_uid, // 결제 아이디
       };
 
+      // pg 결제 성공 후 백엔드로 결제처리
+      // 앱으로 콜백 되는 데이터는 백엔드와의 검증을 위해 결제중으로 저장
       const res = await api.productPayment(request);
       if (res.result) {
         navigation.dispatch([
@@ -216,11 +235,13 @@ export default ({ navigation, route }) => {
       }
     } catch (err) {
       console.error(err);
-    } finally {
-      console.log('Payment end');
     }
   };
 
+  /**
+   * 약관 상세보기 클릭시 웹뷰모달
+   * @param url 
+   */
   const handleViewDetail = (url: keyof termsList) => {
     setWebViewUrl(terms[url]);
     if (isTerms) {

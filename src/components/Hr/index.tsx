@@ -9,6 +9,13 @@ interface Hr {
   style?: ViewStyle | ViewStyle[];
 }
 
+/**
+ * Hr
+ * @param {string} color
+ * @param {number} thickness
+ * @param {ViewStyle | ViewStyle[]} style
+ * @comment 구분선
+ */
 const Hr = ({ color, thickness, style }: Hr) => {
   return (
     <View

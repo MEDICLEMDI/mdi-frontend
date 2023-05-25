@@ -3,6 +3,12 @@ import {Platform, StyleProp, View, ViewStyle} from 'react-native';
 import BoxShadow from './style';
 import { Colors } from '@/constants/theme';
 
+/**
+ * BoxDropShadow
+ * @param {StyleProp<ViewStyle>} style 아코디언 스타일 (내부 헤더 또는 바디는 자식요소에 직접 스타일을 적용)
+ * @comment 메디클에서 사용되는 공통 DropShadow가 적용된 박스입니다. 스타일 옵션을 세분화하여 커스터마이징이 가능하며,
+ * 안드로이드와 아이폰의 그림자 색상이 다른 이슈가 있어 Platform을 확
+ */
 const BoxDropShadow = ({
   color = Platform.OS === 'ios'
     ? Colors.Medicle.Gray.SemiLight

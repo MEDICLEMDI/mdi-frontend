@@ -29,13 +29,14 @@ import { convertNumberLocale } from '@/utils/utilities';
 
 import style from './style';
 import Config from 'react-native-config';
+import { IPaymnetProduct } from '@/interfaces/api';
 
 export default () => {
   const { t } = useTranslation();
   const [visible, setVisible] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [date, setDate] = React.useState({ from: '', to: '' });
-  const [histories, setHistories] = React.useState([]);
+  const [histories, setHistories] = React.useState<IPaymnetProduct[]>([]);
   const [statusCount, setStatusCount] = React.useState({
     pending: 0,
     confirm: 0,
@@ -51,6 +52,9 @@ export default () => {
 
   const statusType = ['결제중', '결제 완료', '결제 취소', '환불 완료'];
 
+  /**
+   * 화면 초기화
+   */
   const initialize = async () => {
     try {
       await getPaymentHistory(dateSetup(1, 'week')); // 히스토리 불러오기
@@ -60,17 +64,25 @@ export default () => {
     }
   };
 
+  /**
+   * 유저 아이디 가져오기
+   * @returns 
+   */
   const getUserId = async () => {
     const user = await getStorageData('@User');
     return user.id;
   };
 
+  /**
+   * 결제 내역 리스트 가져오기
+   * @param date 
+   */
   const getPaymentHistory = async (date: any) => {
     setHistories([]);
     try {
       setInit(false);
       const { data } = await api.getPaymentHistory(await getUserId(), date);
-      setHistories(data);
+      setHistories(data!);
     } catch (e) {
       console.error(e);
     } finally {
@@ -79,9 +91,13 @@ export default () => {
     }
   };
 
+  /**
+   * 결제 내역리스트 갯수 가와서 진행 상태별 랜더링처리
+   */
   const getInfoCount = async () => {
     try {
       const { data } = await api.getInfoCount(await getUserId());
+      console.log(data);
       const newStatusCount = { ...statusCount };
       for (const v of data) {
         if (v.up_status === 0) {

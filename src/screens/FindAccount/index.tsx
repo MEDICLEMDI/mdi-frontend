@@ -12,7 +12,7 @@ import ResultPage from '@/components/ResultPage';
 import Spacing from '@/components/Spacing';
 import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
-import { responseDTO } from '@/interfaces/api';
+import { ResponseDTO } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
 
@@ -32,7 +32,7 @@ export interface FormError {
   email?: string;
 }
 
-const FindAccount = ({ navigation }) => {
+const FindAccount = ({ navigation }: any) => {
   const { t } = useTranslation();
   const data = [{ title: '아이디 찾기' }, { title: '비밀번호 찾기' }];
 
@@ -55,13 +55,13 @@ const FindAccount = ({ navigation }) => {
       /^(0[1-9]|[1-9][0-9])((0[1-9])|(1[0-2]))(([012][0-9])|(3[0-1]))$/,
     registrationNumber2: /^[1-4]\d{6}$/,
   };
-  const [tabIndex, setTabIndex] = React.useState(0);
-  const [result, setResult] = React.useState(false);
+  const [tabIndex, setTabIndex] = React.useState(0); // 아이디찾기, 비밀번호 찾기 탭
+  const [result, setResult] = React.useState(false); // 결과여부 (결과페이지 보여주기 용도)
   const [userId, setUserId] = React.useState<string | undefined>(undefined);
   const nameRef = React.useRef<TextInput>(null);
   const emailRef = React.useRef<TextInput>(null);
   const [responseError, setResponseError] = React.useState('');
-  const [nextDisabled, setNextDisabled] = React.useState(false);
+  const [nextDisabled, setNextDisabled] = React.useState(false); // 다음 버튼 잠금/해제
 
   React.useEffect(() => {
     if (tabIndex === 0) {
@@ -91,11 +91,20 @@ const FindAccount = ({ navigation }) => {
     }
   }, [userData]);
 
+  /**
+   * 아이디찾기, 비밀번호찾기 탭 변경
+   * @param index
+   */
   const tabChangeListener = (index: number) => {
     setTabIndex(index);
     clearDataAndError();
   };
 
+  /**
+   * 인풋 입력에 처리 (valid 등)
+   * @param value 
+   * @param name 
+   */
   const onChange = (value: string, name: string) => {
     setNextDisabled(false);
     setResponseError('');
@@ -107,6 +116,12 @@ const FindAccount = ({ navigation }) => {
     handleBlur(value, name);
   };
 
+  /**
+   * regex 검사
+   * @param value 
+   * @param name 
+   * @returns 
+   */
   const handleBlur = (value: string, name: string) => {
     if (value === '' || value === undefined) {
       errorClear(name);
@@ -122,6 +137,11 @@ const FindAccount = ({ navigation }) => {
     }
   };
 
+  /**
+   * 에러메세지 설정
+   * @param _type 
+   * @param _error 
+   */
   const errorSet = (_type: string, _error?: string) => {
     let _errorMessage;
     if (_error) {
@@ -136,6 +156,10 @@ const FindAccount = ({ navigation }) => {
     });
   };
 
+  /**
+   * 에러메세지 삭제
+   * @param _type 
+   */
   const errorClear = (_type: string) => {
     setError({
       ...error,
@@ -143,6 +167,9 @@ const FindAccount = ({ navigation }) => {
     });
   };
 
+  /**
+   * 아이디 찾기
+   */
   const handleRequestUserId = async () => {
     try {
       const request = {
@@ -150,7 +177,7 @@ const FindAccount = ({ navigation }) => {
         registration_number: `${userData.registrationNumber1}${userData.registrationNumber2}`,
       };
 
-      const response: responseDTO = await api.getUserLoginId(request);
+      const response = await api.getUserLoginId(request);
 
       if (response.result) {
         setUserId(response.data);
@@ -175,6 +202,9 @@ const FindAccount = ({ navigation }) => {
     }
   };
 
+  /**
+   * 비밀번호 찾기
+   */
   const handleRequestUserPassword = async () => {
     try {
       const request = {
@@ -183,7 +213,7 @@ const FindAccount = ({ navigation }) => {
         email: userData.email,
       };
 
-      const response: responseDTO = await api.getUserPassword(request);
+      const response = await api.getUserPassword(request);
 
       if (response.result) {
         setResult(true);
@@ -208,6 +238,9 @@ const FindAccount = ({ navigation }) => {
     }
   };
 
+  /**
+   * 아이지찾기, 비밀번호찾기 탭 변경시 모든 데이터 클리어
+   */
   const clearDataAndError = () => {
     setUserData({
       name: undefined,

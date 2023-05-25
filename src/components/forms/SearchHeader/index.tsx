@@ -9,9 +9,15 @@ import {
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
 import { fontStyleCreator } from '@/utils/fonts';
-
 import style from './style';
 
+/**
+ * SearchBar
+ * @param {(event: GestureResponderEvent) => void} onPress
+ * @param {string} title
+ * @param {string} period
+ * @comment 날짜 검색 모달을 호출하는 상단 검색 해더 공용 컴포넌트 입니다.
+ */
 const SearchBar = ({
   onPress,
   title,

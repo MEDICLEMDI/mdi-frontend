@@ -5,10 +5,8 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
-  Alert,
   FlatList,
   SafeAreaView,
-  ScrollView,
   Text,
   View,
 } from 'react-native';
@@ -17,7 +15,6 @@ import MedicleButton from '@/buttons/MedicleButton';
 import api from '@/components/Api';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import Header from '@/components/Header';
-import Tab from '@/components/Tab';
 import {
   Colors,
   DARK_GRAY_BOLD_12,
@@ -26,39 +23,37 @@ import {
   DARK_GRAY_BOLD_18,
   STANDARD_GRAY_14,
 } from '@/constants/theme';
-import Icon from '@/icons';
 import Routes from '@/navigation/Routes';
 import { convertNumberLocale } from '@/utils/utilities';
 
 import style from './style';
-import useCustomToast from '@/hooks/useToast';
-import { responseDTO } from '@/interfaces/api';
-import { mergeNextPageData } from '@/utils/mergeData';
+import { IAppointmentItem, ResponseDTO } from '@/interfaces/api';
 import { Row } from '@/components/layout';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default ({ navigation, route }) => {
+export default ({ navigation, route }: any) => {
   const { t } = useTranslation();
 
-  const [tabIndex, setTabIndex] = React.useState(1);
-  const [data, setData] = React.useState<any>([]);
-  const [page, setPage] = React.useState(1);
-  const [isInit, setInit] = React.useState(false);
-  const [isMore, setIsMore] = React.useState(true);
+  const [tabIndex, setTabIndex] = React.useState(1); // 진료탭, 문의탭
+  const [data, setData] = React.useState<any>([]); // 데이터 리스트 그릇
+  const [page, setPage] = React.useState(1); // 페이지 넘버
+  const [isInit, setInit] = React.useState(false); // 페이지 랜더링 화면 준비 여부
+  const [isMore, setIsMore] = React.useState(true); // 추가 데이터 존재여부 (페이지네이션 다음페이지 존재여부)
   const [loading, setLoading] = React.useState(true);
   const [refresh, setRefresh] = React.useState(false);
   const isFocus = useIsFocused();
 
   const chartType = [
-    '진료 예약',
-    '진료 완료',
-    '취소 신청중',
-    '취소 완료',
-    '문의 내역',
-    '답변 완료',
+    '진료 예약', // 1
+    '진료 완료', // 2
+    '취소 신청중', // 3
+    '취소 완료', // 4
+    '문의 내역', // 5
+    '답변 완료', // 6
   ];
 
   React.useEffect(() => {
+    // 라우트 파라미터로 페이지 초기화
     if (route.params !== undefined) {
       const { index } = route.params;
       handleRefreshndexChange();
@@ -79,6 +74,11 @@ export default ({ navigation, route }) => {
     }
   }, [page]);
 
+  
+  /**
+   * 예약, 문의 탭변경시 상태 초기화
+   * @param newTabIndex 
+   */
   const handleTabIndexChange = (newTabIndex: number) => {
     if (newTabIndex !== tabIndex) {
       setPage(1);
@@ -89,6 +89,10 @@ export default ({ navigation, route }) => {
       setTabIndex(newTabIndex);
     }
   };
+
+  /**
+   * 페이지 초기화
+   */
   const handleRefreshndexChange = () => {
     setPage(1);
     setData([]);
@@ -98,6 +102,10 @@ export default ({ navigation, route }) => {
     setRefresh(true);
   };
 
+  
+  /**
+   * 선택된 탭에 따라 데이터 가져오기
+   */
   const handleGetData = async () => {
     if (tabIndex === 0) {
       await getUserAppointment();
@@ -106,6 +114,9 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 문의내역 가져오기
+   */
   const getQAList = async () => {
     if (!loading) {
       setLoading(true);
@@ -122,6 +133,9 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 진료내역 가져오기
+   */
   const getUserAppointment = async () => {
     if (!loading) {
       setLoading(true);
@@ -130,7 +144,7 @@ export default ({ navigation, route }) => {
     try {
       const user = await AsyncStorage.getItem('@User');
       const userId = JSON.parse(user!).id;
-      const res: responseDTO = await api.getUserAppointment(userId, page);
+      const res: ResponseDTO<IAppointmentItem> = await api.getUserAppointment(userId, page);
       setData(data.concat(res.data));
       setIsMore(res.message === 'isMore');
 
@@ -144,6 +158,7 @@ export default ({ navigation, route }) => {
     }
   };
 
+  // 내역 리스트 페이지네이션 다음페이지
   const handlePageUp = () => {
     if (isMore && !loading) {
       setPage(page + 1);

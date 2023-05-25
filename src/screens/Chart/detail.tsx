@@ -23,16 +23,15 @@ import {
   DARK_GRAY_BOLD_18,
   STANDARD_GRAY_14,
 } from '@/constants/theme';
-import { IAppointmentDetail, responseDTO } from '@/interfaces/api';
+import { IAppointmentDetail, ResponseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import { convertNumberLocale } from '@/utils/utilities';
 
 import style from './style';
 import useCustomToast from '@/hooks/useToast';
-import LoadingModal from '@/components/LoadingModal';
 
-export default ({ navigation, route }) => {
+export default ({ navigation, route }: any) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
   const { id } = route.params;
@@ -56,6 +55,10 @@ export default ({ navigation, route }) => {
     await getAppointmentDetail();
   };
 
+  
+  /**
+   * 유저 예약 상세정보를 가져오기
+   */
   const getAppointmentDetail = async () => {
     try {
       const res = await api.getAppointmentDetail(id);
@@ -65,13 +68,16 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 예약 취소 프로세스
+   */
   const handleCancelAppointment = async () => {
     setLoading(true);
     const request = {
       id: id,
     };
     try {
-      const response: responseDTO = await api.cancelAppointment(request);
+      const response: ResponseDTO<IAppointmentDetail> = await api.cancelAppointment(request);
       if (response.result) {
         setItem(response.data);
         showToast('예약이 취소되었습니다.')
@@ -96,8 +102,7 @@ export default ({ navigation, route }) => {
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.chart')} />
-      <View style={style.content} />
-      <ScrollView style={style.content}>
+      <ScrollView>
         <Text style={[DARK_GRAY_BOLD_14, style.status, {marginHorizontal: 25, }]}>
           {chartType[item?.status]}
         </Text>

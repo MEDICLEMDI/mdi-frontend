@@ -31,7 +31,7 @@ import {
   DARK_GRAY_10,
 } from '@/constants/theme';
 import Icon from '@/icons';
-import { IProductDetail, responseDTO } from '@/interfaces/api';
+import { IProductDetail, ResponseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import { convertPrice } from '@/utils/utilities';
@@ -44,18 +44,18 @@ import { getStorageData } from '@/utils/localStorage';
 import useCustomToast from '@/hooks/useToast';
 import { textEllipsis } from '@/utils/strings';
 
-const ProductDetail = ({ navigation, route }) => {
+const ProductDetail = ({ navigation, route }: any) => {
   const { id } = route.params;
   const { IMAGESERVER_PREFIX } = Config;
 
   const [itemData, setItemData] = React.useState<IProductDetail>();
   const [userInfo, setUserInfo] = React.useState<any>();
-  const [date, setDate] = React.useState({ from: '', to: '' });
-  const [time, setTime] = React.useState('시간 선택');
+  const [date, setDate] = React.useState({ from: '', to: '' }); // 캘린더 기본양식이기 떄문에 from, to 두개를 사용하지만 실제로는 to만 사용
+  const [time, setTime] = React.useState('시간 선택'); //
   const [timeKey, setTimeKey] = React.useState(0);
-  const [dateType, setDateType] = React.useState('to');
-  const [visible, setVisible] = React.useState(false);
-  const [timeTable, setTimeTable] = React.useState<any>([]);
+  const [dateType, setDateType] = React.useState('to'); 
+  const [visible, setVisible] = React.useState(false); // 시간선택 모달 보이기/숨기기
+  const [timeTable, setTimeTable] = React.useState<any>([]); // 병원 운영시간
   const { showToast } = useCustomToast();
 
   const [documentAgree, setDocumentAgree] = React.useState({
@@ -68,6 +68,9 @@ const ProductDetail = ({ navigation, route }) => {
     initialize();
   }, []);
 
+  /**
+   * 상태에 따라 앱에서 결제하기 버튼 잠금,해제
+   */
   React.useEffect(() => {
     setPayButtonDisabled(
       !(
@@ -81,17 +84,26 @@ const ProductDetail = ({ navigation, route }) => {
 
   React.useEffect(() => {}, [itemData]);
 
+  /**
+   * 화면 초기화
+   */
   const initialize = async () => {
     await getUserInfo();
     await getItemDetail();
     setDate(dateSetup());
   };
 
+  /**
+   * 유저정보 가져오기
+   */
   const getUserInfo = async () => {
     const data = await getStorageData('@User');
     setUserInfo(data);
   };
 
+  /**
+   * 상품 상세정보 가져오기
+   */
   const getItemDetail = async () => {
     try {
       const data = await api.getProductInfo(id);
@@ -101,6 +113,9 @@ const ProductDetail = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 약관 모두 동의 
+   */
   const agreeAll = () => {
     setDocumentAgree({
       doc1: !(documentAgree.doc1 && documentAgree.doc2),
@@ -108,6 +123,9 @@ const ProductDetail = ({ navigation, route }) => {
     });
   };
 
+  /**
+   * 병원 운영시간 가져오기
+   */
   const timetableHandler = async () => {
     try {
       const selectedDate = new Date(date.to);
@@ -134,6 +152,13 @@ const ProductDetail = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 백엔드에서 가져온 병원 운영시간 화면에 랜더링
+   * @param startTime 
+   * @param endTime 
+   * @param startBreakTime 
+   * @param endBreakTime 
+   */
   const createTimeTable = (
     startTime: string,
     endTime: string,

@@ -22,15 +22,15 @@ import WebViewModal from '@/components/Modals/WebView';
 import { handleGetTerms } from '@/utils/terms';
 import LoadingModal from '@/components/LoadingModal';
 
-export default ({ navigation, route }) => {
+export default ({ navigation, route }: any) => {
   const { itemData } = route.params;
-  const [disabled, setDisabled] = React.useState(true);
+  const [disabled, setDisabled] = React.useState(true); // 문의버튼 잠금,해제
   const [userInfo, setUserInfo] = React.useState<any>();
-  const [comment, setComment] = React.useState('');
+  const [comment, setComment] = React.useState(''); // 문의내용
   const { showToast } = useCustomToast();
   const [isTerms, setIsTerms] = React.useState(false); // 약관 url 받아오는게 성공했는지 확인
-  const [webViewVisible, setWebViewVisible] = React.useState(false);
-  const [webViewUrl, setWebViewUrl] = React.useState<string | undefined>(
+  const [webViewVisible, setWebViewVisible] = React.useState(false); // 약관 웹뷰모달
+  const [webViewUrl, setWebViewUrl] = React.useState<string | undefined>( // 약관에 따른 웹뷰 url
     undefined
   );
   const [agrees, setAgrees] = React.useState({
@@ -48,17 +48,24 @@ export default ({ navigation, route }) => {
     initialize();
   }, []);
 
+  // 문의하기 버튼 잠금,해제 설정
   React.useEffect(() => {
     const commentCounter = comment.trim().length >= 10;
     const bool = agrees.doc1 && agrees.doc2 && commentCounter;
     setDisabled(!bool);
   }, [comment, agrees]);
 
+  /**
+   * 화면 초기화
+   */
   const initialize = async () => {
     await getUserInfo();
     await initTerms();
   };
 
+  /**
+   * 필요약관 가져오기
+   */
   const initTerms = async () => {
     const tempTerms = await handleGetTerms();
     if (tempTerms) {
@@ -67,6 +74,9 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 유저정보 가져오기
+   */
   const getUserInfo = async () => {
     const data = await AsyncStorage.getItem('@User');
     if (typeof data === 'string') {
@@ -74,6 +84,9 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 문의 등록
+   */
   const submit = async () => {
     setLoading(true);
     const data = {
@@ -101,6 +114,10 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 약관 상세보기 (웹뷰 모달)
+   * @param url 
+   */
   const handleViewDetail = (url: keyof termsList) => {
     setWebViewUrl(terms[url]);
     if (isTerms) {

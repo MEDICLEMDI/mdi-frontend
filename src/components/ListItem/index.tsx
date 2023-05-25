@@ -20,6 +20,11 @@ import Icon from '@/icons';
 
 import style from './style';
 
+/**
+ * ListItem
+ * @comment 메디클에서 사용하는 리스트에 기본적으로 사용되는 공용 리스트 아이템 컴포넌트입니다.
+ * 백엔드에서 전달받는 상품, 병원 정보등의 데이터를 기준으로 작성되었습니다. 기본적으로 이미지, 가격, 설명등을 포함하고 있습니다.
+ */
 const ListItem = ({
   image,
   type,

@@ -4,7 +4,7 @@ export type User = {
   email: string;
   id: string;
   is_marketing_agree: string;
-  mdi: mdi; 
+  mdi: mdi;
   name: string;
   phone: string;
   post_number: string;
@@ -19,7 +19,7 @@ export type User = {
 export type mdi = {
   mw_mdi_point: number;
   mw_wallet_address: string;
-}
+};
 
 type Company = {
   name: string;
@@ -29,11 +29,11 @@ type Company = {
   trader_number: string;
 };
 
-export type responseDTO = {
+export type ResponseDTO<T> = {
   result: boolean;
   status?: number;
   message: string;
-  data: any;
+  data?: T;
   error_code: number;
 };
 
@@ -58,6 +58,12 @@ export interface IProductItem {
   hospital_address: string;
 }
 
+export interface IEventProduct {
+  event_id: string;
+  event_banner: string;
+  item: IProductItem[];
+}
+
 export interface IProductDetail {
   main_image: string;
   product_id: string;
@@ -75,7 +81,18 @@ export interface IProductDetail {
   like: boolean;
 }
 
-export interface IAppointmentItem {}
+export interface IAppointmentItem {
+  id: string;
+  status: number;
+  company_id: string;
+  product_id: string;
+  user_id: string;
+  hospital_name: string;
+  hospital_address: string;
+  product_name: string;
+  price: string;
+  date: string;
+}
 
 export interface IAppointmentDetail {
   id: string;
@@ -93,6 +110,19 @@ export interface IAppointmentDetail {
   end_date: string;
   price: string;
   create_date: string;
+}
+
+export interface IQaItem {
+  id: string;
+  status: string;
+  company_id: string;
+  product_id: string;
+  user_id: string;
+  hospital_name: string;
+  hospital_address: string;
+  product_name: string;
+  price: string;
+  date: string;
 }
 
 export interface IQaDetail {
@@ -122,11 +152,154 @@ export interface ICompanyItem {
   cg_type_id: string;
 }
 
-export interface ICompanyDetail {}
+export interface ICompanyDetail {
+  cg_type_id: string;
+  ci_address: string;
+  ci_address2: string;
+  ci_code: string;
+  ci_email_tax: string;
+  ci_fee: number;
+  ci_image_main: string;
+  ci_image_sub1: string;
+  ci_image_sub2: string;
+  ci_image_sub3: string;
+  ci_latitude: number;
+  ci_longitude: number;
+  ci_owner_name: string;
+  ci_phone: string;
+  ci_phone2: string;
+  ci_piccharge_name: string;
+  ci_picharge_email: string;
+  ci_picharge_phone: string;
+  ci_trader_image: string;
+  ci_trader_number: string;
+  created_at: string;
+  deleted: number;
+  id: string;
+  name: string;
+  timetable: ICompanyTimeTable[];
+  updated_at: string;
+}
+
+export interface ICompanyTimeTable {
+  ct_break_end: string;
+  ct_break_start: string;
+  ct_day: number;
+  ct_holiday: number;
+  ct_work_end: string;
+  ct_work_start: string;
+}
 
 export interface INotice {
-  id: String;
-  title: String;
-  content: String;
-  main_image: String;
+  id: string;
+  title: string;
+  content: string;
+  main_image: string;
+  date: string;
+}
+
+export interface LoginInfo {
+  user: User;
+  access_token: string;
+  refresh_token: string;
+}
+
+export interface IKakao {
+  social_id: string;
+  email: string;
+}
+
+export interface INaver {
+  id: string;
+  email: string;
+}
+
+export interface IExtLink {
+  id: string;
+  event_id: string;
+  type: string;
+  name: string;
+  link: string;
+  is_display: string;
+}
+
+export interface IHomeMenu {
+  companyGroup: ICompanyGroup[];
+  productGroup: IProductGroup[];
+}
+
+export interface ICompanyGroup {
+  id: string;
+  name: string;
+}
+
+export interface IProductGroup {
+  id: string;
+  pg_company_type: string;
+  pg_name: string;
+}
+
+export interface IEvent {
+  id: string;
+  event_id: string;
+  main_image: string;
+}
+
+export interface IPaymnetProduct {
+  id: string;
+  user_id: string;
+  status: string;
+  price: string;
+  product_name: string;
+  hospital_name: string;
+  main_image: string;
+  sub_image: string;
+  date: string;
+}
+
+export interface IReceiptCount {
+  status_count: string;
+  up_status: number;
+}
+
+export interface IPointHistory {
+  id: string;
+  type: string;
+  point: string;
+  date: string;
+}
+
+export interface IReview {
+  id: string;
+  user_id: string;
+  user_name: string;
+  content: string;
+  date: string;
+}
+
+export interface ITerm {
+  id: string;
+  tm_ext_link: string;
+  tm_type: string;
+}
+
+export interface IWallet {
+  id: string;
+  eth: string;
+  mdi: string;
+}
+
+export interface ITxId {
+  tx_id: string;
+}
+
+export interface ITxHistory {
+  id: string;
+  txid: string;
+  from: string;
+  to: string;
+  amount: string;
+  type: string;
+  status: string;
+  date: string;
 }

@@ -19,7 +19,7 @@ import Header from '@/components/Header';
 import { MedicleInput } from '@/components/inputs';
 import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
-import { responseDTO } from '@/interfaces/api';
+import { ResponseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import eventEmitter from '@/utils/eventEmitter';
@@ -28,7 +28,7 @@ import { fontStyleCreator } from '@/utils/fonts';
 import style from './style';
 import { setStorage } from '@/utils/localStorage';
 
-const SignIn = ({ navigation }) => {
+const SignIn = ({ navigation }: any) => {
   const { t } = useTranslation();
   const HEADER_FONT = fontStyleCreator({
     size: 18,
@@ -75,6 +75,10 @@ const SignIn = ({ navigation }) => {
   const passwordInputRef = React.useRef<TextInput>(null);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
 
+  /**
+   * 입력 인풋별 값 변경 이벤트 리스너
+   * @param param0
+   */
   const onChange = ({
     v,
     name,
@@ -89,6 +93,10 @@ const SignIn = ({ navigation }) => {
     });
   };
 
+  /**
+   * 인풋 에러메세지 삭제
+   * @param name
+   */
   const errorClear = (name: string) => {
     setError({
       ...error,
@@ -96,6 +104,10 @@ const SignIn = ({ navigation }) => {
     });
   };
 
+  /**
+   * 인풋 에러메세지 설정
+   * @param name
+   */
   const errorSet = (name: string) => {
     let _name = 'user_id';
     let _error = '이메일 아이디';
@@ -111,6 +123,10 @@ const SignIn = ({ navigation }) => {
     });
   };
 
+  /**
+   * 로그인 통신 전 인풋 정규식등 검사
+   * @returns
+   */
   const signIn = async () => {
     errorClear('login');
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
@@ -129,29 +145,21 @@ const SignIn = ({ navigation }) => {
       return;
     }
 
-    const user_id = await AsyncStorage.getItem('@LastLogin');
-    const wallet = await AsyncStorage.getItem('@WalletPassword');
-    if (user_id && wallet) {
-      if (user_id !== `"${signInData.user_id}"`) {
-        setModalVisible(true);
-      } else {
-        handleSignIn();
-      }
-    } else {
-      handleSignIn();
-    }
+    handleSignIn();
   };
 
+  /**
+   * 로그인 통신요청
+   */
   const handleSignIn = async () => {
     try {
-      const response: responseDTO = await api.signIn({
+      const response = await api.signIn({
         user_id: signInData.user_id,
         password: signInData.password,
       });
 
-
       if (response.result) {
-        if (!response.data.access_token || !response.data.user) {
+        if (!response.data?.access_token || !response.data?.user) {
           throw 'response data error';
         }
         await setStorage(response.data);
@@ -173,10 +181,6 @@ const SignIn = ({ navigation }) => {
     }
   };
 
-
-  const handleCloseModal = () => {
-    setModalVisible(false);
-  };
 
   return (
     <SafeAreaView style={style.container}>
@@ -221,53 +225,7 @@ const SignIn = ({ navigation }) => {
           </TouchableOpacity>
         </Row>
       </View>
-      
-      
-      <Modal animationType="fade" transparent={true} visible={modalVisible}>
-        <View style={style.modal}>
-          <View style={style.modalContainer}>
-            <View style={{ paddingHorizontal: 20 }}>
-              <View style={style.modalHeader}>
-                <View style={style.modalHeaderCenter}>
-                  <Text style={style.modalTitle}>경고</Text>
-                </View>
-                <TouchableOpacity
-                  style={style.modalHeaderRight}
-                  onPress={handleCloseModal}>
-                  <Image style={style.modalCloseButton} source={Close} />
-                </TouchableOpacity>
-              </View>
-              <View style={style.modalContent}>
-                <Text>
-                  기존 로그인했던 계정과 다른 계정 입니다. 로그인을 계속
-                  진행할시 기존 계정의 지갑이 사라집니다. 기존 계정의 지갑
-                  니모닉넘버를 저장하지 않으셨다면, 기존 지갑을 다시 찾을수
-                  없으니 주의 하시길 바랍니다.
-                </Text>
-              </View>
-            </View>
-            <View style={{ flexDirection: 'row', marginTop: 'auto' }}>
-              <MedicleButton
-                textStyle={style.modalCancelText}
-                buttonStyle={style.modalCancelButton}
-                text="취소"
-                onPress={handleCloseModal}
-              />
-              <MedicleButton
-                buttonStyle={style.modalCheckButton}
-                text="로그인"
-                onPress={() => {
-                  handleSignIn();
-                  handleCloseModal();
-                }}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
-                
     </SafeAreaView>
-    
   );
 };
 

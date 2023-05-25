@@ -26,6 +26,11 @@ interface Props extends ModalizeProps {
   disableScrollIfPossible?: boolean;
 }
 
+/**
+ * Modal (common)
+ * @comment 공용 모달 컴포넌트입니다. Portal을 사용하여 어느 위치에서 호출해도 화면 전체를 사용하는 형태로 호출이 됩니다.
+ * 메디클 앱의 BottomNavigator를 가릴 수 없는 이슈로 Portal을 사용하여 만들어졌으며, Navigation index에 PortalProvider가 선언되어 있습니다.
+ */
 function Modal({
   children,
   modalRef,

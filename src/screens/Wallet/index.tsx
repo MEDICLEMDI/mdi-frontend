@@ -53,25 +53,28 @@ export default ({ navigation }: any) => {
     initialize();
   }, [isFocus]);
 
+  /**
+   * 화면 초기화, 유저정보, 유저지갑 가져오고 잔액갱신
+   */
   const initialize = async () => {
     const user = await getStorageData('@User');
     setAddress(user.mdi.mw_wallet_address);
     await getBalance();
   };
 
+  /**
+   * 지갑 잔액갱신
+   */
   const getBalance = async () => {
     setLoading(true);
     try {
       const user = await getStorageData('@User');
-      console.log(user.id, user.mdi.mw_wallet_address);
       const data = await api.getBalance(user.id, user.mdi.mw_wallet_address);
-      console.log(data);
       setBalance({
-        mdi: data.mdi,
-        eth: data.eth,
+        mdi: Number(data.mdi),
+        eth: Number(data.eth),
       });
     } catch (err) {
-      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -86,6 +89,9 @@ export default ({ navigation }: any) => {
   // 	}
   // }
 
+  /**
+   * 페이지 진입시 뜨는 모달 닫기 (안드로이드만 모달이 뜨고 ios 는 화면에 문구로 나옴)
+   */
   const saveAlretIsOpen = async () => {
     // await AsyncStorage.setItem('@WalletAlert', 'true');
     setVisible(false);
@@ -130,7 +136,6 @@ export default ({ navigation }: any) => {
               <Text style={DARK_GRAY_BOLD_14}>지갑 정보</Text>
               <TouchableOpacity
                 onPress={() => {
-                  console.log('gdgd');
                   getBalance();
                 }}>
                 <Icon name="refresh_s" />

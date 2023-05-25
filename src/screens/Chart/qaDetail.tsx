@@ -23,7 +23,7 @@ import {
   DARK_GRAY_BOLD_18,
   STANDARD_GRAY_14,
 } from '@/constants/theme';
-import { IQaDetail, responseDTO } from '@/interfaces/api';
+import { IQaDetail, ResponseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
 
 import style from './style';
@@ -31,13 +31,14 @@ import useCustomToast from '@/hooks/useToast';
 import LoadingModal from '@/components/LoadingModal';
 import Routes from '@/navigation/Routes';
 
-export default ({ navigation, route }) => {
+export default ({ navigation, route }: any) => {
   const { t } = useTranslation();
   const { id } = route.params;
   const [item, setItem] = React.useState<IQaDetail | undefined>(undefined);
   const [modalVisible, setModalVisible] = React.useState(false);
   const { showToast } = useCustomToast();
   const [loading, setLoading] = React.useState(false);
+
 
   React.useEffect(() => {
     initialize();
@@ -47,6 +48,7 @@ export default ({ navigation, route }) => {
     await getQaDetail();
   };
 
+  // 문의 상세정보
   const getQaDetail = async () => {
     try {
       const res = await api.getQaDetail({ id: id });
@@ -56,6 +58,7 @@ export default ({ navigation, route }) => {
     }
   };
 
+  // 문의 취소
   const handleCancelQa = async () => {
     setLoading(true);
     const request = {
@@ -63,7 +66,7 @@ export default ({ navigation, route }) => {
     };
 
     try {
-      const response: responseDTO = await api.cancelQa(request);
+      const response = await api.cancelQa(request);
       if (response.result) {
         showToast('문의가 취소되었습니다.');
         navigation.navigate(Routes.CHART, {index: 1});
@@ -81,8 +84,7 @@ export default ({ navigation, route }) => {
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('menus.chart')} />
-      <View style={style.content} />
-      <ScrollView style={[style.content, { paddingHorizontal: 25 }]}>
+      <ScrollView style={{ paddingHorizontal: 25 }}>
         <Text style={[DARK_GRAY_BOLD_14, style.status]}>문의 내역</Text>
         <BoxDropShadow style={style.itemBox}>
           <Accordion isOpen={true} style={{ marginBottom: 20 }}>

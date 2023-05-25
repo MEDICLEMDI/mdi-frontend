@@ -19,23 +19,27 @@ import Icon from '@/icons';
 import style from './style';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Row } from '@/components/layout';
+import { IExtLink } from '@/interfaces/api';
 
 export default () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
 
-  const [communityList, setCommunityList] = React.useState([]);
+  const [communityList, setCommunityList] = React.useState<IExtLink[]>([]);
 
   React.useEffect(() => {
     getCommunityList();
   }, [])
 
+  /**
+   * 등록된 커뮤니티 리스트 가져오기 (카카오톡, 트위터 등)
+   */
   const getCommunityList = async () => {
     try {
       const data = await api.getCommunityList();
       setCommunityList(data);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 

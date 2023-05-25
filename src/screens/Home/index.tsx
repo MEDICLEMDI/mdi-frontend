@@ -21,7 +21,7 @@ import Tab from '@/components/Tab';
 import { covnertIcons } from '@/constants/menuBuilder';
 import { Colors } from '@/constants/theme';
 import ImageSlider from '@/components/ImageSlider';
-import { responseDTO } from '@/interfaces/api';
+import { ResponseDTO } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
 import { convertPrice } from '@/utils/utilities';
 
@@ -35,7 +35,9 @@ import useStores from '@/hooks/useStores';
 
 const Home = () => {
   const navigation = useNavigation();
+  // local store 사용
   const { rootStore } = useStores();
+  // mobx로 설정된 local rootStore에서 appManageStore를 가져옴
   const { appManageStore } = rootStore;
 
   const { showToast } = useCustomToast();
@@ -57,6 +59,7 @@ const Home = () => {
 
   
   React.useEffect(() => {
+    // 디바이스 뒤로가기 두번 클릭시 앱 종료
     if (Platform.OS === 'android') {
       const backAction = () => {
         if (navigation.canGoBack()) {
@@ -91,6 +94,7 @@ const Home = () => {
     pageRenderer(index)
   }, [index])
 
+  // 병원 진료과 에 따른 상품 카테고리 설정
   const tabBuilder = () => {
     const data = appManageStore.getData();
     // set types
@@ -98,9 +102,10 @@ const Home = () => {
     setCompanyTypes(companyGroup);
   }
 
+  // 병원 진료과 탭 변경에 따른 화면 랜더링 변경
   const pageRenderer = async (_index: number) => {
     const data = appManageStore.getData();
-    appManageStore.select(_index);
+    appManageStore.select(_index); // 선택한 병원 구분을 저장
     const { productGroup } = data;
 
     const groupFilter = productGroup.filter((group: any) => Number(group.pg_company_type) === Number(_index));
@@ -117,7 +122,7 @@ const Home = () => {
     setProductGroups(generateMenus);
 
     try {
-      // set newest product
+      // 해당 진료과에 대한 최신 상품 5개 가져오기
       const newest = await api.getNewestProducts(_index)
       setNewestProduct(newest);
     } catch (err) {
@@ -127,9 +132,9 @@ const Home = () => {
     }
   }
 
+  // 이벤트 카테고리 리스트 가져오기
   const getEvents = async () => {
     try {
-      // set event list
       const { data } = await api.getEventLists();
       const eventArr: any = [];
       for(const event of data) {
@@ -149,7 +154,7 @@ const Home = () => {
       const request = {
         product_id: product_id,
       };
-      const response: responseDTO = await api.setLikeProducts(request);
+      const response: ResponseDTO = await api.setLikeProducts(request);
       if (response.result) {
         const temp = handleUpdateProductLike(newestProduct, product_id);
         setNewestProduct(temp);

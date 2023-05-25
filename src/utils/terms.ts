@@ -1,9 +1,13 @@
 import Api from '@/components/Api';
-import { responseDTO } from '@/interfaces/api';
+import { ITerm, ResponseDTO } from '@/interfaces/api';
 import { termsList } from '@/interfaces/sign';
 
+/**
+ * 이용약관 가져오기
+ * @returns
+ */
 export const handleGetTerms = async () => {
-  const response: responseDTO = await Api.getTerms();
+  const response: ResponseDTO<ITerm[]> = await Api.getTerms();
   const updatedTerms: termsList = {
     service: '',
     privacy: '',
@@ -12,7 +16,7 @@ export const handleGetTerms = async () => {
     location: '',
   };
   if (response.result) {
-    response.data.map((idx: any) => {
+    response.data?.map((idx: any) => {
       let termsType: keyof termsList;
       switch (idx.id) {
         case '1':

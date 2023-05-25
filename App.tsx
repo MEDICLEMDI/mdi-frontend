@@ -30,14 +30,14 @@ function App() {
     const auth = await api.tokenChecker();
     if (auth) {
       try {
-        const response = await api.autoSignIn();
+        const response: any = await api.autoSignIn();
         if (response.result || response.ok) {
           // set new token
           const {data} = response;
-          await AsyncStorage.setItem('@LastLogin', JSON.stringify(data.user.user_id));
-          await AsyncStorage.setItem('@User', JSON.stringify(data.user));
-          await AsyncStorage.setItem('@AuthKey', data.access_token);
-          await AsyncStorage.setItem('@RefreshKey', data.refresh_token);
+          await AsyncStorage.setItem('@LastLogin', JSON.stringify(data?.user.user_id));
+          await AsyncStorage.setItem('@User', JSON.stringify(data?.user));
+          await AsyncStorage.setItem('@AuthKey', data?.access_token!);
+          await AsyncStorage.setItem('@RefreshKey', data?.refresh_token!);
 
           eventEmitter.emit('autoLoggedIn');
         } else {
@@ -55,7 +55,7 @@ function App() {
     try {
       const { data } = await api.getMenus();
       const { appManageStore } = rootStore;
-      appManageStore.init(data)
+      appManageStore.init(data!);
     } catch (err) {
       console.error(err);
     } finally {

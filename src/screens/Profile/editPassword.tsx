@@ -12,7 +12,7 @@ import ResultModal from '@/components/ResultModal';
 import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
-import { responseDTO } from '@/interfaces/api';
+import { ResponseDTO } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
 
@@ -36,7 +36,7 @@ export interface PasswordErrors {
   result?: string;
 }
 
-const EditPassword = ({ navigation }) => {
+const EditPassword = ({ navigation }: any) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [user, setUser] = React.useState<User | undefined>(undefined);
@@ -86,6 +86,11 @@ const EditPassword = ({ navigation }) => {
     setButtonDisabled(_passwords && _errors);
   }, [user, passwordData]);
 
+  /**
+   * 패스워드 인풋 값 변경에 따른 이벤트리슨
+   * @param type 
+   * @param password 
+   */
   const onchange = (type: string, password: string) => {
     setPasswordData({
       ...passwordData,
@@ -94,6 +99,12 @@ const EditPassword = ({ navigation }) => {
     dataVaild(type, password);
   };
 
+  /**
+   * 인풋별 요구 regex 검사
+   * @param type 
+   * @param password 
+   * @returns 
+   */
   const dataVaild = (type: string, password: string) => {
     if (!password) {
       errorClear(type);
@@ -168,6 +179,10 @@ const EditPassword = ({ navigation }) => {
     }
   };
 
+  /**
+   * 에러 메세지 삭제
+   * @param type 
+   */
   const errorClear = (type: string) => {
     setErrors({
       ...errors,
@@ -175,6 +190,9 @@ const EditPassword = ({ navigation }) => {
     });
   };
 
+  /**
+   * 비밀번호 변경하기
+   */
   const handleEditPassword = async () => {
     try {
       const request = {
@@ -182,7 +200,7 @@ const EditPassword = ({ navigation }) => {
         new_password: passwordData.new,
       };
 
-      const response: responseDTO = await api.editPassword(request);
+      const response = await api.editPassword(request);
 
       if (response.result) {
         setResult(true);

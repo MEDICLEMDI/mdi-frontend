@@ -2,7 +2,6 @@ import Postcode from '@actbase/react-daum-postcode';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Alert,
   Image,
   Modal,
   SafeAreaView,
@@ -10,7 +9,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  StyleSheet,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -26,15 +24,12 @@ import ResultPage from '@/components/ResultPage';
 import Spacing from '@/components/Spacing';
 import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
-import { responseDTO } from '@/interfaces/api';
+import { ResponseDTO } from '@/interfaces/api';
 import { Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 
 import style from './style';
 import useCustomToast from '@/hooks/useToast';
-import { WebView } from 'react-native-webview';
-import { Portal } from 'react-native-portalize';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   agreeList,
   FormError,
@@ -44,7 +39,7 @@ import {
 import { handleGetTerms } from '@/utils/terms';
 import WebViewModal from '@/components/Modals/WebView';
 
-const SignUp = ({ navigation, route }) => {
+const SignUp = ({ navigation, route }: any) => {
   const [signUpData, setSignUpData] = React.useState<ISignUpData>({
     reg_type: 'normal',
     password: undefined,
@@ -101,61 +96,69 @@ const SignUp = ({ navigation, route }) => {
     sms: /^[0-9]*$/,
   };
   const { t } = useTranslation();
-  const [marketing, setMarketing] = React.useState<boolean>(false);
-  const [agreeAll, setAgreeAll] = React.useState<boolean>(false);
-  const [registerDisabed, setRegisterDisabed] = React.useState<boolean>(false);
-  const [addressModal, setAddressModal] = React.useState<boolean>(false);
-  const [smsCode, setSmsCode] = React.useState<string | undefined>(undefined);
-  const [mailCode, setMailCode] = React.useState<string | undefined>(undefined);
-  const [smsAuthDisabled, setSmsAuthDisabled] = React.useState<boolean>(false);
-  const [emailAuthDisabled, setEmailAuthDisabled] =
-    React.useState<boolean>(false);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [success, setSuccess] = React.useState<boolean>(false);
+  const [marketing, setMarketing] = React.useState<boolean>(false); // 마케팅 수신동의
+  const [agreeAll, setAgreeAll] = React.useState<boolean>(false); // 약관 모두동의
+
+  const [registerDisabed, setRegisterDisabed] = React.useState<boolean>(false); // 회원가입버튼 잠금,해제
+
+  const [addressModal, setAddressModal] = React.useState<boolean>(false); // 주소 검색 모달
+
+  const [smsAuthDisabled, setSmsAuthDisabled] = React.useState<boolean>(false); // 인증번호 받기 버튼 잠금,해제
+  const [smsCode, setSmsCode] = React.useState<string | undefined>(undefined); // 문자 인증코드
   const [smsInitialTime, setSmsInitialTime] = React.useState<
     number | undefined
-  >(undefined);
-  const [mailInitialTime, setMailInitialTime] = React.useState<
-    number | undefined
-  >(undefined);
-
+  >(undefined); // 인증시간 설정
   const [smsCheckDisabled, setSmsCheckDisabled] =
-    React.useState<boolean>(false);
-  const [mailCheckDisabled, setMailCheckDisabled] =
-    React.useState<boolean>(false);
+    React.useState<boolean>(false); // 인증번호 확인 버튼 잠금,해제
   const [smsStatus, setSmsStatus] = React.useState<
     'before' | 'progress' | 'timeout' | 'completed'
-  >('before');
-  const [emailStatus, setEmailStatus] = React.useState<
-    'before' | 'progress' | 'timeout' | 'completed'
-  >('before');
+  >('before'); // 인증상태 (단계별 ui)
   const [smsAuthText, setSmsAuthText] = React.useState<string>(
     t('signUp.phoneRequestSms')
-  );
-  const [emailAuthText, setEmailAuthText] =
-    React.useState<string>('인증메일받기');
-  const [confirmPassword, setConfirmPassword] = React.useState<
-    string | undefined
-  >(undefined);
+  ); // 인증관련 플레이스홀더
   const smsMinutes = Math.floor(smsInitialTime! / 60)
     .toString()
-    .padStart(1, '0');
-  const smsSeconds = (smsInitialTime! % 60).toString().padStart(2, '0');
+    .padStart(1, '0'); // 인증시간 분단위
+  const smsSeconds = (smsInitialTime! % 60).toString().padStart(2, '0'); // 인증시간 초단위
+  const smsIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
+
+  const [mailCode, setMailCode] = React.useState<string | undefined>(undefined); // 메일 인증코드
+  const [emailAuthDisabled, setEmailAuthDisabled] =
+    React.useState<boolean>(false); // 이메일 인증 요청하기 버튼 잠금,해제
+  const [mailInitialTime, setMailInitialTime] = React.useState<
+    number | undefined
+  >(undefined); // 메일 인증시간 설정
+  const [mailCheckDisabled, setMailCheckDisabled] =
+    React.useState<boolean>(false); // 메일 인증코드 확인버튼 잠금,해제
+  const [emailStatus, setEmailStatus] = React.useState<
+    'before' | 'progress' | 'timeout' | 'completed'
+  >('before'); // 메일 인증단계 (단계별 ui)
+  const [emailAuthText, setEmailAuthText] =
+    React.useState<string>('인증메일받기'); // 인증메일코드 받기 버튼 잠금,해제
   const mailMinutes = Math.floor(mailInitialTime! / 60)
     .toString()
-    .padStart(1, '0');
-  const mailSeconds = (mailInitialTime! % 60).toString().padStart(2, '0');
-  const smsIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
+    .padStart(1, '0'); // 메일인증시간 분단위
+  const mailSeconds = (mailInitialTime! % 60).toString().padStart(2, '0'); // 메일 인증시간 초단위
   const mailIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
+
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [success, setSuccess] = React.useState<boolean>(false); // result 페이지 보여주기 
+
+  const [confirmPassword, setConfirmPassword] = React.useState<
+    string | undefined
+  >(undefined); // 비밀번호 확인 인풋
+
   const registrationNumberRef1 = React.useRef<TextInput>(null);
   const { showToast } = useCustomToast();
-  const [webViewVisible, setWebViewVisible] = React.useState(false);
+
+  const [webViewVisible, setWebViewVisible] = React.useState(false); // 약관 상세보기 웹뷰 보이기, 숨기기
   const [webViewUrl, setWebViewUrl] = React.useState<string | undefined>(
     undefined
-  );
+  ); // 약관별 웹뷰 url
   const [isTerms, setIsTerms] = React.useState(false); // 약관 url 받아오는게 성공했는지 확인
-  const insets = useSafeAreaInsets();
 
+
+  // 약관클릭 이벤트 리스너 (모두동의 버튼)
   React.useEffect(() => {
     const allAgreesTrue = Object.values(agrees).every(value => value === true);
     setAgreeAll(allAgreesTrue && marketing);
@@ -165,6 +168,7 @@ const SignUp = ({ navigation, route }) => {
     });
   }, [marketing, agrees]);
 
+  // 회원가입 버튼 이벤트 리스너 (인풋 입력값, 필수약관 등 이벤트 리슨하며 회원가입 버튼 잠금,해제)
   React.useEffect(() => {
     setRegisterDisabed(false);
 
@@ -197,6 +201,7 @@ const SignUp = ({ navigation, route }) => {
     );
   }, [error, signUpData, smsStatus, confirmPassword, emailStatus, agrees]);
 
+  // 문자 인증단계별 ui 조절
   React.useEffect(() => {
     if (smsStatus === 'completed') {
       setSmsAuthText(t('signUp.phoneAuthCompleted'));
@@ -207,6 +212,7 @@ const SignUp = ({ navigation, route }) => {
     }
   }, [smsStatus]);
 
+  // 메일 인증 단계별 ui 조절
   React.useEffect(() => {
     if (emailStatus === 'completed') {
       setEmailAuthText('인증완료');
@@ -215,6 +221,7 @@ const SignUp = ({ navigation, route }) => {
     }
   }, [emailStatus]);
 
+  // 문자 인증시간 초단위 감소 ui
   React.useEffect(() => {
     smsIntervalRef.current = setInterval(() => {
       setSmsInitialTime(smsInitialTime! - 1);
@@ -228,6 +235,7 @@ const SignUp = ({ navigation, route }) => {
     return () => clearInterval(smsIntervalRef.current!);
   }, [smsInitialTime]);
 
+  // 메일 인증시간 초단위 감소 ui
   React.useEffect(() => {
     mailIntervalRef.current = setInterval(() => {
       setMailInitialTime(mailInitialTime! - 1);
@@ -241,21 +249,30 @@ const SignUp = ({ navigation, route }) => {
     return () => clearInterval(mailIntervalRef.current!);
   }, [mailInitialTime]);
 
+  // 페이지 진입시 약관들 url 가져오기
   React.useEffect(() => {
     initTerms();
   }, []);
 
-  React.useEffect(() => {
-  }, [terms]);
+  React.useEffect(() => {}, [terms]);
 
+  /**
+   * 약관 가져오기 통신
+   */
   const initTerms = async () => {
     const tempTerms = await handleGetTerms();
     if (tempTerms) {
       setTerms(tempTerms);
       setIsTerms(true);
     }
-  }
+  };
 
+  /**
+   * 인풋별 값 변경 이벤트 리스너 (각 인풋별 정규식 검사 등)
+   * @param value 
+   * @param name 
+   * @returns 
+   */
   const onChange = (value: string, name: string) => {
     setSignUpData({
       ...signUpData,
@@ -284,6 +301,12 @@ const SignUp = ({ navigation, route }) => {
     handleBlur(value, name);
   };
 
+  /**
+   * 포커스 아웃 이벤트 리스너
+   * @param value 
+   * @param name 
+   * @returns 
+   */
   const handleBlur = (value: string, name: string) => {
     if (value === '' || value === undefined) {
       errorClear(name);
@@ -299,6 +322,10 @@ const SignUp = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 전화번호 정규식 검사
+   * @param value 
+   */
   const handlePhoneVaild = (value: string) => {
     errorClear('phone');
     if (
@@ -312,6 +339,10 @@ const SignUp = ({ navigation, route }) => {
     setSmsAuthDisabled(regex.phone.test(value) && value.length === 11);
   };
 
+  /**
+   * 이메일 정규식 검사
+   * @param value 
+   */
   const handleEmailVaild = (value: string) => {
     errorClear('email');
     if (!regex.email.test(value) && value !== '') {
@@ -321,18 +352,21 @@ const SignUp = ({ navigation, route }) => {
     setEmailAuthDisabled(regex.email.test(value));
   };
 
+  /**
+   * 비밀번호 정규식 검사
+   * @param value 
+   */
   const handlePasswordVaild = (value: string) => {
     let _password = undefined;
     let _confirmPassword = undefined;
-  
-    if (value !== '' && !regex.password.test(value)) {
-        _password = '*영문/숫자/특수문자 혼합 8~20자로 입력해주세요.';
-    }
 
+    if (value !== '' && !regex.password.test(value)) {
+      _password = '*영문/숫자/특수문자 혼합 8~20자로 입력해주세요.';
+    }
 
     if (value !== confirmPassword) {
       _confirmPassword = '*비밀번호가 일치하지 않습니다.';
-    } 
+    }
 
     if (!value || !confirmPassword) {
       _confirmPassword = undefined;
@@ -342,9 +376,14 @@ const SignUp = ({ navigation, route }) => {
       ...error,
       password: _password,
       confirmPassword: _confirmPassword,
-    })
+    });
   };
 
+  /**
+   * 비밀번호확인 정규식등 검사
+   * @param _text 
+   * @returns 
+   */
   const handleConfirmPasswordVaild = (_text: string) => {
     errorClear('confirmPassword');
     setConfirmPassword(_text);
@@ -361,6 +400,11 @@ const SignUp = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 대상에 에러메세지 설정
+   * @param _type 
+   * @param _error 
+   */
   const errorSet = (_type: string, _error?: string) => {
     let _errorMessage;
     if (_error) {
@@ -375,6 +419,10 @@ const SignUp = ({ navigation, route }) => {
     });
   };
 
+  /**
+   * 대상 에러메세지 삭제
+   * @param _type 
+   */
   const errorClear = (_type: string) => {
     setError({
       ...error,
@@ -382,6 +430,10 @@ const SignUp = ({ navigation, route }) => {
     });
   };
 
+  /**
+   * 약관 모두동의 설정,해제
+   * @param value 
+   */
   const handleAgreeAll = (value: boolean) => {
     setAgrees({
       service: value,
@@ -395,11 +447,14 @@ const SignUp = ({ navigation, route }) => {
     setMarketing(value);
   };
 
+  /**
+   * 회원가입 통신 handler
+   */
   const register = async () => {
     setLoading(true);
     try {
       const request: ISignUpData = setupSignUpData();
-      const response: responseDTO = await api.normalSignUp(request);
+      const response = await api.normalSignUp(request);
 
       if (response.result) {
         setSuccess(true);
@@ -427,6 +482,10 @@ const SignUp = ({ navigation, route }) => {
     setLoading(false);
   };
 
+  /**
+   * 인풋입력값들 회원가입 요청에 담을 파라미터로 변환
+   * @returns 
+   */
   const setupSignUpData = (): ISignUpData => {
     return {
       reg_type: signUpData.reg_type,
@@ -446,6 +505,9 @@ const SignUp = ({ navigation, route }) => {
     };
   };
 
+  /**
+   * sms 인증코드 요청하기
+   */
   const handleRequestSms = async () => {
     setLoading(true);
     setError({
@@ -458,7 +520,7 @@ const SignUp = ({ navigation, route }) => {
     let _errorMessage = 'unknown';
 
     try {
-      const response: responseDTO = await api.getPhoneAuthCode({
+      const response = await api.getPhoneAuthCode({
         phone: signUpData.phone,
         type: 'register',
       });
@@ -490,6 +552,9 @@ const SignUp = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * email 인증코드 요청하기
+   */
   const handleRequestEmail = async () => {
     setLoading(true);
     setError({
@@ -506,7 +571,7 @@ const SignUp = ({ navigation, route }) => {
         email: signUpData.email,
       };
 
-      const response: responseDTO = await api.getEmailAuthCode(request);
+      const response = await api.getEmailAuthCode(request);
 
       if (response.result) {
         setMailInitialTime(300);
@@ -534,6 +599,10 @@ const SignUp = ({ navigation, route }) => {
     setLoading(false);
   };
 
+  /**
+   * sms 인증코드 규칙검사 
+   * @param text 
+   */
   const handleSmsValid = (text: string) => {
     errorClear('smsCode');
     setSmsCode(text);
@@ -548,6 +617,10 @@ const SignUp = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 이메일 인증코드 규칙검사
+   * @param text 
+   */
   const handleMailValid = (text: string) => {
     errorClear('mailCode');
     setMailCode(text);
@@ -562,6 +635,9 @@ const SignUp = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * sms 인증번호 확인 동작
+   */
   const handleSmsCheck = async () => {
     setLoading(true);
     try {
@@ -570,7 +646,7 @@ const SignUp = ({ navigation, route }) => {
         auth_code: smsCode,
         type: 'register',
       };
-      const response: responseDTO = await api.checkPhoneAuthCode(request);
+      const response = await api.checkPhoneAuthCode(request);
 
       if (response.result) {
         clearInterval(smsIntervalRef.current!);
@@ -595,6 +671,9 @@ const SignUp = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 메일 인증번호 확인하기
+   */
   const handleMailCheck = async () => {
     setLoading(true);
     let _success = false;
@@ -605,7 +684,7 @@ const SignUp = ({ navigation, route }) => {
         email: signUpData.email,
         auth_code: mailCode,
       };
-      const response: responseDTO = await api.checkEmailAuthCode(request);
+      const response = await api.checkEmailAuthCode(request);
 
       if (response.result) {
         clearInterval(mailIntervalRef.current!);
@@ -635,6 +714,9 @@ const SignUp = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 문자 인증시간 만료 
+   */
   const handleSmsTiomeOut = () => {
     errorSet('smsCode', 'smsTimeout');
     setSmsStatus('timeout');
@@ -642,6 +724,9 @@ const SignUp = ({ navigation, route }) => {
     setSmsCheckDisabled(false);
   };
 
+  /**
+   * 메일 인증시간 만료
+   */
   const handleMailTiomeOut = () => {
     errorSet('mailCode', 'smsTimeout');
     setEmailStatus('timeout');
@@ -649,6 +734,10 @@ const SignUp = ({ navigation, route }) => {
     setMailCheckDisabled(false);
   };
 
+  /**
+   * 약관동의하기 (단일타겟)
+   * @param type 
+   */
   const handleAgree = (type: keyof agreeList) => {
     setAgrees({
       ...agrees,
@@ -672,7 +761,7 @@ const SignUp = ({ navigation, route }) => {
 
   const handleViewDetail = (url: keyof termsList) => {
     setWebViewUrl(terms[url]);
-    if(isTerms) {
+    if (isTerms) {
       setWebViewVisible(true);
     } else {
       showToast('처리중 오류가 발생하였습니다.');
@@ -1067,7 +1156,6 @@ const SignUp = ({ navigation, route }) => {
         onClose={() => setWebViewVisible(false)}
       />
       <LoadingModal visible={loading} />
-      
     </SafeAreaView>
   );
 };

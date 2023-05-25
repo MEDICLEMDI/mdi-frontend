@@ -19,6 +19,7 @@ const Social = ({ navigation }) => {
   const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
+    // 안드로이드 디바이스 백버튼 핸들러
     if (Platform.OS === 'android') {
       const backAction = () => {
         if (navigation.canGoBack()) {
@@ -44,6 +45,10 @@ const Social = ({ navigation }) => {
     }
   }, [exitApp, navigation]);
 
+  /**
+   * 소셜로그인 실행
+   * @param type 
+   */
   const handleSocial = async (type: string) => {
     if (Platform.OS !== 'ios' && type !== 'naver') {
       setVisible(true);

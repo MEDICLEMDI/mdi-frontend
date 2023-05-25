@@ -25,6 +25,23 @@ interface TopLabelInputProps extends TextInputProps {
   clearButton?: boolean;
   customHeight?: number;
 }
+
+/**
+ * MedicleInput
+ * @param {'row' | 'column' | undefined} direction - 'row' | 'column' | undefined
+ * @param {React.ReactNode} label - <Text>text</Text>
+ * @param {StyleProp<ViewStyle>} style
+ * @param {boolean} password - 비밀번호 입력폼 플래그
+ * @param {string} errText - 오류또는 validation에 관련하여 발생한 텍스트를 설정하면 해당 입력폼 하단에 텍스트가 렌더링됨
+ * @param {React.ReactNode} leftInputNode - 입력폼 왼쪽에 표시할 노드
+ * @param {React.ReactNode} rightInputNode - 입력폼 우측에 표시할 노드 
+ * @param {React.ReactNode} inputButtonNode - 입력폼 우측에 표시할 버튼 노드
+ * @param {StyleProp<ViewStyle>} textInputStyle
+ * @param {boolean} clearButton - only IOS 입력폼 초기화 플래그
+ * @param {customHeight} customHeight - 입력폼 높이
+ * @param {React.forwardRef<TextInput, TopLabelInputProps>} ref - React ref
+ * @comment 메디클에서 사용하는 공용 입력폼
+ */
 const MedicleInput = React.forwardRef<TextInput, TopLabelInputProps>(
   (
     {

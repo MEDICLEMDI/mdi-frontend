@@ -21,8 +21,11 @@ import Api from '@/components/Api';
 import { resetStorage } from '@/utils/localStorage';
 import eventEmitter from '@/utils/eventEmitter';
 
-const Setting = ({navigation}) => {
+const Setting = ({navigation}: any) => {
   const {t, i18n} = useTranslation();
+  /**
+   * 로그아웃처리 (백엔드 통신이 에러나도 프론트에서 로그아웃처리)
+   */
   const handleLogOut = async () => {
     try {
       const response = await Api.signOut();
@@ -45,6 +48,8 @@ const Setting = ({navigation}) => {
   const pageRoute = (route: string) => {
     navigation.navigate(route);
   };
+  
+  // 마이페이지 목록 리스트
   const data = [
     {
       name: t('setting.notice'),

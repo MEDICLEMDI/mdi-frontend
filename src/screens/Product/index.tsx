@@ -29,7 +29,7 @@ import {
   STANDARD_GRAY_10,
 } from '@/constants/theme';
 import Icon from '@/icons';
-import { IProductItem, responseDTO } from '@/interfaces/api';
+import { IProductItem, ResponseDTO } from '@/interfaces/api';
 import { Column, Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import { convertPrice } from '@/utils/utilities';
@@ -39,7 +39,7 @@ import Config from 'react-native-config';
 import { handleUpdateProductLike } from '@/utils/like';
 import useStores from '@/hooks/useStores';
 
-const Product = ({ navigation, route }) => {
+const Product = ({ navigation, route }: any) => {
   const { t } = useTranslation();
   const { IMAGESERVER_PREFIX } = Config;
   const isFocus = useIsFocused();
@@ -48,10 +48,10 @@ const Product = ({ navigation, route }) => {
 
   const { showToast } = useCustomToast();
 
-  const [groupId, setGroupId] = React.useState<number | undefined>();
-  const [productGroups, setProductGroups] = React.useState<any>([]);
+  const [groupId, setGroupId] = React.useState<number | undefined>(); // 병원과에 따라 치료항목 (임플란트, 충치 등)
+  const [productGroups, setProductGroups] = React.useState<any>([]);  // 상품 항목 전체 (ex, 치과일 경우 치과에 대한 진료 항목 전체)
   const [productList, setProductList] = React.useState<IProductItem[]>([]);
-  const [serachEditable, setSerachEditable] = React.useState(true);
+  const [serachEditable, setSerachEditable] = React.useState(true); // 검색창 잠금,해제
   const [search, setSearch] = React.useState<string>('');
   const [page, setPage] = React.useState(1);
   const [isMore, setIsMore] = React.useState(true);
@@ -66,11 +66,15 @@ const Product = ({ navigation, route }) => {
   }, [groupId]);
 
   React.useEffect(() => {
+    // 홈 에서 카테고리를 클릭해서 마운트 했는지 체크
     if (route.params !== undefined) {
       setGroupId(route.params.groupId);
     }
   }, [route.params]);
   
+  /**
+   * 화면초기화
+   */
   const initialize = async () => {
     setLoading(true);
     setProductList([]);
@@ -80,6 +84,9 @@ const Product = ({ navigation, route }) => {
     getProductGroupItems(groupId, 1, '');
   };
 
+  /**
+   * 상품리스트 검색
+   */
   const searchHandler = async () => {
     if (search !== '') {
       setSerachEditable(false);
@@ -87,6 +94,9 @@ const Product = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 진료과에 따라 항목들 가져오기
+   */
   const getProductGroups = async () => {
     setProductGroups([]);
     const data = appManageStore.getData();
@@ -104,19 +114,26 @@ const Product = ({ navigation, route }) => {
     setGroupId(generateMenus[0].id);
   };
 
+  /**
+   * 진료 항목에 대한 상품 리스트
+   * @param _index 
+   * @param _page 
+   * @param _search 
+   * @returns 
+   */
   const getProductGroupItems = async (_index: number | undefined, _page: number, _search: string) => {
     setLoading(true);
     // 페이지 진입시 한번만 조회를 처리하기 위한 조건
     if(_index === undefined) return false;    
     try {
-      const response: responseDTO = await api.getProductGroupItems(_index, _page, _search);
+      const response = await api.getProductGroupItems(_index, _page, _search);
       setIsMore(response.message === 'isMore');
       setPage(_page);
       if(_page > 1){
-        const arr = productList.concat(response.data);
+        const arr = productList.concat(response.data!);
         setProductList(arr);
       } else {
-        setProductList(response.data);
+        setProductList(response.data!);
       }
     } catch (err) {
       console.error(err);
@@ -125,13 +142,18 @@ const Product = ({ navigation, route }) => {
     }
   }
 
+  /**
+   * 상품 좋아요 설정/해제
+   * @param product_id 
+   */
   const handleSetLike = async (product_id: string) => {
     try {
       const request = {
         product_id: product_id,
       };
-      const response: responseDTO = await api.setLikeProducts(request);
+      const response = await api.setLikeProducts(request);
       if (response.result) {
+        // 좋아요 설정/해제시 랜더링될 화면 처리
         const arr = handleUpdateProductLike(productList, product_id);
         setProductList(arr);
       } else {
@@ -174,7 +196,7 @@ const Product = ({ navigation, route }) => {
           data={productGroups}
           tabStyle={style.tabWrap}
           buttonStyle={style.tabButton}
-          index={groupId}
+          index={groupId!}
           response={setGroupId}
           useScrollIndex={true}
         />

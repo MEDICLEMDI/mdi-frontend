@@ -25,21 +25,22 @@ import api from '@/components/Api';
 import { getStorageData } from '@/utils/localStorage';
 import { formatDate } from '@/utils/dates';
 import { textEllipsis } from '@/utils/strings';
+import { ITxHistory } from '@/interfaces/api';
 
 export default () => {
 	const { t } = useTranslation();
 	const isFocus = useIsFocused();
-	const tab = [{ id: 1, label: '입금 내역' }, { id: 2, label: '출금 내역' }];
-	const withdrawStatus = ['출금', '출금 실패']
+	const tab = [{ id: 1, label: '입금 내역' }, { id: 2, label: '출금 내역' }]; // 입금내역,출금내역 상단 탭
+	const withdrawStatus = ['출금', '출금 실패'] // 출금시에는 성공,실패 2가지가 존재함
 	const tokenTypes = ['ETH', 'MDI']
 
 	const [isLoading, setLoading] = useState(true)
 	const [isRefreshing, setRefresh] = useState(true)
 	const [visible, setVisible] = useState(false);
 	const [date, setDate] = useState({ from: '', to: '' });
-	const [tabIndex, setTabIndex] = useState(1)
+	const [tabIndex, setTabIndex] = useState(1) // 입금내역,출금내역 상단 탭 인덱스
 
-	const [histories, setHistories] = useState([]);
+	const [histories, setHistories] = useState<ITxHistory[]>([]);
 	const [isMore, setMore] = useState(true);
 	const [page, setPage] = useState(1);
 
@@ -47,6 +48,9 @@ export default () => {
 		initialize();
 	}, [tabIndex]);
 
+	/**
+	 * 페이지 초기화
+	 */
 	const initialize = () => {
 		setHistories([]);
 		setPage(1);
@@ -54,6 +58,12 @@ export default () => {
 		handleTabIndexChange(tabIndex, 1);
 	}
 
+	/**
+	 * 탭 변경에 이벤트 리스너
+	 * @param _tabIndex 
+	 * @param _page 
+	 * @returns 
+	 */
 	const handleTabIndexChange = async (_tabIndex: number, _page: number) => {
 		switch (_tabIndex) {
 			case 1:
@@ -63,6 +73,10 @@ export default () => {
 		}
 	}
 
+	/**
+	 * 입금 받은 트랜잭션 내역 가져오기
+	 * @param _page 
+	 */
 	const getDepositHistory = async (_page: number) => {
 		setLoading(true);
 		try {
@@ -75,9 +89,9 @@ export default () => {
 
 			const { data } = response;
 			if (_page === 1) {
-				setHistories(data)
+				setHistories(data!)
 			} else {
-				const arr = histories.concat(data);
+				const arr = histories.concat(data!);
 				setHistories(arr)
 			}
 		} catch (err) {
@@ -87,6 +101,10 @@ export default () => {
 		}
 	}
 
+	/**
+	 * 출금한 트랜잭션 내역 가져오기
+	 * @param _page 
+	 */
 	const getWithdawHistory = async (_page: number) => {
 		setLoading(true);
 		try {
@@ -99,9 +117,9 @@ export default () => {
 
 			const { data } = response;
 			if (_page === 1) {
-				setHistories(data)
+				setHistories(data!)
 			} else {
-				const arr = histories.concat(data);
+				const arr = histories.concat(data!);
 				setHistories(arr)
 			}
 		} catch (err) {

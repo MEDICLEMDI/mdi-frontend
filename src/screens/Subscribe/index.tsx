@@ -26,7 +26,7 @@ import {
 } from '@/constants/theme';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
-import { ICompanyItem, IProductItem, responseDTO } from '@/interfaces/api';
+import { ICompanyItem, IProductItem, ResponseDTO } from '@/interfaces/api';
 import { Column, Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
@@ -37,7 +37,7 @@ import Config from 'react-native-config';
 import useCustomToast from '@/hooks/useToast';
 import useStores from '@/hooks/useStores';
 
-export default ({ navigation, route }) => {
+export default ({ navigation, route }: any) => {
   const { t } = useTranslation();
   const { rootStore } = useStores();
   const { appManageStore } = rootStore;
@@ -74,6 +74,9 @@ export default ({ navigation, route }) => {
     }
   }
 
+  /**
+   * 페이지초기화 (관심상품,병원리스트 불러오기)
+   */
   const init = async () => {
     await handleGetProductList();
     await handleGetCompanyList();
@@ -81,6 +84,9 @@ export default ({ navigation, route }) => {
     setIsInit(true);
   };
 
+  /**
+   * 상품 진료 항목그룹 가져오기 (치아미백, 치아교정, 임플란트 등)
+   */
   const initProductGroup = () => {
     const data = appManageStore.getData();
     const index = appManageStore.selected();
@@ -99,12 +105,16 @@ export default ({ navigation, route }) => {
     setIndex(generateMenus[0].id);
   }
 
+  /**
+   * 관심상품 좋아요 해제 (목록에서 삭제)
+   * @param product_id 
+   */
   const hadneSetProductLike = async (product_id: string) => {
     try {
       const request = {
         product_id: product_id,
       };
-      const response: responseDTO = await Api.setLikeProducts(request);
+      const response = await Api.setLikeProducts(request);
       if (response.result) {
         removeProductById(product_id);
       } else {
@@ -116,12 +126,16 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 관심병원 좋아요 해제 (목록에서 삭제)
+   * @param company_id 
+   */
   const handleSetHospitalLike = async (company_id: string) => {
     try {
       const request = {
         company_id: company_id,
       };
-      const response: responseDTO = await Api.setLikeCompanys(request);
+      const response = await Api.setLikeCompanys(request);
       if (response.result) {
         removeCompanyById(company_id);
       } else {
@@ -133,6 +147,10 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 좋아요 해제된 병원 가지고 있는 데이터에서 삭제하기 (화면에서도 삭제됨)
+   * @param company_id 
+   */
   const removeCompanyById = (company_id: string) => {
     const targetHospitalIndex = hospitalList.findIndex(
       hospital => hospital.id === company_id
@@ -145,6 +163,10 @@ export default ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 좋아요 해제된 상품 가지고 있는 데이터에서 삭제하기 (화면에서도 삭제됨)
+   * @param product_id 
+   */
   const removeProductById = (product_id: string) => {
     const targetProductIndex = productList.findIndex(
       product => product.product_id === product_id

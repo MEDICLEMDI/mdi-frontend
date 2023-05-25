@@ -18,17 +18,21 @@ import style from './style';
 import BoxDropShadow from '@/components/BoxDropShadow';
 import { Row } from '@/layout';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { IExtLink } from '@/interfaces/api';
 
 export default () => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [isInit, setInit] = React.useState(false);
-  const [exchangeList, setExchangeList] = React.useState([]);
+  const [exchangeList, setExchangeList] = React.useState<IExtLink[]>([]);
 
   React.useEffect(() => {
     getExchangeList();
   }, []);
 
+  /**
+   * 등록된 거래소 리스트 가져오기
+   */
   const getExchangeList = async () => {
     try {
       const data = await api.getExchangeList();

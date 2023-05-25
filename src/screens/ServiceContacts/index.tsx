@@ -12,7 +12,7 @@ import MedicleInput from '@/components/inputs/MedicleInput';
 
 import style from './style';
 import MedicleButton from '@/components/buttons/MedicleButton';
-import { responseDTO } from '@/interfaces/api';
+import { ResponseDTO } from '@/interfaces/api';
 import { getStorageData } from '@/utils/localStorage';
 import Api from '@/components/Api';
 import useCustomToast from '@/hooks/useToast';
@@ -25,7 +25,7 @@ export interface partnershipForm {
   content: string;
 }
 
-export default ({navigation}) => {
+export default ({navigation}: any) => {
   const { t } = useTranslation();
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const { showToast } = useCustomToast();
@@ -49,6 +49,9 @@ export default ({navigation}) => {
     handleButtonDisabled();
   }, [form]);
 
+  /**
+   * 페이지 초기화, (이름과 전화번호는 유저의 정보를 받아옴)
+   */
   const userInit = async () => {
     const _user = await getStorageData('@User');
     setForm({
@@ -58,6 +61,11 @@ export default ({navigation}) => {
     });
   };
 
+  /**
+   * 입력 인풋별 변경 이벤트 리스너
+   * @param type 
+   * @param text 
+   */
   const handleOnChange = (type: keyof partnershipForm, text: string) => {
     setButtonDisabled(false);
     setForm({
@@ -68,6 +76,11 @@ export default ({navigation}) => {
     handleFormValid(type, text);
   };
 
+  /**
+   * 인풋별 입력 규칙 (최소~최대 글자갯수등) 검사
+   * @param type 
+   * @param text 
+   */
   const handleFormValid = (type: string, text: string) => {
     if (type === 'content') {
       setError({
@@ -96,6 +109,9 @@ export default ({navigation}) => {
     }
   };
 
+  /**
+   * 입력에 따라 등록버튼 잠금,해제
+   */
   const handleButtonDisabled = () => {
     if (
       form.company &&
@@ -107,12 +123,14 @@ export default ({navigation}) => {
     }
   };
 
+  /**
+   * 제휴문의 보내기
+   */
   const handleSend = async () => {
     setLoading(true);
     let _toastMessage;
     try {
-      const response: responseDTO = await Api.partnershipQA(form);
-      console.log(response);
+      const response = await Api.partnershipQA(form);
       if (response.result) {
         navigation.goBack();
         _toastMessage = '제휴문의가 성공적으로 등록되었습니다.';

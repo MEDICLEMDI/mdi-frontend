@@ -12,6 +12,13 @@ interface IHeader {
   rightNode?: React.ReactNode;
 }
 
+/**
+ * Header
+ * @param {boolean} goBack - 뒤로가기 버튼 활성화 여부
+ * @param {string | undefined} title - 헤더 타이틀, 타이틀이 없는경우 로고가 노출됩니다.
+ * @param {React.ReactNode} rightNode - 헤더 우측 영영에 표시될 노드
+ * @comment 공용 페이지 헤더 컴포넌트입니다.
+ */
 const Header = ({ goBack, title, rightNode }: IHeader) => {
   const navigation = useNavigation();
     return (

@@ -8,15 +8,31 @@ export const formatDate = (date, format) => {
   return dayjs(date).format(format);
 };
 
+/**
+ * MMM Do, YYYY 형식 반환
+ * @param {*} date 
+ * @returns 
+ */
 export const formatLongDate = date => {
   dayjs.extend(customParseFormat);
   return dayjs(date).format('MMM Do, YYYY');
 };
 
+/**
+ * 1~9 앞에 0 변환 ex) 1일 => 01일
+ * @param {*} date 
+ * @returns 
+ */
 export const dateZeroFill = date => {
   return date.toString().padStart(2, '0');
 };
 
+/**
+ * 시작일, 종료일 설정
+ * @param {*} value 
+ * @param {*} type 
+ * @returns 
+ */
 export const dateSetup = (value=0, type='day') => {
   dayjs.extend(utc);
   const format = 'YYYY-MM-DD'
@@ -26,6 +42,11 @@ export const dateSetup = (value=0, type='day') => {
   return { from: startDay, to: endDay };
 };
 
+/**
+ * 시작일,종료일 검사
+ * @param {*} date 
+ * @returns 
+ */
 export const compareDate = (date) => {
   dayjs.extend(utc);
   const startDate = dayjs(date.from).utc(true);;

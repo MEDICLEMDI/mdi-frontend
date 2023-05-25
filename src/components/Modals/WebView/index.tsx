@@ -11,6 +11,10 @@ interface WebViewProps {
   onClose: () => void;
 }
 
+/**
+ * WebViewModal
+ * @comment 브라우저 앱 이동없이 페이지에서 웹뷰를 호출하기 위한 모달
+ */
 const WebViewModal = ({ url, visible, onClose }: WebViewProps) => {
   const insets = useSafeAreaInsets();
   return (

@@ -13,7 +13,7 @@ import ResultModal from '@/components/ResultModal';
 import { ErrorCode } from '@/constants/error';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
-import { responseDTO } from '@/interfaces/api';
+import { ResponseDTO } from '@/interfaces/api';
 import Routes from '@/navigation/Routes';
 import { fontStyleCreator } from '@/utils/fonts';
 
@@ -29,25 +29,25 @@ const EditPhone = ({ navigation }) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [user, setUser] = React.useState<User | undefined>(undefined);
-  const [result, setResult] = React.useState(false);
-  const [smsCheckDisabled, setSmsCheckDisabled] = React.useState(false);
-  const [buttonDisabled, setButtonDisabled] = React.useState(false);
-  const [smsAuthDisabled, setSmsAuthDisabled] = React.useState(false);
-  const [smsCode, setSmsCode] = React.useState<string | undefined>(undefined);
-  const smsIntervalRef = React.useRef<NodeJS.Timeout | undefined>();
+  const [result, setResult] = React.useState(false); // 결과페이지 랜더링용 bool
+  const [smsCheckDisabled, setSmsCheckDisabled] = React.useState(false); // sms 인증코드 확인하기 버튼 잠금,해제
+  const [buttonDisabled, setButtonDisabled] = React.useState(false); // 변경하기 버튼 잠금,해제
+  const [smsAuthDisabled, setSmsAuthDisabled] = React.useState(false); // 인증문자 받기 버튼 잠금,해제
+  const [smsCode, setSmsCode] = React.useState<string | undefined>(undefined); // 인증코드 인풋
+  const smsIntervalRef = React.useRef<NodeJS.Timeout | undefined>(); // 5분 시간설정 ref
   const [smsStatus, setSmsStatus] = React.useState<
     'before' | 'progress' | 'timeout' | 'completed'
   >('before');
   const [smsInitialTime, setSmsInitialTime] = React.useState<
     number | undefined
-  >(undefined);
+  >(undefined); // 인증시간 
   const smsMinutes = Math.floor(smsInitialTime! / 60)
     .toString()
-    .padStart(1, '0');
-  const smsSeconds = (smsInitialTime! % 60).toString().padStart(2, '0');
+    .padStart(1, '0'); // 인증시간 분단위 랜더링
+  const smsSeconds = (smsInitialTime! % 60).toString().padStart(2, '0'); // 인증시간 초단위 랜더링
   const [smsAuthText, setSmsAuthText] = React.useState<string>(
     t('signUp.phoneRequestSms')
-  );
+  ); // 진행상태에 따라 인증문자받기, 인증하기, 인증완료 버튼 글자변경
   const [originPhone, setOriginPhone] = React.useState('');
   const [phoneError, setPhoneError] = React.useState('');
   const [smsError, setSmsError] = React.useState('');
@@ -55,6 +55,7 @@ const EditPhone = ({ navigation }) => {
   const [error, setError] = React.useState('');
 
   React.useEffect(() => {
+    // 유저데이터 가져오기
     const fetchUser = async () => {
       try {
         const userData = await AsyncStorage.getItem('@User');
@@ -90,6 +91,7 @@ const EditPhone = ({ navigation }) => {
     size: 10,
   });
 
+  // sms 인증시간용도 (1초 지날때마다 재랜더링)
   React.useEffect(() => {
     smsIntervalRef.current = setInterval(() => {
       setSmsInitialTime(smsInitialTime! - 1);
@@ -103,6 +105,7 @@ const EditPhone = ({ navigation }) => {
     return () => clearInterval(smsIntervalRef.current!);
   }, [smsInitialTime]);
 
+  // 인증상태에 따라 인증문자받기 버튼 텍스트변경
   React.useEffect(() => {
     if (smsStatus === 'completed') {
       setSmsAuthText(t('signUp.phoneAuthCompleted'));
@@ -115,6 +118,9 @@ const EditPhone = ({ navigation }) => {
     setButtonDisabled(smsStatus === 'completed');
   }, [smsStatus]);
 
+  /**
+   * 인증시간 만료 될경우 초기화
+   */
   const handleSmsTiomeOut = () => {
     setSmsError('*인증시간이 만료되었습니다, 다시 요청해주세요.');
     setSmsStatus('timeout');
@@ -123,12 +129,20 @@ const EditPhone = ({ navigation }) => {
     clearInterval(smsIntervalRef.current!);
   };
 
+  /**
+   * 전화번호 입력 인풋 이벤트 리스너
+   * @param text
+   */
   const handlePhoneChage = (text: string) => {
     setUser({
       ...user,
       phone: text,
     });
   };
+
+  /**
+   * 전화번호 규칙 검사
+   */
   const phoneVaild = () => {
     setSmsAuthDisabled(false);
     setPhoneError('');
@@ -147,6 +161,9 @@ const EditPhone = ({ navigation }) => {
     }
   };
 
+  /**
+   * 인증문자 요청하기
+   */
   const handleRequestSms = async () => {
     clearInterval(smsIntervalRef.current!);
     let _success = false;
@@ -160,7 +177,7 @@ const EditPhone = ({ navigation }) => {
         phone: user!.phone,
         type: 'update',
       };
-      const response: responseDTO = await Api.getPhoneAuthCode(request);
+      const response = await Api.getPhoneAuthCode(request);
 
       if (response.result) {
         setSmsInitialTime(300);
@@ -185,6 +202,10 @@ const EditPhone = ({ navigation }) => {
     }
   };
 
+  /**
+   * 인증번호 6자리 규칙 검사 (인증하기 버튼 활성,비활성)
+   * @param text 
+   */
   const handleSmsValid = (text: string) => {
     setSmsError('');
     setSmsCode(text);
@@ -196,6 +217,9 @@ const EditPhone = ({ navigation }) => {
     }
   };
 
+  /**
+   * 인증번호 유효한지 확인하기
+   */
   const handleSmsCheck = async () => {
     let _success = false;
     let _errorMessage = ErrorCode[101];
@@ -206,7 +230,7 @@ const EditPhone = ({ navigation }) => {
         auth_code: smsCode,
         type: 'update',
       };
-      const response: responseDTO = await Api.checkPhoneAuthCode(request);
+      const response = await Api.checkPhoneAuthCode(request);
       if (response.result) {
         clearInterval(smsIntervalRef.current!);
         setSmsStatus('completed');
@@ -227,6 +251,9 @@ const EditPhone = ({ navigation }) => {
     }
   };
 
+  /**
+   * 모든 인증절차를 완료하고 전화번호 변경하기
+   */
   const handleEditPhone = async () => {
     try {
       const data = await apis.editPhone(user!.phone!, smsCode!);

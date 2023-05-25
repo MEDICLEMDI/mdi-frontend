@@ -28,6 +28,9 @@ const EditProfile = ({ navigation }) => {
   const isFocus = useIsFocused();
   const [user, setUser] = React.useState<User | undefined>(undefined);
 
+  /**
+   * 페이지 초기화 (유저정보 가져오기)
+   */
   React.useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -77,7 +80,8 @@ const EditProfile = ({ navigation }) => {
           </View>
         </View>
         <View style={style.contentWrap}>
-          {/* Input Wrap */}
+
+          {/* 유저가 소셜일 경우 비밀번호가 없음, 일반 타입만 비밀번호 변경 */}
           {user?.reg_type === 'normal' && (
             <View style={style.inputGroup}>
               <View style={style.row}>

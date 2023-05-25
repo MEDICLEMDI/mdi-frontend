@@ -2,6 +2,14 @@ import * as React from "react";
 import {Pressable, StyleProp, StyleSheet, Text, View, ViewStyle} from "react-native";
 import {Colors} from "@/constants/theme";
 
+/**
+ * RadioInput
+ * @param {string} name
+ * @param {boolean} selected
+ * @param {React.ComponentState} response - 선택 정보를 반환할 React state
+ * @param {number} index - 선택된 인데스
+ * @comment 라디오 버튼 공용 컴포넌트입니다.
+ */
 const RadioInput = ({
   size = 16,
   borderColor = Colors.Medicle.Gray.Standard,

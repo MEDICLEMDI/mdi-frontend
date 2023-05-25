@@ -27,7 +27,7 @@ import {
 } from '@/constants/theme';
 import { Colors } from '@/constants/theme';
 import Icon from '@/icons';
-import { ICompanyItem, IProductItem, responseDTO } from '@/interfaces/api';
+import { ICompanyItem, IProductItem, ResponseDTO } from '@/interfaces/api';
 import { Column, Row } from '@/layout';
 import Routes from '@/navigation/Routes';
 import style from './style';
@@ -37,10 +37,9 @@ import useCustomToast from '@/hooks/useToast';
 import { handleUpdateProductLike } from '@/utils/like';
 import useStores from '@/hooks/useStores';
 
-
 const { IMAGESERVER_PREFIX } = Config;
 
-const Hospital = ({ navigation }) => {
+const Hospital = ({ navigation }: any) => {
   const { t } = useTranslation();
   const { showToast } = useCustomToast();
   const isFocused = useIsFocused();
@@ -50,11 +49,11 @@ const Hospital = ({ navigation }) => {
   const [productList, setProductList] = React.useState<IProductItem[]>([]);
   const [hospitalList, setHospitalList] = React.useState<ICompanyItem[]>([]);
 
-  const [tabIndex, setTabIndex] = React.useState(1);
+  const [tabIndex, setTabIndex] = React.useState(1); // 진료항목 카테고리 (교정, 충치, 스케일링 등)
   const [search, setSearch] = React.useState<string>('');
   const [page, setPage] = React.useState(1);
   const [isMore, setIsMore] = React.useState(true);
-  const [serachEditable, setSerachEditable] = React.useState(true);
+  const [serachEditable, setSerachEditable] = React.useState(true); // 검색인풋 잠금
   const [isLoading, setLoading] = React.useState(true);
   const [isLoadingList, setLoadingList] = React.useState(true);
 
@@ -62,14 +61,21 @@ const Hospital = ({ navigation }) => {
     initialize();
   }, [tabIndex, isFocused]);
 
+  /**
+   * 화면 초기 셋팅
+   */
   const initialize = () => {
-    setLoading(true)
+    setLoading(true);
     setPage(1); // 페이지 초기화
     setSearch('');
     setSerachEditable(true);
     searchRenderer(tabIndex, 1);
   };
 
+  /**
+   * 다음페이지 존재 확인
+   * @param isMore 
+   */
   const isMoreListener = (isMore: string) => {
     if (isMore === 'isMore') {
       setIsMore(true);
@@ -78,6 +84,9 @@ const Hospital = ({ navigation }) => {
     }
   };
 
+  /**
+   * 상품 검색
+   */
   const searchHandler = async () => {
     if (search !== '') {
       setSerachEditable(false);
@@ -85,6 +94,14 @@ const Hospital = ({ navigation }) => {
     }
   };
 
+  
+  /**
+   * 검색결과 탭별로 분기
+   * @param _tabIndex 
+   * @param _page 
+   * @param _search 
+   * @returns 
+   */
   const searchRenderer = async (
     _tabIndex: number,
     _page: number,
@@ -103,16 +120,25 @@ const Hospital = ({ navigation }) => {
     }
   };
 
+  /**
+   * 이벤트 상품리스트 호출
+   * @param _page 
+   * @param _search 
+   */
   const getEventItemLists = async (_page: number, _search: string) => {
     try {
-      const response = await api.getAllEventProducts(_page, appManageStore.selected(), _search);
+      const response = await api.getAllEventProducts(
+        _page,
+        appManageStore.selected(),
+        _search
+      );
       isMoreListener(response.message);
       setPage(_page);
       if (_page > 1) {
-        const arr = productList.concat(response.data);
+        const arr = productList.concat(response.data!);
         setProductList(arr);
       } else {
-        setProductList(response.data);
+        setProductList(response.data!);
       }
     } catch (err) {
       console.error(err);
@@ -122,16 +148,25 @@ const Hospital = ({ navigation }) => {
     }
   };
 
+  /**
+   * 리뷰 많은순으로 상품 리스트 호출
+   * @param _page 
+   * @param _search 
+   */
   const getReviewRankLists = async (_page: number, _search: string) => {
     try {
-      const response: responseDTO = await api.getReviewRankLists(_page, appManageStore.selected(), _search);
+      const response = await api.getReviewRankLists(
+        _page,
+        appManageStore.selected(),
+        _search
+      );
       isMoreListener(response.message);
       setPage(_page);
       if (_page > 1) {
-        const arr = productList.concat(response.data);
+        const arr = productList.concat(response.data!);
         setProductList(arr);
       } else {
-        setProductList(response.data);
+        setProductList(response.data!);
       }
     } catch (err) {
       console.error(err);
@@ -141,34 +176,47 @@ const Hospital = ({ navigation }) => {
     }
   };
 
+  /**
+   * 등록된 병원 목록 가져오기
+   * @param _page 
+   * @param _search 
+   */
   const getHospitalList = async (_page: number, _search: string) => {
     try {
-      const response: responseDTO = await api.getHospital(_page, appManageStore.selected(), _search);
+      const response = await api.getHospital(
+        _page,
+        appManageStore.selected(),
+        _search
+      );
       isMoreListener(response.message);
       setPage(_page);
       if (_page > 1) {
-        const arr = hospitalList.concat(response.data);
+        const arr = hospitalList.concat(response.data!);
         setHospitalList(arr);
       } else {
-        setHospitalList(response.data);
+        setHospitalList(response.data!);
       }
       if (isLoading) {
-        setHospitalList(() => response.data);
+        setHospitalList(() => response.data!);
       }
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
       setLoadingList(false);
     }
   };
 
+  /**
+   * 병원 좋아요 설정/해제
+   * @param company_id 
+   */
   const handleSetHospitalLike = async (company_id: string) => {
     try {
       const request = {
         company_id: company_id,
       };
-      const response: responseDTO = await api.setLikeCompanys(request);
+      const response = await api.setLikeCompanys(request);
       if (response.result) {
         handleUpdateHospitalLike(company_id);
       } else {
@@ -179,6 +227,10 @@ const Hospital = ({ navigation }) => {
     }
   };
 
+  /**
+   * 병원 좋아요 설정/해제 에 따른 ui처리작업 (하트 색, 공백)
+   * @param company_id 
+   */
   const handleUpdateHospitalLike = (company_id: string) => {
     const targetHospitalIndex = hospitalList.findIndex(
       hospital => hospital.id === company_id
@@ -196,13 +248,18 @@ const Hospital = ({ navigation }) => {
     setHospitalList(updatedHospitalList);
   };
 
+  /**
+   * 상품 좋아요 설정/해제
+   * @param product_id 
+   */
   const handleSetProductLike = async (product_id: string) => {
     try {
       const request = {
         product_id: product_id,
       };
-      const response: responseDTO = await api.setLikeProducts(request);
+      const response = await api.setLikeProducts(request);
       if (response.result) {
+        // 공용함수 상품리스트에서 특정 상품에 대해 좋아요 설정/해제 시 상품 리스트를 재 취합해줌 (화면 랜더링용도)
         const temp = handleUpdateProductLike(productList, product_id);
         setProductList(temp);
       } else {
@@ -257,49 +314,86 @@ const Hospital = ({ navigation }) => {
           useScrollIndex={true}
         />
       </View>
-          { isLoading
-            ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size="large" />
-              </View>
-            : tabIndex === 3
-              ? <HospitalItem dataList={hospitalList} navigation={navigation} onEndReached={() => isMore ? searchRenderer(tabIndex, page + 1, search) : null} likeHandler={handleSetHospitalLike} isLoading={isLoadingList} />
-              : <ProductItem dataList={productList} navigation={navigation} onEndReached={() => isMore ? searchRenderer(tabIndex, page + 1, search) : null} likeHandler={handleSetProductLike} isLoading={isLoadingList} />
+      {isLoading ? (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" />
+        </View>
+      ) : tabIndex === 3 ? (
+        <HospitalItem
+          dataList={hospitalList}
+          navigation={navigation}
+          onEndReached={() =>
+            isMore ? searchRenderer(tabIndex, page + 1, search) : null
           }
+          likeHandler={handleSetHospitalLike}
+          isLoading={isLoadingList}
+        />
+      ) : (
+        <ProductItem
+          dataList={productList}
+          navigation={navigation}
+          onEndReached={() =>
+            isMore ? searchRenderer(tabIndex, page + 1, search) : null
+          }
+          likeHandler={handleSetProductLike}
+          isLoading={isLoadingList}
+        />
+      )}
     </SafeAreaView>
   );
 };
 
-const HospitalItem = ({ dataList, onEndReached, navigation, likeHandler, isLoading }: any) => {
+const HospitalItem = ({
+  dataList,
+  onEndReached,
+  navigation,
+  likeHandler,
+  isLoading,
+}: any) => {
   const [hospitals, setHospitals] = React.useState([]);
 
   React.useEffect(() => {
     setHospitals(dataList);
-  }, [dataList])
+  }, [dataList]);
 
   const convertAddressText = (str: string) => {
     const splitAddr = str.split(' ');
     return `${splitAddr[0]} | ${splitAddr[1]}`;
-  }
-  
+  };
+
   if (hospitals.length === 0) {
     return (
-      <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 20,
+        }}>
         <Text>조회된 병원이 없습니다.</Text>
       </View>
-    )
+    );
   }
 
   return (
     <FlatList
       style={{ flex: 1 }}
-      keyExtractor={({ item }, index)=> index.toString()}
+      keyExtractor={({ item }, index) => index.toString()}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.1}
       ListFooterComponent={<>{isLoading && <ActivityIndicator />}</>}
       data={hospitals}
       renderItem={({ item }: any) => (
-        <BoxDropShadow key={item.id} style={{ marginBottom: 10, marginHorizontal: 25 }}>
-          <TouchableOpacity onPress={() => navigation.navigate(Routes.HOSPITAL_DETAIL, { id: item.id, name: item.name }) }>
+        <BoxDropShadow
+          key={item.id}
+          style={{ marginBottom: 10, marginHorizontal: 25 }}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(Routes.HOSPITAL_DETAIL, {
+                id: item.id,
+                name: item.name,
+              })
+            }>
             <Row justify="space-between" align="center">
               <Image
                 style={{ minWidth: 90, minHeight: 90, borderRadius: 10 }}
@@ -317,13 +411,13 @@ const HospitalItem = ({ dataList, onEndReached, navigation, likeHandler, isLoadi
                 </Text>
                 <Row justify="space-between" align="flex-start">
                   <Text style={STANDARD_GRAY_10}>
-                    후기 <Text style={ORANGE_BOLD_10}> {item.review_count} </Text> 개
+                    후기{' '}
+                    <Text style={ORANGE_BOLD_10}> {item.review_count} </Text> 개
                   </Text>
-                  <TouchableOpacity
-                    onPress={() => likeHandler(item.id)}>
+                  <TouchableOpacity onPress={() => likeHandler(item.id)}>
                     {item?.like ? (
                       <Icon name="heart" fill="#EDDFCC" />
-                      ) : (
+                    ) : (
                       <Icon name="heart" stroke="#CECECE" />
                     )}
                   </TouchableOpacity>
@@ -334,28 +428,39 @@ const HospitalItem = ({ dataList, onEndReached, navigation, likeHandler, isLoadi
         </BoxDropShadow>
       )}
     />
-  )
-}
+  );
+};
 
-const ProductItem = ({ dataList, onEndReached, navigation, likeHandler, isLoading }: any) => {
+const ProductItem = ({
+  dataList,
+  onEndReached,
+  navigation,
+  likeHandler,
+  isLoading,
+}: any) => {
   const [products, setProducts] = React.useState([]);
 
   React.useEffect(() => {
     setProducts(dataList);
-  }, [dataList])
+  }, [dataList]);
 
   if (products.length === 0) {
     return (
-      <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 20,
+        }}>
         <Text>조회된 상품이 없습니다.</Text>
       </View>
-    )
+    );
   }
 
   return (
     <FlatList
       style={{ flex: 1 }}
-      keyExtractor={({ item }, index)=> index.toString()}
+      keyExtractor={({ item }, index) => index.toString()}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.1}
       ListFooterComponent={<>{isLoading && <ActivityIndicator />}</>}
@@ -378,7 +483,7 @@ const ProductItem = ({ dataList, onEndReached, navigation, likeHandler, isLoadin
         />
       )}
     />
-  )
-}
+  );
+};
 
 export default Hospital;

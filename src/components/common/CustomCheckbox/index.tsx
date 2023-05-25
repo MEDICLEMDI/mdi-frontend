@@ -18,6 +18,17 @@ interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
+/**
+ * CustomCheckbox
+ * @param {void} onPress - () => void;
+ * @param {boolean} selected
+ * @param {string} testID
+ * @param {string} circle 
+ * @param {StyleProp<ViewStyle>} style
+ * @param {React.ReactNode} children
+ * @comment 메디클에서 사용하는 기본 체크박스입니다. 선택 영역을 텍스트를 포함한 영역으로 설정되어있으며,
+ * 선택과 비선택 상태를 svg로 할당합니다.
+ */
 function CustomCheckbox({
   onPress,
   selected,

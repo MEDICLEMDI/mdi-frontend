@@ -18,6 +18,11 @@ interface IToast {
   show: (message: string) => void;
 }
 
+/**
+ * Toast
+ * @param {string} message - 토스터에 표기할 메세지
+ * @comment 화면 하단에 표기할 토스터 컴포넌트
+ */
 const Toast = forwardRef<IToast>((props, ref) => {
   const [message, setMessage] = useState('');
   const toastOpacity = useSharedValue(0);
@@ -38,6 +43,7 @@ const Toast = forwardRef<IToast>((props, ref) => {
   }, []);
 
   
+  // 토스터 메세지를 화면에 렌더링
   const show = useCallback((message: string) => {
     if (!isShowed.current) {
       setMessage(message);

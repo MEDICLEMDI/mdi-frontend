@@ -21,7 +21,7 @@ import { INotice } from '@/interfaces/api';
 export default ({ navigation }: any) => {
   const { t } = useTranslation();
 
-  const [notices, setNotices] = React.useState([]);
+  const [notices, setNotices] = React.useState<INotice[]>([]);
   const [page, setPage] = React.useState(1);
   const [isLoading, setLoading] = React.useState(false);
   const [isMore, setIsMore] = React.useState(true);
@@ -30,12 +30,18 @@ export default ({ navigation }: any) => {
     initialize();
   }, []);
 
+  /**
+   * 화면 초기화
+   */
   const initialize = async () => {
     setPage(1);
     setIsMore(true);
     getNotices(1);
   };
 
+  /**
+   * 공지사항 리스트 가져오기
+   */
   const getNotices = async (_page: number) => {
     if(isLoading) return false;
     setLoading(true);
@@ -45,9 +51,9 @@ export default ({ navigation }: any) => {
       setPage(_page);
       setIsMore(message === 'isMore');
       if (_page === 1) {
-        setNotices(data);  
+        setNotices(data!);  
       } else {
-        const arr = notices.concat(data);
+        const arr = notices.concat(data!);
         setNotices(arr);
       }
     } catch (err) {

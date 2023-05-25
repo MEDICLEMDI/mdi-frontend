@@ -7,12 +7,21 @@ import { clearStorage, getStorageData } from '@/utils/localStorage';
 
 const baseUrl = Config.API_URL;
 
+/**
+ * 비회원상태 http 헤더 생성
+ * @returns 
+ */
 export const createHeaders = () => {
   const header = new Headers();
   header.append('Content-Type', 'application/json');
   return header;
 };
 
+/**
+ * 로그인상태 http 헤더 생성
+ * 헤더에 user_idx 담기
+ * @returns 
+ */
 const authHeader = async () => {
   const headers = new Headers();
   const user = await getStorageData('@User');
@@ -21,9 +30,17 @@ const authHeader = async () => {
   return headers;
 };
 
+/**
+ * GET 통신 
+ * @param url 
+ * @param auth true회원 false비회원
+ * @returns 
+ */
 export const get = async (url: string, auth = true) => {
   const accessToken = await getStorageData('@AuthKey');
   let headers;
+
+  // 회원,비회원 상태 헤더 설정
   if (auth) {
     headers = await authHeader();
     headers.append('Authorization', `Bearer ${accessToken}`);
@@ -33,6 +50,15 @@ export const get = async (url: string, auth = true) => {
   return await _get({ url: url, headers: headers });
 };
 
+
+/**
+ * POST 통신
+ * @param url
+ * @param key jwt access 
+ * @param auth true회원 false비회원 
+ * @param body body param
+ * @returns 
+ */
 export const post = async ({
   url,
   key,
@@ -45,6 +71,7 @@ export const post = async ({
   body?: Record<string, unknown>;
 }) => {
   const headers = await authHeader();
+  // 회원, 비회원 상태 헤더 설정
   if (auth) {
     let key_ = await getStorageData('@AuthKey');
     if (key !== undefined) {
@@ -55,6 +82,12 @@ export const post = async ({
   return await _post({ url: url, body: body, headers: headers });
 };
 
+/**
+ * jwt토큰 만료시 refresh후 요청 재실행 인터셉터
+ * @param input 
+ * @param init 
+ * @returns 
+ */
 const jwtTokenExpireInterceptor = async (
   input: RequestInfo,
   init: RequestInit
@@ -69,6 +102,7 @@ const jwtTokenExpireInterceptor = async (
       }
       const e: ErrorResponse = await response.json();
       switch (e.type) {
+        // 에러 타입이 token 일경우 jwt refresh 요청 재실행
         case 'token':
           await refreshAccessToken();
 
@@ -89,6 +123,9 @@ const jwtTokenExpireInterceptor = async (
   }
 };
 
+/**
+ * jwt access, refresh 토큰 갱신
+ */
 const refreshAccessToken = async () => {
   try {
     const refreshToken = await getStorageData('@RefreshKey');
@@ -112,6 +149,13 @@ const refreshAccessToken = async () => {
   }
 };
 
+
+/**
+ * http get 통신
+ * @param url
+ * @param headers
+ * @returns 
+ */
 const _get = async ({
   url,
   headers,
@@ -135,6 +179,13 @@ const _get = async ({
   }
 };
 
+/**
+ * http post 통신
+ * @param url 
+ * @param body 
+ * @param headers
+ * @returns 
+ */
 const _post = async ({
   url,
   body,

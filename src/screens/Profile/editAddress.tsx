@@ -102,6 +102,9 @@ const EditAddress = ({ navigation }) => {
     size: 10,
   });
 
+  /**
+   * 주소 변경하기 
+   */
   const handleEditAddress = async () => {
     try {
       const request = {
@@ -112,7 +115,7 @@ const EditAddress = ({ navigation }) => {
       const response = await api.editAddress(request);
 
       if (response.result) {
-        await AsyncStorage.setItem('@User', JSON.stringify(response.data.user));
+        await AsyncStorage.setItem('@User', JSON.stringify(response.data));
         setResult(true);
       } else {
         throw 'err';

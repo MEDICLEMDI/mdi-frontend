@@ -21,22 +21,17 @@ import Header from '@/components/Header';
 import Hr from '@/components/Hr';
 import MedicleInput from '@/components/inputs/MedicleInput';
 import eventEmitter from '@/utils/eventEmitter';
-import { fontStyleCreator } from '@/utils/fonts';
 
 import style from './style';
-import { responseDTO, User } from '@/interfaces/api';
+import { User } from '@/interfaces/api';
 import { ErrorCode } from '@/constants/error';
 import { getStorageData } from '@/utils/localStorage';
-import LoadingModal from '@/components/LoadingModal';
 import useCustomToast from '@/hooks/useToast';
 
-export default ({ navigation }) => {
+export default ({ navigation }: any) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [signOutAgree, setSignOutAgree] = React.useState(false);
-  // const [page, setPage] = React.useState<'about wallet' | 'user withdraw'>(
-  //   'about wallet'
-  // );
   const { showToast } = useCustomToast();
   const [user, setUser] = React.useState<User>();
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -50,12 +45,17 @@ export default ({ navigation }) => {
     initialize();
   }, []);
 
+  /**
+   * 화면초기화 (유저정보 가져오기)
+   */
   const initialize = async () => {
     const user: User = await getStorageData('@User');
-    console.log(user);
     setUser(user);
   };
 
+  /**
+   * 회원탈퇴 백엔드 통신요청
+   */
   const handleUserWithdraw = async () => {
     setLoading(true);
     try {
@@ -90,10 +90,17 @@ export default ({ navigation }) => {
     }
   };
 
+  /**
+   * 모달닫기
+   */
   const handleCloseModal = () => {
     setModalVisible(false);
   };
 
+  /**
+   * 비밀번호 변경시 기존 유효검사들 초기화 (재요청시 다시 검사)
+   * @param text 
+   */
   const handlePasswordonChageText = (text: string) => {
     setPasswordErrMessage('');
     setPasswordVaild(text.length > 7);

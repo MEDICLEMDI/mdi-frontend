@@ -39,7 +39,7 @@ import NaverMapView, {
 import useCustomToast from '@/hooks/useToast';
 import Config from 'react-native-config';
 
-const ReviewList = ({ company_id, visible, closeHandler }) => {
+const ReviewList = ({ company_id, visible, closeHandler }: any) => {
   const isFocus = useIsFocused();
   const [page, setPage] = React.useState(1);
   const [reviews, setReviews] = React.useState<any>([]);
@@ -92,15 +92,12 @@ const ReviewList = ({ company_id, visible, closeHandler }) => {
             setIsMore(false);
           }
 
-          if (data.length === 5 && data !== null) {
+          if (data?.length === 5 && data !== null) {
             setPage(page + 1);
           }
 
           // 중복 제거
           const tempArr = reviews.concat(data);
-          const dataFilter = tempArr.filter((review, index, self) => {
-            self.findIndex(f => {}) === index;
-          });
           setReviews(tempArr);
         } catch (err) {
           console.error(err);
@@ -176,7 +173,7 @@ const ReviewList = ({ company_id, visible, closeHandler }) => {
   );
 };
 
-const HospitalDetail = ({ navigation, route }) => {
+const HospitalDetail = ({ navigation, route }: any) => {
   const { id, name } = route.params;
   const [hospitalData, setHospitalData] = React.useState<any>();
   const [timeTable, setTimeTable] = React.useState<any>([]);

@@ -10,6 +10,12 @@ interface TimerProps {
   onTimeOut: () => void;
 }
 
+/**
+ * Timer
+ * @param {number} initialTime - 시작 시간
+ * @param {void} onTimeOut - 종료할 시간
+ * @comment initialTime부터 시간이 감소하여 시간이 초과되는 경우 onTimeOut에 이벤트 설정
+ */
 const Timer = ({ initialTime, onTimeOut }: TimerProps) => {
   const [time, setTime] = useState(initialTime);
   useEffect(() => {}, [time, initialTime]);

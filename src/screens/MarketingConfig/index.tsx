@@ -22,12 +22,18 @@ export default () => {
     getMarketingFlag();
   }, [])
 
+  /**
+   * 스토리지 유저 데이터에서 유저의 마켓팅 수신 동의 상태를 확인
+   */
   const getMarketingFlag = async () => {
     const userInfo = await getStorageData("@User");
     if (userInfo.is_marketing_agree) setMarketingAgree(true)
     else setMarketingAgree(false)
   }
 
+  /**
+   * 마케팅 수신동의, 비동의 처리
+   */
   const updateMarketingFlag = async () => {
     try {
       const reulst = await api.updateMarketingFlag(!marketingAgree);

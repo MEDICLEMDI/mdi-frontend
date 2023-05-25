@@ -165,6 +165,11 @@ interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
+/**
+ * Icon
+ * @param {string} name
+ * @comment import해온 아이콘을 name을 기준으로 화면에 렌더링
+ */
 const Icon = ({
   name,
   fill = 'none',

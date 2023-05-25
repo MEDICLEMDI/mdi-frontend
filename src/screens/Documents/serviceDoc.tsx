@@ -15,7 +15,7 @@ import useCustomToast from '@/hooks/useToast';
 export default ({ navigation }) => {
   const { t } = useTranslation();
   const { showToast } = useCustomToast();
-  const [url, setUrl] = React.useState<string>('');
+  const [url, setUrl] = React.useState<string>(''); // 웹뷰 url (약관들이 링크로 되어있음)
   const [webViewVisible, setWebViewVisible] = React.useState(false);
   const [terms, setTerms] = React.useState<termsList>({
     service: '',
@@ -39,17 +39,25 @@ export default ({ navigation }) => {
   React.useEffect(() => {
   }, [terms]);
 
+  
+  /**
+   * 이용약관 리스트 가져오기
+   */
   const initTerms = async () => {
     const tempTerms = await handleGetTerms();
     setTerms(tempTerms);
   };
 
+  /**
+   * 해당 아이템 url로 웹뷰 실행하기
+   * @param url 
+   */
   const handleWebViewVisible = async (url: string) => {
     if (url) {
       setUrl(url);
       setWebViewVisible(true);
     } else {
-      toastRef.current!.show('처리중 오류가 발생하였습니다.');
+      showToast('처리중 오류가 발생하였습니다.')
     }
   };
 

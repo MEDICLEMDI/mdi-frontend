@@ -334,7 +334,7 @@ const ServiceSettings = () => {
       <Stack.Screen name={Routes.NOTICE} component={Notice} />
       <Stack.Screen name={Routes.NOTICE_DETAIL} component={NoticeDetail} />
       <Stack.Screen name={Routes.SERVICE_DOCUMENT} component={ServiceDoc} />
-      <Stack.Screen name={Routes.PERSONAL_DOCUMENT} component={PersonalDoc} />
+      {/* <Stack.Screen name={Routes.PERSONAL_DOCUMENT} component={PersonalDoc} /> */}
       <Stack.Screen name={Routes.MARKETING} component={MarketingConfig} />
     </Stack.Navigator>
   );

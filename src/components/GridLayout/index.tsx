@@ -19,11 +19,20 @@ export const deviceWidthCalculator = ({
   return (Dimensions.get('window').width - ((padding + gap) * 2)) / numColumns;
 }
 
+/**
+ * GridLayout
+ * @param {number} numColumns
+ * @param {StyleProp<ViewStyle>} style
+ * @param {any} data
+ * @param {React.ReactNode} renderItem
+ * @comment FlatList를 사용하여 기본 그리드 레이아웃을 생성합니다. 단 FlatList로 구성되어 ScrollView에서는 
+ * 스크롤 중첩 이슈로 정상동작을 하지 않기 때문에 ScrollView 내부에 해당 컴포넌트가 필요한 경우 아래의 ScrollViewGrid를 사용합니다.
+ */
 export const GridLayout = ({
   numColumns,
   style,
-  renderItem,
   data,
+  renderItem,
 }: FlatListProps<any>) => {
   return (
     <FlatList
@@ -36,6 +45,24 @@ export const GridLayout = ({
   );
 };
 
+/**
+ * ScrollViewGrid
+ * @param {any} data
+ * @param {'box' | 'circle' | 'loadingBox'} renderItem - 'box' | 'circle' | 'loadingBox'
+ * @param {StyleProp<ViewStyle>} itemStyle
+ * @param {{key: number, color: string}} itemSelected
+ * @param {string} itemBackground
+ * @param {StyleProp<ViewStyle>} iconStyle
+ * @param {{ fill?: string, stroke?: string }} iconColor
+ * @param {StyleProp<TextStyle>} textStyle
+ * @param {StyleProp<ViewStyle>} columnWrapperStyle
+ * @param {number} gap
+ * @param {number} padding
+ * @param {number} numColumns
+ * @param {Function} onPress
+ * @comment SrollView에서 그리드 레이아웃이 필요한경우 해당 컴포넌트를 사용하여 구성 할 수있습니다.
+ * 'box', 'circle'로 아이템의 형태를 선택하여 구성합니다. box형태의 예시는 홈 화면에서 확인이 가능하며, circle형태는 마이페이지에서 확인이 가능합니다.
+ */
 export const  ScrollViewGrid = ({
   data,
   renderItem,
@@ -52,7 +79,7 @@ export const  ScrollViewGrid = ({
   onPress,
 } : {
   readonly data: any;
-  readonly renderItem: 'box' | 'circle' | 'loadingBox';
+  readonly renderItem: 'box' | 'circle';
   onPress?: Function;
   itemStyle?: StyleProp<ViewStyle>;
   itemSelected?: {key: number, color: string};

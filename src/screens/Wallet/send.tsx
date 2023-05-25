@@ -1,9 +1,6 @@
 import Header from '@/components/Header';
 import MedicleButton from '@/components/buttons/MedicleButton';
-import { useIsFocused } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import ModalDropdown from 'react-native-modal-dropdown';
 import {
   Modal,
   SafeAreaView,
@@ -13,6 +10,8 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  Appearance,
+  Platform,
 } from 'react-native';
 import style from './style';
 import {
@@ -28,7 +27,7 @@ import { MedicleInput } from '@/components/inputs';
 import Hr from '@/components/Hr';
 import Li from '@/components/Li';
 import { Portal } from 'react-native-portalize';
-import { Picker } from '@react-native-picker/picker';
+import { Picker, PickerIOS } from '@react-native-picker/picker';
 import { Row } from '@/components/layout';
 import Spacing from '@/components/Spacing';
 import Icon from '@/components/icons';
@@ -37,29 +36,32 @@ import api from '@/components/Api';
 import { textEllipsis } from '@/utils/strings';
 import useCustomToast from '@/hooks/useToast';
 import Routes from '@/navigation/Routes';
+import { User } from '@/interfaces/api';
 
-export default ({ navigation }) => {
+export default ({ navigation }: any) => {
   const tokenTypes = ['ETH', 'MDI'];
+  const theme = Appearance.getColorScheme();
   const { showToast } = useCustomToast();
   const [isLoading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [balance, setBalance] = useState({
     eth: 0,
     mdi: 0,
-  });
-  const [selectedType, setSelectedType] = useState(0);
-  const [transfer, setTransfer] = useState('');
-  const [totalTransfer, setTotalTransfer] = useState('');
-  const [toAddress, setToAddress] = useState('');
-  const [disabled, setDisabled] = useState(true);
-  const [user, setUser] = useState();
+  }); // 유저 보유 토큰량 (0으로 초기화 후 페이지 진입시 잔액불러옴)
+  const [selectedType, setSelectedType] = useState(0); // 선택 토큰타입
+  const [transfer, setTransfer] = useState(''); // 전송수량
+  const [totalTransfer, setTotalTransfer] = useState(''); // 예상 가스(수수료)를 합산한 촐 수량
+  const [toAddress, setToAddress] = useState(''); // 전송대상
+  const [disabled, setDisabled] = useState(true); // 전송 버튼 잠금,해제
+  const [user, setUser] = useState<User>();
+  const [iosPickerVisible, setIosPickerVisible] = useState(false); // android, ios 에 따라 토큰 픽커 다름
 
   const addressRef = useRef<TextInput>(null);
   const transferRef = useRef<TextInput>(null);
 
   // validChecker
-  const [validTransfer, setValidTransfer] = useState('');
-  const [validAddress, setValidAddress] = useState('');
+  const [validTransfer, setValidTransfer] = useState(''); // 전송 수량 valid
+  const [validAddress, setValidAddress] = useState(''); // 전송 주소 valid
 
   useEffect(() => {
     getBalance();
@@ -84,6 +86,9 @@ export default ({ navigation }) => {
     setTotalTransfer(resultAmount.toFixed(4));
   }, [transfer]);
 
+  /**
+   * 유저 지갑잔액 가져오기
+   */
   const getBalance = async () => {
     setLoading(true);
     try {
@@ -91,16 +96,20 @@ export default ({ navigation }) => {
       setUser(_user);
       const data = await api.getBalance(_user.id, _user.mdi.mw_wallet_address);
       setBalance({
-        mdi: data.mdi,
-        eth: data.eth,
+        mdi: Number(data.mdi),
+        eth: Number(data.eth),
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
+  /**
+   * 지갑주소 유효성 검사
+   * @returns 
+   */
   const isAddress = () => {
     if (
       /^(0x|0X)?[0-9a-f]{40}$/.test(toAddress.toLowerCase()) ||
@@ -118,6 +127,10 @@ export default ({ navigation }) => {
     }
   };
 
+  /**
+   * 전송수량 유효성 검사
+   * @returns 
+   */
   const valueValidation = () => {
     const balance = convertTypeBalance();
     if(Number(transfer) <= 0) {
@@ -134,10 +147,18 @@ export default ({ navigation }) => {
     }
   };
 
+  /**
+   * 현재 선택 토큰값 가져오기
+   * @returns 
+   */
   const convertTypeBalance = () => {
     return selectedType === 0 ? balance.eth : balance.mdi;
   };
 
+  /**
+   * 예상 가스 수수료 가져오기
+   * @returns 
+   */
   const expectationGasFee = () => {
     const gasLimit = 21000;
     const gwei = 40;
@@ -148,16 +169,21 @@ export default ({ navigation }) => {
     return networkFee;
   };
 
+  /**
+   * 전송수량, 전송대상 지갑주소 검사 후 보내기 버튼 잠금,해제
+   */
   const transferValidation = () => {
     const value = valueValidation();
     const address = isAddress();
 
     if (value && address) {
-      console.log('call modal');
       setVisible(true);
     }
   };
 
+  /**
+   * 전송 요청하기
+   */
   const transferExcute = async () => {
     try {
       setLoading(true);
@@ -278,15 +304,40 @@ export default ({ navigation }) => {
           <Header goBack={true} title="전송" />
           <ScrollView style={[style.containerOffset]}>
             <View style={style.pickerWrap}>
-              <Picker
-                style={style.picker}
-                selectedValue={selectedType}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedType(itemValue)
-                }>
-                <Picker.Item style={DARK_GRAY_12} label="ETH 전송" value={0} />
-                <Picker.Item style={DARK_GRAY_12} label="MDI 전송" value={1} />
-              </Picker>
+              {
+                Platform.OS === 'android'
+                ?
+                <Picker
+                  style={style.picker}
+                  selectedValue={selectedType}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setSelectedType(itemValue)
+                  }>
+                    <Picker.Item style={theme === 'dark' ? { fontSize: 12 } : DARK_GRAY_12} label="ETH 전송" value={0} />
+                    <Picker.Item style={theme === 'dark' ? { fontSize: 12 } : DARK_GRAY_12} label="MDI 전송" value={1} />
+                </Picker>
+                :
+                <>
+                  <View>
+                    <MedicleInput value={tokenTypes[selectedType]} clearButton={false} editable={false} onPressIn={() => setIosPickerVisible(true)}/>
+                  </View>
+                  <Modal animationType="fade" transparent={true} visible={iosPickerVisible}>
+                    <View style={[style.sendModalWrap]}>
+                      <View style={style.sendModal}>
+                        <PickerIOS
+                          selectedValue={selectedType}
+                          onValueChange={(itemValue, itemIndex) =>{
+                            setSelectedType(itemValue)
+                            setIosPickerVisible(false)
+                          }}>
+                          <Picker.Item style={theme === 'dark' ? { fontSize: 14 } : DARK_GRAY_12} label="ETH 전송" value={0} />
+                          <Picker.Item style={theme === 'dark' ? { fontSize: 14 } : DARK_GRAY_12} label="MDI 전송" value={1} />
+                        </PickerIOS>
+                      </View>
+                    </View>
+                  </Modal>
+                </>
+              }
             </View>
 
             <MedicleInput

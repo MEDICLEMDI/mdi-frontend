@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from "mobx";
 
-interface IAppManage {
+export interface IAppManage {
   companyGroup: [] | undefined;
   productGroup: [] | undefined;
 }

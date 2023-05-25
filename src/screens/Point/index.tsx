@@ -30,15 +30,16 @@ import { convertNumberLocale } from '@/utils/utilities';
 import dayjs from 'dayjs';
 import { Row } from '@/components/layout';
 import { DARK_GRAY_BOLD_14, STANDARD_GRAY_12 } from '@/constants/theme';
+import { IPointHistory } from '@/interfaces/api';
 
-export default ({ navigation }) => {
+export default ({ navigation }: any) => {
   const { t } = useTranslation();
   const isFocus = useIsFocused();
   const [visible, setVisible] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [point, setPoint] = React.useState(0);
   const [date, setDate] = React.useState({ from: '', to: '' });
-  const [histories, setHistories] = React.useState([]);
+  const [histories, setHistories] = React.useState<IPointHistory[]>([]);
   const [isInit, setInit] = React.useState(false);
 
   React.useEffect(() => {
@@ -50,6 +51,9 @@ export default ({ navigation }) => {
     size: 10,
   });
 
+  /**
+   * 화면 초기화 설정
+   */
   const initialize = async () => {
     setInit(false);
     const initDate = dateSetup(1, 'week');
@@ -58,22 +62,33 @@ export default ({ navigation }) => {
     await setUserInformation();
   };
 
+  /**
+   * 유저정보 가져오기
+   */
   const setUserInformation = async () => {
     const user = await getStorageData('@User');
     setPoint(user.mdi.mw_mdi_point);
   };
 
+  /**
+   * 유저 아이디 반환
+   * @returns
+   */
   const getUserId = async () => {
     const user = await getStorageData('@User');
     return user.id;
   };
 
+  /**
+   * 유저 포인트 거래내역
+   * @param date 
+   */
   const getPointHistory = async (date: any) => {
     setHistories([]);
     setInit(false);
     try {
       const { data } = await api.getPointHistory(await getUserId(), date);
-      setHistories(data);
+      setHistories(data!);
     } catch (e) {
       console.error(e);
     } finally {
@@ -114,7 +129,7 @@ export default ({ navigation }) => {
       </BoxDropShadow>
       <View style={style.historyWrap}>
         <View style={{ paddingHorizontal: 20 }}>
-          <SearchBar onPress={() => setVisible(true)} />
+          <SearchBar onPress={() => setVisible(true)} title={''} period={''} />
         </View>
         <DatePicker
           name="dataPicker"

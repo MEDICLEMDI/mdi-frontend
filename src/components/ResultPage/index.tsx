@@ -19,6 +19,10 @@ interface ResultProps {
   onPress?: (event: GestureResponderEvent) => void;
 }
 
+/**
+ * ResultPage
+ * @comment 완료처리에 대한 페이지
+ */
 const ResultPage = (props: ResultProps) => {
   return (
     <SafeAreaView style={style.mainContainer}>

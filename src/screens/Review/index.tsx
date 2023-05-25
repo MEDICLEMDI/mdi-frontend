@@ -14,12 +14,13 @@ import { convertPrice } from '@/utils/utilities';
 import style from './style';
 import useCustomToast from '@/hooks/useToast';
 import LoadingModal from '@/components/LoadingModal';
+import { IProductDetail, User } from '@/interfaces/api';
 
-const Review = ({ navigation, route }) => {
+const Review = ({ navigation, route }: any) => {
   const { company_id, appointment_id, product_id, user_id } = route.params;
 
-  const [productData, setProductData] = React.useState();
-  const [userData, setUserData] = React.useState();
+  const [productData, setProductData] = React.useState<IProductDetail>();
+  const [userData, setUserData] = React.useState<User>();
   const [comment, setComment] = React.useState('');
   const [disabled, setDisabled] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
@@ -45,20 +46,29 @@ const Review = ({ navigation, route }) => {
     setDisabled(!lengthCheck);
   }, [comment]);
 
+  /**
+   * 페이지 초기화
+   */
   const dataSetup = async () => {
     await getProductDetail();
     await getUserData();
   };
 
+  /**
+   * 유저정보 가져오기
+   */
   const getUserData = async () => {
     try {
       const user = await AsyncStorage.getItem('@User');
-      setUserData(JSON.parse(user));
+      setUserData(JSON.parse(user!));
     } catch (err) {
       console.error(err);
     }
   };
 
+  /**
+   * 상품의 상세정보 가져오기
+   */
   const getProductDetail = async () => {
     try {
       const data = await api.getProductInfo(product_id);
@@ -68,6 +78,9 @@ const Review = ({ navigation, route }) => {
     }
   };
 
+  /**
+   * 리뷰 작성하기
+   */
   const submit = async () => {
     setLoading(true);
     const request = {
