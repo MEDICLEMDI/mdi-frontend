@@ -62,10 +62,11 @@ const Tab = ({
   const selected_style_tab = tabSelectedStyle[1];
 
   const flatListRef = React.useRef<FlatList>(null);
+  const [tabBuilder, setTabBuilder] = React.useState<any[]>([]);
 
-  React.useEffect(() => {
-    scrollIndex();
-  }, [])
+  // React.useEffect(() => {
+  //   scrollIndex();
+  // }, [])
   
   React.useEffect(() => {
     scrollIndex();
@@ -73,12 +74,24 @@ const Tab = ({
 
   // 만약 탭이 좌우로 또는 상하로 긴 경우 설정된 탭의 인덱스 번호까지 자동으로 스크롤
   const scrollIndex = () => {
-    if(useScrollIndex && data.length > 0) {
-      flatListRef.current?.scrollToIndex({ animated: true, viewOffset: 1, index: index - data[0].id })
+
+    const tabSorting = [];
+    for (const tab of data) {
+      const key = data.indexOf(tab);
+      // 상품 메뉴 추가시 발생하는 배열의 out of range 문제로 추가된 코드입니다.
+      // 배열 자체의 인덱스와 데이터베이스에서 전달받은 pk(PrimaryKey) 인덱스를 분리하여 배열을 재구성합니다
+      tabSorting.push({ id: key + 1, pk: tab.id, name: tab.name ? tab.name : tab.label });
+    }
+    setTabBuilder(tabSorting);
+
+    if(useScrollIndex && tabBuilder.length > 0) {
+      const scrollIndex = tabSorting.findIndex((tab) => Number(tab.pk) === Number(index));
+      flatListRef.current?.scrollToIndex({ animated: true, viewOffset: 1, index: scrollIndex })
     }
   }
   // 탭의 스크롤이 실패했을 경우 1초 후 다시한번 시도
   const scrollToIndexFail = ({ index }: any) => {
+    console.log(`scrollToIndexFail: ${index}`)
     setTimeout(() => {
       flatListRef.current?.scrollToIndex({ animated: true, viewOffset: 1, index: index })
     }, 1000)
@@ -92,14 +105,14 @@ const Tab = ({
         keyExtractor={(item) => item.id}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        data={data}
+        data={tabBuilder}
         renderItem={({ item }) => (
           <TouchableOpacity
             key={item.id}
-            onPress={() => response(item.id)}
-            style={[buttonStyle, Number(index) === Number(item.id) && selected_style_tab]}>
-            <Text style={[textStyle, Number(index) === Number(item.id) && selected_style_text]}>
-              {item.label ? item.label : item.name}
+            onPress={() => response(item.pk)}
+            style={[buttonStyle, Number(index) === Number(item.pk) && selected_style_tab]}>
+            <Text style={[textStyle, Number(index) === Number(item.pk) && selected_style_text]}>
+              {item.name}
             </Text>
           </TouchableOpacity>
         )}
