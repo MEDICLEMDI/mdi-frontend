@@ -2,16 +2,16 @@ import Routes from '@/navigation/Routes';
 
 
 export const myPageMenus = (t) => [
-  {
-    icon: 'coin',
-    name: t('menus.point'),
-    route: Routes.POINT,
-  },
-  {
-    icon: 'book',
-    name: t('menus.receipt'),
-    route: Routes.RECEIPT,
-  },
+  // {
+  //   icon: 'coin',
+  //   name: t('menus.point'),
+  //   route: Routes.POINT,
+  // },
+  // {
+  //   icon: 'book',
+  //   name: t('menus.receipt'),
+  //   route: Routes.RECEIPT,
+  // },
   {
     icon: 'heart',
     name: t('menus.subscribe'),
@@ -47,9 +47,9 @@ export const myPageMenus = (t) => [
     name: t('menus.settings'),
     route: Routes.SERVICE_SETTINGS,
   },
-  {
-    icon: 'wallet',
-    name: '지갑',
-    route: Routes.WALLET,
-  },
+  // {
+  //   icon: 'wallet',
+  //   name: '지갑',
+  //   route: Routes.WALLET,
+  // },
 ];

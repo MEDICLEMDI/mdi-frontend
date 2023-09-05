@@ -73,6 +73,8 @@ import XTCIcon from './svg/XTC.svg';
 import YZoneIcon from './svg/YZone.svg';
 import BinanceIcon from './svg/Binance.svg';
 import EthereumIcon from './svg/Ethereum.svg';
+import MediumIcon from './svg/Medium.svg';
+import DiscordIcon from './svg/Discord.svg';
 
 export const IconTypes = (type: string) =>
   ({
@@ -84,6 +86,8 @@ export const IconTypes = (type: string) =>
     github: GithubIcon,
     twitter: TwitterIcon,
     telegram: TelegramIcon,
+    medium: MediumIcon,
+    discord: DiscordIcon,
     menu: MenuIcon,
     mdi: MDIIcon,
     xtc: XTCIcon,
