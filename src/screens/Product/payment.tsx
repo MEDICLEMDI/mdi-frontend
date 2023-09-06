@@ -122,10 +122,11 @@ export default ({ navigation, route }: any) => {
    * 결제 진행
    */
   const submit = async () => {
-    let payment_method = radioIndex === 0 ? 'point' : 'pg';
+    // let payment_method = radioIndex === 0 ? 'point' : 'pg';
+    // if (payment_method === 'point') await paymentPoint();
+    // else paymentPg();
 
-    if (payment_method === 'point') await paymentPoint();
-    else paymentPg();
+    await paymentPoint(); // 포인트 사용으로 고정
   };
 
   /**
@@ -135,11 +136,13 @@ export default ({ navigation, route }: any) => {
    */
   const paymentPoint = async () => {
     setloading(true);
-    if (Number(user?.mdi.mw_mdi_point) < Number(itemData?.discount_price)) {
-      showToast('포인트가 부족합니다.');
-      setloading(false);
-      return;
-    }
+    
+    // 보유포인트 확인 
+    // if (Number(user?.mdi.mw_mdi_point) < Number(itemData?.discount_price)) {
+    //   showToast('포인트가 부족합니다.');
+    //   setloading(false);
+    //   return;
+    // }
 
     const request = {
       payment_method: 'point',
@@ -155,7 +158,8 @@ export default ({ navigation, route }: any) => {
           navigation.navigate({ name: Routes.MYPAGE }),
           navigation.navigate({ name: Routes.RECEIPT }),
         ]);
-        showToast('결제가 완료되었습니다.')
+        // showToast('결제가 완료되었습니다.')
+        showToast('예약이 완료되었습니다.')
       }
     } catch (err) {
       console.error(err);
