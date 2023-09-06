@@ -386,7 +386,8 @@ const ProductDetail = ({ navigation, route }: any) => {
             }
             textStyle={DARK_GRAY_BOLD_12}
             disabled={payButtonDisabled}
-            text="앱에서 결제하기"
+            // text="앱에서 결제하기"
+            text="앱에서 에약하기"
           />
         </Row>
         <CustomModal
