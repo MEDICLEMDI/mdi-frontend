@@ -268,16 +268,16 @@ export default ({ navigation, route }: any) => {
                 {itemData?.product_name}
               </Text>
               <Text style={[DARK_GRAY_BOLD_14, { marginTop: 10 }]}>
-                {convertPrice(itemData?.discount_price)}
+                {/* {convertPrice(itemData?.discount_price)}
                 &nbsp;
                 <Text style={LIGHT_GRAY_10}>
                   &nbsp; VAT | 마취/사후관리비 포함
-                </Text>
+                </Text> */}
               </Text>
             </Accordion.Body>
           </Accordion>
         </View>
-        <View style={[style.borderBottom]}>
+        {/* <View style={[style.borderBottom]}>
           <View style={[style.chargeWrap]}>
             <Text style={[DARK_GRAY_BOLD_14, style.sectionHeader]}>
               결제 정보
@@ -325,14 +325,14 @@ export default ({ navigation, route }: any) => {
               </BoxDropShadow>
             )}
           </View>
-        </View>
-        <View style={[style.borderBottom, style.chargeWrap]}>
+        </View> */}
+        {/* <View style={[style.borderBottom, style.chargeWrap]}>
           <Row justify="space-between" align="center">
             <Text>무이자/부분 무이자 할부 혜택 안내</Text>
             <Icon name="arrowRight" />
           </Row>
-        </View>
-        <View style={[style.borderBottom, style.chargeWrap]}>
+        </View> */}
+        {/* <View style={[style.borderBottom, style.chargeWrap]}>
           <Accordion>
             <Accordion.Header>
               <Text style={[DARK_GRAY_BOLD_14]}>환불 방법</Text>
@@ -341,9 +341,9 @@ export default ({ navigation, route }: any) => {
               <Text>상품 예약시 약관</Text>
             </Accordion.Body>
           </Accordion>
-        </View>
+        </View> */}
         <View style={[style.chargeWrap]}>
-          <Accordion isOpen={true} style={style.totalPriceWrap}>
+          {/* <Accordion isOpen={true} style={style.totalPriceWrap}>
             <Accordion.Header>
               <Text style={[DARK_GRAY_BOLD_14, style.sectionHeader]}>
                 최종 결제금액
@@ -377,20 +377,21 @@ export default ({ navigation, route }: any) => {
                 <Text style={DARK_GRAY_BOLD_14}>0원</Text>
               </View>
             </Accordion.Body>
-          </Accordion>
+          </Accordion> */}
 
-          <View style={[style.totalWrap]}>
+          {/* <View style={[style.totalWrap]}>
             <Text style={ORANGE_BOLD_14}>결제 금액</Text>
             <Text style={DARK_GRAY_BOLD_14}>
               {convertNumberLocale(itemData?.discount_price)}
             </Text>
-          </View>
+          </View> */}
           <Text />
         </View>
         {radioIndex === 0 && (
           <View style={style.chargeWrap}>
             <Text style={STANDARD_GRAY_10}>
-              회원 본인은 구매 조건, 주문 내용 확인 및 결제에 동의합니다.
+              {/* 회원 본인은 구매 조건, 주문 내용 확인 및 결제에 동의합니다. */}
+              회원 본인은 예약 상품 및 예약 내용을 확인했습니다.
             </Text>
             <View style={style.checkDocsWrap}>
               <View style={style.termBox}>
@@ -467,10 +468,11 @@ export default ({ navigation, route }: any) => {
         buttonStyle={{ height: 52 }}
         onPress={() => submit()}
         textStyle={DARK_GRAY_BOLD_14}
-        text={convertNumberLocale(itemData?.discount_price) + ' 결제하기'}
+        // text={convertNumberLocale(itemData?.discount_price) + ' 결제하기'}
+        text={'진료 예약하기'}
         disabled={payButtonDisabled}
       />
-      <Modal animationType="slide" visible={visible} transparent={false}>
+      {/* <Modal animationType="slide" visible={visible} transparent={false}>
         <SafeAreaView style={{ flex: 1 }}>
           <View style={{ flex: 1 }}>
             <IMP.Payment
@@ -482,7 +484,7 @@ export default ({ navigation, route }: any) => {
             />
           </View>
         </SafeAreaView>
-      </Modal>
+      </Modal> */}
       <LoadingModal visible={loading} />
       
     </SafeAreaView>
