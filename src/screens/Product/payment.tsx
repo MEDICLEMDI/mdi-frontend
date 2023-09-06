@@ -161,6 +161,9 @@ export default ({ navigation, route }: any) => {
         // showToast('결제가 완료되었습니다.')
         showToast('예약이 완료되었습니다.')
       }
+      else{
+        showToast('예약 정보 저장 중 문제가 발생했습니다.')
+      }
     } catch (err) {
       console.error(err);
     } finally {
