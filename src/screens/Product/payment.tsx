@@ -156,7 +156,8 @@ export default ({ navigation, route }: any) => {
       if (res.result) {
         navigation.dispatch([
           navigation.navigate({ name: Routes.MYPAGE }),
-          navigation.navigate({ name: Routes.RECEIPT }),
+          // navigation.navigate({ name: Routes.RECEIPT }),
+          navigation.navigate({ name: Routes.CHART }), // 예약 후 이동할 페이지 변경
         ]);
         // showToast('결제가 완료되었습니다.')
         showToast('예약이 완료되었습니다.')
@@ -237,7 +238,8 @@ export default ({ navigation, route }: any) => {
       if (res.result) {
         navigation.dispatch([
           navigation.navigate({ name: Routes.MYPAGE }),
-          navigation.navigate({ name: Routes.RECEIPT }),
+          // navigation.navigate({ name: Routes.RECEIPT }),
+          navigation.navigate({ name: Routes.CHART }), // 예약 후 이동할 페이지 변경
         ]);
         showToast('결제가 완료되었습니다.')
       }
