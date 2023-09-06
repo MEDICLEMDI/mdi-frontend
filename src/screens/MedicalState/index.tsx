@@ -78,8 +78,8 @@ export default ({ navigation }) => {
               </View>
             </View>
             <View style={[style.justifyTextWrap, style.priceWrap]}>
-              <Text>총 결제금액</Text>
-              <Text>{price.toLocaleString()}원</Text>
+              {/* <Text>총 결제금액</Text>
+              <Text>{price.toLocaleString()}원</Text> */}
             </View>
             <MedicleButton
               buttonStyle={style.button}

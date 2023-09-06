@@ -158,12 +158,12 @@ export default ({ navigation, route }: any) => {
                     </Text>
                   </Row>
                 )}
-                <Row style={{ marginVertical: 5 }}>
+                {/* <Row style={{ marginVertical: 5 }}>
                   <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>진료비</Text>
                   <Text style={[DARK_GRAY_BOLD_14, { flex: 2 }]}>
                     {convertNumberLocale(item?.price)}
                   </Text>
-                </Row>
+                </Row> */}
               </View>
             </Accordion.Body>
           </Accordion>

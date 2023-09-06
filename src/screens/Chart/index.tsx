@@ -215,8 +215,8 @@ export default ({ navigation, route }: any) => {
                 </View>
                 {item.status < 4 && (
                   <View style={[style.justifyTextWrap, style.priceWrap]}>
-                    <Text>총 결제금액</Text>
-                    <Text>{convertNumberLocale(item.price)}</Text>
+                    {/* <Text>총 결제금액</Text>
+                    <Text>{convertNumberLocale(item.price)}</Text> */}
                   </View>
                 )}
                 <MedicleButton
