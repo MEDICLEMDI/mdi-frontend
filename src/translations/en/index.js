@@ -93,7 +93,8 @@ const translations = {
     etc: 'ETC',
   },
   menus: {
-    point: 'Point',
+    point: 'Poiint', // Point -> Reserve text change
+    reserve: 'Reserve',
     receipt: 'Payment history',
     subscribe: 'Wish list',
     chart: 'Medical record',

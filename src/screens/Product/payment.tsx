@@ -254,7 +254,7 @@ export default ({ navigation, route }: any) => {
 
   return (
     <SafeAreaView style={style.container}>
-      <Header goBack={true} title={t('menus.point')} />
+      <Header goBack={true} title={t('menus.reserve')} />
       <ScrollView>
         <View style={[style.borderBottom, style.chargeWrap]}>
           <Accordion isOpen={true}>

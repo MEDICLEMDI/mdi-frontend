@@ -132,6 +132,7 @@ const translations = {
   },
   menus: {
     point: '포인트',
+    reserve: '예약확정',
     receipt: '결제목록',
     subscribe: '관심상품',
     chart: '예약내역',
