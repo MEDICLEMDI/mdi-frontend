@@ -120,18 +120,20 @@ const Profile = ({ navigation }: any) => {
             opacity={0.95}
             radius={10}
             style={style.profileWrap}>
-              {isInit ?  
-              
-            <><View style={style.profileNameWrap}>
+              {isInit ?
+            <>
+              <View style={style.profileNameWrap}>
                 <Icon name="userCircle" />
                 <Text style={style.name}>{user?.name}</Text>
-              </View><View style={style.pointBtn}>
-                  <Icon name="mdiIcon" />
-                  <Text style={{ marginHorizontal: 10 }}>
-                    포인트
-                  </Text>
-                  <Text>{convertPrice(user?.mdi.mw_mdi_point)}</Text>
-                </View></>
+              </View>
+              {/* <View style={style.pointBtn}>
+                <Icon name="mdiIcon" />
+                <Text style={{ marginHorizontal: 10 }}>
+                  포인트
+                </Text>
+                <Text>{convertPrice(user?.mdi.mw_mdi_point)}</Text>
+              </View> */}
+            </>
               :
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                   <ActivityIndicator />
