@@ -207,7 +207,8 @@ const Home = () => {
           <ScrollViewGrid
             columnWrapperStyle={style.categoryWrap}
             itemStyle={style.itemStyle}
-            itemBackground="#F3F1EB"
+            // itemBackground="#F3F1EB"
+            itemBackground={Colors.Medicle.Gray.CustomGray}
             iconStyle={style.iconStyle}
             iconColor={{ fill: Colors.Medicle.Black }}
             textStyle={style.textStyle}

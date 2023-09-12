@@ -157,7 +157,8 @@ const Profile = ({ navigation }: any) => {
         </View>
         <ScrollViewGrid
           itemStyle={style.itemStyle}
-          itemBackground={Colors.Medicle.Brown.Light}
+          // itemBackground={Colors.Medicle.Brown.Light}
+          itemBackground={Colors.Medicle.Gray.CustomGray}
           numColumns={numColumns}
           padding={menuPadding}
           iconColor={{ stroke: Colors.Medicle.Brown.SemiDark }}
