@@ -169,14 +169,14 @@ export default ({ navigation, route }: any) => {
                     {item?.hospital_doctor}
                   </Text>
                 </Row>
-                <Row style={{ marginVertical: 5 }}>
+                {/* <Row style={{ marginVertical: 5 }}>
                   <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>
                     사업자번호
                   </Text>
                   <Text style={[DARK_GRAY_BOLD_14, { flex: 2 }]}>
                     {item?.trader_number}
                   </Text>
-                </Row>
+                </Row> */}
                 <Row style={{ marginVertical: 5 }}>
                   <Text style={[STANDARD_GRAY_14, { flex: 1 }]}>증상/요청</Text>
                   <Text style={[DARK_GRAY_BOLD_14, { flex: 2 }]}>

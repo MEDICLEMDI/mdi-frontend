@@ -281,13 +281,13 @@ const ProductDetail = ({ navigation, route }: any) => {
                 value={itemData?.doctor_name}
                 editable={false}
               />
-              <MedicleInput
+              {/* <MedicleInput
                 style={style.input}
                 label={<Text>사업자번호</Text>}
                 clearButton={false}
                 value={itemData?.trader_number}
                 editable={false}
-              />
+              /> */}
               <MedicleInput
                 style={style.input}
                 label={<Text>소재지</Text>}
