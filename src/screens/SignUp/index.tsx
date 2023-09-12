@@ -1028,7 +1028,7 @@ const SignUp = ({ navigation, route }: any) => {
                 style={style.checkBox}
               />
               <Text style={style.essentialText}>
-                [필수]메디클 서비스 이용약관 동의
+                [필수]MDI 서비스 이용약관 동의
               </Text>
               <TouchableOpacity onPress={() => handleViewDetail('service')}>
                 <Text style={style.detail}>상세보기</Text>

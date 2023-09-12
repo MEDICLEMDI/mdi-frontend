@@ -5,7 +5,7 @@ export const chargeType = [
 ]
 
 export const payType = [
-  {name: '메디클 포인트 결제'},
+  {name: 'MDI 포인트 결제'},
   {name: '일반 결제'},
 ]
 

@@ -25,7 +25,7 @@ export default ({ navigation }) => {
     location: '',
   });
   const data = [
-    ['메디클 서비스 이용약관', terms.service],
+    ['MDI 서비스 이용약관', terms.service],
     ['개인정보 처리방침', terms.privacy],
     ['개인정보 제3자 제공', terms.provision],
     ['전자금융거래 이용약관', terms.financial],

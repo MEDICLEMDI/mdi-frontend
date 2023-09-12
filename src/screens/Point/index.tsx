@@ -108,7 +108,7 @@ export default ({ navigation }: any) => {
       <Header goBack={true} title={t('menus.point')} />
       <BoxDropShadow style={[style.pointWrap]}>
         <View style={[style.flexRow]}>
-          <Text>메디클 포인트</Text>
+          <Text>MDI 포인트</Text>
           {/* <TouchableOpacity style={style.infoButton}> */}
           {/* <Text style={FONT_BASIC_BLACK}>이용안내</Text> */}
           {/* </TouchableOpacity> */}

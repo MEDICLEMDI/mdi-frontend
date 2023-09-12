@@ -116,7 +116,7 @@ export const handleNaver = async (navigation: any) => {
 // 리액트네이티브 네이버 소셜로그인 기본설정 자세한 방법은 해당 라이브러리 확인
 // https://github.com/crossplatformkorea/react-native-naver-login
 export const getNaverToken = async () => {
-  const appName = '메디클';
+  const appName = 'MDI';
   const consumerKey = Config.NAVER_SOCIAL_CLIENT_ID!;
   const consumerSecret = Config.NAVER_SOCIAL_CLIENT_SECRET!;
   const serviceUrlScheme = 'com.medicle.alpha';
