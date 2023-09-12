@@ -31,6 +31,7 @@ export const Colors = {
       Standard: '#989898',
       Dark: '#454545',
       SemiDark: '#666666',
+      CustomGray: '#F3F1EB',
     },
     Brown: {
       Light: '#FCF4E9',
