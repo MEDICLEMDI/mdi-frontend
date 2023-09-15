@@ -32,11 +32,11 @@ export const myPageMenus = (t) => [
     name: t('menus.faq'),
     route: Routes.FAQ,
   },
-  {
-    icon: 'exchange',
-    name: t('menus.exchange'),
-    route: Routes.EXCHANGE,
-  },
+  // {
+  //   icon: 'exchange',
+  //   name: t('menus.exchange'),
+  //   route: Routes.EXCHANGE,
+  // },
   {
     icon: 'community',
     name: t('menus.community'),
@@ -46,6 +46,11 @@ export const myPageMenus = (t) => [
     icon: 'settings',
     name: t('menus.settings'),
     route: Routes.SERVICE_SETTINGS,
+  },
+  {
+    icon: '',
+    name: '',
+    route: '',
   },
   // {
   //   icon: 'wallet',
