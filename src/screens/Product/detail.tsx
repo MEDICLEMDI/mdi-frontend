@@ -345,7 +345,7 @@ const ProductDetail = ({ navigation, route }: any) => {
               <TouchableOpacity onPress={() => setVisible(true)}>
                 <Text style={DARK_GRAY_BOLD_16}>희망 진료 일자</Text>
                 <Text style={[ORANGE_BOLD_16, { marginBottom: 5 }]}>
-                  {date.from} ({time})
+                  {date.to} ({time})
                 </Text>
                 {/* <Text style={DARK_GRAY_BOLD_16}>{itemData?.hospital_name}</Text>
                 <Text style={DARK_GRAY_10}>
