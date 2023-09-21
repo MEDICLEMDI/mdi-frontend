@@ -24,7 +24,7 @@ export default ({
     <SafeAreaView style={style.container}>
       <Header goBack={true} title={t('setting.notice')} />
       <View style={style.imageBox}>
-        <Image source={{ uri: `${IMAGESERVER_PREFIX}${notice.main_image}` }} style={style.image} resizeMode="cover"/>
+        <Image source={{ uri: `${IMAGESERVER_PREFIX}${notice.main_image}` }} style={style.image} resizeMode="contain"/>
       </View>
       <View style={style.titleWrap}>
         <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{notice.title}</Text>
