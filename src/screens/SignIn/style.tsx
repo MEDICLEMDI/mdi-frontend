@@ -11,6 +11,11 @@ export default StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
   },
+  contentIos: {
+    paddingTop: 110,
+    flex: 1,
+    paddingHorizontal: 30,
+  },
   signInButton: {
     height: 45,
     borderRadius: 10,
@@ -96,5 +101,10 @@ export default StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: Colors.Medicle.Font.White,
+  },
+  MdiLogoImage: {
+    width: '100%',
+    height: 110,
+    marginTop: 100,
   },
 });

@@ -3,6 +3,7 @@ import {
   BackHandler,
   SafeAreaView,
   View,
+  Image,
 } from 'react-native';
 import Header from '@/components/Header';
 import Routes from '@/navigation/Routes';
@@ -12,6 +13,8 @@ import { SocialLoginButton } from '@/components/buttons/SocialLoginButton';
 import useCustomToast from '@/hooks/useToast';
 import LoadingModal from '@/components/LoadingModal';
 import { Platform } from 'react-native';
+
+import MDILogo from '@/assets/icons/medicle-logo-full.png';
 
 const Social = ({ navigation }) => {
   const { showToast } = useCustomToast();
@@ -71,7 +74,14 @@ const Social = ({ navigation }) => {
   return (
     <SafeAreaView style={style.container}>
       <Header goBack={false} />
-      <View style={style.content}>
+      <Image
+          source={MDILogo}
+          resizeMode="contain"
+          style={style.MdiLogoImage}
+      />
+
+      {Platform.OS !== 'ios' && (
+        <View style={style.content}>
         <SocialLoginButton
           label="카카오톡 계정으로 시작"
           color="#FEE500"
@@ -98,8 +108,21 @@ const Social = ({ navigation }) => {
           icon="email"
           onPress={() => navigation.navigate(Routes.SIGNIN)}
         />
-        
-      </View>
+        </View>
+      )}
+
+      {Platform.OS === 'ios' && (
+        <View style={style.content}>
+        <SocialLoginButton
+          label="이메일 계정으로 시작하기"
+          color="#5F5F5F"
+          textColor="#FFFFFF"
+          icon="email"
+          onPress={() => navigation.navigate(Routes.SIGNIN)}
+        />
+        </View>
+      )}
+      
       <LoadingModal visible={visible}/>
     </SafeAreaView>
   );
