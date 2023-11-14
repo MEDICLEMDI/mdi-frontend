@@ -492,7 +492,7 @@ const SignUp = ({ navigation, route }: any) => {
       user_id: signUpData.email,
       password: signUpData.password,
       name: signUpData.name,
-      registration_number: `${signUpData.registrationNumber1}${signUpData.registrationNumber2}`,
+      // registration_number: `${signUpData.registrationNumber1}${signUpData.registrationNumber2}`,
       phone: signUpData.phone,
       email: signUpData.email,
       address1: signUpData.address1,
@@ -781,7 +781,7 @@ const SignUp = ({ navigation, route }: any) => {
             // onBlur={() => handleBlur('name')}
             errText={error.name !== undefined ? error.name : undefined}
           />
-          <View>
+          {/* <View>
             <Text style={style.labelText}>
               {t('signUp.registrationNumberLabel')}
             </Text>
@@ -815,7 +815,7 @@ const SignUp = ({ navigation, route }: any) => {
                 }
               />
             </Row>
-          </View>
+          </View> */}
           <View>
             <Text style={style.labelText}>{t('signUp.addressLabel')}</Text>
             <MedicleInput
