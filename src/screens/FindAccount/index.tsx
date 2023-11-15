@@ -20,15 +20,17 @@ import style from './style';
 
 export interface UserData {
   name?: string;
-  registrationNumber1?: string;
-  registrationNumber2?: string;
+  // registrationNumber1?: string;
+  // registrationNumber2?: string;
+  phone?: string;
   email?: string;
 }
 
 export interface FormError {
   name?: string;
-  registrationNumber1?: string;
-  registrationNumber2?: string;
+  // registrationNumber1?: string;
+  // registrationNumber2?: string;
+  phone?: string;
   email?: string;
 }
 
@@ -39,21 +41,24 @@ const FindAccount = ({ navigation }: any) => {
   const [userData, setUserData] = React.useState<UserData>({
     name: undefined,
     email: undefined,
-    registrationNumber1: undefined,
-    registrationNumber2: undefined,
+    phone: undefined,
+    // registrationNumber1: undefined,
+    // registrationNumber2: undefined,
   });
   const [error, setError] = React.useState<FormError>({
     name: undefined,
-    registrationNumber1: undefined,
-    registrationNumber2: undefined,
+    // registrationNumber1: undefined,
+    // registrationNumber2: undefined,
+    phone: undefined,
     email: undefined,
   });
   const regex: { [key: string]: RegExp } = {
     name: /^[가-힣]{2,10}$/,
     email: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-    registrationNumber1:
-      /^(0[1-9]|[1-9][0-9])((0[1-9])|(1[0-2]))(([012][0-9])|(3[0-1]))$/,
-    registrationNumber2: /^[1-4]\d{6}$/,
+    phone: /^010[0-9]*$/,
+    // registrationNumber1:
+    //   /^(0[1-9]|[1-9][0-9])((0[1-9])|(1[0-2]))(([012][0-9])|(3[0-1]))$/,
+    // registrationNumber2: /^[1-4]\d{6}$/,
   };
   const [tabIndex, setTabIndex] = React.useState(0); // 아이디찾기, 비밀번호 찾기 탭
   const [result, setResult] = React.useState(false); // 결과여부 (결과페이지 보여주기 용도)
@@ -67,23 +72,27 @@ const FindAccount = ({ navigation }: any) => {
     if (tabIndex === 0) {
       if (
         userData.name &&
-        userData.registrationNumber1 &&
-        userData.registrationNumber2 &&
+        // userData.registrationNumber1 &&
+        // userData.registrationNumber2 &&
+        userData.phone &&
         error.name === undefined &&
-        error.registrationNumber1 === undefined &&
-        error.registrationNumber2 === undefined
+        // error.registrationNumber1 === undefined &&
+        // error.registrationNumber2 === undefined
+        error.phone === undefined
       ) {
         setNextDisabled(true);
       }
     } else if (tabIndex === 1) {
       if (
         userData.name &&
-        userData.registrationNumber1 &&
-        userData.registrationNumber2 &&
+        // userData.registrationNumber1 &&
+        // userData.registrationNumber2 &&
+        userData.phone &&
         userData.email &&
         error.name === undefined &&
-        error.registrationNumber1 === undefined &&
-        error.registrationNumber2 === undefined &&
+        // error.registrationNumber1 === undefined &&
+        // error.registrationNumber2 === undefined &&
+        error.phone === undefined &&
         error.email === undefined
       ) {
         setNextDisabled(true);
@@ -174,9 +183,9 @@ const FindAccount = ({ navigation }: any) => {
     try {
       const request = {
         name: userData.name,
-        registration_number: `${userData.registrationNumber1}${userData.registrationNumber2}`,
+        // registration_number: `${userData.registrationNumber1}${userData.registrationNumber2}`,
+        phone: userData.phone,
       };
-
       const response = await api.getUserLoginId(request);
 
       if (response.result) {
@@ -188,8 +197,9 @@ const FindAccount = ({ navigation }: any) => {
           setUserData({
             ...userData,
             name: undefined,
-            registrationNumber1: undefined,
-            registrationNumber2: undefined,
+            // registrationNumber1: undefined,
+            // registrationNumber2: undefined,
+            phone: undefined,
           });
           setResponseError(ErrorCode[response.error_code]);
         } else {
@@ -209,7 +219,8 @@ const FindAccount = ({ navigation }: any) => {
     try {
       const request = {
         name: userData.name,
-        registration_number: `${userData.registrationNumber1}${userData.registrationNumber2}`,
+        // registration_number: `${userData.registrationNumber1}${userData.registrationNumber2}`,
+        phone: userData.phone,
         email: userData.email,
       };
 
@@ -223,8 +234,9 @@ const FindAccount = ({ navigation }: any) => {
           setUserData({
             ...userData,
             name: undefined,
-            registrationNumber1: undefined,
-            registrationNumber2: undefined,
+            // registrationNumber1: undefined,
+            // registrationNumber2: undefined,
+            phone: undefined,
             email: undefined,
           });
           setResponseError(ErrorCode[response.error_code]);
@@ -245,15 +257,17 @@ const FindAccount = ({ navigation }: any) => {
     setUserData({
       name: undefined,
       email: undefined,
-      registrationNumber1: undefined,
-      registrationNumber2: undefined,
+      // registrationNumber1: undefined,
+      // registrationNumber2: undefined,
+      phone: undefined,
     });
 
     setError({
       name: undefined,
       email: undefined,
-      registrationNumber1: undefined,
-      registrationNumber2: undefined,
+      // registrationNumber1: undefined,
+      // registrationNumber2: undefined,
+      phone: undefined,
     });
 
     setResponseError('');
@@ -347,13 +361,27 @@ const FindAccount = ({ navigation }: any) => {
             errText={error.name !== undefined ? error.name : undefined}
           />
           <Text style={style.labelText}>
-            {t('signUp.registrationNumberLabel')}
+            {t('signUp.phoneLabel')}
           </Text>
           <Row justify="space-between">
             <MedicleInput
               style={{ flex: 1 }}
+              value={userData?.phone}
+              onChangeText={text => onChange(text, 'phone')}
+              errText={
+                error.phone !== undefined
+                  ? error.phone
+                  : undefined
+              }
+              maxLength={11}
+              placeholder={t('signUp.phoneLabel')}
+            />
+            <Spacing size={10} />
+            {/* <MedicleInput
+              style={{ flex: 1 }}
               value={userData?.registrationNumber1}
               onChangeText={text => onChange(text, 'registrationNumber1')}
+
               errText={
                 error.registrationNumber1 !== undefined
                   ? error.registrationNumber1
@@ -374,7 +402,7 @@ const FindAccount = ({ navigation }: any) => {
                   ? error.registrationNumber2
                   : undefined
               }
-            />
+            /> */}
           </Row>
           {responseError !== '' && (
             <Text style={style.errorText}>{responseError}</Text>
