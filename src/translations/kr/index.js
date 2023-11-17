@@ -240,7 +240,7 @@ const translations = {
     name: '성함을 입력해주세요.',
     nameLabel: '성함',
     registrationNumber: '생년월일 6자리',
-    registrationNumberLabel: '주민등록번호',
+    registrationNumberLabel: '생년월일',
     address1: '우편번호',
     address2: '시/군/구 + 도로명, 동명',
     address3: '상세주소',

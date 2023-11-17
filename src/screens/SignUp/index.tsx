@@ -45,7 +45,7 @@ const SignUp = ({ navigation, route }: any) => {
     password: undefined,
     name: undefined,
     registrationNumber1: undefined,
-    registrationNumber2: undefined,
+    // registrationNumber2: undefined,
     phone: undefined,
     email: undefined,
     address1: undefined,
@@ -62,7 +62,7 @@ const SignUp = ({ navigation, route }: any) => {
     confirmPassword: undefined,
     email: undefined,
     registrationNumber1: undefined,
-    registrationNumber2: undefined,
+    // registrationNumber2: undefined,
     smsCode: undefined,
     mailCode: undefined,
   });
@@ -88,7 +88,7 @@ const SignUp = ({ navigation, route }: any) => {
     name: /^[가-힣]{2,10}$/,
     registrationNumber1:
       /^(0[1-9]|[1-9][0-9])((0[1-9])|(1[0-2]))(([012][0-9])|(3[0-1]))$/,
-    registrationNumber2: /^[1-4]\d{6}$/,
+    // registrationNumber2: /^[1-4]\d{6}$/,
     phone: /^010[0-9]*$/,
     email: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
     password:
@@ -463,7 +463,7 @@ const SignUp = ({ navigation, route }: any) => {
           setSignUpData({
             ...signUpData,
             registrationNumber1: undefined,
-            registrationNumber2: undefined,
+            // registrationNumber2: undefined,
           });
           setError({
             ...error,
@@ -493,6 +493,7 @@ const SignUp = ({ navigation, route }: any) => {
       password: signUpData.password,
       name: signUpData.name,
       // registration_number: `${signUpData.registrationNumber1}${signUpData.registrationNumber2}`,
+      registration_number: `${signUpData.registrationNumber1}`,
       phone: signUpData.phone,
       email: signUpData.email,
       address1: signUpData.address1,
@@ -781,6 +782,28 @@ const SignUp = ({ navigation, route }: any) => {
             // onBlur={() => handleBlur('name')}
             errText={error.name !== undefined ? error.name : undefined}
           />
+          <View>
+          <Text style={style.labelText}>
+              {t('signUp.registrationNumberLabel')}
+            </Text>
+            <Row justify="space-between">
+              <MedicleInput
+                style={{ flex: 1 }}
+                value={signUpData?.registrationNumber1}
+                onChangeText={text => onChange(text, 'registrationNumber1')}
+                // onBlur={() => handleBlur('registrationNumber1')}
+                ref={registrationNumberRef1}
+                errText={
+                  error.registrationNumber1 !== undefined
+                    ? error.registrationNumber1
+                    : undefined
+                }
+                maxLength={6}
+                placeholder={t('signUp.registrationNumber')}
+              />
+              <Spacing size={10} />
+            </Row>
+          </View>
           {/* <View>
             <Text style={style.labelText}>
               {t('signUp.registrationNumberLabel')}
